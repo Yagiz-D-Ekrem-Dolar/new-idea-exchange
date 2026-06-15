@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEW IDEA EXCHANGE — Teknik Mimari Raporu</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --blue: #0057cc;
+      --blue-soft: #e8f0ff;
+      --green: #16a34a;
+      --green-soft: #dcfce7;
+      --amber: #b45309;
+      --amber-soft: #fef3c7;
+      --red: #dc2626;
+      --red-soft: #fee2e2;
+      --purple: #7c3aed;
+      --purple-soft: #ede9fe;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; font-size: 12px; }
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      .card { box-shadow: none !important; border: 1px solid #ddd !important; }
+      a { color: var(--blue) !important; text-decoration: none; }
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* ── COVER ── */
+    .cover {
+      background: linear-gradient(135deg, #0a1628 0%, #0d2050 50%, #0a1628 100%);
+      color: white;
+      padding: 64px 64px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(0,87,204,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.25) 0%, transparent 50%);
+    }
+    .cover-content { position: relative; z-index: 1; }
+    .cover-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+    }
+    .cover-title {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.75));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cover-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 400;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .cover-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .cover-meta-item strong { display: block; font-size: 15px; color: white; }
+    .cover-meta-item span { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── BODY ── */
+    .body-content { padding: 0; }
+
+    /* ── SECTION ── */
+    .section {
+      margin-top: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--line);
+    }
+    .section-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .section-title { font-size: 18px; font-weight: 750; color: var(--ink); letter-spacing: -0.02em; }
+    .section-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* ── SUMMARY BOX ── */
+    .summary-box {
+      background: linear-gradient(135deg, #e8f0ff, #f0e8ff);
+      border: 1px solid rgba(0,87,204,0.18);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .summary-box p { color: #1e3a6e; font-size: 13.5px; line-height: 1.7; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .card + .card { margin-top: 12px; }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+    /* ── TECH CARD ── */
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tech-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .badge-blue { background: var(--blue-soft); color: var(--blue); }
+    .badge-green { background: var(--green-soft); color: var(--green); }
+    .badge-purple { background: var(--purple-soft); color: var(--purple); }
+    .badge-amber { background: var(--amber-soft); color: var(--amber); }
+    .badge-red { background: var(--red-soft); color: var(--red); }
+    .badge-dark { background: #f1f5f9; color: #475569; }
+
+    .tech-card-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .tech-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .tech-card-version { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 600; }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--line); }
+    table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 13px; }
+    thead { background: #f8fafc; }
+    th { padding: 11px 16px; text-align: left; font-weight: 700; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--line); }
+    td { padding: 11px 16px; border-bottom: 1px solid #f1f5f9; color: var(--ink); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    .td-mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue); }
+    .td-cost { font-weight: 700; color: var(--green); }
+    .td-total { font-weight: 800; color: var(--ink); background: #f0fdf4; }
+
+    /* ── ARCH DIAGRAM ── */
+    .arch-diagram {
+      background: #0f172a;
+      border-radius: 14px;
+      padding: 28px 32px;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    .arch-layer { margin-bottom: 20px; }
+    .arch-layer-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .arch-boxes { display: flex; gap: 10px; flex-wrap: wrap; }
+    .arch-box {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+    }
+    .arch-box.blue { background: rgba(0,87,204,0.25); border: 1px solid rgba(0,87,204,0.4); color: #93c5fd; }
+    .arch-box.green { background: rgba(22,163,74,0.2); border: 1px solid rgba(22,163,74,0.4); color: #86efac; }
+    .arch-box.purple { background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4); color: #c4b5fd; }
+    .arch-box.amber { background: rgba(180,83,9,0.2); border: 1px solid rgba(180,83,9,0.4); color: #fcd34d; }
+    .arch-box.gray { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); }
+    .arch-arrow { text-align: center; color: rgba(255,255,255,0.2); font-size: 18px; margin: 4px 0; }
+
+    /* ── HIGHLIGHT ── */
+    .highlight-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+    .highlight-item {
+      flex: 1;
+      min-width: 160px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .highlight-item strong { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: var(--blue); }
+    .highlight-item span { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+
+    /* ── PILL ── */
+    .pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 11.5px; font-weight: 600; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-left: 3px solid var(--blue);
+      background: var(--blue-soft);
+      padding: 14px 18px;
+      border-radius: 0 10px 10px 0;
+      margin: 16px 0;
+      font-size: 13px;
+      color: #1e3a6e;
+      line-height: 1.6;
+    }
+    .callout.green { border-color: var(--green); background: var(--green-soft); color: #14532d; }
+    .callout.amber { border-color: var(--amber); background: var(--amber-soft); color: #78350f; }
+
+    /* ── TOC ── */
+    .toc { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 26px; margin-top: 32px; }
+    .toc-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px; }
+    .toc-list { display: flex; flex-direction: column; gap: 5px; counter-reset: toc; }
+    .toc-item { display: flex; align-items: baseline; gap: 8px; font-size: 13.5px; color: var(--ink); font-weight: 500; }
+    .toc-item::before { content: counter(toc); counter-increment: toc; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-soft); width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+    .toc-item-page { margin-left: auto; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+    /* ── PRINT BUTTON ── */
+    .print-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,87,204,0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 999;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .print-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,87,204,0.5); }
+
+    /* ── FOOTER ── */
+    .report-footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .report-footer strong { color: var(--ink); }
+
+    @media (max-width: 700px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .cover { padding: 36px 24px; }
+      .cover-title { font-size: 28px; }
+      .container { padding: 0 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-content">
+    <p class="cover-eyebrow">NEW IDEA EXCHANGE · Gizli / Dahili Kullanım</p>
+    <h1 class="cover-title">Teknik Mimari<br>Raporu</h1>
+    <p class="cover-subtitle">Platform altyapısı, teknoloji yığını, ölçeklenebilirlik planı ve aylık altyapı maliyet analizi.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>v2.4.0</strong><span>Versiyon</span></div>
+      <div class="cover-meta-item"><strong>Haziran 2026</strong><span>Tarih</span></div>
+      <div class="cover-meta-item"><strong>NIE Platform</strong><span>Ürün</span></div>
+      <div class="cover-meta-item"><strong>Gizli</strong><span>Sınıflandırma</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="body-content">
+
+  <!-- TOC -->
+  <div class="toc">
+    <p class="toc-title">İçindekiler</p>
+    <div class="toc-list">
+      <div class="toc-item">Yönetici Özeti<span class="toc-item-page">03</span></div>
+      <div class="toc-item">Mimari Genel Bakış<span class="toc-item-page">04</span></div>
+      <div class="toc-item">Frontend Teknoloji Yığını<span class="toc-item-page">05</span></div>
+      <div class="toc-item">Backend & API Katmanı<span class="toc-item-page">06</span></div>
+      <div class="toc-item">Veritabanı & Depolama<span class="toc-item-page">08</span></div>
+      <div class="toc-item">Yapay Zeka & Makine Öğrenimi<span class="toc-item-page">09</span></div>
+      <div class="toc-item">Gerçek Zamanlı Altyapı<span class="toc-item-page">10</span></div>
+      <div class="toc-item">Güvenlik & Uyumluluk<span class="toc-item-page">11</span></div>
+      <div class="toc-item">DevOps & CI/CD<span class="toc-item-page">12</span></div>
+      <div class="toc-item">Performans & Ölçeklenebilirlik<span class="toc-item-page">13</span></div>
+      <div class="toc-item">Maliyet Analizi<span class="toc-item-page">14</span></div>
+    </div>
+  </div>
+
+  <!-- 1. YÖNETİCİ ÖZETİ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <div><div class="section-title">Yönetici Özeti</div><div class="section-desc">Platformun teknik vizyonu ve temel metrikler</div></div>
+    </div>
+    <div class="summary-box">
+      <p><strong>NEW IDEA EXCHANGE (NIE)</strong>, holding genelinde çalışanların fikir üretmesini, ekip kurmasını ve inovasyon projelerini hayata geçirmesini sağlayan kurumsal inovasyon platformudur. Sistem; fikir borsası, ekip yönetimi, gerçek zamanlı mesajlaşma, AI destekli değerlendirme ve analitik modüllerinden oluşmaktadır.</p>
+      <p style="margin-top:10px;">Bu rapor, platformun üretim ortamına alınması için öngörülen <strong>enterprise-grade teknoloji yığınını</strong>, mimari kararları, güvenlik gereksinimlerini ve aylık operasyon maliyetlerini kapsamaktadır.</p>
+    </div>
+
+    <div class="highlight-row">
+      <div class="highlight-item"><strong>99.95%</strong><span>Hedef Uptime SLA</span></div>
+      <div class="highlight-item"><strong>&lt;120ms</strong><span>Global P95 API Latency</span></div>
+      <div class="highlight-item"><strong>50K+</strong><span>Hedef Eşzamanlı Kullanıcı</span></div>
+      <div class="highlight-item"><strong>SOC 2</strong><span>Güvenlik Sertifikasyonu</span></div>
+      <div class="highlight-item"><strong>KVKK</strong><span>Uyumluluk Standardı</span></div>
+    </div>
+  </div>
+
+  <!-- 2. MİMARİ -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <div><div class="section-title">Mimari Genel Bakış</div><div class="section-desc">Katmanlı sistem mimarisi ve veri akışı</div></div>
+    </div>
+
+    <div class="arch-diagram">
+      <div class="arch-layer">
+        <div class="arch-layer-label">🌐 Kullanıcı Katmanı / Client</div>
+        <div class="arch-boxes">
+          <span class="arch-box blue">Next.js 15 App Router</span>
+          <span class="arch-box blue">React 19 + TypeScript</span>
+          <span class="arch-box blue">PWA (Offline Support)</span>
+          <span class="arch-box blue">Mobile (React Native)</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↕ HTTPS / WSS</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">⚡ Edge & CDN Katmanı</div>
+        <div class="arch-boxes">
+          <span class="arch-box amber">Cloudflare CDN</span>
+          <span class="arch-box amber">Vercel Edge Network</span>
+          <span class="arch-box amber">CF Workers (Auth, Rate Limit)</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↕ Internal Network</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">🔧 API & Servis Katmanı</div>
+        <div class="arch-boxes">
+          <span class="arch-box green">Hono.js REST API</span>
+          <span class="arch-box green">GraphQL (Apollo Server)</span>
+          <span class="arch-box green">WebSocket (Partykit)</span>
+          <span class="arch-box green">BullMQ Job Queue</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↕ DB Connections</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">🗄️ Veri Katmanı</div>
+        <div class="arch-boxes">
+          <span class="arch-box purple">SpacetimeDB (Realtime State)</span>
+          <span class="arch-box purple">Supabase (PostgreSQL)</span>
+          <span class="arch-box purple">Upstash Redis (Cache)</span>
+          <span class="arch-box purple">Pinecone (Vector DB)</span>
+          <span class="arch-box purple">Cloudflare R2 (Files)</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↕ SDK Calls</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">🤖 AI / ML Katmanı</div>
+        <div class="arch-boxes">
+          <span class="arch-box gray">Anthropic Claude 4 API</span>
+          <span class="arch-box gray">OpenAI Embeddings</span>
+          <span class="arch-box gray">LangChain RAG Pipeline</span>
+          <span class="arch-box gray">Vercel AI SDK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. FRONTEND -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <div><div class="section-title">Frontend Teknoloji Yığını</div><div class="section-desc">UI framework, state yönetimi ve performans katmanı</div></div>
+    </div>
+
+    <div class="callout">
+      Frontend, <strong>Server Components + Streaming</strong> mimarisiyle kurgulanmıştır. İlk yükleme 0.8 sn'nin altında tutulmakta; borsada gerçek zamanlı fiyat güncellemeleri WebSocket üzerinden sunulmaktadır.
+    </div>
+
+    <div class="grid-3">
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">Core Framework</span>
+        <span class="tech-card-name">Next.js 15</span>
+        <span class="tech-card-version">v15.3.2</span>
+        <span class="tech-card-desc">App Router, Server Components, Streaming SSR, ISR ile edge-optimized rendering.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">UI Library</span>
+        <span class="tech-card-name">React 19</span>
+        <span class="tech-card-version">v19.1.0</span>
+        <span class="tech-card-desc">Concurrent rendering, use() hook, Server Actions ve Suspense ile modern bileşen mimarisi.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-dark">Language</span>
+        <span class="tech-card-name">TypeScript 5.5</span>
+        <span class="tech-card-version">strict mode</span>
+        <span class="tech-card-desc">Tam tip güvenliği, zod ile runtime validation, tRPC ile end-to-end tipler.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-amber">Styling</span>
+        <span class="tech-card-name">Tailwind CSS 4</span>
+        <span class="tech-card-version">v4.0 + CSS vars</span>
+        <span class="tech-card-desc">Lightning CSS compiler, design token sistemi, dark mode ve responsive grid.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-purple">Animation</span>
+        <span class="tech-card-name">Framer Motion</span>
+        <span class="tech-card-version">v11.x</span>
+        <span class="tech-card-desc">Layout animations, shared element transitions, spring physics, GPU-accelerated mikro-animasyonlar.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-dark">Components</span>
+        <span class="tech-card-name">shadcn/ui + Radix</span>
+        <span class="tech-card-version">headless</span>
+        <span class="tech-card-desc">Erişilebilir, unstyled bileşen primitifleri. WCAG 2.1 AA uyumlu.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-green">State</span>
+        <span class="tech-card-name">Zustand + Jotai</span>
+        <span class="tech-card-version">v4.x / v2.x</span>
+        <span class="tech-card-desc">Global state için Zustand, atomic state için Jotai. Devtools ve persist middleware.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">Data Fetching</span>
+        <span class="tech-card-name">TanStack Query</span>
+        <span class="tech-card-version">v5.x</span>
+        <span class="tech-card-desc">Stale-while-revalidate, optimistic updates, infinite scroll, background sync.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-amber">Charts</span>
+        <span class="tech-card-name">Recharts + D3</span>
+        <span class="tech-card-version">v2.x / v7.x</span>
+        <span class="tech-card-desc">Borsa grafikleri, sinerji radar, analitik panelleri için SVG tabanlı rendering.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. BACKEND -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-number">4</div>
+      <div><div class="section-title">Backend & API Katmanı</div><div class="section-desc">Sunucu mimarisi, API tasarımı ve job queue sistemi</div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-card">
+        <span class="tech-card-badge badge-green">Runtime</span>
+        <span class="tech-card-name">Bun 1.x</span>
+        <span class="tech-card-version">v1.1.x</span>
+        <span class="tech-card-desc">Node.js'e kıyasla 3x daha hızlı cold start. Native TypeScript, built-in bundler ve test runner.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-green">API Framework</span>
+        <span class="tech-card-name">Hono.js</span>
+        <span class="tech-card-version">v4.x</span>
+        <span class="tech-card-desc">Edge-native, ultra lightweight REST API. Middleware zinciri, validation (zod), JWT auth dahili.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">GraphQL</span>
+        <span class="tech-card-name">Apollo Server 4</span>
+        <span class="tech-card-version">Federation v2</span>
+        <span class="tech-card-desc">Schema-first GraphQL, DataLoader batching, persisted queries, subscription (realtime).</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-purple">RPC Layer</span>
+        <span class="tech-card-name">tRPC v11</span>
+        <span class="tech-card-version">+ Zod</span>
+        <span class="tech-card-desc">End-to-end type safety, istemci-sunucu arasında sözleşme. Next.js ile tam entegrasyon.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-amber">Job Queue</span>
+        <span class="tech-card-name">BullMQ</span>
+        <span class="tech-card-version">v5.x + Redis</span>
+        <span class="tech-card-desc">AI analiz, e-posta bildirimleri, borsa fiyat güncellemeleri için asenkron iş kuyruğu.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-dark">ORM</span>
+        <span class="tech-card-name">Drizzle ORM</span>
+        <span class="tech-card-version">v0.30+</span>
+        <span class="tech-card-desc">SQL-first, sıfır overhead ORM. TypeScript şema tanımları, otomatik migration.</span>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:16px;">
+      <strong>Mikro-servis hazırlığı:</strong> Monolith olarak başlayan backend, <strong>bounded context</strong> prensibiyle modüllere ayrılmıştır: <em>Fikir Servisi, Borsa Servisi, Ekip Servisi, Mesajlaşma Servisi, AI Servisi.</em> Ölçeğe göre ayrı konteyner olarak deploy edilebilir.
+    </div>
+  </div>
+
+  <!-- 5. VERİTABANI -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">5</div>
+      <div><div class="section-title">Veritabanı & Depolama</div><div class="section-desc">Çok katmanlı veri mimarisi</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Teknoloji</th>
+            <th>Kullanım Amacı</th>
+            <th>Katman</th>
+            <th>Ölçek</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SpacetimeDB</strong></td>
+            <td>Gerçek zamanlı uygulama state'i — borsa fiyatları, canlı ekip değişiklikleri, anlık mesajlar</td>
+            <td><span class="pill badge-purple">Realtime DB</span></td>
+            <td>1M+ eşzamanlı bağlantı</td>
+          </tr>
+          <tr>
+            <td><strong>Supabase (PostgreSQL 16)</strong></td>
+            <td>Ana ilişkisel veri — kullanıcılar, fikirler, ekipler, yorumlar, denetim kaydı</td>
+            <td><span class="pill badge-blue">Primary DB</span></td>
+            <td>Row-level security, 500GB+</td>
+          </tr>
+          <tr>
+            <td><strong>Upstash Redis</strong></td>
+            <td>Session cache, rate limiting, job queue backing store, SSE broadcast</td>
+            <td><span class="pill badge-green">Cache / Queue</span></td>
+            <td>Global edge, &lt;1ms</td>
+          </tr>
+          <tr>
+            <td><strong>Pinecone</strong></td>
+            <td>Fikir semantik arama, AI önerisi — embedding vektörlerinin depolanması</td>
+            <td><span class="pill badge-amber">Vector DB</span></td>
+            <td>100M+ vektör</td>
+          </tr>
+          <tr>
+            <td><strong>Cloudflare R2</strong></td>
+            <td>Kullanıcı dosyaları, fikir ekleri, raporlar, şirket logoları — S3 uyumlu</td>
+            <td><span class="pill badge-dark">Object Storage</span></td>
+            <td>10TB+, ücretsiz egress</td>
+          </tr>
+          <tr>
+            <td><strong>Turso (libSQL)</strong></td>
+            <td>Edge-close per-tenant SQLite — düşük gecikme gerektiren okuma ağırlıklı sorgular</td>
+            <td><span class="pill badge-purple">Edge DB</span></td>
+            <td>500+ lokasyon</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout green" style="margin-top:16px;">
+      <strong>SpacetimeDB Neden?</strong> Geleneksel WebSocket + Redis Pub/Sub mimarisinin ötesine geçen SpacetimeDB, uygulama state'ini veritabanı içinde barındırarak istemci-sunucu senkronizasyonunu otomatikleştirir. Borsa işlemlerinde <strong>sub-millisecond latency</strong> sağlar.
+    </div>
+  </div>
+
+  <!-- 6. YAPAY ZEKA -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-number">6</div>
+      <div><div class="section-title">Yapay Zeka & Makine Öğrenimi</div><div class="section-desc">AI modülleri, RAG pipeline ve embedding sistemi</div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-card">
+        <span class="tech-card-badge badge-purple">LLM</span>
+        <span class="tech-card-name">Anthropic Claude 4 Sonnet</span>
+        <span class="tech-card-version">claude-sonnet-4-5</span>
+        <span class="tech-card-desc">Fikir değerlendirmesi, AI raporu üretimi, sohbet asistanı, önerilerin kişiselleştirilmesi. 200K token context.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">Embeddings</span>
+        <span class="tech-card-name">OpenAI text-embedding-3</span>
+        <span class="tech-card-version">3072 dim</span>
+        <span class="tech-card-desc">Fikir benzerlik analizi, semantik arama ve öneri motoru için vektör üretimi.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-green">RAG Framework</span>
+        <span class="tech-card-name">LangChain.js</span>
+        <span class="tech-card-version">v0.3.x</span>
+        <span class="tech-card-desc">Retrieval-Augmented Generation: platform dökümantasyonu ve geçmiş fikirlerden bağlam çekme.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-amber">AI SDK</span>
+        <span class="tech-card-name">Vercel AI SDK</span>
+        <span class="tech-card-version">v4.x</span>
+        <span class="tech-card-desc">Streaming responses, tool use, multi-step AI flows. Model provider abstraction (Claude/OpenAI).</span>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="card">
+        <strong style="font-size:13.5px;">AI Özellikleri Listesi</strong>
+        <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Fikir Otomatik Skorlama (0–100)</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> AI Destekli Proje Raporu</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Sinerji Hesaplama (Ekip Uyumu)</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Semantik Fikir Arama</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Kişiselleştirilmiş Öneri Motoru</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Otomatik Kategori Sınıflandırma</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Doğal Dil Sohbet Asistanı</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;font-size:12.5px;"><span style="color:#16a34a;font-size:16px;">✓</span> Borsa Trend Tahminleme</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. GERÇEKZAMANLİ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">7</div>
+      <div><div class="section-title">Gerçek Zamanlı Altyapı</div><div class="section-desc">WebSocket, SSE ve canlı veri akışı</div></div>
+    </div>
+
+    <div class="grid-3">
+      <div class="tech-card">
+        <span class="tech-card-badge badge-purple">Realtime DB</span>
+        <span class="tech-card-name">SpacetimeDB</span>
+        <span class="tech-card-desc">Borsa fiyat tick'leri, anlık alım/satım, canlı sıralama tablosu, ekip chat state.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">Collaboration</span>
+        <span class="tech-card-name">Partykit</span>
+        <span class="tech-card-desc">Kullanıcı presence (kim online), ekip sohbetleri, shared cursor, canlı form editleme.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-green">Notifications</span>
+        <span class="tech-card-name">SSE + Upstash</span>
+        <span class="tech-card-desc">Server-Sent Events ile push bildirimleri. Redis pub/sub ile çok sunuculu broadcast.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. GÜVENLİK -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-number">8</div>
+      <div><div class="section-title">Güvenlik & Uyumluluk</div><div class="section-desc">Kimlik doğrulama, yetkilendirme ve veri koruma</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Katman</th><th>Teknoloji</th><th>Açıklama</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Kimlik Doğrulama</strong></td><td class="td-mono">Auth.js v5 + SAML</td><td>Kurumsal SSO (Active Directory / SAML 2.0), MFA zorunluluğu, session rotation</td></tr>
+          <tr><td><strong>Yetkilendirme</strong></td><td class="td-mono">RBAC + RLS</td><td>Rol tabanlı erişim; Supabase Row-Level Security ile veri izolasyonu</td></tr>
+          <tr><td><strong>API Güvenliği</strong></td><td class="td-mono">JWT + mTLS</td><td>Short-lived JWT (15 dk), servisler arası mTLS, API key rotation</td></tr>
+          <tr><td><strong>Şifreleme</strong></td><td class="td-mono">AES-256 / TLS 1.3</td><td>Dinlenme halinde ve transit sırasında tam şifreleme</td></tr>
+          <tr><td><strong>Rate Limiting</strong></td><td class="td-mono">CF Workers + Redis</td><td>IP ve kullanıcı bazlı; sliding window algoritması</td></tr>
+          <tr><td><strong>Uyumluluk</strong></td><td class="td-mono">KVKK / GDPR</td><td>Veri silme talepleri, consent yönetimi, denetim logu</td></tr>
+          <tr><td><strong>Sertifikasyon</strong></td><td class="td-mono">SOC 2 Type II</td><td>Yıllık bağımsız denetim (hedef: Q4 2026)</td></tr>
+          <tr><td><strong>Secret Yönetimi</strong></td><td class="td-mono">Doppler / Vault</td><td>Environment variable merkezi yönetimi, otomatik rotation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 9. DEVOPS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">9</div>
+      <div><div class="section-title">DevOps & CI/CD Pipeline</div><div class="section-desc">Geliştirme, test ve deployment akışı</div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="tech-card">
+        <span class="tech-card-badge badge-dark">Version Control</span>
+        <span class="tech-card-name">GitHub + Monorepo</span>
+        <span class="tech-card-desc">Turborepo ile monorepo yönetimi. Branch protection, required reviews, signed commits.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-blue">CI/CD</span>
+        <span class="tech-card-name">GitHub Actions</span>
+        <span class="tech-card-desc">PR üzerine otomatik lint, test, build, Vercel preview deploy. Main'e merge = production.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-green">Testing</span>
+        <span class="tech-card-name">Vitest + Playwright</span>
+        <span class="tech-card-desc">Unit/integration: Vitest. E2E: Playwright (multi-browser, mobil emülasyon). Coverage %80+.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-purple">Monitoring</span>
+        <span class="tech-card-name">Datadog + Sentry</span>
+        <span class="tech-card-desc">APM, distributed tracing, error tracking, uptime monitoring, alerting (PagerDuty).</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-amber">Containers</span>
+        <span class="tech-card-name">Docker + Kubernetes</span>
+        <span class="tech-card-desc">Backend servisleri için Dockerfile. Prod ortamında K8s (EKS) ile horizontal auto-scaling.</span>
+      </div>
+      <div class="tech-card">
+        <span class="tech-card-badge badge-dark">Feature Flags</span>
+        <span class="tech-card-name">GrowthBook</span>
+        <span class="tech-card-desc">A/B testing, gradual rollout, dark launches, kullanıcı segmentasyon.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. PERFORMANS -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-number">10</div>
+      <div><div class="section-title">Performans & Ölçeklenebilirlik</div><div class="section-desc">Hedef metrikler ve ölçekleme stratejisi</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metrik</th><th>Hedef</th><th>Ölçüm Yöntemi</th></tr></thead>
+        <tbody>
+          <tr><td>Core Web Vitals — LCP</td><td class="td-cost">&lt; 1.2s</td><td>Lighthouse CI (her PR)</td></tr>
+          <tr><td>Core Web Vitals — CLS</td><td class="td-cost">&lt; 0.05</td><td>Vercel Speed Insights</td></tr>
+          <tr><td>API P50 Latency</td><td class="td-cost">&lt; 45ms</td><td>Datadog APM</td></tr>
+          <tr><td>API P95 Latency</td><td class="td-cost">&lt; 120ms</td><td>Datadog APM</td></tr>
+          <tr><td>WebSocket Message Delay</td><td class="td-cost">&lt; 50ms</td><td>Partykit Dashboard</td></tr>
+          <tr><td>DB Query P99</td><td class="td-cost">&lt; 200ms</td><td>Supabase Logs</td></tr>
+          <tr><td>SpacetimeDB Tick Rate</td><td class="td-cost">60 Hz</td><td>SpacetimeDB Metrics</td></tr>
+          <tr><td>Eşzamanlı Kullanıcı (başlangıç)</td><td class="td-cost">5,000</td><td>K6 Load Testing</td></tr>
+          <tr><td>Eşzamanlı Kullanıcı (hedef)</td><td class="td-cost">50,000</td><td>Auto-scaling ile</td></tr>
+          <tr><td>Uptime SLA</td><td class="td-cost">99.95%</td><td>Better Uptime</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 11. MALİYET ANALİZİ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">11</div>
+      <div><div class="section-title">Aylık Altyapı Maliyet Analizi</div><div class="section-desc">5.000 aktif kullanıcı varsayımıyla üretim ortamı tahmini</div></div>
+    </div>
+
+    <div class="callout amber">
+      Aşağıdaki maliyetler <strong>5.000 aylık aktif kullanıcı</strong> için tahmin edilmiştir. Kullanıcı sayısı 50.000'e ulaştığında aylık toplam ~$3.200–4.800 bandına çıkması öngörülmektedir.
+    </div>
+
+    <div class="table-wrap" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Servis</th>
+            <th>Provider</th>
+            <th>Plan / Limit</th>
+            <th style="text-align:right;">Aylık USD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Frontend Hosting</strong></td><td>Vercel Pro</td><td>100GB bandwidth, 1000 deployments</td><td style="text-align:right;" class="td-cost">$20</td></tr>
+          <tr><td><strong>Ana Veritabanı</strong></td><td>Supabase Pro</td><td>8GB DB, 250GB bandwidth, 2 projects</td><td style="text-align:right;" class="td-cost">$25</td></tr>
+          <tr><td><strong>Realtime State DB</strong></td><td>SpacetimeDB Cloud</td><td>10M requests/mo, 5GB storage</td><td style="text-align:right;" class="td-cost">$49</td></tr>
+          <tr><td><strong>Redis Cache & Queue</strong></td><td>Upstash</td><td>10M commands/mo, global edge</td><td style="text-align:right;" class="td-cost">$20</td></tr>
+          <tr><td><strong>Vector Database</strong></td><td>Pinecone Starter+</td><td>5M vectors, 1 index</td><td style="text-align:right;" class="td-cost">$70</td></tr>
+          <tr><td><strong>CDN & Security</strong></td><td>Cloudflare Pro</td><td>DDoS, WAF, Workers 10M req</td><td style="text-align:right;" class="td-cost">$20</td></tr>
+          <tr><td><strong>Object Storage</strong></td><td>Cloudflare R2</td><td>10GB, 10M Class A ops</td><td style="text-align:right;" class="td-cost">$15</td></tr>
+          <tr><td><strong>AI — Claude API</strong></td><td>Anthropic</td><td>~500K tokens/mo (değerlendirme + rapor)</td><td style="text-align:right;" class="td-cost">$40</td></tr>
+          <tr><td><strong>AI — Embeddings</strong></td><td>OpenAI</td><td>~5M tokens/mo (text-embedding-3-small)</td><td style="text-align:right;" class="td-cost">$10</td></tr>
+          <tr><td><strong>Backend Compute</strong></td><td>Fly.io / Railway</td><td>2 vCPU, 2GB RAM, always-on</td><td style="text-align:right;" class="td-cost">$30</td></tr>
+          <tr><td><strong>Realtime Collab</strong></td><td>Partykit</td><td>1M connections, 10GB data transfer</td><td style="text-align:right;" class="td-cost">$25</td></tr>
+          <tr><td><strong>Email Bildirimleri</strong></td><td>Resend</td><td>50K emails/mo</td><td style="text-align:right;" class="td-cost">$20</td></tr>
+          <tr><td><strong>Error Tracking</strong></td><td>Sentry</td><td>100K errors, 5 users</td><td style="text-align:right;" class="td-cost">$26</td></tr>
+          <tr><td><strong>Monitoring & APM</strong></td><td>Datadog</td><td>5 hosts, APM + logs</td><td style="text-align:right;" class="td-cost">$30</td></tr>
+          <tr><td><strong>Feature Flags</strong></td><td>GrowthBook</td><td>OSS self-hosted</td><td style="text-align:right;" class="td-cost">$0</td></tr>
+          <tr><td><strong>Domain & SSL</strong></td><td>Cloudflare Registrar</td><td>nieplatform.com + wildcard SSL</td><td style="text-align:right;" class="td-cost">$1.5</td></tr>
+          <tr style="background:#f0fdf4;">
+            <td colspan="3"><strong>TOPLAM (5K kullanıcı / ay)</strong></td>
+            <td style="text-align:right;"><strong class="td-cost" style="font-size:16px;">$401.5</strong></td>
+          </tr>
+          <tr>
+            <td colspan="3" style="color:#64748b;font-size:12px;">Kullanıcı başına aylık maliyet (5K kullanıcı)</td>
+            <td style="text-align:right;color:#64748b;font-size:12px;"><strong>~$0.08 / kullanıcı</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-row" style="margin-top:20px;">
+      <div class="highlight-item"><strong>$401</strong><span>Aylık (5K kullanıcı)</span></div>
+      <div class="highlight-item" style="border-color:var(--blue);"><strong>$0.08</strong><span>Kullanıcı Başına</span></div>
+      <div class="highlight-item"><strong>~$1,200</strong><span>Aylık (20K kullanıcı)</span></div>
+      <div class="highlight-item"><strong>~$3,800</strong><span>Aylık (50K kullanıcı)</span></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <div>
+      <strong>NEW IDEA EXCHANGE</strong> · Teknik Mimari Raporu v2.4.0<br>
+      <span>Haziran 2026 · Gizli / Dahili Kullanım</span>
+    </div>
+    <div style="text-align:right;">
+      <span>NIE Platform Mühendislik Ekibi</span><br>
+      <span>engineering@nie.tibas.com.tr</span>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Print Button -->
+<button class="print-btn no-print" onclick="window.print()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+  PDF olarak kaydet
+</button>
+
+</body>
+</html>

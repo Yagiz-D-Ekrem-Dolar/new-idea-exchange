@@ -1,0 +1,17 @@
+{
+  "name": "fikirkovani",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kurumsal inovasyon, fikir paylaşımı ve karar destek platformu demo uygulaması.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "innovation",
+    "enterprise",
+    "ideas",
+    "dashboard"
+  ],
+  "author": "",
+  "license": "UNLICENSED"
+}
