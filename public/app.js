@@ -2059,7 +2059,7 @@ const initialNotificationsList = [
 ];
 
 const navItems = [
-  { id: "dashboard", label: "Dashboard", icon: "layout-dashboard" },
+  { id: "dashboard", label: "Genel", icon: "layout-dashboard" },
   { id: "quickFlow", label: "Borsa", icon: "chart-candlestick" },
   { id: "data", label: "Veri&Bilgi", icon: "database" },
   { id: "agenda", label: "Gündem", icon: "newspaper" },
@@ -2067,12 +2067,10 @@ const navItems = [
   { id: "social", label: "Sosyal", icon: "globe" },
   { id: "challenges", label: "Yarışmalar", icon: "trophy" },
   { id: "studio", label: "Stüdyo", icon: "layers" },
-  { id: "teams", label: "Ekipler", icon: "users-round" },
-  { id: "products", label: "Geliştirilmiş Ürünler", icon: "package-check" },
   { id: "profile", label: "Profil", icon: "user-round" },
   { id: "messages", label: "Mesajlar", icon: "message-square-text" },
   { id: "managerDashboard", label: "Yönetici Dashboardu", icon: "chart-no-axes-combined", managerOnly: true },
-  { id: "adminStorage", label: "Yönetici Depolama", icon: "folder-kanban", managerOnly: true },
+  { id: "adminStorage", label: "Yönetici Depolama Alanı", icon: "folder-kanban", managerOnly: true },
   { id: "manager", label: "Karar Kurulu", icon: "clipboard-check", managerOnly: true },
   { id: "analytics", label: "Karar Analitiği", icon: "chart-no-axes-combined" },
   { id: "quickEval", label: "Hızlı Değerlendir", icon: "flame" },
@@ -2427,16 +2425,36 @@ const state = {
       category: "AI Host",
       date: "2026-06-14",
       tags: ["ai", "demo kapsamı", "veri güvenliği"],
-      author: "İş NEW"
+      author: "İş NEW",
+      isAiGenerated: true
     },
     {
       id: "ag-3",
-      title: "Geliştirilmiş ürünler için ekip ihtiyacı görünürlüğe açıldı",
-      body: "Ürün aşamasına geçen fikirlerde açık roller ve geliştirme seviyesi artık ayrı ürün panosundan izlenebilecek.",
+      title: "Ürünler için ekip ihtiyacı görünürlüğe açıldı",
+      body: "Ürün aşamasına geçen fikirlerde açık roller ve geliştirme seviyesi artık stüdyo panosundan izlenebilecek.",
       category: "Ürün",
       date: "2026-06-13",
       tags: ["ürün", "ekip", "stüdyo"],
       author: "İnovasyon Ofisi"
+    },
+    {
+      id: "ag-4",
+      title: "Diğer departmanlar için yenilikçi süreç anketi yayında",
+      body: "Belirli bir kategoriye sığmayan operasyonel dışı tüm süreç iyileştirme fikirleriniz için anket sonuçları toplanmaya başlandı.",
+      category: "Diğer",
+      date: "2026-06-12",
+      tags: ["anket", "iştirakler", "geri bildirim"],
+      author: "İnovasyon Ofisi"
+    },
+    {
+      id: "ag-ai-weekly",
+      title: "AI Raporu: Haftalık İnovasyon Analitiği Özeti",
+      body: "Platformdaki son fikirlerin değerlendirmesi: Dijitalleşme ve yeşil finans temalı projelerde AI puan ortalaması 82.5/100 barajını aştı.",
+      category: "AI Host",
+      date: "2026-06-16",
+      tags: ["ai-raporu", "analiz", "haftalık-ozet"],
+      author: "AI Denetçi",
+      isAiGenerated: true
     }
   ],
   adminStorageDraft: {
@@ -2646,6 +2664,52 @@ const state = {
       date: "2026-06-07",
       comments: [],
       likes: 22
+    },
+    {
+      id: "ann-5",
+      title: "🌍 Yeşil Mutabakat ve Sürdürülebilirlik Yol Haritamız Tanıtıldı",
+      body: "İştiraklerimizden İş Leasing öncülüğünde geliştirilen karbon nötrleme platformunun entegrasyon takvimi açıklandı. Yeşil finansman projeleri önceliklendirilecektir.",
+      author: "Aras Kılınç",
+      authorId: "p14",
+      companyId: "is-leasing",
+      type: "Kurumsal",
+      area: "Sürdürülebilirlik",
+      importanceScore: 5,
+      date: "2026-06-10",
+      comments: [
+        { user: "Nazlı Durukan", body: "İş Leasing projelerimiz için mükemmel bir rehber olacak.", manager: false }
+      ],
+      likes: 54,
+      imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "ann-6",
+      title: "💡 Mobil Ödeme ve QR Altyapısı Entegrasyonu Başarıyla Tamamlandı",
+      body: "Moka API'leri üzerinden çalışan QR kodlu sanal ödeme sistemi tüm pilot şubelerimizde aktif edildi. Müşterilerimiz artık saniyeler içinde işlemlerini tamamlayabiliyor.",
+      author: "Aslı Ergin",
+      authorId: "p15",
+      companyId: "moka",
+      type: "Kurumsal",
+      area: "Teknoloji Entegrasyonu",
+      importanceScore: 4,
+      date: "2026-06-09",
+      comments: [],
+      likes: 38,
+      imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "ann-7",
+      title: "🏆 Yılın İnovatif Proje Başvuruları Değerlendirme Sürecinde",
+      body: "Karar kurulu bu ay rekor sayıda 78 yeni öneriyi inceleme listesine aldı. Proje sahiplerine AI ön değerlendirme sonuçları bildirim olarak gönderilmeye başlandı.",
+      author: "Mert Alkan",
+      authorId: "p02",
+      companyId: "tibas-holding",
+      type: "Kurumsal",
+      area: "Değerlendirmeler",
+      importanceScore: 5,
+      date: "2026-06-11",
+      comments: [],
+      likes: 47
     }
   ],
   
@@ -2981,7 +3045,7 @@ function pageSubtitle() {
   const subtitles = {
     announcements: "Holding, iştirak, ülke, şehir ve bina ölçeğinde duyurular",
     messages: "Gruplar, direkt mesajlar ve kurum profilleri",
-    dashboard: "İnovasyon portföyü ve aksiyon özeti",
+    dashboard: "Kurum içi veri, duyuru, öneri ve piyasa sinyalleri genel paneli",
     managerDashboard: "Oy, yatırım ve ürün performansı yönetici analitiği",
     agenda: "Adminlerin manuel eklediği kurumsal gündem akışı",
     ideas: "Öneri, şikayet ve iyileştirme kayıtları",
@@ -2995,9 +3059,9 @@ function pageSubtitle() {
     profile: "Katkıların ve rozetlerin",
     manager: "Değerlendirme ve karar kuyruğu",
     admin: "Yetki ve sistem yönetimi",
-    adminStorage: "Yönetici notları, dosyaları ve kaynak arşivi",
-    studio: "Kategori bazlı çalışma alanları ve ürünleşme stüdyoları",
-    products: "Geliştirilmiş fikirler ve ürünleşme seviyesi",
+    adminStorage: "Yönetici depolama alanı, dosyaları ve kaynak arşivi",
+    studio: "İştirak inovasyon stüdyoları, proje geliştirme ekipleri ve kuluçkadaki ürünler",
+    products: "Ürünleşen fikirler ve gelişim seviyeleri",
     systemDetails: "İş NEW platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
     settings: "Marka, görünüm ve bildirim tercihleri",
     detail: "Problem, çözüm, skorlar ve yorumlar",
@@ -3081,6 +3145,125 @@ function renderLogin() {
   `;
 }
 
+function renderGlobalSearchPanel() {
+  if (!state.globalSearchQuery || !state.globalSearchQuery.trim()) return "";
+  
+  const q = state.globalSearchQuery.trim().toLocaleLowerCase("tr-TR");
+  
+  // 1. Projects (Ideas)
+  const matchingIdeas = (state.ideas || []).filter(idea => 
+    idea.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    idea.summary.toLocaleLowerCase("tr-TR").includes(q) ||
+    (idea.marketTicker && idea.marketTicker.toLocaleLowerCase("tr-TR").includes(q))
+  ).slice(0, 3);
+  
+  // 2. Announcements
+  const matchingAnnouncements = (state.announcements || []).filter(ann => 
+    ann.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    ann.body.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 3);
+  
+  // 3. DataSets
+  const matchingDataSets = (state.dataSets || []).filter(ds => 
+    ds.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    ds.summary.toLocaleLowerCase("tr-TR").includes(q) ||
+    ds.area.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 3);
+  
+  // 4. Teams (Integrated into studio!)
+  const matchingTeams = (state.teams || []).filter(team => 
+    team.name.toLocaleLowerCase("tr-TR").includes(q) ||
+    team.description.toLocaleLowerCase("tr-TR").includes(q) ||
+    team.area.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 3);
+
+  const totalResults = matchingIdeas.length + matchingAnnouncements.length + matchingDataSets.length + matchingTeams.length;
+
+  if (totalResults === 0) {
+    return `
+      <div class="global-search-panel" style="margin-top: 10px; margin-right: 28px;">
+        <div class="global-search-empty">
+          ${icon("info")}
+          <span>"${esc(state.globalSearchQuery)}" için arama sonucu bulunamadı.</span>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="global-search-panel" style="margin-top: 10px; margin-right: 28px;">
+      <div class="global-search-head">
+        <span>${icon("search")} Arama Sonuçları: <strong>${totalResults} eşleşme</strong></span>
+        <button class="btn ghost slim-btn" data-action="close-global-search" style="font-size: 11px; padding: 4px 8px;">${icon("x")} Kapat</button>
+      </div>
+      
+      ${matchingIdeas.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Borsa Projeleri</span>
+          ${matchingIdeas.map(idea => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="idea" data-id="${esc(idea.id)}">
+              <i>${icon("chart-candlestick")}</i>
+              <div>
+                <strong>${esc(idea.title)}</strong>
+                <small>${esc(idea.summary)}</small>
+              </div>
+              <em>${esc(idea.marketTicker || "NIE")}</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+
+      ${matchingAnnouncements.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Duyurular</span>
+          ${matchingAnnouncements.map(ann => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="announcement" data-id="${esc(ann.id)}">
+              <i>${icon("megaphone")}</i>
+              <div>
+                <strong>${esc(ann.title)}</strong>
+                <small>${esc(ann.body)}</small>
+              </div>
+              <em>Duyuru</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+
+      ${matchingDataSets.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Veri Setleri</span>
+          ${matchingDataSets.map(ds => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="dataset" data-id="${esc(ds.id)}">
+              <i>${icon("database")}</i>
+              <div>
+                <strong>${esc(ds.title)}</strong>
+                <small>${esc(ds.summary)}</small>
+              </div>
+              <em>${esc(ds.area)}</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+
+      ${matchingTeams.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Proje Ekipleri</span>
+          ${matchingTeams.map(team => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="team" data-id="${esc(team.id)}">
+              <i>${icon("users-round")}</i>
+              <div>
+                <strong>${esc(team.name)}</strong>
+                <small>${esc(team.description)}</small>
+              </div>
+              <em>${esc(team.area)}</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
+
 function renderShell() {
   const user = currentUser();
   const nav = allowedNav();
@@ -3124,7 +3307,7 @@ function renderShell() {
           <label class="search-box">
             ${icon("search")}
             <span class="sr-only">Global arama</span>
-            <input class="input" data-global-search placeholder="Ara" />
+            <input class="input" data-global-search placeholder="Ara" value="${esc(state.globalSearchQuery || '')}" />
           </label>
           <div class="top-actions">
             <span class="credit-pill">${icon("coins")} ${user.voteCreditBalance}</span>
@@ -3136,6 +3319,7 @@ function renderShell() {
             <button class="btn primary" data-page="newIdea">${icon("plus")} Başvuru</button>
           </div>
         </header>
+        ${renderGlobalSearchPanel()}
         <main class="page-content">
           ${renderPage()}
         </main>
@@ -3149,7 +3333,7 @@ function renderShell() {
 }
 
 function renderMobileNav(nav) {
-  const ids = ["dashboard", "quickFlow", "agenda", "studio", "teams", "profile"];
+  const ids = ["dashboard", "quickFlow", "agenda", "studio", "profile"];
   const mobileLabels = {
     dashboard: "Panel",
     announcements: "Duyuru",
@@ -3158,7 +3342,6 @@ function renderMobileNav(nav) {
     data: "Veri&Bilgi",
     agenda: "Gündem",
     studio: "Stüdyo",
-    teams: "Ekip",
     social: "Sosyal",
     quickFlow: "Borsa",
     profile: "Profil"
@@ -3175,6 +3358,15 @@ function renderMobileNav(nav) {
 }
 
 function renderPage() {
+  if (state.page === "teams") {
+    state.page = "studio";
+    state.studioTab = "teams";
+  }
+  if (state.page === "products") {
+    state.page = "studio";
+    state.studioTab = "products";
+  }
+
   const pageItem = navItems.find(item => item.id === state.page) || { id: state.page, managerOnly: state.page === "manager", adminOnly: state.page === "admin" };
   if (!canAccess(pageItem)) {
     state.page = "quickFlow";
@@ -3258,11 +3450,19 @@ function renderDashboard() {
 
   return `
     <div class="view-stack apple-page">
-      <section class="apple-hero">
+      <section class="apple-hero" style="position: relative; overflow: hidden; padding-bottom: 30px;">
         <div class="apple-hero-copy">
           <span class="panel-kicker">Veri&Bilgi Alanı</span>
           <h2>Kurum içi veri, duyuru ve piyasa sinyali.</h2>
           <p>Öneri, araştırma, proje ve duyuruları tek bilgi katmanında izle; revaçta olan başlıkları Borsa hareketiyle gör.</p>
+          
+          <!-- Prominent Global Search Motor -->
+          <div class="hero-global-search-container" style="margin-top: 20px; width: 100%; max-width: 540px;">
+            <label class="search-box" style="background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); border-radius: 99px; display: flex; align-items: center; padding: 10px 18px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer;" data-trigger-global-search>
+              ${icon("search", "style='color: #ffffff; opacity: 0.9; margin-right: 8px;'")}
+              <input class="input" placeholder="Platform genelinde ara (Proje, Duyuru, Veri, Üye...)" readonly style="background: transparent; border: none; color: #ffffff; outline: none; width: 100%; font-size: 14.5px; cursor: pointer;" />
+            </label>
+          </div>
         </div>
         <div class="apple-hero-actions">
           <button class="btn ghost" data-page="quickFlow">${icon("chart-candlestick")} Borsayı aç</button>
@@ -3493,6 +3693,14 @@ function renderQuickFlow() {
           <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Fikir Borsası</h2>
           <p>Proje, fikir ve araştırmalar burada listelenir. Al, sat ve raporları incele.</p>
+          
+          <!-- Prominent Global Search Motor -->
+          <div class="hero-global-search-container" style="margin-top: 14px; width: 100%; max-width: 460px;">
+            <label class="search-box" style="background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: 99px; display: flex; align-items: center; padding: 8px 16px; width: 100%; cursor: pointer;" data-trigger-global-search>
+              ${icon("search", "style='color: var(--muted); margin-right: 8px;'")}
+              <input class="input" placeholder="Platform genelinde ara (Proje, Duyuru, Veri, Üye...)" readonly style="background: transparent; border: none; color: var(--ink); outline: none; width: 100%; font-size: 13.5px; cursor: pointer;" />
+            </label>
+          </div>
         </div>
         <div style="display: flex; gap: 16px; align-items: center;">
           <div class="market-wallet" style="text-align: right;">
@@ -5798,6 +6006,12 @@ function renderAnnouncementCard(item) {
       <h3 style="margin: 12px 0 6px 0; font-size: 18px; font-weight: 600;">${esc(item.title)}</h3>
       <p style="font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 12px;">${esc(item.body)}</p>
       
+      ${item.imageUrl ? `
+        <div class="announcement-image-container" style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 12px; max-height: 320px; border: 1px solid var(--line-soft);">
+          <img src="${esc(item.imageUrl)}" alt="${esc(item.title)}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy" />
+        </div>
+      ` : ""}
+      
       <footer style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line-soft); padding-top: 10px; font-size: 12px; color: var(--muted);">
         <span class="author-line" style="display: flex; align-items: center; gap: 6px; cursor: pointer;" data-action="view-profile" data-user-id="${author.id}">
           ${avatar(author.name, "tiny", author.photo)} 
@@ -6382,7 +6596,10 @@ function renderAgendaPage() {
           <article class="agenda-card">
             <div class="agenda-card-date"><strong>${esc(item.date.slice(8, 10) || item.date)}</strong><span>${esc(item.date.slice(5, 7) || "")}</span></div>
             <div>
-              <span class="panel-kicker">${esc(item.category)} · ${esc(item.author)}</span>
+              <span class="panel-kicker" style="display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                ${esc(item.category)} · ${esc(item.author)}
+                ${item.isAiGenerated ? `<span class="badge ai-badge" style="background: rgba(147, 51, 234, 0.1); color: #a855f7; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 600; border: 1px solid rgba(147, 51, 234, 0.2); display: inline-flex; align-items: center; gap: 4px; vertical-align: middle; line-height: 1.2;">${icon("bot", "style='width:12px;height:12px;'")} AI Generated</span>` : ""}
+              </span>
               <h3>${esc(item.title)}</h3>
               <p>${esc(item.body)}</p>
               <div class="challenge-chip-row">${(item.tags || []).map(tag => `<span>#${esc(tag)}</span>`).join("")}</div>
@@ -6402,13 +6619,14 @@ function renderAgendaComposer() {
       <div class="manager-panel-head"><span class="panel-kicker">${state.agendaEditId ? "Düzenleme" : "Admin ekleme"}</span><strong>${state.agendaEditId ? "Gündemi güncelle" : "Yeni gündem ekle"}</strong></div>
       <div class="agenda-composer-grid">
         <label class="field"><span>Başlık</span><input class="input" data-agenda-draft="title" value="${esc(d.title)}" placeholder="Gündem başlığı" /></label>
-        <label class="field"><span>Kategori</span><select class="select" data-agenda-draft="category">${optionList(["Strateji", "Operasyon", "AI Host", "Ürün", "Etkinlik", "Risk"], d.category)}</select></label>
+        <label class="field"><span>Kategori</span><select class="select" data-agenda-draft="category">${optionList(["Strateji", "Operasyon", "AI Host", "Ürün", "Etkinlik", "Risk", "Diğer"], d.category)}</select></label>
         <label class="field"><span>Tarih</span><input class="input" type="date" data-agenda-draft="date" value="${esc(d.date)}" /></label>
         <label class="field"><span>Etiketler</span><input class="input" data-agenda-draft="tags" value="${esc(d.tags)}" placeholder="virgülle ayır" /></label>
         <label class="field full"><span>Açıklama</span><textarea class="textarea" rows="3" data-agenda-draft="body">${esc(d.body)}</textarea></label>
       </div>
-      <div class="field-row">
+      <div class="field-row" style="display: flex; gap: 8px;">
         <button class="btn primary" data-action="submit-agenda-item">${icon("send")} ${state.agendaEditId ? "Güncelle" : "Yayınla"}</button>
+        <button class="btn ghost" data-action="generate-agenda-ai" style="display: inline-flex; align-items: center; gap: 6px;">${icon("bot")} AI Gündem Öner</button>
         ${state.agendaEditId ? `<button class="btn ghost" data-action="cancel-agenda-edit">${icon("x")} Vazgeç</button>` : ""}
       </div>
     </article>
@@ -6427,24 +6645,51 @@ function filteredAgendaItems() {
 }
 
 function renderStudioPage() {
-  const studios = filteredStudios();
+  state.studioTab = state.studioTab || "products";
+  const tab = state.studioTab;
+  const studiosCount = state.studios.length;
+  const productsCount = state.ideas.length;
+  const teamsCount = state.teams.length;
+
   return `
-    <div class="view-stack studio-page-v2">
-      <section class="studio-hero">
-        <div class="studio-hero-left"><span class="panel-kicker">Stüdyo</span><h2>Çalışma alanları ayrı, ekipler ayrı.</h2><p>Stüdyolar kategori bazlı ürünleşme alanlarıdır; ekipler ayrı bölümden yönetilir.</p></div>
-        <div class="studio-hero-right">
-          <div class="studio-stat"><strong>${state.studios.length}</strong><span>Stüdyo</span></div>
-          <div class="studio-stat accent"><strong>${Math.round(state.studios.reduce((s, x) => s + x.popularity, 0) / state.studios.length)}</strong><span>Ortalama popülerlik</span></div>
-          <button class="btn primary studio-cta" data-page="teams">${icon("users-round")} Ekipleri Gör</button>
+    <div class="view-stack studio-hub-page">
+      <section class="studio-hero" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div class="studio-hero-left" style="flex: 1; min-width: 280px;">
+          <span class="panel-kicker" style="color: var(--primary); font-weight: 700;">İştirak İnovasyon Stüdyoları</span>
+          <h2 style="font-size: 24px; font-weight: 700; color: var(--ink); margin: 6px 0 8px 0; font-family: 'Space Grotesk', sans-serif;">Fikirlerin Ürünleştiği Merkez</h2>
+          <p style="color: var(--ink-soft); font-size: 13.5px; margin: 0; line-height: 1.5;">İştiraklerimizin fikir geliştirdiği, çapraz fonksiyonlu ekipler kurduğu ve prototipleri kuluçkaya aldığı inovasyon ekosistemi.</p>
+        </div>
+        <div class="studio-hero-right" style="display: flex; gap: 16px; align-items: center;">
+          <div class="studio-stat" style="text-align: center; background: var(--bg-soft); padding: 12px 18px; border-radius: 12px; min-width: 90px;">
+            <strong style="display: block; font-size: 20px; color: var(--ink);">${productsCount}</strong>
+            <span style="font-size: 11px; color: var(--muted);">Aktif Ürün</span>
+          </div>
+          <div class="studio-stat" style="text-align: center; background: var(--bg-soft); padding: 12px 18px; border-radius: 12px; min-width: 90px;">
+            <strong style="display: block; font-size: 20px; color: var(--ink);">${studiosCount}</strong>
+            <span style="font-size: 11px; color: var(--muted);">Stüdyo</span>
+          </div>
+          <div class="studio-stat" style="text-align: center; background: var(--bg-soft); padding: 12px 18px; border-radius: 12px; min-width: 90px;">
+            <strong style="display: block; font-size: 20px; color: var(--ink);">${teamsCount}</strong>
+            <span style="font-size: 11px; color: var(--muted);">Ekip</span>
+          </div>
         </div>
       </section>
-      <section class="challenge-filterbar">
-        <label class="search-box">${icon("search")}<input class="input" data-studio-filter="search" value="${esc(state.filters.studioSearch || "")}" placeholder="Stüdyo ara..." /></label>
-        <select class="select" data-studio-filter="category">${["Tümü", ...Array.from(new Set(state.studios.map(s => s.category)))].map(v => `<option value="${esc(v)}" ${state.filters.studioCategory === v ? "selected" : ""}>Kategori: ${esc(v)}</option>`).join("")}</select>
-        <select class="select" data-studio-filter="status">${["Tümü", "Aktif", "Kuruluyor"].map(v => `<option value="${esc(v)}" ${state.filters.studioStatus === v ? "selected" : ""}>Durum: ${esc(v)}</option>`).join("")}</select>
-        <select class="select" data-studio-filter="sort">${["Popülerlik", "Tarih", "Ad"].map(v => `<option value="${esc(v)}" ${state.filters.studioSort === v ? "selected" : ""}>Sırala: ${esc(v)}</option>`).join("")}</select>
-      </section>
-      <section class="studio-card-grid">${studios.map(renderStudioCard).join("")}</section>
+
+      <div class="segmented studio-main-switcher" style="width: 100%; margin: 16px 0; display: flex; background: var(--bg-soft); border-radius: 12px; padding: 4px; border: 1px solid var(--line-soft);">
+        <button class="btn ${tab === 'products' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="products" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'products' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'products' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'products' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
+          ${icon("package-check")} Ürünler
+        </button>
+        <button class="btn ${tab === 'studios' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="studios" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'studios' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'studios' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'studios' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
+          ${icon("layers")} Kuluçka Stüdyoları
+        </button>
+        <button class="btn ${tab === 'teams' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="teams" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'teams' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'teams' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'teams' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
+          ${icon("users-round")} Proje Ekipleri
+        </button>
+      </div>
+
+      <div class="studio-tab-content">
+        ${tab === "products" ? renderUnifiedProductsTab() : tab === "studios" ? renderUnifiedStudiosTab() : renderUnifiedTeamsTab()}
+      </div>
     </div>
   `;
 }
@@ -6473,8 +6718,79 @@ function renderStudioCard(studio) {
       <p>${esc(studio.description)}</p>
       <div class="challenge-chip-row"><span>${esc(studio.category)}</span><span>${studio.linkedIdeas.length} fikir</span><span>${studio.linkedTeams.length} ekip</span></div>
       <div class="product-progress-track"><div class="product-progress-fill" style="width:${studio.popularity}%;"></div></div>
-      <div class="challenge-footer"><small>${esc(studio.createdAt)}</small><button class="btn ghost slim-btn" data-page="teams">${icon("arrow-right")} Ekipler</button></div>
+      <div class="challenge-footer"><small>${esc(studio.createdAt)}</small><button class="btn ghost slim-btn" data-action="set-studio-main-tab" data-tab="teams">${icon("arrow-right")} Ekipler</button></div>
     </article>
+  `;
+}
+
+function renderUnifiedProductsTab() {
+  const ideas = filteredAdvancedProducts();
+  const userCanManage = currentUser().isManager || currentUser().isAdmin;
+  return `
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <section class="challenge-filterbar" style="margin-bottom: 0;">
+        <label class="search-box">${icon("search")}<input class="input" data-product-filter="search" value="${esc(state.filters.productSearch || "")}" placeholder="Ürün ara..." /></label>
+        <select class="select" data-product-filter="stage">${["Tümü", "Geliştiriliyor", "Kuruluyor", "Fikir Aşaması"].map(v => `<option value="${esc(v)}" ${state.filters.productStage === v ? "selected" : ""}>Seviye: ${esc(v)}</option>`).join("")}</select>
+        <select class="select" data-product-filter="category">${["Tümü", ...Array.from(new Set(state.ideas.map(i => i.marketCategory || "Fikir")))].map(v => `<option value="${esc(v)}" ${state.filters.productCategory === v ? "selected" : ""}>Kategori: ${esc(v)}</option>`).join("")}</select>
+      </section>
+      <section class="enhanced-product-list">
+        ${ideas.map(idea => renderEnhancedProductRow(idea, userCanManage)).join("") || `
+          <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft);">
+            ${icon("package-open", "36")}
+            <p style="margin-top: 10px; font-size: 14px;">Eşleşen ürün bulunamadı.</p>
+          </div>
+        `}
+      </section>
+    </div>
+  `;
+}
+
+function renderUnifiedStudiosTab() {
+  const studios = filteredStudios();
+  return `
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <section class="challenge-filterbar" style="margin-bottom: 0;">
+        <label class="search-box">${icon("search")}<input class="input" data-studio-filter="search" value="${esc(state.filters.studioSearch || "")}" placeholder="Stüdyo ara..." /></label>
+        <select class="select" data-studio-filter="category">${["Tümü", ...Array.from(new Set(state.studios.map(s => s.category)))].map(v => `<option value="${esc(v)}" ${state.filters.studioCategory === v ? "selected" : ""}>Kategori: ${esc(v)}</option>`).join("")}</select>
+        <select class="select" data-studio-filter="status">${["Tümü", "Aktif", "Kuruluyor"].map(v => `<option value="${esc(v)}" ${state.filters.studioStatus === v ? "selected" : ""}>Durum: ${esc(v)}</option>`).join("")}</select>
+        <select class="select" data-studio-filter="sort">${["Popülerlik", "Tarih", "Ad"].map(v => `<option value="${esc(v)}" ${state.filters.studioSort === v ? "selected" : ""}>Sırala: ${esc(v)}</option>`).join("")}</select>
+      </section>
+      <section class="studio-card-grid">
+        ${studios.map(renderStudioCard).join("") || `
+          <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft);">
+            ${icon("layers", "36")}
+            <p style="margin-top: 10px; font-size: 14px;">Eşleşen stüdyo bulunamadı.</p>
+          </div>
+        `}
+      </section>
+    </div>
+  `;
+}
+
+function renderUnifiedTeamsTab() {
+  if (state.teamsView === "detail") return renderTeamDetail();
+  if (state.teamsView === "create") return renderCreateTeam();
+  const list = filteredTeams();
+  return `
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--ink); margin: 0;">Proje Geliştirme Ekipleri</h3>
+        <button class="btn primary slim-btn" data-action="start-create-team">${icon("plus")} Yeni Ekip Kur</button>
+      </div>
+      <section class="challenge-filterbar" style="margin-bottom: 0;">
+        <label class="search-box">${icon("search")}<input class="input" data-team-filter="search" value="${esc(state.filters.teamSearch || "")}" placeholder="Ekip ara..." /></label>
+        <select class="select" data-team-filter="area">${["Tümü", ...Array.from(new Set(state.teams.map(t => t.area)))].map(v => `<option value="${esc(v)}" ${state.filters.teamArea === v ? "selected" : ""}>Alan: ${esc(v)}</option>`).join("")}</select>
+        <select class="select" data-team-filter="status">${["Tümü", "active", "forming", "disbanded"].map(v => `<option value="${esc(v)}" ${state.filters.teamStatus === v ? "selected" : ""}>Durum: ${esc(teamStatusLabel(v))}</option>`).join("")}</select>
+      </section>
+      <section class="teams-grid">
+        ${list.map(team => renderTeamCard(team, isMyTeam(team))).join("") || `
+          <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft); grid-column: span 3;">
+            ${icon("users-round", "36")}
+            <p style="margin-top: 10px; font-size: 14px;">Eşleşen ekip bulunamadı.</p>
+          </div>
+        `}
+      </section>
+    </div>
   `;
 }
 
@@ -8715,6 +9031,20 @@ async function analyzeIdea() {
 let quickFlowPointer = null;
 
 document.addEventListener("click", event => {
+  const triggerGlobalSearch = event.target.closest("[data-trigger-global-search]");
+  if (triggerGlobalSearch) {
+    state.globalSearchQuery = " ";
+    render();
+    setTimeout(() => {
+      const topbarSearch = document.querySelector(".topbar [data-global-search]");
+      if (topbarSearch) {
+        topbarSearch.focus();
+        topbarSearch.select();
+      }
+    }, 80);
+    return;
+  }
+
   const pageButton = event.target.closest("[data-page]");
   if (pageButton) {
     const targetPage = pageButton.dataset.page;
@@ -8742,6 +9072,40 @@ document.addEventListener("click", event => {
   if (!actionButton) return;
 
   const action = actionButton.dataset.action;
+
+  if (action === "close-global-search") {
+    state.globalSearchQuery = "";
+    const inputs = document.querySelectorAll("[data-global-search]");
+    inputs.forEach(input => input.value = "");
+    render();
+    return;
+  }
+
+  if (action === "go-to-search-result") {
+    const type = actionButton.dataset.type;
+    const id = actionButton.dataset.id;
+    state.globalSearchQuery = "";
+    const inputs = document.querySelectorAll("[data-global-search]");
+    inputs.forEach(input => input.value = "");
+    
+    if (type === "idea") {
+      state.page = "detail";
+      state.selectedIdeaId = id;
+    } else if (type === "announcement") {
+      state.page = "announcements";
+    } else if (type === "dataset") {
+      state.page = "data";
+      state.dataActiveSection = "datasets";
+    } else if (type === "team") {
+      state.page = "studio";
+      state.studioTab = "teams";
+      state.selectedTeamId = id;
+      state.teamsView = "detail";
+    }
+    render();
+    resetScroll();
+    return;
+  }
 
   // Yeniden Yapılandırma ve Polaj Aksiyonları
   if (action === "apply-to-idea") {
@@ -9366,6 +9730,11 @@ document.addEventListener("click", event => {
     return;
   }
 
+  if (action === "set-studio-main-tab") {
+    state.studioTab = actionButton.dataset.tab;
+    render(); resetScroll(); return;
+  }
+
   if (action === "set-teams-tab") {
     state.teamsTab = actionButton.dataset.tab;
     render(); resetScroll(); return;
@@ -9948,6 +10317,38 @@ document.addEventListener("click", event => {
     return;
   }
 
+  if (action === "generate-agenda-ai") {
+    const randomTopic = [
+      {
+        title: "Borsa projelerinde sürdürülebilirlik rüzgarı",
+        body: "Son eklenen projeler arasında yeşil finansman, enerji verimliliği ve karbon nötrleme temaları öne çıkıyor. AI Denetçi puanları ortalama 85 barajını aştı.",
+        category: "AI Host",
+        tags: "sürdürülebilirlik, trend, ai-analiz"
+      },
+      {
+        title: "Yapay Zeka değerlendirmelerinde tüzük uyumluluğu artıyor",
+        body: "AI Değerlendirme skoru 70 altında kalan fikirlerin sayısı bu hafta %15 azaldı. Çalışanlarımızın tüzük kurallarına hakimiyeti ve fikir kalitesi yükseliyor.",
+        category: "AI Host",
+        tags: "tüzük, kalite, ai-denetçi"
+      },
+      {
+        title: "Platform içi oylama ve kredi sirkülasyonu rekor seviyede",
+        body: "NIE-06 ve NIE-01 projelerinin gördüğü yüksek ilgi, oylama kredilerinin iştirakler arası yayılım hızını %40 oranında artırdı.",
+        category: "AI Host",
+        tags: "piyasa, kredi, sirkülasyon"
+      }
+    ][Math.floor(Math.random() * 3)];
+    
+    state.agendaDraft.title = randomTopic.title;
+    state.agendaDraft.category = randomTopic.category;
+    state.agendaDraft.tags = randomTopic.tags;
+    state.agendaDraft.body = randomTopic.body;
+    state.agendaDraft.date = new Date().toISOString().slice(0, 10);
+    state.agendaDraft.isAiGenerated = true;
+    render();
+    return;
+  }
+
   if (action === "submit-agenda-item") {
     if (!currentUser().isManager && !currentUser().isAdmin) return;
     const draft = state.agendaDraft;
@@ -9968,7 +10369,8 @@ document.addEventListener("click", event => {
         .split(",")
         .map(tag => tag.trim())
         .filter(Boolean),
-      author: currentUser().name
+      author: draft.isAiGenerated ? "AI Host" : currentUser().name,
+      isAiGenerated: !!draft.isAiGenerated
     };
 
     if (state.agendaEditId) {
@@ -10360,6 +10762,29 @@ document.addEventListener("click", event => {
             alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 41 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!`);
           }, 100);
         }
+        // Auto-push AI agenda post for completion
+        if (!state.agendaItems) state.agendaItems = [];
+        state.agendaItems.unshift({
+          id: "ag-ai-" + Date.now(),
+          title: `AI Analizi: "${idea.title}" Başarıyla Hayata Geçirildi!`,
+          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 41 katı kadar oylama kredisi dağıtıldı.`,
+          category: "AI Host",
+          date: new Date().toISOString().slice(0, 10),
+          tags: ["ai-analizi", "ürünleşme", idea.marketTicker.toLowerCase()],
+          author: "AI Denetçi"
+        });
+      } else if (idea.status === "rejected") {
+        // Auto-push AI agenda post for rejection
+        if (!state.agendaItems) state.agendaItems = [];
+        state.agendaItems.unshift({
+          id: "ag-ai-" + Date.now(),
+          title: `AI Analizi: "${idea.title}" Reddedildi`,
+          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
+          category: "AI Host",
+          date: new Date().toISOString().slice(0, 10),
+          tags: ["ai-denetimi", "red", idea.marketTicker.toLowerCase()],
+          author: "AI Denetçi"
+        });
       }
       render();
     }
@@ -10382,6 +10807,16 @@ document.addEventListener("click", event => {
 });
 
 document.addEventListener("input", event => {
+  if (event.target.matches("[data-global-search]")) {
+    state.globalSearchQuery = event.target.value;
+    const inputs = document.querySelectorAll("[data-global-search]");
+    inputs.forEach(input => {
+      if (input !== event.target) input.value = event.target.value;
+    });
+    render();
+    return;
+  }
+
   if (event.target.matches("[data-market-filter='search']")) {
     state.marketSearch = event.target.value;
     render();
