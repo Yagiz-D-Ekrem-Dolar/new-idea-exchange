@@ -3748,6 +3748,18 @@ function renderDashboard() {
           </div>
         </article>
 
+        <article class="content-panel apple-panel">
+          <div class="section-title">
+            <div>
+              <h2>En Çok Beğenilen Projeler</h2>
+              <p>Topluluk tarafından en fazla desteklenen fikirler.</p>
+            </div>
+          </div>
+          <div class="apple-idea-list">
+            ${[...state.ideas].sort((a, b) => (b.likes || b.supporters || 0) - (a.likes || a.supporters || 0)).slice(0, 3).map(idea => simpleIdeaRow(idea)).join("")}
+          </div>
+        </article>
+
         <aside class="content-panel apple-panel">
           <div class="section-title">
             <div>
@@ -14203,6 +14215,9 @@ function renderProfileV2() {
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'pinned' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'pinned' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="pinned">
               Sabitli Fikirler (${(state.pinnedIdeaIds || []).length})
             </button>
+            <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'portfolio' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'portfolio' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="portfolio">
+              Portföyüm (${Object.values(state.marketHoldings || {}).filter(q => q > 0).length})
+            </button>
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'applications' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'applications' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="applications">
               Başvurularım (${state.ideas.filter(i => i.applications && i.applications.some(a => a.userId === user.id)).length})
             </button>
@@ -14355,7 +14370,31 @@ function renderProfileTabContent(user, tab) {
           </div>
           <span class="status-badge" style="font-size: 11px; background: rgba(var(--primary-rgb), 0.1); color: var(--primary); font-weight: 600; border: 1px solid rgba(var(--primary-rgb), 0.2);">Sabitli</span>
         </div>
+        </div>
       `).join("")}
+    </div>`;
+  }
+
+  if (tab === "portfolio") {
+    const holdings = Object.entries(state.marketHoldings || {}).filter(([, qty]) => qty > 0);
+    if (holdings.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz portföyünüzde hisse bulunmamaktadır.</p>`;
+    return `<div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+      ${holdings.map(([id, qty]) => {
+        const i = state.ideas.find(x => x.id === id);
+        if (!i) return "";
+        const val = (i.marketPrice || 100) * qty;
+        return `
+        <div style="background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" data-action="open-idea" data-id="${i.id}">
+          <div style="flex: 1; min-width: 0; margin-right: 12px;">
+            <h4 style="font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--ink);">${esc(i.title)}</h4>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(i.summary)}</p>
+          </div>
+          <div style="text-align: right; min-width: 80px;">
+            <div style="font-weight: 700; color: var(--ink);">${qty} Hisse</div>
+            <div style="font-size: 12px; color: var(--positive);">${formatCurrency(val)}</div>
+          </div>
+        </div>`;
+      }).join("")}
     </div>`;
   }
 
