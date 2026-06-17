@@ -2066,7 +2066,9 @@ const navItems = [
   { id: "announcements", label: "Duyurular", icon: "megaphone" },
   { id: "social", label: "Sosyal", icon: "globe" },
   { id: "challenges", label: "Yarışmalar", icon: "trophy" },
-  { id: "studio", label: "Stüdyo", icon: "layers" },
+  { id: "education", label: "Eğitim & Mentörlük", icon: "graduation-cap" },
+  { id: "events", label: "Etkinlikler", icon: "calendar" },
+  { id: "studio", label: "Girişim Stüdyosu", icon: "layers" },
   { id: "profile", label: "Profil", icon: "user-round" },
   { id: "messages", label: "Mesajlar", icon: "message-square-text" },
   { id: "managerDashboard", label: "Yönetici Dashboardu", icon: "chart-no-axes-combined", managerOnly: true },
@@ -2081,7 +2083,7 @@ const navItems = [
   { id: "settings", label: "Ayarlar", icon: "settings" }
 ];
 
-const cleanNavIds = ["dashboard", "quickFlow", "data", "agenda", "announcements", "social", "challenges", "studio", "teams", "products", "profile", "messages", "managerDashboard", "adminStorage", "manager", "analytics", "quickEval", "rules", "complaintBox", "aiAssistantMenu", "systemDetails", "settings"];
+const cleanNavIds = ["dashboard", "quickFlow", "data", "agenda", "announcements", "social", "challenges", "education", "events", "studio", "teams", "products", "profile", "messages", "managerDashboard", "adminStorage", "manager", "analytics", "quickEval", "rules", "complaintBox", "aiAssistantMenu", "systemDetails", "settings"];
 
 const wizardSteps = [
   "Temel Bilgi",
@@ -2236,7 +2238,11 @@ const state = {
   page: "quickFlow",
   previousPage: "quickFlow",
   selectedIdeaId: "idea-1",
-  ideas: structuredClone(initialIdeas),
+  ideas: structuredClone(initialIdeas).map((idea, idx) => {
+    const equities = [15, 20, 25, 30, 35, 40];
+    idea.openEquity = idea.openEquity || equities[idx % equities.length];
+    return idea;
+  }),
   ideaView: "cards",
   marketBudget: 10000,
   marketHoldings: {
@@ -2490,6 +2496,140 @@ const state = {
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: ["team-002"], linkedIdeas: ["idea-1"] },
     { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Moka, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
   ],
+  predictions: [
+    {
+      id: "pred-1",
+      userId: "u1",
+      userName: "Ayşe Yılmaz",
+      userAvatar: "https://randomuser.me/api/portraits/women/44.jpg",
+      ideaId: "idea-1",
+      ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi",
+      predictionText: "Bu projenin pilot mağazalarda bekleme süresini en az %20 azaltacağını tahmin ediyorum. Çünkü geçmiş veriler çok tutarlı.",
+      probability: 85,
+      date: "2026-06-16",
+      likes: 14,
+      comments: [
+        { userName: "Can Koç", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
+      ]
+    },
+    {
+      id: "pred-2",
+      userId: "u2",
+      userName: "Mehmet Demir",
+      userAvatar: "https://randomuser.me/api/portraits/men/32.jpg",
+      ideaId: "idea-3",
+      ideaTitle: "Müşteri şikayetlerinin otomatik sınıflandırılması",
+      predictionText: "Otomatik sınıflandırma sayesinde çağrı merkezinde yanlış departmana yönlendirilen şikayet oranı %15 azalacaktır.",
+      probability: 78,
+      date: "2026-06-15",
+      likes: 9,
+      comments: []
+    }
+  ],
+  educationItems: [
+    {
+      id: "edu-1",
+      title: "Sıfırdan İleri Seviyeye Yalın Girişim Metodolojisi",
+      category: "Girişimcilik Eğitimi",
+      description: "Girişim fikirlerinizi nasıl doğrularsınız, MVP (Minimum Uygulanabilir Ürün) nasıl kurgulanır ve müşteri görüşmeleri nasıl yürütülür sorularına pratik yanıtlar.",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      date: "Her Çarşamba, 14:00",
+      organizer: "İş New İnovasyon Ofisi"
+    },
+    {
+      id: "edu-2",
+      title: "FinTech Girişimleri için Hukuk ve Uyum Webinarı",
+      category: "Seminer",
+      description: "KVKK, BDDK lisanslama süreçleri, açık bankacılık regülasyonları ve ödeme kuruluşları mevzuatları hakkında bilgilendirici oturum.",
+      link: "https://zoom.us/j/demo-fintech",
+      date: "24 Haziran 2026, 11:00",
+      organizer: "Moka Hukuk & Uyum Departmanı"
+    },
+    {
+      id: "edu-3",
+      title: "B2B SaaS Girişimlerinde Fiyatlandırma ve Büyüme Stratejileri",
+      category: "Atölye",
+      description: "Kullanıcı başına lisanslama, kullanım tabanlı fiyatlandırma modelleri ve kurumsal SaaS satış kanallarını optimize etme üzerine atölye çalışması.",
+      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      date: "Kayıttan İzle (1.5 Saat)",
+      organizer: "İş-Net Bulut Bilişim Grubu"
+    }
+  ],
+  mentors: [
+    {
+      id: "mentor-1",
+      name: "Elif Şahin",
+      title: "FinTech & Ürün Yönetimi Müdürü (İş New)",
+      specialties: ["Ürün Yönetimi", "FinTech", "İş Modeli Geliştirme"],
+      bio: "12+ yıllık ürün yönetim deneyimi. Moka ve İşBank dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
+      avatar: "https://randomuser.me/api/portraits/women/22.jpg",
+      email: "elif.sahin@isbank.example"
+    },
+    {
+      id: "mentor-2",
+      name: "Emir Arslan",
+      title: "Yapay Zekâ Çözüm Mimarı (İşBank Teknoloji)",
+      specialties: ["Yapay Zekâ", "Makine Öğrenmesi", "Teknik Altyapı"],
+      bio: "Büyük dil modelleri (LLM), veri analitiği ve akıllı tahminleme altyapıları üzerine uzmanlaşmıştır. Fikirlerin teknik fizibilitesini değerlendirmede destek sağlar.",
+      avatar: "https://randomuser.me/api/portraits/men/41.jpg",
+      email: "emir.arslan@isbank.example"
+    },
+    {
+      id: "mentor-3",
+      name: "Zeynep Kaya",
+      title: "Sürdürülebilirlik & ESG Koordinatörü (TSKB)",
+      specialties: ["Yeşil Finans", "ESG Uyum", "Karbon Takip"],
+      bio: "Girişimlerin yeşil finansman imkanlarına erişimi, ESG raporlama standartları ve karbon nötrleme projelerinin kurgulanması konularında mentörlük sunuyor.",
+      avatar: "https://randomuser.me/api/portraits/women/51.jpg",
+      email: "zeynep.kaya@isbank.example"
+    }
+  ],
+  mentorApplications: [],
+  events: [
+    {
+      id: "event-1",
+      title: "Kurumsal Girişimcilik Demo Günü 2026",
+      topic: "Proje Sunumları",
+      date: "28 Haziran 2026, 14:00 - 17:00",
+      description: "İştirak stüdyolarında kuluçkaya alınan en iyi 5 projenin üst yönetim ve jüri karşısında sunum yapacağı, demo ve soru-cevap oturumlarının düzenleneceği büyük final.",
+      link: "https://zoom.us/j/demo-day-2026",
+      organizer: "İş New İnovasyon Ofisi"
+    },
+    {
+      id: "event-2",
+      title: "FinTech & Yapay Zekâ Fikir Maratonu (Hackathon)",
+      topic: "Yarışmalar",
+      date: "10-12 Temmuz 2026",
+      description: "TİBAŞ Holding iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
+      link: "https://fikirkovani.com/hackathon-kayit",
+      organizer: "İşBank Teknoloji"
+    },
+    {
+      id: "event-3",
+      title: "Yeşil Enerji Proje Eşleşme Buluşması",
+      topic: "Toplantı & Buluşmalar",
+      date: "02 Temmuz 2026, 15:30",
+      description: "Sürdürülebilirlik alanında fikri olan çalışanlar ile bu fikirlere katkı sağlamak isteyen yazılımcı, tasarımcı ve iş geliştiricileri bir araya getiren sinerji toplantısı.",
+      link: "https://teams.microsoft.com/l/meetup-green",
+      organizer: "Yeşil Finans Stüdyosu"
+    }
+  ],
+  educationActiveTab: "programs",
+  mentorApplyModalId: null,
+  educationDraft: {
+    title: "",
+    description: "",
+    category: "Girişimcilik Eğitimi",
+    link: "",
+    date: ""
+  },
+  eventDraft: {
+    title: "",
+    topic: "Seminerler",
+    date: "",
+    description: "",
+    link: ""
+  },
   
   // Initial Datasets (Veriler)
   dataSets: [
@@ -3150,34 +3290,62 @@ function renderGlobalSearchPanel() {
   
   const q = state.globalSearchQuery.trim().toLocaleLowerCase("tr-TR");
   
-  // 1. Projects (Ideas)
-  const matchingIdeas = (state.ideas || []).filter(idea => 
-    idea.title.toLocaleLowerCase("tr-TR").includes(q) ||
-    idea.summary.toLocaleLowerCase("tr-TR").includes(q) ||
-    (idea.marketTicker && idea.marketTicker.toLocaleLowerCase("tr-TR").includes(q))
+  // 1. Projeler (Ideas with status other than "done" and in "Fikir Aşaması")
+  const matchingProjects = (state.ideas || []).filter(idea => 
+    productStage(idea) === "Fikir Aşaması" && (
+      idea.title.toLocaleLowerCase("tr-TR").includes(q) ||
+      idea.summary.toLocaleLowerCase("tr-TR").includes(q) ||
+      (idea.marketTicker && idea.marketTicker.toLocaleLowerCase("tr-TR").includes(q))
+    )
+  ).slice(0, 3);
+
+  // 2. Ürünler (Ideas that have active development teams)
+  const matchingProducts = (state.ideas || []).filter(idea => 
+    productStage(idea) !== "Fikir Aşaması" && (
+      idea.title.toLocaleLowerCase("tr-TR").includes(q) ||
+      idea.summary.toLocaleLowerCase("tr-TR").includes(q) ||
+      (idea.marketTicker && idea.marketTicker.toLocaleLowerCase("tr-TR").includes(q))
+    )
   ).slice(0, 3);
   
-  // 2. Announcements
-  const matchingAnnouncements = (state.announcements || []).filter(ann => 
-    ann.title.toLocaleLowerCase("tr-TR").includes(q) ||
-    ann.body.toLocaleLowerCase("tr-TR").includes(q)
-  ).slice(0, 3);
-  
-  // 3. DataSets
-  const matchingDataSets = (state.dataSets || []).filter(ds => 
-    ds.title.toLocaleLowerCase("tr-TR").includes(q) ||
-    ds.summary.toLocaleLowerCase("tr-TR").includes(q) ||
-    ds.area.toLocaleLowerCase("tr-TR").includes(q)
-  ).slice(0, 3);
-  
-  // 4. Teams (Integrated into studio!)
+  // 3. Ekipler (Girişim Takımları)
   const matchingTeams = (state.teams || []).filter(team => 
     team.name.toLocaleLowerCase("tr-TR").includes(q) ||
     team.description.toLocaleLowerCase("tr-TR").includes(q) ||
     team.area.toLocaleLowerCase("tr-TR").includes(q)
   ).slice(0, 3);
 
-  const totalResults = matchingIdeas.length + matchingAnnouncements.length + matchingDataSets.length + matchingTeams.length;
+  // 4. Gündem
+  const matchingAgenda = (state.agendaItems || []).filter(item => 
+    item.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    item.body.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 3);
+
+  // 5. Tahminler
+  const matchingPredictions = (state.predictions || []).filter(pred => 
+    pred.predictionText.toLocaleLowerCase("tr-TR").includes(q) ||
+    pred.ideaTitle.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 3);
+
+  // 6. Etkinlikler
+  const matchingEvents = (state.events || []).filter(ev => 
+    ev.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    ev.description.toLocaleLowerCase("tr-TR").includes(q) ||
+    ev.topic.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 3);
+
+  // 7. Duyurular & Veri Setleri (Diğer)
+  const matchingAnnouncements = (state.announcements || []).filter(ann => 
+    ann.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    ann.body.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 2);
+  
+  const matchingDataSets = (state.dataSets || []).filter(ds => 
+    ds.title.toLocaleLowerCase("tr-TR").includes(q) ||
+    ds.summary.toLocaleLowerCase("tr-TR").includes(q)
+  ).slice(0, 2);
+
+  const totalResults = matchingProjects.length + matchingProducts.length + matchingTeams.length + matchingAgenda.length + matchingPredictions.length + matchingEvents.length + matchingAnnouncements.length + matchingDataSets.length;
 
   if (totalResults === 0) {
     return `
@@ -3191,16 +3359,16 @@ function renderGlobalSearchPanel() {
   }
 
   return `
-    <div class="global-search-panel" style="margin-top: 10px; margin-right: 28px;">
+    <div class="global-search-panel" style="margin-top: 10px; margin-right: 28px; max-height: 480px; overflow-y: auto;">
       <div class="global-search-head">
         <span>${icon("search")} Arama Sonuçları: <strong>${totalResults} eşleşme</strong></span>
         <button class="btn ghost slim-btn" data-action="close-global-search" style="font-size: 11px; padding: 4px 8px;">${icon("x")} Kapat</button>
       </div>
       
-      ${matchingIdeas.length ? `
+      ${matchingProjects.length ? `
         <div class="global-search-group">
-          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Borsa Projeleri</span>
-          ${matchingIdeas.map(idea => `
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Projeler & Fikirler</span>
+          ${matchingProjects.map(idea => `
             <button class="global-search-result" data-action="go-to-search-result" data-type="idea" data-id="${esc(idea.id)}">
               <i>${icon("chart-candlestick")}</i>
               <div>
@@ -3213,33 +3381,17 @@ function renderGlobalSearchPanel() {
         </div>
       ` : ""}
 
-      ${matchingAnnouncements.length ? `
+      ${matchingProducts.length ? `
         <div class="global-search-group">
-          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Duyurular</span>
-          ${matchingAnnouncements.map(ann => `
-            <button class="global-search-result" data-action="go-to-search-result" data-type="announcement" data-id="${esc(ann.id)}">
-              <i>${icon("megaphone")}</i>
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Ürünleşen Girişimler</span>
+          ${matchingProducts.map(idea => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="product" data-id="${esc(idea.id)}">
+              <i>${icon("package-check")}</i>
               <div>
-                <strong>${esc(ann.title)}</strong>
-                <small>${esc(ann.body)}</small>
+                <strong>${esc(idea.title)}</strong>
+                <small>${esc(idea.summary)}</small>
               </div>
-              <em>Duyuru</em>
-            </button>
-          `).join("")}
-        </div>
-      ` : ""}
-
-      ${matchingDataSets.length ? `
-        <div class="global-search-group">
-          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Veri Setleri</span>
-          ${matchingDataSets.map(ds => `
-            <button class="global-search-result" data-action="go-to-search-result" data-type="dataset" data-id="${esc(ds.id)}">
-              <i>${icon("database")}</i>
-              <div>
-                <strong>${esc(ds.title)}</strong>
-                <small>${esc(ds.summary)}</small>
-              </div>
-              <em>${esc(ds.area)}</em>
+              <em>${esc(idea.marketTicker || "NIE")}</em>
             </button>
           `).join("")}
         </div>
@@ -3247,7 +3399,7 @@ function renderGlobalSearchPanel() {
 
       ${matchingTeams.length ? `
         <div class="global-search-group">
-          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Proje Ekipleri</span>
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Girişim Takımları</span>
           ${matchingTeams.map(team => `
             <button class="global-search-result" data-action="go-to-search-result" data-type="team" data-id="${esc(team.id)}">
               <i>${icon("users-round")}</i>
@@ -3260,8 +3412,83 @@ function renderGlobalSearchPanel() {
           `).join("")}
         </div>
       ` : ""}
+
+      ${matchingAgenda.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Gündem ve Duyurular</span>
+          ${matchingAgenda.map(item => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="agenda" data-id="${esc(item.id)}">
+              <i>${icon("newspaper")}</i>
+              <div>
+                <strong>${esc(item.title)}</strong>
+                <small>${esc(item.body)}</small>
+              </div>
+              <em>${esc(item.category)}</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+
+      ${matchingPredictions.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Tahmin ve Öngörüler</span>
+          ${matchingPredictions.map(pred => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="prediction" data-id="${esc(pred.id)}">
+              <i>${icon("trending-up")}</i>
+              <div>
+                <strong>${esc(pred.ideaTitle)}</strong>
+                <small>${esc(pred.predictionText)}</small>
+              </div>
+              <em>%${pred.probability} İhtimal</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+
+      ${matchingEvents.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Seminer ve Etkinlikler</span>
+          ${matchingEvents.map(ev => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="event" data-id="${esc(ev.id)}">
+              <i>${icon("calendar")}</i>
+              <div>
+                <strong>${esc(ev.title)}</strong>
+                <small>${esc(ev.description)}</small>
+              </div>
+              <em>${esc(ev.topic)}</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+
+      ${matchingAnnouncements.length || matchingDataSets.length ? `
+        <div class="global-search-group">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Diğer İçerikler</span>
+          ${matchingAnnouncements.map(ann => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="announcement" data-id="${esc(ann.id)}">
+              <i>${icon("megaphone")}</i>
+              <div>
+                <strong>${esc(ann.title)}</strong>
+                <small>${esc(ann.body)}</small>
+              </div>
+              <em>Duyuru</em>
+            </button>
+          `).join("")}
+          ${matchingDataSets.map(ds => `
+            <button class="global-search-result" data-action="go-to-search-result" data-type="dataset" data-id="${esc(ds.id)}">
+              <i>${icon("database")}</i>
+              <div>
+                <strong>${esc(ds.title)}</strong>
+                <small>${esc(ds.summary)}</small>
+              </div>
+              <em>Veri Seti</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
     </div>
   `;
+}
 }
 
 function renderShell() {
@@ -3335,13 +3562,13 @@ function renderShell() {
 function renderMobileNav(nav) {
   const ids = ["dashboard", "quickFlow", "agenda", "studio", "profile"];
   const mobileLabels = {
-    dashboard: "Panel",
+    dashboard: "Genel",
     announcements: "Duyuru",
     challenges: "Yarışma",
     messages: "Mesaj",
     data: "Veri&Bilgi",
     agenda: "Gündem",
-    studio: "Stüdyo",
+    studio: "Girişim Stüdyosu",
     social: "Sosyal",
     quickFlow: "Borsa",
     profile: "Profil"
@@ -3431,6 +3658,10 @@ function renderPage() {
       return renderRulesPage();
     case "complaintBox":
       return renderComplaintBoxPage();
+    case "education":
+      return renderEducationPage();
+    case "events":
+      return renderEventsPage();
     default:
       return renderQuickFlow();
   }
@@ -3452,15 +3683,15 @@ function renderDashboard() {
     <div class="view-stack apple-page">
       <section class="apple-hero" style="position: relative; overflow: hidden; padding-bottom: 30px;">
         <div class="apple-hero-copy">
-          <span class="panel-kicker">Veri&Bilgi Alanı</span>
-          <h2>Kurum içi veri, duyuru ve piyasa sinyali.</h2>
+          <span class="panel-kicker">Genel Bilgi Alanı</span>
+          <h2>Kurumsal İnovasyon ve Gelişmeler</h2>
           <p>Öneri, araştırma, proje ve duyuruları tek bilgi katmanında izle; revaçta olan başlıkları Borsa hareketiyle gör.</p>
           
           <!-- Prominent Global Search Motor -->
           <div class="hero-global-search-container" style="margin-top: 20px; width: 100%; max-width: 540px;">
-            <label class="search-box" style="background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); border-radius: 99px; display: flex; align-items: center; padding: 10px 18px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer;" data-trigger-global-search>
+            <label class="search-box" style="background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); border-radius: 99px; display: flex; align-items: center; padding: 10px 18px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
               ${icon("search", "style='color: #ffffff; opacity: 0.9; margin-right: 8px;'")}
-              <input class="input" placeholder="Platform genelinde ara (Proje, Duyuru, Veri, Üye...)" readonly style="background: transparent; border: none; color: #ffffff; outline: none; width: 100%; font-size: 14.5px; cursor: pointer;" />
+              <input class="input" placeholder="Platform genelinde ara (Proje, Ürün, Ekip, Gündem, Tahmin...)" data-global-search style="background: transparent; border: none; color: #ffffff; outline: none; width: 100%; font-size: 14.5px;" value="${esc(state.globalSearchQuery || '')}" />
             </label>
           </div>
         </div>
@@ -3696,9 +3927,9 @@ function renderQuickFlow() {
           
           <!-- Prominent Global Search Motor -->
           <div class="hero-global-search-container" style="margin-top: 14px; width: 100%; max-width: 460px;">
-            <label class="search-box" style="background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: 99px; display: flex; align-items: center; padding: 8px 16px; width: 100%; cursor: pointer;" data-trigger-global-search>
+            <label class="search-box" style="background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: 99px; display: flex; align-items: center; padding: 8px 16px; width: 100%;">
               ${icon("search", "style='color: var(--muted); margin-right: 8px;'")}
-              <input class="input" placeholder="Platform genelinde ara (Proje, Duyuru, Veri, Üye...)" readonly style="background: transparent; border: none; color: var(--ink); outline: none; width: 100%; font-size: 13.5px; cursor: pointer;" />
+              <input class="input" placeholder="Platform genelinde ara (Proje, Ürün, Ekip, Gündem, Tahmin...)" data-global-search style="background: transparent; border: none; color: var(--ink); outline: none; width: 100%; font-size: 13.5px;" value="${esc(state.globalSearchQuery || '')}" />
             </label>
           </div>
         </div>
@@ -3715,12 +3946,13 @@ function renderQuickFlow() {
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
       <section class="info-banner" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 16px; margin: 16px 0 8px 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; line-height: 1.5;">
         <div style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--primary);">
-          ${icon("info")} Önemli Değerlendirme & Hayata Geçirilme Kuralları
+          ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası
         </div>
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
-          <li><strong>Hayata Geçirilme Ödülü (41 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>41 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
+          <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
+          <li><strong>Girişimci-Yatırımcı Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u yatırımcıları arasında paylaştırılacaktır.</li>
         </ul>
       </section>
 
@@ -3759,7 +3991,7 @@ function renderQuickFlow() {
             </select>
 
             <select class="select" data-market-filter="sort" aria-label="Sıralama">
-              ${optionList(["En yeni", "En önemli", "En çok etkileşim alan", "En çok yorumlanan", "Fiyat"], state.marketSort)}
+              ${optionList(["En yeni", "En Pahalılar", "En Yüksek AI Skoru", "En İyi Tahmin Edilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
             </select>
 
             <button class="btn ghost slim-btn" data-action="clear-borsa-filters" style="padding: 6px 12px; font-size: 13px;">
@@ -4798,11 +5030,12 @@ function renderTradingExchange() {
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
       <section class="info-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px 16px; margin: 10px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.4;">
         <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--primary);">
-          ${icon("info")} Değerlendirme & Hayata Geçirilme Kuralları:
+          ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası:
         </div>
         <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
           <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
-          <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın 41 katı oylama kredisi (ödül) aktarılır.</span>
+          <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın <strong>10 katı</strong> oylama kredisi (ödül) aktarılır.</span>
+          <span>• Fikir hayata geçirildiğinde, girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırılır.</span>
         </div>
       </section>
 
@@ -5627,7 +5860,12 @@ function renderApplicationPage() {
           <span class="borsa-league-badge" style="font-size: 11px; font-weight: 600; text-transform: uppercase; background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 20px;">
             ${esc(idea.marketCategory || "Fikir")}
           </span>
-          <span style="font-size: 12.5px; color: var(--muted);">${esc(idea.createdAt)}</span>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="font-size: 12px; background: rgba(16, 185, 129, 0.1); color: var(--emerald); padding: 4px 8px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+              ${icon("percent", "12")} Açık Hisse Oranı: %${idea.openEquity || 0}
+            </span>
+            <span style="font-size: 12.5px; color: var(--muted);">${esc(idea.createdAt)}</span>
+          </div>
         </div>
         <h3 style="font-size: 17px; font-weight: 600; color: var(--ink); margin: 0;">${esc(idea.title)}</h3>
         <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin: 0;">${esc(idea.summary)}</p>
@@ -5689,8 +5927,19 @@ function renderApplicationPage() {
           </label>
 
           <label class="field full" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px;">
-            <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Projeye Nasıl Katkı Sağlayacaksınız? (Yetenek ve Tecrübeleriniz)</span>
+            <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Deneyimleriniz & Teknik Yetkinlikleriniz</span>
+            <textarea class="textarea" id="app-experience" rows="3" placeholder="Daha önce çalıştığınız benzer projeleri veya teknik becerilerinizi (yazılım dilleri, araçlar vb.) kısaca yazın..." style="padding: 10px; font-size: 14px;"></textarea>
+          </label>
+
+          <label class="field full" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Projeye Nasıl Katkı Sağlayacaksınız?</span>
             <textarea class="textarea" id="app-contribution" rows="3" placeholder="Hangi teknik yetkinlikler veya iş deneyimiyle projeyi ileri taşıyacaksınız?" style="padding: 10px; font-size: 14px;"></textarea>
+          </label>
+
+          <label class="field" style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Talep Edilen Ortaklık Hissesi (%)</span>
+            <input type="number" class="input" id="app-requested-equity" min="1" max="${idea.openEquity || 100}" value="5" style="padding: 10px; font-size: 14px;" />
+            <small style="color: var(--muted); font-size: 11px;">Maksimum %${idea.openEquity || 0} talep edebilirsiniz.</small>
           </label>
         </div>
 
@@ -5798,10 +6047,12 @@ function renderIdeaDetail() {
                       
                       <div style="font-size: 13px; color: var(--ink-soft); line-height: 1.4; background: var(--surface); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line-soft);">
                         <div><strong>Katılım Motivasyonu:</strong> ${esc(app.motivation)}</div>
+                        <div style="margin-top: 6px;"><strong>Deneyim & Yetkinlikler:</strong> ${esc(app.experience || "Belirtilmemiş")}</div>
                         <div style="margin-top: 6px;"><strong>Katkı Sunabileceği Alanlar:</strong> ${esc(app.contribution)}</div>
                         <div style="margin-top: 6px; display: flex; gap: 16px; font-size: 11.5px; color: var(--muted); flex-wrap: wrap;">
                           <span>${icon("clock", "12")} ${esc(app.timeCommitment)} / Hafta</span>
                           <span>${icon("wallet", "12")} ${esc(app.budgetRequest)}</span>
+                          <span>${icon("percent", "12")} Talep Edilen Hisse: %${esc(app.requestedEquity || "0")}</span>
                           <span>Tarih: ${esc(app.date)}</span>
                         </div>
                       </div>
@@ -6573,7 +6824,7 @@ function renderAdminStorage() {
 function renderAgendaPage() {
   const userCanEdit = currentUser().isManager || currentUser().isAdmin;
   const list = filteredAgendaItems();
-  const categories = ["Tümü", ...Array.from(new Set(state.agendaItems.map(item => item.category)))];
+  const categories = ["Tümü", "Strateji", "Operasyon", "AI Host", "Ürün", "Etkinlik", "Risk", "Diğer"];
   const tags = ["Tümü", ...Array.from(new Set(state.agendaItems.flatMap(item => item.tags || [])))];
   return `
     <div class="view-stack agenda-page">
@@ -6589,6 +6840,7 @@ function renderAgendaPage() {
         <select class="select" data-agenda-filter="category">${categories.map(item => `<option value="${esc(item)}" ${state.filters.agendaCategory === item ? "selected" : ""}>Kategori: ${esc(item)}</option>`).join("")}</select>
         <select class="select" data-agenda-filter="tag">${tags.map(item => `<option value="${esc(item)}" ${state.filters.agendaTag === item ? "selected" : ""}>Etiket: ${esc(item)}</option>`).join("")}</select>
         <button class="btn ghost slim-btn" data-action="clear-agenda-filters">${icon("rotate-ccw")} Temizle</button>
+        ${userCanEdit ? `<button class="btn primary slim-btn" data-action="ai-auto-post-agenda" style="background: linear-gradient(135deg, #a855f7, #6366f1); border: none; color: #fff; display: flex; align-items: center; gap: 6px; font-weight: 600; margin-left: auto;">${icon("bot")} AI Gündem Paylaş</button>` : ""}
       </section>
       ${userCanEdit ? renderAgendaComposer() : ""}
       <section class="agenda-list">
@@ -6655,9 +6907,9 @@ function renderStudioPage() {
     <div class="view-stack studio-hub-page">
       <section class="studio-hero" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
         <div class="studio-hero-left" style="flex: 1; min-width: 280px;">
-          <span class="panel-kicker" style="color: var(--primary); font-weight: 700;">İştirak İnovasyon Stüdyoları</span>
-          <h2 style="font-size: 24px; font-weight: 700; color: var(--ink); margin: 6px 0 8px 0; font-family: 'Space Grotesk', sans-serif;">Fikirlerin Ürünleştiği Merkez</h2>
-          <p style="color: var(--ink-soft); font-size: 13.5px; margin: 0; line-height: 1.5;">İştiraklerimizin fikir geliştirdiği, çapraz fonksiyonlu ekipler kurduğu ve prototipleri kuluçkaya aldığı inovasyon ekosistemi.</p>
+          <span class="panel-kicker" style="color: var(--primary); font-weight: 700;">Kurumsal Girişim Stüdyoları</span>
+          <h2 style="font-size: 24px; font-weight: 700; color: var(--ink); margin: 6px 0 8px 0; font-family: 'Space Grotesk', sans-serif;">Fikirlerin Girişime ve Ürüne Dönüştüğü Merkez</h2>
+          <p style="color: var(--ink-soft); font-size: 13.5px; margin: 0; line-height: 1.5;">İştiraklerimizin iş modellerini olgunlaştırdığı, nitelikli sinerji takımları kurduğu ve yenilikçi çözümleri ölçeklediği kurumsal girişimcilik ekosistemi.</p>
         </div>
         <div class="studio-hero-right" style="display: flex; gap: 16px; align-items: center;">
           <div class="studio-stat" style="text-align: center; background: var(--bg-soft); padding: 12px 18px; border-radius: 12px; min-width: 90px;">
@@ -6680,10 +6932,10 @@ function renderStudioPage() {
           ${icon("package-check")} Ürünler
         </button>
         <button class="btn ${tab === 'studios' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="studios" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'studios' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'studios' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'studios' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("layers")} Kuluçka Stüdyoları
+          ${icon("layers")} Girişim Stüdyoları
         </button>
         <button class="btn ${tab === 'teams' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="teams" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'teams' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'teams' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'teams' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("users-round")} Proje Ekipleri
+          ${icon("users-round")} Sinerji & Girişim Takımları
         </button>
       </div>
 
@@ -6712,13 +6964,48 @@ function filteredStudios() {
 
 function renderStudioCard(studio) {
   return `
-    <article class="studio-card-v2">
-      <div class="studio-card-top"><span class="challenge-prize-icon">${icon("layers")}</span><span class="status-badge ${studio.status === "Aktif" ? "new" : "review"}">${esc(studio.status)}</span></div>
-      <h3>${esc(studio.name)}</h3>
-      <p>${esc(studio.description)}</p>
-      <div class="challenge-chip-row"><span>${esc(studio.category)}</span><span>${studio.linkedIdeas.length} fikir</span><span>${studio.linkedTeams.length} ekip</span></div>
-      <div class="product-progress-track"><div class="product-progress-fill" style="width:${studio.popularity}%;"></div></div>
-      <div class="challenge-footer"><small>${esc(studio.createdAt)}</small><button class="btn ghost slim-btn" data-action="set-studio-main-tab" data-tab="teams">${icon("arrow-right")} Ekipler</button></div>
+    <article class="studio-card-v2" style="display:flex; flex-direction:column; justify-content:space-between; height: 100%;">
+      <div>
+        <div class="studio-card-top">
+          <span class="challenge-prize-icon">${icon("layers")}</span>
+          <span class="status-badge ${studio.status === "Aktif" ? "new" : "review"}">${esc(studio.status)}</span>
+        </div>
+        <h3 style="margin-top: 10px;">${esc(studio.name)}</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:6px 0 12px 0;">${esc(studio.description)}</p>
+        <div class="challenge-chip-row" style="margin-bottom:12px;">
+          <span>${esc(studio.category)}</span>
+          <span>${studio.linkedIdeas.length} Fikir</span>
+          <span>${studio.linkedTeams.length} Ekip</span>
+        </div>
+        
+        <!-- Entegre Ürün Listesi ve Yönetimi -->
+        <div class="studio-linked-products" style="margin-top: 12px; border-top: 1px dashed var(--line-soft); padding-top: 8px; margin-bottom: 12px;">
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 6px; color: var(--primary); font-weight:700; display:block;">Bağlı Ürünler & Durum</span>
+          ${studio.linkedIdeas.map(ideaId => {
+            const idea = state.ideas.find(i => i.id === ideaId);
+            if (!idea) return "";
+            const stage = productStage(idea);
+            const progress = productProgress(idea);
+            return `
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 6px; padding: 6px 8px; background: var(--bg-soft); border-radius: 8px; border: 1px solid var(--line-soft);">
+                <div style="min-width:0; flex:1; margin-right:8px;">
+                  <strong style="color: var(--ink); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size: 12.5px;" title="${esc(idea.title)}">${esc(idea.title)}</strong>
+                  <span style="font-size:10px; color:var(--muted);">${progress}% tamamlandı</span>
+                </div>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                  <span class="product-stage-badge" style="--stage-color:${productStageColor(stage)}; font-size: 9px; padding: 2px 5px; border-radius: 4px;">${esc(stage)}</span>
+                  <button class="btn ghost slim-btn" style="padding: 2px 4px; font-size: 10px;" data-action="open-idea" data-id="${esc(idea.id)}" title="Ürün Detayları">${icon("external-link", "style='width:11px;height:11px;'")}</button>
+                </div>
+              </div>
+            `;
+          }).join("") || `<span style="font-size: 11px; color: var(--muted); display:block; text-align:center; padding: 6px;">Bağlı ürün bulunamadı.</span>`}
+        </div>
+      </div>
+      
+      <div class="challenge-footer" style="margin-top: auto; border-top: 1px solid var(--line-soft); padding-top: 12px; display:flex; justify-content:space-between; align-items:center;">
+        <small>${esc(studio.createdAt)}</small>
+        <button class="btn ghost slim-btn" data-action="set-studio-main-tab" data-tab="teams" style="font-weight:600;">${icon("arrow-right")} Ekipler</button>
+      </div>
     </article>
   `;
 }
@@ -6830,7 +7117,7 @@ function renderAdvancedProductsPage() {
   return `
     <div class="view-stack products-page">
       <section class="products-hero">
-        <div class="products-hero-text"><span class="panel-kicker">Geliştirilmiş Ürünler</span><h2>Ürünleşen fikirler.</h2><p>Durum, oy sayısı, kategori ve geliştirme seviyesi ayrı listelenir.</p></div>
+        <div class="products-hero-text"><span class="panel-kicker">Ürünler</span><h2>Ürünleşen fikirler.</h2><p>Durum, oy sayısı, kategori ve geliştirme seviyesi ayrı listelenir.</p></div>
         <div class="products-hero-stats"><div class="product-stat-pill"><strong>${ideas.length}</strong><span>ürün</span></div><div class="product-stat-pill green"><strong>${ideas.filter(i => productStage(i) === "Geliştiriliyor").length}</strong><span>geliştiriliyor</span></div></div>
       </section>
       <section class="challenge-filterbar">
@@ -6854,6 +7141,318 @@ function filteredAdvancedProducts() {
       && (state.filters.productStage === "Tümü" || stage === state.filters.productStage)
       && (state.filters.productCategory === "Tümü" || (idea.marketCategory || "Fikir") === state.filters.productCategory);
   }).slice(0, 18);
+}
+
+function renderEducationPage() {
+  const user = currentUser();
+  const isManager = user.isManager || user.isAdmin;
+  state.educationActiveTab = state.educationActiveTab || "programs";
+  
+  const trainings = state.educationItems || [];
+  const mentorsList = state.mentors || [];
+
+  return `
+    <div class="view-stack education-page" style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+      <section class="apple-page-head" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">Gelişim & Sinerji</span>
+          <h2>Eğitim & Mentörlük Akademisi</h2>
+          <p>Girişimcilik eğitimleri, uzman webinarları ve kurum içi mentörlük eşleştirme platformu.</p>
+        </div>
+        ${(isManager && state.educationActiveTab === "programs") ? `
+          <button class="btn primary" data-action="toggle-education-composer" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
+            ${icon("plus")} Yeni Program Ekle
+          </button>
+        ` : ""}
+      </section>
+
+      <div class="segmented" style="width: 100%; max-width: 400px; margin-bottom: 8px;">
+        <button class="btn ${state.educationActiveTab === 'programs' ? 'active' : ''}" data-action="set-education-tab" data-tab="programs" style="font-size: 13.5px; font-weight: 600; flex: 1;">
+          ${icon("graduation-cap")} Eğitimler & Programlar
+        </button>
+        <button class="btn ${state.educationActiveTab === 'mentors' ? 'active' : ''}" data-action="set-education-tab" data-tab="mentors" style="font-size: 13.5px; font-weight: 600; flex: 1;">
+          ${icon("users-round")} Mentörlük Alanı
+        </button>
+      </div>
+
+      ${(isManager && state.educationComposerOpen && state.educationActiveTab === "programs") ? `
+        <article class="manager-panel" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow-soft);">
+          <div style="border-bottom: 1px solid var(--line-soft); padding-bottom: 10px;">
+            <strong style="font-size: 15px; color: var(--ink);">Yeni Eğitim Programı Tanımla</strong>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+            <label class="field">
+              <span>Program Başlığı</span>
+              <input class="input" id="edu-composer-title" placeholder="Örn: Yalın Girişim Metodolojisi" />
+            </label>
+            <label class="field">
+              <span>Kategori</span>
+              <select class="select" id="edu-composer-category">
+                <option value="Girişimcilik Eğitimi">Girişimcilik Eğitimi</option>
+                <option value="Seminer">Seminer</option>
+                <option value="Atölye">Atölye</option>
+                <option value="Diğer">Diğer</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Tarih & Zaman</span>
+              <input class="input" id="edu-composer-date" placeholder="Örn: 24 Haziran 2026, 14:00 veya Kayıttan İzle" />
+            </label>
+            <label class="field">
+              <span>Düzenleyen Birim</span>
+              <input class="input" id="edu-composer-organizer" placeholder="Örn: Moka İnovasyon Ekibi" />
+            </label>
+            <label class="field full" style="grid-column: 1 / -1;">
+              <span>Katılım veya Yayın Linki (Zoom, YouTube vb.)</span>
+              <input class="input" id="edu-composer-link" placeholder="https://zoom.us/j/... veya YouTube video linki" />
+            </label>
+            <label class="field full" style="grid-column: 1 / -1;">
+              <span>Program Detayı / Açıklama</span>
+              <textarea class="textarea" id="edu-composer-desc" rows="3" placeholder="Eğitimin içeriği, kimler katılmalı, neler öğrenilecek..."></textarea>
+            </label>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 14px;">
+            <button class="btn ghost" data-action="toggle-education-composer">Vazgeç</button>
+            <button class="btn primary" data-action="submit-education-item" style="font-weight: 600;">Eğitimi Yayınla</button>
+          </div>
+        </article>
+      ` : ""}
+
+      ${state.educationActiveTab === "programs" ? `
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${trainings.map(item => `
+            <article style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; transition: box-shadow 0.2s;">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span class="borsa-league-badge" style="font-size: 11px; font-weight: 600; text-transform: uppercase; background: rgba(var(--primary-rgb), 0.08); color: var(--primary); padding: 4px 8px; border-radius: 20px;">
+                    ${esc(item.category)}
+                  </span>
+                  <span style="font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 4px;">
+                    ${icon("calendar", "14")} ${esc(item.date)}
+                  </span>
+                </div>
+                <h3 style="font-size: 16.5px; font-weight: 600; color: var(--ink); margin: 4px 0 0 0;">${esc(item.title)}</h3>
+                <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin: 0;">${esc(item.description)}</p>
+                <span style="font-size: 12.5px; color: var(--muted); font-weight: 500; margin-top: 2px;">
+                  <strong>Düzenleyen:</strong> ${esc(item.organizer)}
+                </span>
+              </div>
+              <div>
+                <a href="${esc(item.link)}" target="_blank" class="btn primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: 8px;">
+                  ${item.link.includes("youtube.com") || item.link.includes("youtu.be") ? icon("play-circle") : icon("external-link")}
+                  <span>${item.link.includes("youtube.com") || item.link.includes("youtu.be") ? "Kayıttan İzle" : "Katıl / İzle"}</span>
+                </a>
+              </div>
+            </article>
+          `).join("") || `
+            <div style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 40px; text-align: center; color: var(--muted);">
+              ${icon("graduation-cap", "32")}
+              <p style="margin-top: 10px;">Henüz aktif eğitim programı bulunmuyor.</p>
+            </div>
+          `}
+        </div>
+      ` : `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
+          ${mentorsList.map(mentor => `
+            <article style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; position: relative; transition: transform 0.2s, box-shadow 0.2s;">
+              <div style="display: flex; gap: 12px; align-items: center;">
+                ${avatar(mentor.name, "large", mentor.avatar || "")}
+                <div style="line-height: 1.3;">
+                  <h3 style="font-size: 15px; font-weight: 700; color: var(--ink); margin: 0;">${esc(mentor.name)}</h3>
+                  <span style="font-size: 12px; color: var(--muted); display: block;">${esc(mentor.title)}</span>
+                </div>
+              </div>
+              
+              <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; flex: 1;">${esc(mentor.bio)}</p>
+              
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                ${mentor.specialties.map(spec => `
+                  <span style="font-size: 11px; background: rgba(var(--primary-rgb), 0.05); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 500;">
+                    ${esc(spec)}
+                  </span>
+                `).join("")}
+              </div>
+              
+              <div style="border-top: 1px solid var(--line-soft); padding-top: 12px; display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                <span style="font-size: 11px; color: var(--muted);">${esc(mentor.email)}</span>
+                <button class="btn primary btn-sm" data-action="open-mentor-request-modal" data-mentor-id="${esc(mentor.id)}" style="font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 6px;">
+                  Danışma Talebi
+                </button>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      `}
+
+      ${state.mentorApplyModalId ? renderMentorApplyModal() : ""}
+    </div>
+  `;
+}
+
+function renderMentorApplyModal() {
+  const mentorId = state.mentorApplyModalId;
+  const mentor = state.mentors.find(m => m.id === mentorId);
+  const myIdeas = state.ideas.filter(idea => idea.authorId === state.currentUserId);
+  
+  return `
+    <div class="dialog-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px);">
+      <article class="dialog-content" style="background: var(--surface); border-radius: 16px; max-width: 500px; width: 90%; padding: 24px; display: flex; flex-direction: column; gap: 18px; box-shadow: var(--shadow-strong); border: 1px solid var(--line-soft);">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line-soft); padding-bottom: 12px;">
+          <h3 style="margin: 0; font-size: 16.5px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 8px;">
+            ${icon("users-round")} Mentör Görüşme Talebi
+          </h3>
+          <button class="btn ghost btn-sm" data-action="close-mentor-modal" style="padding: 4px;">${icon("x")}</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; background: var(--bg-soft); padding: 10px; border-radius: 10px; border: 1px solid var(--line-soft);">
+          ${avatar(mentor?.name || '', "medium", mentor?.avatar || "")}
+          <div style="line-height: 1.3;">
+            <strong style="font-size: 13.5px; color: var(--ink); display: block;">${esc(mentor?.name || '')}</strong>
+            <small style="font-size: 11.5px; color: var(--muted);">${esc(mentor?.title || '')}</small>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <label class="field" style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Görüşmek İstediğiniz Proje</span>
+            <select class="select" id="mentor-app-idea" style="padding: 8px; font-size: 13.5px; border-radius: 8px; width: 100%;">
+              <option value="">Projesiz / Genel Fikir Danışma</option>
+              ${myIdeas.map(idea => `<option value="${esc(idea.id)}">${esc(idea.title)}</option>`).join("")}
+            </select>
+          </label>
+
+          <label class="field" style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Danışmak İstediğiniz Konu ve Mesajınız</span>
+            <textarea class="textarea" id="mentor-app-message" rows="4" placeholder="Hangi konuda rehberliğe ihtiyaç duyduğunuzu ve mentöre iletmek istediğiniz detayları buraya yazın..." style="padding: 10px; font-size: 13.5px; border-radius: 8px; resize: none;"></textarea>
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 14px;">
+          <button class="btn ghost" data-action="close-mentor-modal">İptal</button>
+          <button class="btn primary" data-action="submit-mentor-application" data-mentor-id="${esc(mentorId)}" style="font-weight: 600; padding: 10px 20px;">
+            Talep Gönder
+          </button>
+        </div>
+      </article>
+    </div>
+  `;
+}
+
+function renderEventsPage() {
+  const user = currentUser();
+  const isManager = user.isManager || user.isAdmin;
+  const events = state.events || [];
+
+  return `
+    <div class="view-stack events-page" style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+      <section class="apple-page-head" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">Etkinlik Takvimi</span>
+          <h2>Kurumsal İnovasyon Etkinlikleri</h2>
+          <p>Hackathonlar, Demo Günü sunumları, sinerji buluşmaları ve uzman paylaşım seminerleri.</p>
+        </div>
+        <button class="btn primary" data-action="toggle-event-composer" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
+          ${icon("plus")} Etkinlik Öner / Ekle
+        </button>
+      </section>
+
+      ${state.eventComposerOpen ? `
+        <article class="manager-panel" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow-soft);">
+          <div style="border-bottom: 1px solid var(--line-soft); padding-bottom: 10px;">
+            <strong style="font-size: 15px; color: var(--ink);">Yeni Etkinlik Kaydı</strong>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+            <label class="field">
+              <span>Etkinlik Başlığı</span>
+              <input class="input" id="evt-title" placeholder="Örn: FinTech Hackathon 2026" />
+            </label>
+            <label class="field">
+              <span>Kategori</span>
+              <select class="select" id="evt-topic">
+                <option value="Seminerler">Seminerler</option>
+                <option value="Hackathon & Maraton">Hackathon & Maraton</option>
+                <option value="Sunum & Demo Günü">Sunum & Demo Günü</option>
+                <option value="Toplantı & Buluşmalar">Toplantı & Buluşmalar</option>
+                <option value="Diğer">Diğer</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Tarih & Saat</span>
+              <input class="input" id="evt-date" placeholder="Örn: 12 Temmuz 2026, 10:00" />
+            </label>
+            <label class="field">
+              <span>Düzenleyen / Organizatör</span>
+              <input class="input" id="evt-organizer" placeholder="Örn: İşBank Teknoloji" />
+            </label>
+            <label class="field full" style="grid-column: 1 / -1;">
+              <span>Katılım veya Yayın Linki (Zoom, Teams, Kayıt formu vb.)</span>
+              <input class="input" id="evt-link" placeholder="https://zoom.us/j/... veya web kayıt linki" />
+            </label>
+            <label class="field full" style="grid-column: 1 / -1;">
+              <span>Etkinlik Detayları / Açıklama</span>
+              <textarea class="textarea" id="evt-desc" rows="3" placeholder="Etkinliğin amacı, katılım koşulları, verilecek ödüller vb..."></textarea>
+            </label>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 14px;">
+            <button class="btn ghost" data-action="toggle-event-composer">Vazgeç</button>
+            <button class="btn primary" data-action="submit-event-item" style="font-weight: 600;">Etkinliği Ekle</button>
+          </div>
+        </article>
+      ` : ""}
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 20px;">
+        ${events.map(event => {
+          let topicColor = 'var(--primary)';
+          let topicBg = 'rgba(59, 130, 246, 0.08)';
+          if (event.topic.includes("Hackathon") || event.topic.includes("Maraton")) {
+            topicColor = 'var(--rose)';
+            topicBg = 'rgba(244, 63, 94, 0.08)';
+          } else if (event.topic.includes("Demo") || event.topic.includes("Sunum")) {
+            topicColor = 'var(--amber)';
+            topicBg = 'rgba(245, 158, 11, 0.08)';
+          } else if (event.topic.includes("Buluşma") || event.topic.includes("Toplantı")) {
+            topicColor = 'var(--emerald)';
+            topicBg = 'rgba(16, 185, 129, 0.08)';
+          }
+          
+          return `
+            <article style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px; position: relative; transition: transform 0.2s, box-shadow 0.2s;">
+              <div style="display: flex; justify-content: space-between; align-items: start; gap: 8px;">
+                <span class="borsa-league-badge" style="font-size: 11px; font-weight: 600; text-transform: uppercase; background: ${topicBg}; color: ${topicColor}; padding: 4px 8px; border-radius: 20px;">
+                  ${esc(event.topic)}
+                </span>
+                <span style="font-size: 11.5px; color: var(--muted); font-weight: 500;">
+                  Org: ${esc(event.organizer)}
+                </span>
+              </div>
+              
+              <div style="flex: 1; min-height: 80px;">
+                <h3 style="font-size: 15.5px; font-weight: 700; color: var(--ink); margin: 4px 0 6px 0; line-height: 1.3;">${esc(event.title)}</h3>
+                <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 0;">${esc(event.description)}</p>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line-soft); padding-top: 10px; margin-top: 4px;">
+                ${icon("calendar", "14")}
+                <span><strong>Zaman:</strong> ${esc(event.date)}</span>
+              </div>
+              
+              <div style="margin-top: 4px;">
+                <a href="${esc(event.link)}" target="_blank" class="btn primary btn-sm" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 12.5px; padding: 8px; width: 100%; border-radius: 6px;">
+                  ${icon("external-link", "14")}
+                  <span>Katılım Linki</span>
+                </a>
+              </div>
+            </article>
+          `;
+        }).join("") || `
+          <div style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 40px; text-align: center; color: var(--muted); grid-column: 1 / -1;">
+            ${icon("calendar", "32")}
+            <p style="margin-top: 10px;">Henüz aktif etkinlik planlanmamış.</p>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
 }
 
 function renderEnhancedProductRow(idea, userCanManage) {
@@ -7056,8 +7655,13 @@ function renderTeamCard(team, isMine) {
       </div>
 
       ${linkedIdea ? `
-        <div class="team-linked-idea">
-          ${icon("link-2")} <span>Borsada: <strong>${esc(linkedIdea.marketTicker || linkedIdea.title.slice(0,30))}</strong></span>
+        <div class="team-linked-idea" style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="display: flex; align-items: center; gap: 4px;">
+            ${icon("link-2")} Borsada: <strong>${esc(linkedIdea.marketTicker || linkedIdea.title.slice(0,20))}</strong>
+          </span>
+          <span style="font-size: 11px; background: rgba(16, 185, 129, 0.1); color: var(--emerald); padding: 2px 6px; border-radius: 4px; font-weight: 600;">
+            Açık Hisse: %${linkedIdea.openEquity || 0}
+          </span>
         </div>
       ` : ""}
     </article>
@@ -7117,8 +7721,13 @@ function renderTeamDetail() {
 
           ${linkedIdea ? `
             <div class="team-linked-idea-card">
-              <div class="team-panel-head" style="margin-bottom:8px;">
-                ${icon("trending-up")} <strong>Borsa Bağlantısı</strong>
+              <div class="team-panel-head" style="margin-bottom:8px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="display: flex; align-items: center; gap: 6px;">
+                  ${icon("trending-up")} <strong>Borsa Bağlantısı</strong>
+                </span>
+                <span style="font-size: 11px; background: rgba(16, 185, 129, 0.1); color: var(--emerald); padding: 2px 6px; border-radius: 4px; font-weight: 600;">
+                  Açık Hisse: %${linkedIdea.openEquity || 0}
+                </span>
               </div>
               <button class="btn ghost" data-action="open-idea" data-id="${esc(linkedIdea.id)}" style="width:100%;text-align:left;padding:10px;border-radius:10px;">
                 <strong style="font-size:13px;display:block;">${esc(linkedIdea.marketTicker)}</strong>
@@ -9091,6 +9700,10 @@ document.addEventListener("click", event => {
     if (type === "idea") {
       state.page = "detail";
       state.selectedIdeaId = id;
+    } else if (type === "product") {
+      state.page = "studio";
+      state.studioTab = "products";
+      state.filters.productSearch = state.ideas.find(i => i.id === id)?.title || "";
     } else if (type === "announcement") {
       state.page = "announcements";
     } else if (type === "dataset") {
@@ -9101,6 +9714,13 @@ document.addEventListener("click", event => {
       state.studioTab = "teams";
       state.selectedTeamId = id;
       state.teamsView = "detail";
+    } else if (type === "agenda") {
+      state.page = "agenda";
+    } else if (type === "prediction") {
+      state.page = "social";
+      state.socialActiveTab = "tahminler";
+    } else if (type === "event") {
+      state.page = "events";
     }
     render();
     resetScroll();
@@ -9169,9 +9789,16 @@ document.addEventListener("click", event => {
     const budgetRequestVal = document.getElementById("app-budget")?.value || "";
     const motivationVal = document.getElementById("app-motivation")?.value || "";
     const contributionVal = document.getElementById("app-contribution")?.value || "";
+    const experienceVal = document.getElementById("app-experience")?.value || "";
+    const requestedEquityVal = parseInt(document.getElementById("app-requested-equity")?.value || "0");
 
-    if (!motivationVal.trim() || !contributionVal.trim()) {
-      alert("Lütfen katılım motivasyonunuzu ve katkı sunacağınız alanları belirtin.");
+    if (!motivationVal.trim() || !contributionVal.trim() || !experienceVal.trim()) {
+      alert("Lütfen motivasyonunuzu, katkı sunacağınız alanları ve teknik deneyimlerinizi belirtin.");
+      return;
+    }
+
+    if (requestedEquityVal <= 0 || requestedEquityVal > (idea.openEquity || 100)) {
+      alert(`Lütfen 1 ile ${idea.openEquity || 100} arasında geçerli bir ortaklık hissesi talep edin.`);
       return;
     }
 
@@ -9184,6 +9811,8 @@ document.addEventListener("click", event => {
       userPhoto: user.photo || profilePhotos[user.id] || "https://randomuser.me/api/portraits/men/75.jpg",
       motivation: motivationVal,
       contribution: contributionVal,
+      experience: experienceVal,
+      requestedEquity: requestedEquityVal,
       role: roleVal,
       timeCommitment: timeCommitmentVal,
       body: motivationVal, // support older bindings if any
@@ -9222,6 +9851,267 @@ document.addEventListener("click", event => {
     state.page = "detail";
     render();
     resetScroll();
+    return;
+  }
+
+  // ==========================================
+  // PREDICTION SYSTEM ACTIONS
+  // ==========================================
+  if (action === "submit-prediction") {
+    const ideaId = document.getElementById("prediction-idea-id")?.value;
+    const probability = parseInt(document.getElementById("prediction-probability")?.value || "50");
+    const text = document.getElementById("prediction-text")?.value.trim();
+    
+    if (!ideaId) {
+      alert("Lütfen bir proje seçin.");
+      return;
+    }
+    if (!text) {
+      alert("Lütfen tahmin gerekçenizi yazın.");
+      return;
+    }
+    
+    const idea = state.ideas.find(i => i.id === ideaId);
+    const me = currentUser();
+    state.predictions = state.predictions || [];
+    state.predictions.unshift({
+      id: `pred-${Date.now()}`,
+      userId: me.id,
+      userName: me.name,
+      userAvatar: me.photo || "https://randomuser.me/api/portraits/men/32.jpg",
+      ideaId: ideaId,
+      ideaTitle: idea ? idea.title : "Bilinmeyen Proje",
+      predictionText: text,
+      probability: probability,
+      date: new Date().toISOString().slice(0, 10),
+      likes: 0,
+      comments: []
+    });
+    
+    rewardMarketBudget(250, "Fikir tahmin paylaşım ödülü");
+    render();
+    return;
+  }
+
+  if (action === "support-prediction") {
+    const predId = actionButton.dataset.id;
+    state.likedPredictions = state.likedPredictions || [];
+    const predIndex = state.likedPredictions.indexOf(predId);
+    const pred = (state.predictions || []).find(p => p.id === predId);
+    if (pred) {
+      if (predIndex > -1) {
+        state.likedPredictions.splice(predIndex, 1);
+        pred.likes = Math.max(0, (pred.likes || 0) - 1);
+      } else {
+        state.likedPredictions.push(predId);
+        pred.likes = (pred.likes || 0) + 1;
+      }
+      render();
+    }
+    return;
+  }
+
+  if (action === "toggle-prediction-comments") {
+    const predId = actionButton.dataset.id;
+    state.predictionCommentsExpanded = state.predictionCommentsExpanded || {};
+    state.predictionCommentsExpanded[predId] = !state.predictionCommentsExpanded[predId];
+    render();
+    return;
+  }
+
+  if (action === "add-prediction-comment") {
+    const predId = actionButton.dataset.id;
+    const input = document.getElementById(`prediction-comment-input-${predId}`);
+    const bodyText = input?.value?.trim();
+    if (!bodyText) {
+      alert("Lütfen yorum yazın.");
+      return;
+    }
+    const pred = (state.predictions || []).find(p => p.id === predId);
+    if (pred) {
+      const me = currentUser();
+      pred.comments = pred.comments || [];
+      pred.comments.push({
+        userName: me.name,
+        body: bodyText,
+        date: new Date().toISOString().slice(0, 10)
+      });
+      if (input) input.value = "";
+      render();
+    }
+    return;
+  }
+
+  // ==========================================
+  // EDUCATION & MENTORSHIP ACTIONS
+  // ==========================================
+  if (action === "set-education-tab") {
+    state.educationActiveTab = actionButton.dataset.tab;
+    render();
+    return;
+  }
+
+  if (action === "toggle-education-composer") {
+    state.educationComposerOpen = !state.educationComposerOpen;
+    render();
+    return;
+  }
+
+  if (action === "submit-education-item") {
+    const title = document.getElementById("edu-composer-title")?.value.trim();
+    const category = document.getElementById("edu-composer-category")?.value;
+    const date = document.getElementById("edu-composer-date")?.value.trim();
+    const organizer = document.getElementById("edu-composer-organizer")?.value.trim() || "İnovasyon Ofisi";
+    const desc = document.getElementById("edu-composer-desc")?.value.trim();
+    const link = document.getElementById("edu-composer-link")?.value.trim() || "#";
+    
+    if (!title || !desc || !date) {
+      alert("Lütfen başlık, tarih ve açıklama alanlarını doldurun.");
+      return;
+    }
+    
+    state.educationItems = state.educationItems || [];
+    state.educationItems.unshift({
+      id: `edu-${Date.now()}`,
+      title,
+      category,
+      date,
+      organizer,
+      description: desc,
+      link
+    });
+    
+    state.educationComposerOpen = false;
+    alert("Yeni eğitim programı başarıyla eklendi.");
+    render();
+    return;
+  }
+
+  if (action === "open-mentor-request-modal") {
+    state.mentorApplyModalId = actionButton.dataset.mentorId;
+    render();
+    return;
+  }
+
+  if (action === "close-mentor-modal") {
+    state.mentorApplyModalId = null;
+    render();
+    return;
+  }
+
+  if (action === "submit-mentor-application") {
+    const mentorId = actionButton.dataset.mentorId;
+    const ideaId = document.getElementById("mentor-app-idea")?.value;
+    const message = document.getElementById("mentor-app-message")?.value.trim();
+    
+    if (!message) {
+      alert("Lütfen mentörünüze iletmek istediğiniz mesajı yazın.");
+      return;
+    }
+    
+    const mentor = state.mentors.find(m => m.id === mentorId);
+    state.mentorApplications = state.mentorApplications || [];
+    state.mentorApplications.push({
+      id: `ma-${Date.now()}`,
+      mentorId,
+      mentorName: mentor ? mentor.name : "Mentör",
+      ideaId,
+      message,
+      status: "pending",
+      date: new Date().toISOString().slice(0, 10)
+    });
+    
+    state.notifications.unshift({
+      id: `n-${Date.now()}`,
+      type: "Mentörlük",
+      title: "Mentörlük Talebi Gönderildi",
+      body: `${mentor ? mentor.name : 'Mentör'} isimli mentöre danışma talebiniz başarıyla iletildi.`,
+      unread: true
+    });
+    
+    state.mentorApplyModalId = null;
+    alert("Mentörlük talebiniz başarıyla gönderildi! Mentörünüz en kısa sürede sizinle iletişime geçecektir.");
+    render();
+    return;
+  }
+
+  // ==========================================
+  // EVENTS ACTIONS
+  // ==========================================
+  if (action === "toggle-event-composer") {
+    state.eventComposerOpen = !state.eventComposerOpen;
+    render();
+    return;
+  }
+
+  if (action === "submit-event-item") {
+    const title = document.getElementById("evt-title")?.value.trim();
+    const topic = document.getElementById("evt-topic")?.value;
+    const date = document.getElementById("evt-date")?.value.trim();
+    const desc = document.getElementById("evt-desc")?.value.trim();
+    const link = document.getElementById("evt-link")?.value.trim() || "#";
+    const organizer = document.getElementById("evt-organizer")?.value.trim() || currentUser().name;
+    
+    if (!title || !date || !desc) {
+      alert("Lütfen başlık, tarih ve açıklama alanlarını doldurun.");
+      return;
+    }
+    
+    state.events = state.events || [];
+    state.events.unshift({
+      id: `event-${Date.now()}`,
+      title,
+      topic,
+      date,
+      description: desc,
+      link,
+      organizer
+    });
+    
+    state.eventComposerOpen = false;
+    alert("Yeni etkinlik başarıyla eklendi.");
+    render();
+    return;
+  }
+
+  if (action === "ai-auto-post-agenda") {
+    const aiAgendaItems = [
+      {
+        title: "AI & NLP Tabanlı Mevzuat Analizi Yayında",
+        body: "Hukuk ve Uyum Ofisi'nin desteğiyle geliştirilen yeni NLP motoru, platforma eklenen projeleri KVKK ve BDDK düzenlemelerine göre otomatik taramaya başladı. Uyum oranı %98 olan projeler doğrudan borsa listelenmesine aktarılıyor.",
+        category: "AI Host",
+        tags: ["Mevzuat", "NLP", "Otomasyon"]
+      },
+      {
+        title: "Yeşil Enerji Projeleri Yatırım Trendleri",
+        body: "Girişim stüdyolarımızda kuluçkalanan Yeşil Enerji ve Karbon Takip projelerine olan bireysel yatırım hacmi son iki haftada %40 arttı. ESG raporlama standartlarına uyum sağlayan girişimler öncelikli destek alıyor.",
+        category: "Strateji",
+        tags: ["YeşilFinans", "ESG", "Yatırım"]
+      },
+      {
+        title: "Borsa Simülasyonu Hacim Rekoru Kırdı",
+        body: "İş NEW platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
+        category: "Operasyon",
+        tags: ["Borsa", "Hacim", "Hype"]
+      }
+    ];
+    
+    const selected = aiAgendaItems[Math.floor(Math.random() * aiAgendaItems.length)];
+    
+    state.agendaItems = state.agendaItems || [];
+    state.agendaItems.unshift({
+      id: `agenda-${Date.now()}`,
+      title: selected.title,
+      body: selected.body,
+      category: selected.category,
+      date: new Date().toISOString().slice(0, 10),
+      author: "AI İnovasyon Analisti",
+      tags: selected.tags,
+      isAiGenerated: true
+    });
+    
+    alert("Yapay Zeka tarafından analiz edilen yeni gündem maddesi otomatik olarak paylaşıldı!");
+    render();
     return;
   }
 
@@ -10755,11 +11645,11 @@ document.addEventListener("click", event => {
         idea.communityScore = Math.min(100, idea.communityScore + 4);
         const investedAmount = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
         if (investedAmount > 0) {
-          const reward = investedAmount * 41;
+          const reward = investedAmount * 10;
           state.marketBudget += reward;
           state.marketInvestedAmount[idea.id] = 0;
           setTimeout(() => {
-            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 41 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!`);
+            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 10 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!\n\nYatırım Politikası Gereği: Girişimci ödülünün %10'u da yatırımcılar arasında paylaştırılmıştır.`);
           }, 100);
         }
         // Auto-push AI agenda post for completion
@@ -10767,7 +11657,7 @@ document.addEventListener("click", event => {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Başarıyla Hayata Geçirildi!`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 41 katı kadar oylama kredisi dağıtıldı.`,
+          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-analizi", "ürünleşme", idea.marketTicker.toLowerCase()],
@@ -11694,6 +12584,16 @@ function renderQuickEval() {
 // PORTAL V2 IMPLEMENTATION & HELPER FUNCTIONS
 // ==========================================
 
+function getIdeaPredictionProbability(ideaId) {
+  const preds = (state.predictions || []).filter(p => p.ideaId === ideaId);
+  if (preds.length > 0) {
+    const sum = preds.reduce((acc, curr) => acc + (curr.probability || 50), 0);
+    return sum / preds.length;
+  }
+  const idea = state.ideas.find(i => i.id === ideaId);
+  return idea ? idea.aiScore || 50 : 50;
+}
+
 function filteredBorsaIdeas() {
   let list = [...state.ideas];
   
@@ -11744,8 +12644,16 @@ function filteredBorsaIdeas() {
     list.sort((a, b) => (b.supporters || 0) - (a.supporters || 0));
   } else if (sortType === "En çok yorumlanan") {
     list.sort((a, b) => ((b.comments || []).length) - ((a.comments || []).length));
-  } else if (sortType === "Fiyat") {
+  } else if (sortType === "En Pahalılar" || sortType === "Fiyat") {
     list.sort((a, b) => marketPrice(b) - marketPrice(a));
+  } else if (sortType === "En Yüksek AI Skoru") {
+    list.sort((a, b) => (b.aiScore || 0) - (a.aiScore || 0));
+  } else if (sortType === "En İyi Tahmin Edilenler") {
+    list.sort((a, b) => {
+      const probB = getIdeaPredictionProbability(b.id);
+      const probA = getIdeaPredictionProbability(a.id);
+      return probB - probA;
+    });
   }
 
   return list;
@@ -11779,6 +12687,9 @@ function renderBorsaCard(idea) {
         <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
           <span style="font-size: 12px; background: rgba(var(--primary-rgb), 0.05); color: var(--ink-soft); padding: 3px 8px; border-radius: 6px;">
             ${icon("tag", "12")} ${esc(idea.area || "Diğer")}
+          </span>
+          <span style="font-size: 12px; background: rgba(16, 185, 129, 0.08); color: var(--emerald); padding: 3px 8px; border-radius: 6px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
+            ${icon("percent", "12")} Açık Hisse: %${idea.openEquity || 0}
           </span>
           ${(idea.tags || []).slice(0, 2).map(tag => `
             <span style="font-size: 11px; background: var(--bg); color: var(--muted); padding: 3px 8px; border-radius: 6px;">#${esc(tag)}</span>
@@ -12589,12 +13500,16 @@ function renderSocial() {
           <button class="btn ${state.socialActiveTab === 'all' ? 'active' : ''}" data-action="set-social-tab" data-tab="all" style="font-size: 13px; font-weight: 600;">
             ${icon("globe")} Tümü
           </button>
+          <button class="btn ${state.socialActiveTab === 'tahminler' ? 'active' : ''}" data-action="set-social-tab" data-tab="tahminler" style="font-size: 13px; font-weight: 600;">
+            ${icon("trending-up")} Tahminler
+          </button>
           <button class="btn ${state.socialActiveTab === 'leaderboard' ? 'active' : ''}" data-action="set-social-tab" data-tab="leaderboard" style="font-size: 13px; font-weight: 600;">
             ${icon("trophy")} Lider Tablosu
           </button>
         </div>
 
-        ${state.socialActiveTab === "leaderboard" ? renderSocialLeaderboard() : `
+        ${state.socialActiveTab === "leaderboard" ? renderSocialLeaderboard() : 
+          state.socialActiveTab === "tahminler" ? renderSocialPredictions() : `
           <!-- Post Composer -->
           <article class="social-post-composer" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
             <div style="display: flex; gap: 10px; align-items: center;">
@@ -12643,9 +13558,9 @@ function renderSocial() {
 
       <!-- Right Column: Connections & Team Recruitment -->
       <div style="display: flex; flex-direction: column; gap: 20px;">
-        
-        <!-- Connections Widget -->
-        <aside class="social-connections-widget" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        ${state.socialActiveTab === "tahminler" ? renderAIPredictionRankingsWidget() : `
+          <!-- Connections Widget -->
+          <aside class="social-connections-widget" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
           <h3 style="font-size: 15px; font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--line-soft); padding-bottom: 8px; margin: 0;">Bağlantı Önerileri</h3>
           <div style="display: flex; flex-direction: column; gap: 12px;">
             ${recommendedPeople.map(person => `
@@ -12681,7 +13596,7 @@ function renderSocial() {
             </aside>
           `;
         })()}
-
+        `}
       </div>
 
     </div>
@@ -12750,6 +13665,179 @@ function renderSocialPostCard(post) {
       ` : ""}
 
     </article>
+  `;
+}
+
+function renderSocialPredictions() {
+  const user = currentUser();
+  const ideas = state.ideas || [];
+  const predictions = [...(state.predictions || [])].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  return `
+    <article class="social-post-composer" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line-soft); padding-bottom: 12px;">
+        ${icon("trending-up", "20", "style='color: var(--primary);'")}
+        <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: var(--ink);">Yeni Başarı Tahmini Paylaş</h3>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <label class="field">
+          <span style="font-weight: 500; font-size: 13px; color: var(--ink);">Proje / Fikir Seçin</span>
+          <select class="select" id="prediction-idea-id" style="width: 100%; margin-top: 4px; padding: 8px; border-radius: 8px;">
+            <option value="">-- Tahmin etmek istediğiniz projeyi seçin --</option>
+            ${ideas.map(idea => `<option value="${esc(idea.id)}">${esc(idea.title)} (${esc(idea.marketTicker || '')})</option>`).join("")}
+          </select>
+        </label>
+        
+        <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: center;">
+          <label class="field">
+            <span style="font-weight: 500; font-size: 13px; color: var(--ink);">Başarı Olasılığı Hedefi: <strong id="prediction-prob-label" style="color: var(--primary);">50%</strong></span>
+            <input type="range" class="range" id="prediction-probability" min="10" max="100" value="50" style="width: 100%; margin-top: 6px; accent-color: var(--primary);" oninput="document.getElementById('prediction-prob-label').innerText = this.value + '%'" />
+          </label>
+          <div style="background: rgba(var(--primary-rgb), 0.05); border: 1px dashed rgba(var(--primary-rgb), 0.3); border-radius: 8px; padding: 8px; text-align: center; font-size: 12px; color: var(--muted); height: fit-content; margin-top: 18px;">
+            AI Skoru ile karşılaştırılır
+          </div>
+        </div>
+        
+        <label class="field">
+          <span style="font-weight: 500; font-size: 13px; color: var(--ink);">Tahmin Analizi & Gerekçelendirme</span>
+          <textarea class="textarea" id="prediction-text" rows="3" placeholder="Bu projenin neden başarılı olacağını veya hedefe ulaşacağını düşünüyorsunuz? Veri ve analizlerinizi paylaşın..." style="margin-top: 4px; border-radius: 8px; resize: none;"></textarea>
+        </label>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--line-soft); padding-top: 12px;">
+        <button class="btn primary" data-action="submit-prediction" style="padding: 8px 20px; font-size: 13px; font-weight: 600;">Tahmini Yayınla</button>
+      </div>
+    </article>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
+      ${predictions.map(pred => {
+        const idea = ideas.find(i => i.id === pred.ideaId);
+        const hasLiked = state.likedPredictions && state.likedPredictions.includes(pred.id);
+        const showComments = state.predictionCommentsExpanded && state.predictionCommentsExpanded[pred.id];
+        const comments = pred.comments || [];
+        
+        return `
+          <article class="social-post-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <div style="display: flex; gap: 10px; align-items: center;">
+                ${avatar(pred.userName, "medium", pred.userAvatar || "")}
+                <div style="line-height: 1.3;">
+                  <strong style="font-size: 14px; color: var(--ink); display: block;">${esc(pred.userName)}</strong>
+                  <span style="font-size: 11px; color: var(--muted);">${esc(pred.date)} tarihinde tahmin paylaştı</span>
+                </div>
+              </div>
+              <span class="product-stage-badge" style="--stage-color: ${pred.probability >= 70 ? 'var(--emerald)' : pred.probability >= 40 ? 'var(--amber)' : 'var(--rose)'}; padding: 6px 12px; font-weight: 600; font-size: 12px; border-radius: 20px;">
+                %${pred.probability} Başarı Tahmini
+              </span>
+            </div>
+            
+            <div style="background: var(--bg-soft); border-left: 3px solid var(--primary); padding: 12px; border-radius: 0 8px 8px 0; cursor: pointer;" data-action="go-to-search-result" data-type="idea" data-id="${esc(pred.ideaId)}">
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); font-weight: 700; display: block; margin-bottom: 2px;">Hedeflenen Proje</span>
+              <strong style="font-size: 13.5px; color: var(--ink); display: flex; align-items: center; gap: 6px;">
+                ${esc(pred.ideaTitle || idea?.title || 'Bilinmeyen Proje')} 
+                ${idea?.marketTicker ? `<span style="font-size: 11px; color: var(--muted); background: var(--line-soft); padding: 2px 6px; border-radius: 4px;">${esc(idea.marketTicker)}</span>` : ''}
+              </strong>
+            </div>
+
+            <p style="color: var(--ink-soft); font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${esc(pred.predictionText)}</p>
+
+            <div style="display: flex; gap: 16px; border-top: 1px solid var(--line-soft); padding-top: 12px; font-size: 13px;">
+              <button class="btn ghost btn-sm ${hasLiked ? 'active' : ''}" data-action="support-prediction" data-id="${esc(pred.id)}" style="color: ${hasLiked ? 'var(--primary)' : 'var(--muted)'}; font-weight: 500; display: flex; align-items: center; gap: 6px; padding: 4px 8px;">
+                ${icon(hasLiked ? "heart" : "heart", "16")}
+                <span>${pred.likes || 0} Beğeni</span>
+              </button>
+              <button class="btn ghost btn-sm" data-action="toggle-prediction-comments" data-id="${esc(pred.id)}" style="color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: 6px; padding: 4px 8px;">
+                ${icon("message-square", "16")}
+                <span>${comments.length} Yorum</span>
+              </button>
+            </div>
+
+            ${showComments ? `
+              <div class="prediction-comments-area" style="background: var(--bg-soft); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 4px; border: 1px solid var(--line-soft);">
+                ${comments.length > 0 ? `
+                  <div style="display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto;">
+                    ${comments.map(c => `
+                      <div style="display: flex; gap: 8px; align-items: start; font-size: 12.5px; line-height: 1.4;">
+                        ${avatar(c.userName, "small", "")}
+                        <div style="background: var(--surface); padding: 8px 12px; border-radius: 12px; flex: 1; border: 1px solid var(--line-soft);">
+                          <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                            <strong style="color: var(--ink); font-weight: 600;">${esc(c.userName)}</strong>
+                            <small style="color: var(--muted); font-size: 10px;">${esc(c.date || '')}</small>
+                          </div>
+                          <p style="color: var(--ink-soft); margin: 0; white-space: pre-wrap;">${esc(c.body)}</p>
+                        </div>
+                      </div>
+                    `).join("")}
+                  </div>
+                ` : `
+                  <p style="text-align: center; color: var(--muted); font-size: 12px; margin: 0; padding: 8px 0;">Henüz yorum yapılmamış. İlk yorumu siz yazın!</p>
+                `}
+
+                <div style="display: flex; gap: 8px; align-items: center; border-top: 1px solid var(--line-soft); padding-top: 10px; margin-top: 4px;">
+                  <input type="text" class="input" id="prediction-comment-input-${esc(pred.id)}" placeholder="Yorumunuzu yazın..." style="flex: 1; font-size: 13px; padding: 8px 12px; border-radius: 8px;" />
+                  <button class="btn primary btn-sm" data-action="add-prediction-comment" data-id="${esc(pred.id)}" style="padding: 8px 16px; font-size: 12.5px;">Gönder</button>
+                </div>
+              </div>
+            ` : ""}
+          </article>
+        `;
+      }).join("") || `
+        <div style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 40px; text-align: center; color: var(--muted);">
+          ${icon("trending-up", "32")}
+          <p style="margin-top: 10px;">Henüz tahmin paylaşılmamış.</p>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+function renderAIPredictionRankingsWidget() {
+  const ideas = [...(state.ideas || [])];
+  const rankedIdeas = ideas.map(idea => {
+    const probability = getIdeaPredictionProbability(idea.id);
+    return {
+      ...idea,
+      probability
+    };
+  }).sort((a, b) => b.probability - a.probability).slice(0, 5);
+
+  return `
+    <aside class="social-connections-widget" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line-soft); padding-bottom: 10px; margin: 0;">
+        ${icon("bot", "18", "style='color: var(--primary);'")}
+        <h3 style="font-size: 14.5px; font-weight: 700; color: var(--ink); margin: 0;">AI Başarı Olasılığı Sıralaması</h3>
+      </div>
+      
+      <p style="font-size: 12px; color: var(--muted); margin: 0; line-height: 1.4;">
+        Topluluk tahminleri ve yapay zeka analiz skoru harmanlanarak en yüksek başarı olasılığına sahip projeler listelenmiştir.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px;">
+        ${rankedIdeas.map((idea, index) => {
+          const colorStyle = idea.probability >= 75 
+            ? { text: 'var(--emerald)', bg: 'rgba(16, 185, 129, 0.1)' } 
+            : idea.probability >= 50 
+              ? { text: 'var(--amber)', bg: 'rgba(245, 158, 11, 0.1)' } 
+              : { text: 'var(--rose)', bg: 'rgba(244, 63, 94, 0.1)' };
+              
+          return `
+            <div style="display: flex; align-items: center; gap: 10px; background: var(--bg-soft); padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-soft); cursor: pointer;" data-action="go-to-search-result" data-type="idea" data-id="${esc(idea.id)}">
+              <span style="font-size: 14px; font-weight: 800; color: var(--muted); width: 16px; text-align: center;">${index + 1}</span>
+              
+              <div style="flex: 1; min-width: 0; line-height: 1.2;">
+                <strong style="font-size: 12.5px; color: var(--ink); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(idea.title)}</strong>
+                <span style="font-size: 11px; color: var(--muted);">${esc(idea.marketTicker || 'TICKER')} | ${esc(idea.marketCategory || 'Fikir')}</span>
+              </div>
+              
+              <span style="font-size: 12px; font-weight: 700; color: ${colorStyle.text}; background: ${colorStyle.bg}; padding: 4px 8px; border-radius: 6px;">
+                %${Math.round(idea.probability)}
+              </span>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </aside>
   `;
 }
 
@@ -13569,7 +14657,7 @@ function handleAIChatResponse(msgText) {
     Bu sinyal sadece İş NEW içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
   } else if (query.includes("ürün") || query.includes("urun") || query.includes("geliştirilmiş") || query.includes("gelistirilmis")) {
     const products = [...(state.ideas || [])].sort((a, b) => productProgress(b) - productProgress(a)).slice(0, 4);
-    replyText = `**Geliştirilmiş ürün görünümü:**
+    replyText = `**Ürünler görünümü:**
     
     ${products.map(i => `- **${i.title}**: ${productStage(i)}, seviye ${productProgress(i)}%, ${i.supporters || i.credits || 0} oy.`).join("\n")}
     
@@ -13677,12 +14765,13 @@ function renderRulesPage() {
 
         <div style="border-top: 1px solid var(--line-soft); padding-top: 16px;">
           <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; margin-top: 0;">
-            ${icon("gavel")} 6. Borsa Değerlendirme ve Hayata Geçirilme Tüzüğü
+            ${icon("gavel")} 6. Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
           </h3>
           <p>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
-            • <strong>Hayata Geçirilme Ödülü (41 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>41 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.
+            • <strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.<br/>
+            • <strong>Girişimci-Yatırımcı Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u yatırımcıları arasında paylaştırılacaktır.
           </p>
         </div>
       </section>

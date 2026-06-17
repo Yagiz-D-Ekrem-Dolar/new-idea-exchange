@@ -11,7 +11,7 @@ from reportlab.platypus.flowables import HRFlowable
 from reportlab.lib.colors import HexColor, white, black
 import os
 
-OUTPUT = r"C:\Users\yozid\Desktop\A\App\public\NIE-Technical-Report.pdf"
+OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "NIE-Technical-Report.pdf")
 
 # ── Colors ────────────────────────────────────────────────────────────────────
 NAVY      = HexColor("#0a1628")
@@ -103,17 +103,17 @@ cover_inner = [
         [[Paragraph("v2.4.0",     COVER_META), Paragraph("Haziran 2026", COVER_META),
           Paragraph("NIE Platform",COVER_META), Paragraph("Gizli",       COVER_META)]],
         colWidths=[38*mm,38*mm,38*mm,38*mm],
-        style=TableStyle([("VALIGN","(0,0)",(-1,-1),"TOP")])
+        style=TableStyle([("VALIGN", (0,0), (-1,-1), "TOP")])
     )],
 ]
 cover_tbl = Table([[c] for c in cover_inner],
     colWidths=[W - 40*mm],
     style=TableStyle([
-        ("BACKGROUND","(0,0)",(-1,-1), NAVY),
-        ("TOPPADDING","(0,0)",(-1,-1),6),
-        ("BOTTOMPADDING","(0,0)",(-1,-1),6),
-        ("LEFTPADDING","(0,0)",(-1,-1),16*mm),
-        ("RIGHTPADDING","(0,0)",(-1,-1),10*mm),
+        ("BACKGROUND",(0,0),(-1,-1), NAVY),
+        ("TOPPADDING",(0,0),(-1,-1),6),
+        ("BOTTOMPADDING",(0,0),(-1,-1),6),
+        ("LEFTPADDING",(0,0),(-1,-1),16*mm),
+        ("RIGHTPADDING",(0,0),(-1,-1),10*mm),
         ("ROUNDEDCORNERS",[8]),
     ])
 )
@@ -123,12 +123,12 @@ full_cover = Table(
     colWidths=[W - 40*mm],
     rowHeights=[210*mm],
     style=TableStyle([
-        ("BACKGROUND","(0,0)",(-1,-1), NAVY),
-        ("VALIGN","(0,0)",(-1,-1),"MIDDLE"),
-        ("LEFTPADDING","(0,0)",(-1,-1),0),
-        ("RIGHTPADDING","(0,0)",(-1,-1),0),
-        ("TOPPADDING","(0,0)",(-1,-1),0),
-        ("BOTTOMPADDING","(0,0)",(-1,-1),0),
+        ("BACKGROUND",(0,0),(-1,-1), NAVY),
+        ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+        ("LEFTPADDING",(0,0),(-1,-1),0),
+        ("RIGHTPADDING",(0,0),(-1,-1),0),
+        ("TOPPADDING",(0,0),(-1,-1),0),
+        ("BOTTOMPADDING",(0,0),(-1,-1),0),
         ("ROUNDEDCORNERS",[12]),
     ])
 )
@@ -164,18 +164,18 @@ for val, lbl in meta_data:
                                  alignment=TA_CENTER, fontName="Helvetica"))]],
               colWidths=[28*mm],
               style=TableStyle([
-                  ("BACKGROUND","(0,0)",(-1,-1), WHITE),
-                  ("BOX","(0,0)",(-1,-1),0.5,LINE),
+                  ("BACKGROUND",(0,0),(-1,-1), WHITE),
+                  ("BOX",(0,0),(-1,-1),0.5,LINE),
                   ("ROUNDEDCORNERS",[6]),
-                  ("TOPPADDING","(0,0)",(-1,-1),6),
-                  ("BOTTOMPADDING","(0,0)",(-1,-1),6),
+                  ("TOPPADDING",(0,0),(-1,-1),6),
+                  ("BOTTOMPADDING",(0,0),(-1,-1),6),
               ]))
     )
 
 metric_tbl = Table([metric_inner], colWidths=[31*mm]*5,
-    style=TableStyle([("VALIGN","(0,0)",(-1,-1),"TOP"),
-                      ("LEFTPADDING","(0,0)",(-1,-1),1.5*mm),
-                      ("RIGHTPADDING","(0,0)",(-1,-1),1.5*mm)]))
+    style=TableStyle([("VALIGN",(0,0),(-1,-1),"TOP"),
+                      ("LEFTPADDING",(0,0),(-1,-1),1.5*mm),
+                      ("RIGHTPADDING",(0,0),(-1,-1),1.5*mm)]))
 story.append(metric_tbl)
 story.append(PageBreak())
 
@@ -186,11 +186,11 @@ def section(num, title, desc=""):
     num_box = Table([[Paragraph(str(num), SEC_NUM)]],
         colWidths=[7*mm], rowHeights=[7*mm],
         style=TableStyle([
-            ("BACKGROUND","(0,0)",(-1,-1), BLUE),
+            ("BACKGROUND",(0,0),(-1,-1), BLUE),
             ("ROUNDEDCORNERS",[4]),
-            ("VALIGN","(0,0)",(-1,-1),"MIDDLE"),
-            ("TOPPADDING","(0,0)",(-1,-1),0),
-            ("BOTTOMPADDING","(0,0)",(-1,-1),0),
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("TOPPADDING",(0,0),(-1,-1),0),
+            ("BOTTOMPADDING",(0,0),(-1,-1),0),
         ])
     )
     title_cell = [Paragraph(title, SEC_TITLE)]
@@ -199,10 +199,10 @@ def section(num, title, desc=""):
     row = Table([[num_box, title_cell]],
         colWidths=[10*mm, W - 50*mm],
         style=TableStyle([
-            ("VALIGN","(0,0)",(-1,-1),"TOP"),
-            ("LEFTPADDING","(0,1)",(-1,-1), 8),
-            ("TOPPADDING","(0,0)",(-1,-1),0),
-            ("BOTTOMPADDING","(0,0)",(-1,-1),6),
+            ("VALIGN",(0,0),(-1,-1),"TOP"),
+            ("LEFTPADDING",(0,1),(-1,-1), 8),
+            ("TOPPADDING",(0,0),(-1,-1),0),
+            ("BOTTOMPADDING",(0,0),(-1,-1),6),
         ])
     )
     items = [row, HRFlowable(width="100%", thickness=1.5, color=LINE, spaceAfter=10)]
@@ -214,14 +214,14 @@ def callout(text, bg=BLUE_SOFT, border=BLUE):
         [[Paragraph(text, CALLOUT)]],
         colWidths=[W - 40*mm],
         style=TableStyle([
-            ("BACKGROUND","(0,0)",(-1,-1), bg),
-            ("LINEAFTER","(0,0)",(-1,-1), 3, border),   # left border trick via right of prev col
-            ("LINEBEFORE","(0,0)",(-1,-1), 3, border),
+            ("BACKGROUND",(0,0),(-1,-1), bg),
+            ("LINEAFTER",(0,0),(-1,-1), 3, border),   # left border trick via right of prev col
+            ("LINEBEFORE",(0,0),(-1,-1), 3, border),
             ("ROUNDEDCORNERS",[4]),
-            ("TOPPADDING","(0,0)",(-1,-1),8),
-            ("BOTTOMPADDING","(0,0)",(-1,-1),8),
-            ("LEFTPADDING","(0,0)",(-1,-1),12),
-            ("RIGHTPADDING","(0,0)",(-1,-1),12),
+            ("TOPPADDING",(0,0),(-1,-1),8),
+            ("BOTTOMPADDING",(0,0),(-1,-1),8),
+            ("LEFTPADDING",(0,0),(-1,-1),12),
+            ("RIGHTPADDING",(0,0),(-1,-1),12),
         ])
     )
 
@@ -232,17 +232,17 @@ def data_table(headers, rows, col_widths, alt=True):
     for r in rows:
         data.append([Paragraph(str(c), TD) for c in r])
     ts = [
-        ("BACKGROUND","(0,0)",(-1,0), HexColor("#f1f5f9")),
-        ("FONTNAME","(0,0)",(-1,0),"Helvetica-Bold"),
-        ("FONTSIZE","(0,0)",(-1,0),8.5),
-        ("TEXTCOLOR","(0,0)",(-1,0), MUTED),
-        ("GRID","(0,0)",(-1,-1),0.35, LINE),
-        ("ROWBACKGROUNDS","(0,1)",(-1,-1),[WHITE, HexColor("#f8fafc")] if alt else [WHITE]),
-        ("VALIGN","(0,0)",(-1,-1),"TOP"),
-        ("TOPPADDING","(0,0)",(-1,-1),5),
-        ("BOTTOMPADDING","(0,0)",(-1,-1),5),
-        ("LEFTPADDING","(0,0)",(-1,-1),7),
-        ("RIGHTPADDING","(0,0)",(-1,-1),7),
+        ("BACKGROUND",(0,0),(-1,0), HexColor("#f1f5f9")),
+        ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+        ("FONTSIZE",(0,0),(-1,0),8.5),
+        ("TEXTCOLOR",(0,0),(-1,0), MUTED),
+        ("GRID",(0,0),(-1,-1),0.35, LINE),
+        ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE, HexColor("#f8fafc")] if alt else [WHITE]),
+        ("VALIGN",(0,0),(-1,-1),"TOP"),
+        ("TOPPADDING",(0,0),(-1,-1),5),
+        ("BOTTOMPADDING",(0,0),(-1,-1),5),
+        ("LEFTPADDING",(0,0),(-1,-1),7),
+        ("RIGHTPADDING",(0,0),(-1,-1),7),
         ("ROUNDEDCORNERS",[4]),
     ]
     return Table(data, colWidths=col_widths, style=TableStyle(ts), repeatRows=1)
@@ -382,12 +382,12 @@ feat_rows = [[Paragraph(f"✓  {a}", BODY), Paragraph(f"✓  {b}", BODY) if b el
              for a,b in feat_pairs]
 feat_tbl = Table(feat_rows, colWidths=[(W-40*mm)/2]*2,
     style=TableStyle([
-        ("BACKGROUND","(0,0)",(-1,-1), BG),
-        ("BOX","(0,0)",(-1,-1),0.5, LINE),
-        ("GRID","(0,0)",(-1,-1),0.3, LINE),
-        ("TOPPADDING","(0,0)",(-1,-1),5),
-        ("BOTTOMPADDING","(0,0)",(-1,-1),5),
-        ("LEFTPADDING","(0,0)",(-1,-1),10),
+        ("BACKGROUND",(0,0),(-1,-1), BG),
+        ("BOX",(0,0),(-1,-1),0.5, LINE),
+        ("GRID",(0,0),(-1,-1),0.3, LINE),
+        ("TOPPADDING",(0,0),(-1,-1),5),
+        ("BOTTOMPADDING",(0,0),(-1,-1),5),
+        ("LEFTPADDING",(0,0),(-1,-1),10),
         ("ROUNDEDCORNERS",[4]),
     ]))
 story.append(feat_tbl)
@@ -462,16 +462,16 @@ for m, t in perf:
         S("PV", fontSize=9, fontName="Helvetica-Bold", textColor=GREEN))])
 perf_tbl = Table(perf_data, colWidths=[90*mm, 40*mm],
     style=TableStyle([
-        ("BACKGROUND","(0,0)",(-1,0), DARK_ROW),
-        ("FONTNAME","(0,0)",(-1,0),"Helvetica-Bold"),
-        ("FONTSIZE","(0,0)",(-1,0),8.5),
-        ("TEXTCOLOR","(0,0)",(-1,0), MUTED),
-        ("GRID","(0,0)",(-1,-1),0.35, LINE),
-        ("ROWBACKGROUNDS","(0,1)",(-1,-1),[WHITE, HexColor("#f8fafc")]),
-        ("VALIGN","(0,0)",(-1,-1),"MIDDLE"),
-        ("TOPPADDING","(0,0)",(-1,-1),5),
-        ("BOTTOMPADDING","(0,0)",(-1,-1),5),
-        ("LEFTPADDING","(0,0)",(-1,-1),7),
+        ("BACKGROUND",(0,0),(-1,0), DARK_ROW),
+        ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+        ("FONTSIZE",(0,0),(-1,0),8.5),
+        ("TEXTCOLOR",(0,0),(-1,0), MUTED),
+        ("GRID",(0,0),(-1,-1),0.35, LINE),
+        ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE, HexColor("#f8fafc")]),
+        ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+        ("TOPPADDING",(0,0),(-1,-1),5),
+        ("BOTTOMPADDING",(0,0),(-1,-1),5),
+        ("LEFTPADDING",(0,0),(-1,-1),7),
         ("ROUNDEDCORNERS",[4]),
     ]), repeatRows=1)
 story.append(perf_tbl)
@@ -479,9 +479,46 @@ story.append(Spacer(1, 5*mm))
 story.append(PageBreak())
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 9. MALİYET ANALİZİ
+# 9. GİRİŞİMCİLİK EKOSİSTEMİ & GENİŞLETİLMİŞ ÖZELLİKLER
 # ─────────────────────────────────────────────────────────────────────────────
-story.append(section(9, "Aylik Altyapi Maliyet Analizi",
+story.append(section(9, "Girisimcilik Ekosistemi & Genisletilmis Ozellikler",
+    "Sosyal tahmin, mentorluk, hisse paylasim ve AI gundem modulleri"))
+
+eco_data = [
+    ("Sosyal Tahmin", "Basari Tahmin & AI Siralama", "Borsa projelerinin basari olasiliklarini tahmin eden topluluk analiz araci. AI ve topluluk tahminlerinin harmanlanmasiyla dinamik basari siralamasi."),
+    ("Mentorluk", "Matchmaking & Mentor Dizini", "Holding ici uzmanlarin yetkinlik ve tecrubelerine gore listelendigi mentor dizini ve akilli eslestirme modulu."),
+    ("Ekip & Hisse", "Paylasimli Ortaklik & %10 Odul Paylasimi", "Projelerin acik hisse orani (openEquity) takibi. Proje hayata gectiginde yatirimci ve girisimci %10 paylasim kurallari."),
+    ("Otomasyon", "AI Gundem Analiz Motoru", "NLP tabanli AI analisti ile trendlerin, borsa hacminin ve tamamlanan projelerin otomatik gundem postu olarak paylasilmasi.")
+]
+
+eco_rows = [["Modul", "Teknoloji / Yapi", "Detay / Islev"]]
+for m, t, d in eco_data:
+    eco_rows.append([Paragraph(m, TD), Paragraph(t, TD_MONO), Paragraph(d, S("ED", fontSize=8.5, textColor=MUTED, fontName="Helvetica"))])
+
+eco_tbl = Table(eco_rows, colWidths=[35*mm, 45*mm, 60*mm],
+    style=TableStyle([
+        ("BACKGROUND",(0,0),(-1,0), DARK_ROW),
+        ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+        ("FONTSIZE",(0,0),(-1,0),8.5),
+        ("TEXTCOLOR",(0,0),(-1,0), MUTED),
+        ("GRID",(0,0),(-1,-1),0.35, LINE),
+        ("ROWBACKGROUNDS",(0,1),(-1,-1),[WHITE, HexColor("#f8fafc")]),
+        ("VALIGN",(0,0),(-1,-1),"TOP"),
+        ("TOPPADDING",(0,0),(-1,-1),5),
+        ("BOTTOMPADDING",(0,0),(-1,-1),5),
+        ("LEFTPADDING",(0,0),(-1,-1),7),
+        ("RIGHTPADDING",(0,0),(-1,-1),7),
+        ("ROUNDEDCORNERS",[4]),
+    ]), repeatRows=1)
+
+story.append(eco_tbl)
+story.append(Spacer(1, 5*mm))
+story.append(PageBreak())
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 10. MALİYET ANALİZİ
+# ─────────────────────────────────────────────────────────────────────────────
+story.append(section(10, "Aylik Altyapi Maliyet Analizi",
     "5.000 Aktif Kullanici Varsayimiyla Uretim Ortami"))
 
 story.append(callout(
@@ -538,19 +575,19 @@ cost_data.append([
 cw = [W - 40*mm - 108*mm, 36*mm, 50*mm, 22*mm]
 cost_tbl = Table(cost_data, colWidths=cw,
     style=TableStyle([
-        ("BACKGROUND","(0,0)",(-1,0), DARK_ROW),
-        ("FONTNAME","(0,0)",(-1,0),"Helvetica-Bold"),
-        ("FONTSIZE","(0,0)",(-1,0),8.5),
-        ("TEXTCOLOR","(0,0)",(-1,0), MUTED),
-        ("GRID","(0,0)",(-1,-1),0.35, LINE),
-        ("ROWBACKGROUNDS","(0,1)",(-1,-3),[WHITE, HexColor("#f8fafc")]),
-        ("BACKGROUND","(0,-2)",(-1,-1), GREEN_SOFT),
-        ("LINEABOVE","(0,-2)",(-1,-2),1.5, GREEN),
-        ("VALIGN","(0,0)",(-1,-1),"MIDDLE"),
-        ("TOPPADDING","(0,0)",(-1,-1),5),
-        ("BOTTOMPADDING","(0,0)",(-1,-1),5),
-        ("LEFTPADDING","(0,0)",(-1,-1),7),
-        ("RIGHTPADDING","(0,0)",(-1,-1),7),
+        ("BACKGROUND",(0,0),(-1,0), DARK_ROW),
+        ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+        ("FONTSIZE",(0,0),(-1,0),8.5),
+        ("TEXTCOLOR",(0,0),(-1,0), MUTED),
+        ("GRID",(0,0),(-1,-1),0.35, LINE),
+        ("ROWBACKGROUNDS",(0,1),(-1,-3),[WHITE, HexColor("#f8fafc")]),
+        ("BACKGROUND",(0,-2),(-1,-1), GREEN_SOFT),
+        ("LINEABOVE",(0,-2),(-1,-2),1.5, GREEN),
+        ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+        ("TOPPADDING",(0,0),(-1,-1),5),
+        ("BOTTOMPADDING",(0,0),(-1,-1),5),
+        ("LEFTPADDING",(0,0),(-1,-1),7),
+        ("RIGHTPADDING",(0,0),(-1,-1),7),
         ("ROUNDEDCORNERS",[4]),
     ]), repeatRows=1)
 story.append(cost_tbl)
@@ -574,17 +611,17 @@ for u, c, l in scale_data:
                                alignment=TA_CENTER, fontName="Helvetica"))]],
               colWidths=[35*mm],
               style=TableStyle([
-                  ("BACKGROUND","(0,0)",(-1,-1), WHITE),
-                  ("BOX","(0,0)",(-1,-1),0.5, LINE),
-                  ("TOPPADDING","(0,0)",(-1,-1),7),
-                  ("BOTTOMPADDING","(0,0)",(-1,-1),7),
+                  ("BACKGROUND",(0,0),(-1,-1), WHITE),
+                  ("BOX",(0,0),(-1,-1),0.5, LINE),
+                  ("TOPPADDING",(0,0),(-1,-1),7),
+                  ("BOTTOMPADDING",(0,0),(-1,-1),7),
                   ("ROUNDEDCORNERS",[6]),
               ]))
     )
 story.append(Table([scale_inner], colWidths=[38*mm]*4,
-    style=TableStyle([("VALIGN","(0,0)",(-1,-1),"TOP"),
-                      ("LEFTPADDING","(0,0)",(-1,-1),1.5*mm),
-                      ("RIGHTPADDING","(0,0)",(-1,-1),1.5*mm)])))
+    style=TableStyle([("VALIGN",(0,0),(-1,-1),"TOP"),
+                      ("LEFTPADDING",(0,0),(-1,-1),1.5*mm),
+                      ("RIGHTPADDING",(0,0),(-1,-1),1.5*mm)])))
 
 story.append(Spacer(1, 12*mm))
 
@@ -596,7 +633,7 @@ footer_row = Table(
                 S("FR", fontSize=8, textColor=MUTED, fontName="Helvetica",
                   alignment=TA_RIGHT))]],
     colWidths=[(W-40*mm)/2]*2,
-    style=TableStyle([("VALIGN","(0,0)",(-1,-1),"MIDDLE")])
+    style=TableStyle([("VALIGN",(0,0),(-1,-1),"MIDDLE")])
 )
 story.append(footer_row)
 
