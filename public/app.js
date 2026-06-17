@@ -3489,7 +3489,6 @@ function renderGlobalSearchPanel() {
     </div>
   `;
 }
-}
 
 function renderShell() {
   const user = currentUser();
