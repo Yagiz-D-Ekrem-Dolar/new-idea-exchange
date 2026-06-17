@@ -1,6 +1,7 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#0F4C81" rx="20"/>
-  <circle cx="42" cy="45" r="18" fill="none" stroke="#A3D959" stroke-width="6"/>
-  <circle cx="58" cy="45" r="18" fill="none" stroke="#00A4E4" stroke-width="6"/>
-  <text x="50" y="82" font-family="system-ui, sans-serif" font-weight="900" font-size="14" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">AgeSA</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
+  <!-- AgeSA High-Fidelity SVG Logo -->
+  <text x="10" y="52" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF" letter-spacing="-1">age<tspan fill="#00A39D">SA</tspan></text>
+  <!-- Premium brand circle/ring -->
+  <circle cx="160" cy="42" r="14" fill="none" stroke="#00A39D" stroke-width="4" />
+  <circle cx="160" cy="42" r="6" fill="#FFD700" />
 </svg>

@@ -2300,7 +2300,7 @@ function renderLogin() {
           <div style="display: flex; flex-direction: column; gap: 10px;">
             ${countriesList.map(c => `
               <button class="btn secondary block justify-start" style="padding: 16px; display: flex; align-items: center; gap: 12px; height: auto; text-align: left;" data-action="select-login-country" data-code="${c.code}">
-                <span style="font-size: 24px;">${c.flag}</span>
+                <img src="/assets/flags/${c.code.toLowerCase()}.svg" alt="${c.name}" style="width: 28px; height: 18px; object-fit: cover; border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);" />
                 <div style="display: flex; flex-direction: column; flex: 1;">
                   <strong style="font-size: 14.5px; color: var(--ink);">${c.name}</strong>
                   <small style="font-size: 11.5px; color: var(--muted);">${c.label}</small>
@@ -2611,6 +2611,15 @@ function renderShell() {
             <input class="input" data-global-search placeholder="Ara" value="${esc(state.globalSearchQuery || '')}" />
           </label>
           <div class="top-actions">
+            ${(() => {
+              const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
+              return `
+                <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 99px; font-size: 13px; font-weight: 600; color: var(--text);">
+                  <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 20px; height: 13px; object-fit: cover; border-radius: 2px;" alt="" />
+                  <span>${activeC.name}</span>
+                </div>
+              `;
+            })()}
             <span class="credit-pill">${icon("coins")} ${user.voteCreditBalance}</span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
             <button class="icon-button position-relative" data-page="notifications" aria-label="Bildirimler">
@@ -13310,6 +13319,7 @@ function renderProfileV2() {
             <strong style="font-size: 14.5px; color: var(--primary); display: block; margin-bottom: 4px;">${esc(user.role || user.title || "Kullanıcı")}</strong>
             <div style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 13.5px; color: var(--ink-soft); font-weight: 600;">Aktif Portal:</span>
+              <img src="/assets/flags/${state.activeCountry.toLowerCase()}.svg" style="width: 20px; height: 13px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);" alt="" />
               <select class="select" style="padding: 4px 8px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid var(--line-soft); background: var(--surface);" data-action="change-active-country">
                 ${countriesList.map(c => `<option value="${c.code}" ${c.code === state.activeCountry ? 'selected' : ''}>${c.flag} ${c.name}</option>`).join("")}
               </select>
