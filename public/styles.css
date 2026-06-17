@@ -5110,8 +5110,8 @@ body[data-theme="dark"] .tinder-comment-panel {
   --accent: #005daa;
   --accent-strong: #004b95;
   --accent-soft: #e8f2ff;
-  --primary: #005daa;
-  --primary-rgb: 0, 93, 170;
+  --primary: #0A3A60;
+  --primary-rgb: 10, 58, 96;
   --indigo: #3730a3;
   --positive: #16a34a;
   --positive-rgb: 22, 163, 74;
@@ -5183,7 +5183,7 @@ body[data-theme="dark"] {
     var(--bg);
 }
 
-.isbank-lockup {
+.sabanci-lockup {
   display: grid;
   gap: 7px;
   min-width: 0;
@@ -5191,26 +5191,26 @@ body[data-theme="dark"] {
   color: var(--accent);
 }
 
-.isbank-logo-image {
+.sabanci-logo-image {
   width: min(100%, 430px);
   height: auto;
   display: block;
   object-fit: contain;
 }
 
-.isbank-lockup small {
+.sabanci-lockup small {
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0;
 }
 
-.isbank-lockup.compact .isbank-logo-image {
+.sabanci-lockup.compact .sabanci-logo-image {
   width: min(100%, 242px);
   max-height: 76px;
 }
 
-.isbank-lockup.compact small {
+.sabanci-lockup.compact small {
   font-size: 10px;
 }
 
@@ -6423,11 +6423,11 @@ body[data-theme="dark"] .mobile-tab.active {
     align-self: center;
   }
 
-  .isbank-logo-image {
+  .sabanci-logo-image {
     width: min(100%, 360px);
   }
 
-  .isbank-lockup.compact .isbank-logo-image {
+  .sabanci-lockup.compact .sabanci-logo-image {
     width: 220px;
   }
 
@@ -14769,4 +14769,44 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
     grid-column: 2 / -1;
     text-align: left;
   }
+}
+
+
+/* Sabancı Coin Premium Styling & Hover Animations */
+.sa-coin-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(241, 196, 15, 0.06) 0%, rgba(212, 172, 13, 0.08) 100%);
+  border: 1px solid rgba(212, 172, 13, 0.25);
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.sa-coin-inline:hover {
+  transform: translateY(-1px);
+  border-color: rgba(241, 196, 15, 0.5);
+  box-shadow: 0 4px 12px rgba(241, 196, 15, 0.12);
+}
+
+.sa-coin-svg {
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sa-coin-inline:hover .sa-coin-svg {
+  transform: rotate(360deg);
+}
+
+/* User profile user selection active row styling */
+.user-select-row {
+  transition: all 0.2s ease;
+}
+.user-select-row:hover {
+  background: rgba(var(--primary-rgb), 0.03);
+  border-color: var(--line);
+}
+.user-select-row.active {
+  background: rgba(var(--primary-rgb), 0.06) !important;
+  border-color: var(--primary) !important;
 }

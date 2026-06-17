@@ -36,257 +36,306 @@ const remoteImages = {
   ]
 };
 
-const brandLogoSrc = "/assets/is_new_logo.png";
+
+const countriesList = [
+  { code: "TR", name: "Türkiye", flag: "🇹🇷", lang: "tr", label: "Türkiye Portal" },
+  { code: "GB", name: "United Kingdom", flag: "🇬🇧", lang: "en", label: "UK Portal" },
+  { code: "US", name: "United States", flag: "🇺🇸", lang: "en", label: "USA Portal" },
+  { code: "DE", name: "Germany", flag: "🇩🇪", lang: "de", label: "Germany Portal" },
+  { code: "ES", name: "Spain", flag: "🇪🇸", lang: "es", label: "Spain Portal" }
+];
+
+const brandLogoSrc = "/assets/company-logos/sabanci-holding.svg";
 
 const profilePhotos = {
   u1: "https://randomuser.me/api/portraits/women/44.jpg",
   u2: "https://randomuser.me/api/portraits/men/32.jpg",
   u3: "https://randomuser.me/api/portraits/men/75.jpg",
   u4: "https://randomuser.me/api/portraits/men/65.jpg",
-  u5: "https://randomuser.me/api/portraits/women/68.jpg"
+  u5: "https://randomuser.me/api/portraits/women/68.jpg",
+  u6: "https://randomuser.me/api/portraits/women/51.jpg",
+  u7: "https://randomuser.me/api/portraits/men/41.jpg",
+  u8: "https://randomuser.me/api/portraits/men/52.jpg",
+  u9: "https://randomuser.me/api/portraits/women/36.jpg",
+  u10: "https://randomuser.me/api/portraits/men/22.jpg",
+  u11: "https://randomuser.me/api/portraits/women/76.jpg",
+  u12: "https://randomuser.me/api/portraits/men/86.jpg",
+  u13: "https://randomuser.me/api/portraits/men/72.jpg",
+  u14: "https://randomuser.me/api/portraits/men/61.jpg",
+  u15: "https://randomuser.me/api/portraits/women/29.jpg"
 };
 
 const namedAvatarPhotos = {
-  "Elif Şahin": "https://randomuser.me/api/portraits/women/22.jpg",
-  "Zeynep Kaya": "https://randomuser.me/api/portraits/women/51.jpg",
-  "Emir Arslan": "https://randomuser.me/api/portraits/men/41.jpg",
-  "Duru Aksoy": "https://randomuser.me/api/portraits/women/36.jpg",
-  "Ali Çelik": "https://randomuser.me/api/portraits/men/52.jpg"
+  "Ayşe Yılmaz": "https://randomuser.me/api/portraits/women/44.jpg",
+  "Mehmet Demir": "https://randomuser.me/api/portraits/men/32.jpg",
+  "Can Koç": "https://randomuser.me/api/portraits/men/75.jpg",
+  "Kerem Yıldız": "https://randomuser.me/api/portraits/men/65.jpg",
+  "Merve Aydın": "https://randomuser.me/api/portraits/women/68.jpg",
+  "John Sterling": "https://randomuser.me/api/portraits/men/41.jpg",
+  "Sarah Jenkins": "https://randomuser.me/api/portraits/women/51.jpg",
+  "Emily Rose": "https://randomuser.me/api/portraits/women/36.jpg",
+  "Michael Vance": "https://randomuser.me/api/portraits/men/22.jpg",
+  "Carlos Ruiz": "https://randomuser.me/api/portraits/men/61.jpg",
+  "Maria Ortega": "https://randomuser.me/api/portraits/women/29.jpg"
 };
 
 const affiliationCompanies = [
   {
-    id: "tibas-holding",
-    name: "TİBAŞ Holding",
-    shortName: "TİBAŞ",
-    logo: "/assets/company-logos/tibas-holding.png",
-    domain: "isbank.com.tr",
+    id: "sabanci-holding",
+    name: "Hacı Ömer Sabancı Holding A.Ş.",
+    shortName: "Sabancı Holding",
+    logo: "/assets/company-logos/sabanci-holding.svg",
+    domain: "sabanci.com",
     type: "Holding",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Ankara", "İzmir"],
-    campuses: ["Levent Genel Müdürlük", "Tuzla Operasyon Merkezi", "Ankara Bölge Ofisi"],
-    departments: ["Strateji", "İnovasyon", "Finans", "İnsan Kaynakları"]
+    countries: ["Türkiye", "Birleşik Krallık", "Amerika Birleşik Devletleri", "Almanya", "İspanya"],
+    cities: ["İstanbul", "Londra", "New York", "Münih", "Madrid"],
+    campuses: ["Sabancı Center", "London HQ", "New York Office", "Munich Hub", "Madrid Hub"],
+    departments: ["Strateji", "İnovasyon", "Finans", "İnsan Kaynakları", "Sürdürülebilirlik"]
   },
   {
-    id: "is-new",
-    name: "İş New",
-    shortName: "İş New",
-    logo: "/assets/is_new_logo.png",
-    domain: "isbank.com.tr",
-    type: "İnovasyon",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Ankara", "İzmir"],
-    campuses: ["Dijital İnovasyon Alanı", "Levent Veri&Bilgi Ofisi", "Ankara Deneyim Noktası"],
-    departments: ["Borsa", "Veri&Bilgi", "Ürün", "Araştırma"]
-  },
-  {
-    id: "sisecam",
-    name: "Türkiye Şişe ve Cam Fabrikaları",
-    shortName: "Şişecam",
-    logo: "/assets/company-logos/sisecam.png",
-    domain: "sisecam.com.tr",
-    type: "Sanayi",
-    countries: ["Türkiye", "Almanya", "İtalya"],
-    cities: ["İstanbul", "Kırklareli", "Mersin"],
-    campuses: ["Tuzla Ar-Ge", "Trakya Fabrika", "Mersin Soda Tesisi"],
-    departments: ["Üretim", "Ar-Ge", "Tedarik", "Sürdürülebilirlik"]
-  },
-  {
-    id: "tskb",
-    name: "Türkiye Sınai Kalkınma Bankası (TSKB)",
-    shortName: "TSKB",
-    logo: "/assets/company-logos/tskb.svg",
-    domain: "tskb.com.tr",
+    id: "akbank",
+    name: "Akbank T.A.Ş.",
+    shortName: "Akbank",
+    logo: "/assets/company-logos/akbank.svg",
+    domain: "akbank.com",
     type: "Banka",
     countries: ["Türkiye"],
     cities: ["İstanbul", "Ankara", "İzmir"],
-    campuses: ["Fındıklı Genel Müdürlük", "Ankara Temsilcilik", "İzmir Temsilcilik"],
-    departments: ["Kurumsal Bankacılık", "Sürdürülebilir Finans", "Risk", "Araştırma"]
+    campuses: ["Akbank Genel Müdürlük", "Akbank Akademi", "Sabancı Center"],
+    departments: ["Dijital Bankacılık", "Kurumsal Bankacılık", "Hazine", "İnovasyon Lab"]
   },
   {
-    id: "is-yatirim",
-    name: "İş Yatırım Menkul Değerler",
-    shortName: "İş Yatırım",
-    logo: "/assets/company-logos/is-yatirim.svg",
-    domain: "isyatirim.com.tr",
-    type: "Yatırım",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Ankara", "İzmir"],
-    campuses: ["Levent Genel Müdürlük", "Etiler Şube", "Ankara Şube"],
-    departments: ["Araştırma", "Kurumsal Finansman", "Dijital Kanallar", "Operasyon"]
-  },
-  {
-    id: "is-leasing",
-    name: "İş Finansal Kiralama",
-    shortName: "İş Leasing",
-    logo: "/assets/company-logos/is-leasing.png",
-    domain: "isleasing.com.tr",
-    type: "Finans",
+    id: "teknosa",
+    name: "Teknosa İç ve Dış Ticaret A.Ş.",
+    shortName: "Teknosa",
+    logo: "/assets/company-logos/teknosa.svg",
+    domain: "teknosa.com",
+    type: "Perakende",
     countries: ["Türkiye"],
     cities: ["İstanbul", "Ankara", "Bursa"],
-    campuses: ["Genel Müdürlük", "Kurumsal Operasyon", "Bursa Bölge"],
-    departments: ["Satış", "Kredi", "Operasyon", "Tahsis"]
+    campuses: ["Teknosa HQ", "Gebze Lojistik Merkezi"],
+    departments: ["Kategori Yönetimi", "E-Ticaret", "Tedarik Zinciri", "Müşteri Deneyimi"]
   },
   {
-    id: "milli-reasurans",
-    name: "Milli Reasürans",
-    shortName: "Milli Re",
-    logo: "/assets/company-logos/milli-reasurans-official.png",
-    domain: "millire.com",
+    id: "carrefoursa",
+    name: "CarrefourSA Carrefour Sabancı Ticaret Merkezi A.Ş.",
+    shortName: "CarrefourSA",
+    logo: "/assets/company-logos/carrefoursa.svg",
+    domain: "carrefoursa.com",
+    type: "Gıda Perakendeciliği",
+    countries: ["Türkiye"],
+    cities: ["İstanbul", "İzmir", "Antalya"],
+    campuses: ["CarrefourSA Plaza", "Maltepe Depo"],
+    departments: ["Kategori Yönetimi", "Tedarik Zinciri", "Mağaza Operasyonları", "E-Ticaret"]
+  },
+  {
+    id: "enerjisa",
+    name: "Enerjisa Enerji A.Ş.",
+    shortName: "Enerjisa",
+    logo: "/assets/company-logos/enerjisa.svg",
+    domain: "enerjisa.com.tr",
+    type: "Enerji",
+    countries: ["Türkiye"],
+    cities: ["İstanbul", "Ankara", "Adana"],
+    campuses: ["Enerjisa HQ", "Dağıtım Kontrol Merkezi"],
+    departments: ["Şebeke Operasyonları", "Müşteri Hizmetleri", "Yeşil Enerji", "BT"]
+  },
+  {
+    id: "brisa",
+    name: "Brisa Bridgestone Sabancı Lastik San. ve Tic. A.Ş.",
+    shortName: "Brisa",
+    logo: "/assets/company-logos/brisa.svg",
+    domain: "brisa.com.tr",
+    type: "Sanayi",
+    countries: ["Türkiye"],
+    cities: ["Kocaeli", "Aksaray", "İstanbul"],
+    campuses: ["İzmit Fabrika", "Aksaray Akıllı Fabrika"],
+    departments: ["Üretim", "Ar-Ge", "Tedarik Zinciri", "Pazarlama"]
+  },
+  {
+    id: "kordsa",
+    name: "Kordsa Teknik Tekstil A.Ş.",
+    shortName: "Kordsa",
+    logo: "/assets/company-logos/kordsa.svg",
+    domain: "kordsa.com",
+    type: "Sanayi",
+    countries: ["Türkiye"],
+    cities: ["Kocaeli"],
+    campuses: ["İzmit HQ"],
+    departments: ["Ar-Ge", "Üretim", "Kompozit Teknolojileri", "Kalite"]
+  },
+  {
+    id: "cimsa",
+    name: "Çimsa Çimento San. ve Tic. A.Ş.",
+    shortName: "Çimsa",
+    logo: "/assets/company-logos/cimsa.svg",
+    domain: "cimsa.com.tr",
+    type: "Sanayi",
+    countries: ["Türkiye"],
+    cities: ["Mersin"],
+    campuses: ["Mersin Fabrika"],
+    departments: ["Üretim", "Sürdürülebilirlik", "Lojistik", "Ar-Ge"]
+  },
+  {
+    id: "temsa",
+    name: "Temsa Skoda Ulaşım Araçları A.Ş.",
+    shortName: "Temsa",
+    logo: "/assets/company-logos/temsa.svg",
+    domain: "temsa.com",
+    type: "Otomotiv",
+    countries: ["Türkiye"],
+    cities: ["Adana"],
+    campuses: ["Adana Fabrika"],
+    departments: ["Üretim", "Elektrikli Araçlar Ar-Ge", "Kalite Kontrol", "Satış"]
+  },
+  {
+    id: "sabancidx",
+    name: "Sabancı Dijital Teknoloji Hizmetleri A.Ş.",
+    shortName: "SabancıDx",
+    logo: "/assets/company-logos/sabancidx.svg",
+    domain: "sabancidx.com",
+    type: "Teknoloji",
+    countries: ["Türkiye"],
+    cities: ["İstanbul"],
+    campuses: ["SabancıDx Dijital Kampüs"],
+    departments: ["Yapay Zekâ", "Siber Güvenlik", "Bulut Teknolojileri", "Ürün Yönetimi"]
+  },
+  {
+    id: "aksigorta",
+    name: "Aksigorta A.Ş.",
+    shortName: "Aksigorta",
+    logo: "/assets/company-logos/aksigorta.svg",
+    domain: "aksigorta.com.tr",
     type: "Sigorta",
     countries: ["Türkiye"],
     cities: ["İstanbul"],
-    campuses: ["Teşvikiye Genel Müdürlük", "Nişantaşı Konferans Alanı"],
-    departments: ["Reasürans", "Aktüerya", "Hasar", "Risk"]
+    campuses: ["Aksigorta Genel Müdürlük"],
+    departments: ["Risk Yönetimi", "Aktüerya", "Müşteri Deneyimi", "Hasar Yönetimi"]
   },
   {
-    id: "anadolu-hayat",
-    name: "Anadolu Hayat Emeklilik",
-    shortName: "Anadolu Hayat",
-    logo: "/assets/company-logos/anadolu-hayat.png",
-    domain: "anadoluhayat.com.tr",
-    type: "Emeklilik",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Ankara", "İzmir", "Antalya"],
-    campuses: ["Genel Müdürlük", "Ankara Bölge", "İzmir Bölge"],
-    departments: ["Müşteri Deneyimi", "Satış", "Operasyon", "Dijital Ürün"]
-  },
-  {
-    id: "is-gyo",
-    name: "İş Gayrimenkul Yatırım Ortaklığı",
-    shortName: "İş GYO",
-    logo: "/assets/company-logos/is-gyo.png",
-    domain: "isgyo.com.tr",
-    type: "Gayrimenkul",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "İzmir"],
-    campuses: ["Kuleler Portföy Ofisi", "Proje Yönetim Ofisi", "İzmir Karma Proje"],
-    departments: ["Portföy", "Proje", "Finans", "Satış"]
-  },
-  {
-    id: "isbank-ag",
-    name: "İşbank AG",
-    shortName: "İşbank AG",
-    logo: "/assets/company-logos/isbank-ag.svg",
-    domain: "isbank.de",
-    type: "Banka",
-    countries: ["Almanya"],
-    cities: ["Frankfurt", "Berlin", "Münih"],
-    campuses: ["Frankfurt HQ", "Berlin Branch", "München Branch"],
-    departments: ["Retail Banking", "Corporate Banking", "Operations", "Compliance"]
-  },
-  {
-    id: "jsc-isbank",
-    name: "JSC İşbank",
-    shortName: "JSC İşbank",
-    logo: "/assets/company-logos/jsc-isbank.png",
-    domain: "isbank.ru",
-    type: "Banka",
-    countries: ["Rusya"],
-    cities: ["Moskova"],
-    campuses: ["Moskova Ofis", "Operasyon Birimi"],
-    departments: ["Corporate", "Treasury", "Operations", "Risk"]
-  },
-  {
-    id: "isbank-georgia",
-    name: "JSC Isbank Georgia",
-    shortName: "Isbank Georgia",
-    logo: "/assets/company-logos/isbank-georgia.png",
-    domain: "isbank.ge",
-    type: "Banka",
-    countries: ["Gürcistan"],
-    cities: ["Tiflis", "Batum"],
-    campuses: ["Tiflis HQ", "Batum Branch"],
-    departments: ["Branch Banking", "Operations", "Risk", "Digital"]
-  },
-  {
-    id: "arap-turk-bankasi",
-    name: "Arap Türk Bankası",
-    shortName: "A&T Bank",
-    logo: "/assets/company-logos/arap-turk-bankasi.svg",
-    domain: "atbank.com.tr",
-    type: "Banka",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Ankara"],
-    campuses: ["Genel Müdürlük", "Ankara Şube"],
-    departments: ["Kurumsal Bankacılık", "Dış Ticaret", "Operasyon", "Risk"]
-  },
-  {
-    id: "moka",
-    name: "Moka Ödeme ve Elektronik Para Kuruluşu",
-    shortName: "Moka",
-    logo: "/assets/company-logos/moka.png",
-    domain: "moka.com",
-    type: "Fintech",
+    id: "agesa",
+    name: "AgeSA Hayat ve Emeklilik A.Ş.",
+    shortName: "AgeSA",
+    logo: "/assets/company-logos/agesa.svg",
+    domain: "agesa.com.tr",
+    type: "Finans",
     countries: ["Türkiye"],
     cities: ["İstanbul"],
-    campuses: ["Fintech Ofis", "Operasyon Alanı"],
-    departments: ["Ürün", "Teknoloji", "Risk", "Müşteri Başarısı"]
+    campuses: ["AgeSA Genel Müdürlük"],
+    departments: ["Bireysel Emeklilik", "Müşteri Deneyimi", "Dijital Kanallar", "Satış"]
   },
+  // International Subsidiaries
   {
-    id: "is-net",
-    name: "İş Net Elektronik Bilgi Üretim Dağıtım Ticaret ve İletişim Hizmetleri",
-    shortName: "İşNet",
-    logo: "/assets/company-logos/is-net.png",
-    domain: "isnet.net.tr",
-    type: "Teknoloji",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Ankara"],
-    campuses: ["Veri Merkezi", "Network Operasyon", "Ankara Operasyon"],
-    departments: ["Altyapı", "Siber Güvenlik", "Servis Yönetimi", "NOC"]
-  },
-  {
-    id: "is-merkezleri",
-    name: "İş Merkezleri Yönetim ve İşletim",
-    shortName: "İş Merkezleri",
-    logo: "/assets/company-logos/is-merkezleri.png",
-    domain: "ismer.com.tr",
-    type: "Tesis Yönetimi",
-    countries: ["Türkiye"],
-    cities: ["İstanbul"],
-    campuses: ["Kule 3 Yönetim", "Levent Kampüs", "Tesis Operasyon"],
-    departments: ["Tesis", "Güvenlik", "Bakım", "Misafir Deneyimi"]
-  },
-  {
-    id: "is-kultur",
-    name: "Kültür Yayınları İş Türk",
-    shortName: "İş Kültür",
-    logo: "/assets/company-logos/is-kultur.png",
-    domain: "iskultur.com.tr",
-    type: "Yayıncılık",
-    countries: ["Türkiye"],
-    cities: ["İstanbul"],
-    campuses: ["Yayın Ofisi", "Dağıtım Deposu", "Etkinlik Alanı"],
-    departments: ["Editöryal", "Tasarım", "Dağıtım", "Pazarlama"]
-  },
-  {
-    id: "trakya-yatirim",
-    name: "Trakya Yatırım Holding",
-    shortName: "Trakya Yatırım",
-    logo: "/assets/company-logos/trakya-yatirim.png",
-    domain: "isbank.com.tr",
-    type: "Holding",
-    countries: ["Türkiye"],
-    cities: ["İstanbul", "Kırklareli"],
-    campuses: ["Yönetim Ofisi", "Trakya Koordinasyon"],
-    departments: ["Yatırım", "Finans", "Portföy", "Raporlama"]
-  },
-  {
-    id: "genel-energy",
-    name: "Genel Energy Plc.",
-    shortName: "Genel Energy",
-    logo: "/assets/company-logos/genel-energy.png",
-    domain: "genelenergy.com",
+    id: "sabanci-renewables-uk",
+    name: "Sabancı Renewables UK Ltd.",
+    shortName: "Sabancı Renewables UK",
+    logo: "/assets/company-logos/sabanci-holding.svg",
+    domain: "sabanci.com",
     type: "Enerji",
-    countries: ["Birleşik Krallık", "Irak"],
-    cities: ["Londra", "Erbil"],
-    campuses: ["London Office", "Erbil Operations", "Field Coordination"],
-    departments: ["Operations", "HSE", "Finance", "Exploration"]
+    countries: ["Birleşik Krallık"],
+    cities: ["Londra"],
+    campuses: ["London Tech Center"],
+    departments: ["Operations", "Grid Connection", "Investment"]
+  },
+  {
+    id: "cimsa-uk",
+    name: "Çimsa UK Ltd.",
+    shortName: "Çimsa UK",
+    logo: "/assets/company-logos/cimsa.svg",
+    domain: "cimsa.com.tr",
+    type: "Sanayi",
+    countries: ["Birleşik Krallık"],
+    cities: ["Londra"],
+    campuses: ["London White Cement HQ"],
+    departments: ["Logistics", "Sales", "Supply Chain"]
+  },
+  {
+    id: "kordsa-uk",
+    name: "Kordsa UK Ltd.",
+    shortName: "Kordsa UK",
+    logo: "/assets/company-logos/kordsa.svg",
+    domain: "kordsa.com",
+    type: "Sanayi",
+    countries: ["Birleşik Krallık"],
+    cities: ["Londra"],
+    campuses: ["London Composite R&D"],
+    departments: ["Aerospace Materials", "Sales", "Quality Assurance"]
+  },
+  {
+    id: "sabanci-climate-us",
+    name: "Sabancı Climate Technologies Inc.",
+    shortName: "Sabancı Climate US",
+    logo: "/assets/company-logos/sabanci-holding.svg",
+    domain: "sabanciclimatetech.com",
+    type: "Enerji",
+    countries: ["Amerika Birleşik Devletleri"],
+    cities: ["Houston", "Austin"],
+    campuses: ["Austin Renewables HQ", "Texas Solar Farm Office"],
+    departments: ["Energy Storage", "Solar Operations", "Grid Integration"]
+  },
+  {
+    id: "cimsa-americas",
+    name: "Cimsa Americas Inc.",
+    shortName: "Cimsa Americas",
+    logo: "/assets/company-logos/cimsa.svg",
+    domain: "cimsa.com.tr",
+    type: "Sanayi",
+    countries: ["Amerika Birleşik Devletleri"],
+    cities: ["Houston"],
+    campuses: ["Houston Terminal", "Bunnell white cement facility"],
+    departments: ["Logistics", "Operations", "Sales"]
+  },
+  {
+    id: "kordsa-usa",
+    name: "Kordsa Inc. (USA)",
+    shortName: "Kordsa USA",
+    logo: "/assets/company-logos/kordsa.svg",
+    domain: "kordsa.com",
+    type: "Sanayi",
+    countries: ["Amerika Birleşik Devletleri"],
+    cities: ["Chattanooga", "Laurel"],
+    campuses: ["Chattanooga Facility", "Laurel R&D center"],
+    departments: ["Production", "Technical Services", "Safety"]
+  },
+  {
+    id: "cimsa-germany",
+    name: "Cimsa Germany GmbH",
+    shortName: "Cimsa Germany",
+    logo: "/assets/company-logos/cimsa.svg",
+    domain: "cimsa.de",
+    type: "Sanayi",
+    countries: ["Almanya"],
+    cities: ["Münih", "Hamburg"],
+    campuses: ["München Sales Hub", "Hamburg Warehouse Terminal"],
+    departments: ["Logistics", "Sales & Advisory", "Compliance"]
+  },
+  {
+    id: "temsa-germany",
+    name: "Temsa Deutschland GmbH",
+    shortName: "Temsa Germany",
+    logo: "/assets/company-logos/temsa.svg",
+    domain: "temsa.de",
+    type: "Otomotiv",
+    countries: ["Almanya"],
+    cities: ["Münih"],
+    campuses: ["München Mobility Lab"],
+    departments: ["Electric Buses Sales", "Support", "Operations"]
+  },
+  {
+    id: "cimsa-spain",
+    name: "Cimsa Buñol Cementos S.L.U.",
+    shortName: "Çimsa Spain",
+    logo: "/assets/company-logos/cimsa.svg",
+    domain: "cimsa.es",
+    type: "Sanayi",
+    countries: ["İspanya"],
+    cities: ["Buñol", "Valencia"],
+    campuses: ["Buñol White Cement Plant", "Valencia Sales Hub"],
+    departments: ["Sustainabilty", "Production", "R&D", "Logistics"]
   }
 ];
 
 const scopeLevels = ["Holding geneli", "İştirak", "Ülke", "Şehir", "Yerleşke / Bina", "Departman"];
-
 const marketCategories = ["Proje", "Fikir", "Araştırma"];
 const borsaAreas = ["FinTech & Dijital Bankacılık", "Sürdürülebilirlik & Yeşil Enerji", "Yapay Zekâ & Derin Teknoloji", "PropTech & Akıllı Şehirler", "Akıllı Lojistik & Dağıtım", "Operasyon", "Borsa", "Diğer"];
 
@@ -312,43 +361,44 @@ function defaultBundleFiles(ticker = "NIE", category = "Fikir") {
 }
 
 const peopleDirectory = [
-  { id: "p01", name: "Defne Arman", companyId: "tibas-holding", role: "Strateji Direktörü", team: "Holding Strateji", city: "İstanbul", campus: "Levent Genel Müdürlük", photo: "https://randomuser.me/api/portraits/women/12.jpg", status: "Aktif" },
-  { id: "p02", name: "Mert Alkan", companyId: "tibas-holding", role: "İnovasyon Yöneticisi", team: "İnovasyon Ofisi", city: "İstanbul", campus: "Levent Genel Müdürlük", photo: "https://randomuser.me/api/portraits/men/12.jpg", status: "Toplantıda" },
-  { id: "p03", name: "Selin Eryılmaz", companyId: "sisecam", role: "Ar-Ge Lideri", team: "Tuzla Ar-Ge", city: "İstanbul", campus: "Tuzla Ar-Ge", photo: "https://randomuser.me/api/portraits/women/32.jpg", status: "Aktif" },
-  { id: "p04", name: "Baran İleri", companyId: "sisecam", role: "Üretim Müdürü", team: "Trakya Fabrika", city: "Kırklareli", campus: "Trakya Fabrika", photo: "https://randomuser.me/api/portraits/men/27.jpg", status: "Sahada" },
-  { id: "p05", name: "Ece Uslu", companyId: "tskb", role: "Sürdürülebilir Finans", team: "Kurumsal Bankacılık", city: "İstanbul", campus: "Fındıklı Genel Müdürlük", photo: "https://randomuser.me/api/portraits/women/45.jpg", status: "Aktif" },
-  { id: "p06", name: "Kaan Öztürk", companyId: "is-yatirim", role: "Araştırma Müdürü", team: "Araştırma", city: "İstanbul", campus: "Levent Genel Müdürlük", photo: "https://randomuser.me/api/portraits/men/44.jpg", status: "Aktif" },
-  { id: "p07", name: "Nazlı Durukan", companyId: "is-leasing", role: "Operasyon Lideri", team: "Kurumsal Operasyon", city: "İstanbul", campus: "Kurumsal Operasyon", photo: "https://randomuser.me/api/portraits/women/64.jpg", status: "Aktif" },
-  { id: "p08", name: "Ata Güner", companyId: "milli-reasurans", role: "Risk Analisti", team: "Aktüerya", city: "İstanbul", campus: "Teşvikiye Genel Müdürlük", photo: "https://randomuser.me/api/portraits/men/53.jpg", status: "Aktif" },
-  { id: "p09", name: "İpek Candan", companyId: "anadolu-hayat", role: "Müşteri Deneyimi", team: "Dijital Ürün", city: "İstanbul", campus: "Genel Müdürlük", photo: "https://randomuser.me/api/portraits/women/58.jpg", status: "Aktif" },
-  { id: "p10", name: "Ozan Gürel", companyId: "is-gyo", role: "Proje Yöneticisi", team: "Portföy", city: "İstanbul", campus: "Kuleler Portföy Ofisi", photo: "https://randomuser.me/api/portraits/men/61.jpg", status: "Sahada" },
-  { id: "p11", name: "Lena Becker", companyId: "isbank-ag", role: "Compliance Lead", team: "Compliance", city: "Frankfurt", campus: "Frankfurt HQ", photo: "https://randomuser.me/api/portraits/women/76.jpg", status: "Aktif" },
-  { id: "p12", name: "Emirhan Sönmez", companyId: "jsc-isbank", role: "Treasury Manager", team: "Treasury", city: "Moskova", campus: "Moskova Ofis", photo: "https://randomuser.me/api/portraits/men/72.jpg", status: "Aktif" },
-  { id: "p13", name: "Nino Kaladze", companyId: "isbank-georgia", role: "Branch Lead", team: "Branch Banking", city: "Tiflis", campus: "Tiflis HQ", photo: "https://randomuser.me/api/portraits/women/79.jpg", status: "Aktif" },
-  { id: "p14", name: "Deniz Okan", companyId: "arap-turk-bankasi", role: "Dış Ticaret Müdürü", team: "Kurumsal Bankacılık", city: "İstanbul", campus: "Genel Müdürlük", photo: "https://randomuser.me/api/portraits/men/19.jpg", status: "Aktif" },
-  { id: "p15", name: "Aslı Ergin", companyId: "moka", role: "Ürün Sahibi", team: "Ödeme Deneyimi", city: "İstanbul", campus: "Fintech Ofis", photo: "https://randomuser.me/api/portraits/women/88.jpg", status: "Aktif" },
-  { id: "p16", name: "Yiğit Bora", companyId: "is-net", role: "NOC Lideri", team: "Network Operasyon", city: "İstanbul", campus: "Veri Merkezi", photo: "https://randomuser.me/api/portraits/men/83.jpg", status: "Nöbette" },
-  { id: "p17", name: "Seda Moran", companyId: "is-merkezleri", role: "Tesis Deneyimi", team: "Tesis Operasyon", city: "İstanbul", campus: "Kule 3 Yönetim", photo: "https://randomuser.me/api/portraits/women/91.jpg", status: "Aktif" },
-  { id: "p18", name: "Arda Pekin", companyId: "is-kultur", role: "Editör", team: "Editöryal", city: "İstanbul", campus: "Yayın Ofisi", photo: "https://randomuser.me/api/portraits/men/38.jpg", status: "Aktif" },
-  { id: "p19", name: "Pelin Sezer", companyId: "trakya-yatirim", role: "Portföy Raporlama", team: "Yatırım", city: "İstanbul", campus: "Yönetim Ofisi", photo: "https://randomuser.me/api/portraits/women/40.jpg", status: "Aktif" },
-  { id: "p20", name: "James Carter", companyId: "genel-energy", role: "Operations Lead", team: "Operations", city: "Londra", campus: "London Office", photo: "https://randomuser.me/api/portraits/men/86.jpg", status: "Aktif" },
-  { id: "p21", name: "Derya Akman", companyId: "tibas-holding", role: "İK İş Ortağı", team: "İnsan Kaynakları", city: "Ankara", campus: "Ankara Bölge Ofisi", photo: "https://randomuser.me/api/portraits/women/14.jpg", status: "Aktif" },
-  { id: "p22", name: "Cem Yalın", companyId: "moka", role: "Risk Operasyon", team: "Risk", city: "İstanbul", campus: "Operasyon Alanı", photo: "https://randomuser.me/api/portraits/men/24.jpg", status: "Aktif" },
-  { id: "p23", name: "Gizem Sarı", companyId: "anadolu-hayat", role: "Bölge Koordinatörü", team: "Satış", city: "İzmir", campus: "İzmir Bölge", photo: "https://randomuser.me/api/portraits/women/17.jpg", status: "Sahada" },
-  { id: "p24", name: "Volkan Er", companyId: "isbank-ag", role: "Operations Manager", team: "Operations", city: "Berlin", campus: "Berlin Branch", photo: "https://randomuser.me/api/portraits/men/95.jpg", status: "Aktif" },
-  { id: "p25", name: "Aras Kılınç", companyId: "is-leasing", role: "Leasing Tahsis Müdürü", team: "Tahsis", city: "İstanbul", campus: "Genel Müdürlük", photo: "https://randomuser.me/api/portraits/men/45.jpg", status: "Aktif" }
+  // Turkey (TR)
+  { id: "p01", name: "Defne Arman", companyId: "sabanci-holding", role: "Strateji Direktörü", team: "Holding Strateji", city: "İstanbul", campus: "Sabancı Center", photo: "https://randomuser.me/api/portraits/women/12.jpg", status: "Aktif", country: "TR" },
+  { id: "p02", name: "Mert Alkan", companyId: "sabancidx", role: "İnovasyon Lideri", team: "Yapay Zekâ Ofisi", city: "İstanbul", campus: "SabancıDx Dijital Kampüs", photo: "https://randomuser.me/api/portraits/men/12.jpg", status: "Toplantıda", country: "TR" },
+  { id: "p03", name: "Selin Eryılmaz", companyId: "cimsa", role: "Ar-Ge Lideri", team: "Mersin Fabrika Ar-Ge", city: "Mersin", campus: "Mersin Fabrika", photo: "https://randomuser.me/api/portraits/women/32.jpg", status: "Aktif", country: "TR" },
+  { id: "p04", name: "Baran İleri", companyId: "temsa", role: "Üretim Müdürü", team: "Adana Fabrika", city: "Adana", campus: "Adana Fabrika", photo: "https://randomuser.me/api/portraits/men/27.jpg", status: "Sahada", country: "TR" },
+  { id: "p05", name: "Ece Uslu", companyId: "akbank", role: "Sürdürülebilir Finans Yöneticisi", team: "İnovasyon Lab", city: "İstanbul", campus: "Akbank Genel Müdürlük", photo: "https://randomuser.me/api/portraits/women/45.jpg", status: "Aktif", country: "TR" },
+  
+  // United Kingdom (GB)
+  { id: "p06", name: "John Sterling", companyId: "sabanci-renewables-uk", role: "Clean Energy Director", team: "Investment", city: "Londra", campus: "London Tech Center", photo: "https://randomuser.me/api/portraits/men/44.jpg", status: "Aktif", country: "GB" },
+  { id: "p07", name: "Sarah Jenkins", companyId: "cimsa-uk", role: "UK Sales Lead", team: "Sales", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/women/64.jpg", status: "Aktif", country: "GB" },
+  { id: "p08", name: "David Miller", companyId: "kordsa-uk", role: "Composite Lead Scientist", team: "R&D", city: "Londra", campus: "London Tech Center", photo: "https://randomuser.me/api/portraits/men/53.jpg", status: "Aktif", country: "GB" },
+  { id: "p09", name: "Oliver Watson", companyId: "sabanci-holding", role: "International Strategist", team: "Strategy", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/men/86.jpg", status: "Aktif", country: "GB" },
+
+  // United States (US)
+  { id: "p10", name: "Michael Vance", companyId: "sabanci-climate-us", role: "VP of Energy Storage", team: "Energy Storage", city: "Austin", campus: "Austin HQ", photo: "https://randomuser.me/api/portraits/men/22.jpg", status: "Aktif", country: "US" },
+  { id: "p11", name: "Emily Rose", companyId: "cimsa-americas", role: "Houston Terminal Manager", team: "Operations", city: "Houston", campus: "Houston Terminal", photo: "https://randomuser.me/api/portraits/women/36.jpg", status: "Sahada", country: "US" },
+  { id: "p12", name: "Robert Chen", companyId: "kordsa-usa", role: "Material Lead Scientist", team: "Technical Services", city: "Chattanooga", campus: "Chattanooga Facility", photo: "https://randomuser.me/api/portraits/men/61.jpg", status: "Aktif", country: "US" },
+
+  // Germany (DE)
+  { id: "p13", name: "Hans Müller", companyId: "cimsa-germany", role: "Logistics Coordinator", team: "Logistics", city: "Hamburg", campus: "Hamburg Terminal", photo: "https://randomuser.me/api/portraits/men/72.jpg", status: "Aktif", country: "DE" },
+  { id: "p14", name: "Dieter Schmidt", companyId: "temsa-germany", role: "Mobility Operations Mgr", team: "Mobility Lab", city: "Münih", campus: "München Mobility Lab", photo: "https://randomuser.me/api/portraits/men/95.jpg", status: "Aktif", country: "DE" },
+
+  // Spain (ES)
+  { id: "p15", name: "Carlos Ruiz", companyId: "cimsa-spain", role: "Buñol Plant Manager", team: "Production", city: "Buñol", campus: "Buñol Plant", photo: "https://randomuser.me/api/portraits/men/38.jpg", status: "Aktif", country: "ES" },
+  { id: "p16", name: "Maria Ortega", companyId: "cimsa-spain", role: "Sustainability Lead Analyst", team: "R&D", city: "Buñol", campus: "Buñol Plant", photo: "https://randomuser.me/api/portraits/women/29.jpg", status: "Aktif", country: "ES" }
 ];
 
 const initialAnnouncements = [
+  // Turkey (TR)
   {
     id: "ann-1",
-    title: "Haziran fikir döngüsü holding genelinde açıldı",
-    body: "Öneri, şikayet ve verimlilik kayıtları bu ay aynı karar akışında toplanacak. Her iştirak kendi yerleşke çıktısını ayrıca görebilecek.",
+    title: "Sabancı Holding Haziran Fikir Kampanyası başladı",
+    body: "Tüm grup şirketlerindeki verimlilik ve enerji tasarrufu fikirleri bu ay aynı havuzda toplanacaktır. Akbank, Teknosa, Çimsa ve Enerjisa ekiplerine duyurulur.",
     scope: "Holding geneli",
-    companyId: "tibas-holding",
-    country: "Türkiye",
+    companyId: "sabanci-holding",
+    country: "TR",
     city: "İstanbul",
-    campus: "Levent Genel Müdürlük",
+    campus: "Sabancı Center",
     department: "Tüm ekipler",
     authorId: "p01",
     time: "Bugün 09:10",
@@ -356,72 +406,76 @@ const initialAnnouncements = [
   },
   {
     id: "ann-2",
-    title: "Tuzla Ar-Ge ve Trakya Fabrika için saha geri bildirimi",
-    body: "Şişecam ekipleri üretim hattı bekleme süreleri ve bakım planı önerilerini bu hafta yerleşke ölçeğinde toplayacak.",
-    scope: "Yerleşke / Bina",
-    companyId: "sisecam",
-    country: "Türkiye",
-    city: "Kırklareli",
-    campus: "Trakya Fabrika",
-    department: "Üretim",
-    authorId: "p04",
-    time: "Bugün 10:35",
-    priority: "Yerleşke"
-  },
-  {
-    id: "ann-3",
-    title: "TSKB sürdürülebilir finans fikir sprinti",
-    body: "Kurumsal bankacılık ve araştırma ekipleri yeşil finans raporlama akışını sadeleştirecek önerileri bekliyor.",
+    title: "Akbank Akademi inovasyon eğitimleri açıldı",
+    body: "Bankacılık süreçlerinde otomasyon ve API teknolojileri geliştirmek isteyen çalışma arkadaşları için başvurular başladı.",
     scope: "İştirak",
-    companyId: "tskb",
-    country: "Türkiye",
+    companyId: "akbank",
+    country: "TR",
     city: "İstanbul",
-    campus: "Fındıklı Genel Müdürlük",
-    department: "Sürdürülebilir Finans",
+    campus: "Akbank Akademi",
+    department: "Tüm Ekipler",
     authorId: "p05",
-    time: "Dün 16:20",
+    time: "Dün 14:20",
     priority: "İştirak"
   },
+  // United Kingdom (GB)
+  {
+    id: "ann-3",
+    title: "Sabancı Renewables Wind Grid Connection Update",
+    body: "The UK wind grid integration project will collect and evaluate smart distribution ideas. Open to all operations and grid team members.",
+    scope: "Holding geneli",
+    companyId: "sabanci-renewables-uk",
+    country: "GB",
+    city: "Londra",
+    campus: "London Tech Center",
+    department: "Operations",
+    authorId: "p06",
+    time: "Dün 10:45",
+    priority: "Yönetici duyurusu"
+  },
+  // United States (US)
   {
     id: "ann-4",
-    title: "Frankfurt operasyon geçiş planı",
-    body: "İşbank AG operasyon ve uyum ekipleri yeni kontrol listesini Berlin ve Frankfurt ofislerinde paralel deneyecek.",
-    scope: "Ülke",
-    companyId: "isbank-ag",
-    country: "Almanya",
-    city: "Frankfurt",
-    campus: "Frankfurt HQ",
+    title: "Houston White Cement Packing Automation Trial",
+    body: "Cimsa Americas is starting a trial for high-speed bagging line automation. Submit your suggestions to reduce dust emissions.",
+    scope: "İştirak",
+    companyId: "cimsa-americas",
+    country: "US",
+    city: "Houston",
+    campus: "Houston Terminal",
     department: "Operations",
     authorId: "p11",
-    time: "Dün 11:45",
-    priority: "Ülke"
+    time: "Bugün 08:00",
+    priority: "İştirak"
   },
+  // Germany (DE)
   {
     id: "ann-5",
-    title: "Levent kampüs misafir deneyimi güncellemesi",
-    body: "İş Merkezleri ekibi güvenlik, yönlendirme ve toplantı alanı geri bildirimlerini bina bazında açtı.",
-    scope: "Şehir",
-    companyId: "is-merkezleri",
-    country: "Türkiye",
-    city: "İstanbul",
-    campus: "Kule 3 Yönetim",
-    department: "Tesis",
-    authorId: "p17",
-    time: "2 gün önce",
-    priority: "Operasyon"
-  },
-  {
-    id: "ann-leasing-1",
-    title: "İş Leasing verimlilik ve dijitalleşme fikir maratonu",
-    body: "Tüm İş Finansal Kiralama ekiplerinin katılımıyla operasyon süreçlerinin hızlandırılması ve müşteri portalı entegrasyonu odaklı fikir alımları başladı.",
+    title: "München Mobility Lab Hydrogen bus test trials",
+    body: "Temsa Germany is launching hydrogen-powered bus suburban test routes. Please register route optimization ideas.",
     scope: "İştirak",
-    companyId: "is-leasing",
-    country: "Türkiye",
-    city: "İstanbul",
-    campus: "Genel Müdürlük",
-    department: "Tüm Ekipler",
-    authorId: "p07",
-    time: "Bugün 08:30",
+    companyId: "temsa-germany",
+    country: "DE",
+    city: "Münih",
+    campus: "München Mobility Lab",
+    department: "Electric Buses Sales",
+    authorId: "p14",
+    time: "2 gün önce",
+    priority: "İştirak"
+  },
+  // Spain (ES)
+  {
+    id: "ann-6",
+    title: "Buñol plant solar micro-grid integration",
+    body: "Çimsa Spain is collecting technical designs for integration of solar arrays to feed white cement rotary kilns.",
+    scope: "İştirak",
+    companyId: "cimsa-spain",
+    country: "ES",
+    city: "Buñol",
+    campus: "Buñol Plant",
+    department: "Production",
+    authorId: "p15",
+    time: "Bugün 11:30",
     priority: "İştirak"
   }
 ];
@@ -429,87 +483,16 @@ const initialAnnouncements = [
 const initialMessageSpaces = [
   {
     id: "msg-holding",
-    name: "Holding Genel Akış",
-    description: "Tüm iştiraklerden yöneticiler ve inovasyon temsilcileri.",
-    companyId: "tibas-holding",
+    name: "Sabancı Global Flow",
+    description: "Tüm grup şirketleri inovasyon temsilcileri akışı.",
+    companyId: "sabanci-holding",
     scope: "Holding geneli",
-    members: ["p01", "p02", "p05", "p09", "p15", "p17"],
+    members: ["p01", "p02", "p05", "p06", "p10", "p15"],
     messages: [
-      { userId: "p02", body: "Bu hafta tüm iştiraklerden en güçlü 3 öneriyi tek portföy görünümünde toplayalım.", time: "09:22" },
-      { userId: "p01", body: "Holding geneli duyuru yayınlandı. Şehir ve yerleşke kırılımını ayrıca kontrol edeceğim.", time: "09:27" },
-      { userId: "p05", body: "TSKB olarak yeşil finans raporlama başlığını borsa listelemesine soktuk. Talebi oradan izleyebilirsiniz.", time: "10:14" },
-      { userId: "p09", body: "Anadolu Hayat tarafındaki yeni onboarding rehberi pilotta çok iyi gidiyor, AI skoru 93/100 çıkmıştı zaten.", time: "11:35" },
-      { userId: "p02", body: "Harika! Şişecam lojistik planlama yapay zeka asistanı fikrini bu hafta kurul gündemine ekliyoruz.", time: "14:15" },
-      { userId: "p15", body: "Tuzla veri merkezi PUE izleme projesi için de sensör montaj planlaması tamamlandı, kuruluma başladık.", time: "15:20" },
-      { userId: "p17", body: "Holding genelinde su tasarrufu vanaları montajı bitti, faturalardaki düşüşü takip etmeye başladık.", time: "16:05" }
-    ]
-  },
-  {
-    id: "msg-istanbul-campus",
-    name: "İstanbul Yerleşkeleri",
-    description: "Levent, Tuzla, Fındıklı ve veri merkezi ekipleri.",
-    companyId: "tibas-holding",
-    scope: "Şehir",
-    members: ["p02", "p03", "p05", "p10", "p16", "p17"],
-    messages: [
-      { userId: "p16", body: "Veri merkezi tarafında vardiya teslim formunu öneri olarak açtım.", time: "10:04" },
-      { userId: "p17", body: "Kule 3 yönlendirme geri bildirimlerini duyuruya bağladım.", time: "10:11" },
-      { userId: "p03", body: "Tuzla Ar-Ge'den gelen hammadde takip otomasyonu fikri için test ortamı hazırlıyoruz.", time: "11:45" },
-      { userId: "p10", body: "Kuleler portföy ofisi olarak gişe yönlendirme ekranlarındaki sadeleşmeyi tüm binada test edeceğiz.", time: "13:20" },
-      { userId: "p16", body: "Beşiktaş şubesinde kağıtsız şube projesi pilotu başladı, gişe fişlerini artık tabletten imzalıyoruz.", time: "15:30" },
-      { userId: "p03", body: "Tuzla kampüsündeki ortak çalışma alanları için akıllı dolap kurulumu haftaya başlıyor, kilitler geldi.", time: "16:12" },
-      { userId: "p05", body: "Müşteri çağrı ses kayıtlarının AI ile analiz edilmesi fikrinin veri setini hazırlıyoruz.", time: "17:05" }
-    ]
-  },
-  {
-    id: "msg-finance",
-    name: "Finans ve Yatırım Masası",
-    description: "TSKB, İş Yatırım, Leasing ve GYO odaklı karar hazırlığı.",
-    companyId: "tskb",
-    scope: "İştirak",
-    members: ["p05", "p06", "p07", "p10", "p19", "p25"],
-    messages: [
-      { userId: "p06", body: "Araştırma rapor şablonunu sadeleştirme fikrini hızlı akışa aldım.", time: "11:18" },
-      { userId: "p07", body: "Leasing operasyonundan iki şikayet aynı kök nedene bağlanıyor.", time: "11:26" },
-      { userId: "p19", body: "Trakya Yatırım bütçe verimlilik analizini sisteme dosya bundle'ı olarak yükledim, borsa fiyatı artacaktır.", time: "12:05" },
-      { userId: "p25", body: "İş Leasing tarafında geliştirdiğimiz Kullandıkça Öde (Pay-as-you-use) borsa projesi için IoT entegrasyonu tamamlanmak üzere.", time: "12:30" },
-      { userId: "p07", body: "Bu model, özellikle KOBİ'lerin finansman yükünü hafifletecektir. Hacim beklentimiz oldukça yüksek.", time: "12:45" },
-      { userId: "p05", body: "TSKB sürdürülebilir fon dağıtım algoritması önerimiz hakkında yönetim kurulu sunumu onaylandı.", time: "14:12" },
-      { userId: "p10", body: "Yeşil finansman projeleri raporlama portalı prototipi üzerinde çalışmalara başladık.", time: "16:22" },
-      { userId: "p19", body: "Algoritmanın geriye dönük test (backtest) verilerini yarın hazine ekibiyle gözden geçireceğiz.", time: "17:10" }
-    ]
-  },
-  {
-    id: "msg-global",
-    name: "Yurt Dışı Ofisler",
-    description: "Almanya, Rusya, Gürcistan ve Londra ofislerinden sinyaller.",
-    companyId: "isbank-ag",
-    scope: "Ülke",
-    members: ["p11", "p12", "p13", "p20", "p24"],
-    messages: [
-      { userId: "p13", body: "Tiflis şube onboarding dökümanlarını İngilizce/Türkçe tek akışa çekmek istiyor.", time: "12:02" },
-      { userId: "p20", body: "Energy tarafında HSE bildirimlerini anonim şikayet gibi açmak faydalı olur.", time: "12:09" },
-      { userId: "p24", body: "Berlin şubesi yeni operasyon kontrol listesini Frankfurt ile eş zamanlı test etmeye hazır.", time: "13:40" },
-      { userId: "p11", body: "Uyum süreçleri için hazırladığımız AI destekli asistan fikrini Frankfurt HQ onayına sunduk.", time: "15:02" },
-      { userId: "p24", body: "Şubeler arası barkodlu evrak lojistiği takibi uygulaması test kullanıcısı tanımları tamamlandı.", time: "16:45" },
-      { userId: "p13", body: "Londra şubesinden de benzer bir entegrasyon talebi geldi, kapsama dahil edebiliriz.", time: "17:22" }
-    ]
-  },
-  {
-    id: "msg-digital",
-    name: "Dijital Ürün ve Ödeme",
-    description: "Moka, Anadolu Hayat ve İşNet ürün/operasyon ekipleri.",
-    companyId: "moka",
-    scope: "Departman",
-    members: ["p09", "p15", "p16", "p22", "p23"],
-    messages: [
-      { userId: "p15", body: "Ödeme akışı hata bildirimlerini şikayet bölümüyle eşleştiriyorum.", time: "13:14" },
-      { userId: "p09", body: "Müşteri deneyimi ölçümlerini duyuru panosunda şehir bazlı görmek iyi oldu.", time: "13:21" },
-      { userId: "p16", body: "İşNet üzerinden Moka API entegrasyonu için performans iyileştirme önerisini ideas sayfasına girdim.", time: "14:55" },
-      { userId: "p22", body: "Hata bildirim otomasyonu için hazırladığımız pilot şema onaylandı, entegrasyonu başlatabiliriz.", time: "16:10" },
-      { userId: "p23", body: "Moka üye işyeri onboarding evrak kontrol otomasyonu (OCR) ilk testleri başarıyla bitirdik.", time: "16:48" },
-      { userId: "p09", body: "Onay sürelerinin 2 saate inmesi müşteri kazanım hızımızı 3 kat artıracaktır.", time: "17:15" },
-      { userId: "p16", body: "Ağ geçidi optimizasyonu ve QoS tanımları bu gece yarısı İşNet tarafında yayına alınıyor.", time: "17:40" }
+      { userId: "p02", body: "Bu hafta SabancıDx olarak yapay zeka analiz motorunu çoklu dil desteğine uyarladık. Almanca ve İspanyolca fikirler de artık otomatik puanlanabiliyor.", time: "09:22" },
+      { userId: "p01", body: "Harika! Akbank sürdürülebilirlik fonlama fikrini de borsa tahtasına aldık, SA Coin bakiyelerinizi kontrol edin.", time: "09:27" },
+      { userId: "p10", body: "Texas solar farm energy storage designs are uploaded. Ready for group strategy review.", time: "10:14" },
+      { userId: "p15", body: "We started carbon capture trials in Buñol. Cement clinker performance remains excellent.", time: "11:35" }
     ]
   }
 ];
@@ -530,71 +513,80 @@ const ideaTypes = [
 ];
 
 const demoUsers = [
+  // TR Users
   {
     id: "u1",
     name: "Ayşe Yılmaz",
-    email: "ayse.yilmaz@isbank.example",
-    employeeId: "P-10452",
-    company: "İşBank Teknoloji",
-    department: "Operasyon",
-    location: "İstanbul Genel Müdürlük",
+    email: "ayse.yilmaz@teknosa.example",
+    employeeId: "SA-10452",
+    company: "Teknosa İç ve Dış Ticaret A.Ş.",
+    companyId: "teknosa",
+    department: "Müşteri Deneyimi",
+    location: "Teknosa HQ",
     city: "İstanbul",
     region: "Marmara",
-    role: "Operasyon Uzmanı",
+    role: "Kategori Uzmanı",
     roleKey: "employee",
     seniority: "Uzman",
     isManager: false,
     isAdmin: false,
     voteCreditBalance: 17,
     monthlyVoteCredit: 30,
-    badges: ["İlk Fikir", "Aktif Katılımcı", "AI ile Güçlendirilmiş Fikir"]
+    badges: ["İlk Fikir", "Aktif Katılımcı", "AI ile Güçlendirilmiş Fikir"],
+    country: "TR"
   },
   {
     id: "u2",
     name: "Mehmet Demir",
-    email: "mehmet.demir@isbank.example",
-    employeeId: "S-88312",
-    company: "İşBank Perakende Operasyonları",
+    email: "mehmet.demir@carrefoursa.example",
+    employeeId: "SA-88312",
+    company: "CarrefourSA Carrefour Sabancı Ticaret Merkezi A.Ş.",
+    companyId: "carrefoursa",
     department: "Mağaza Operasyonları",
-    location: "Bursa Mağaza",
-    city: "Bursa",
+    location: "Maltepe Depo",
+    city: "İstanbul",
     region: "Marmara",
-    role: "Mağaza Çalışanı",
+    role: "Lojistik Saha Görevlisi",
     roleKey: "field",
     seniority: "Saha çalışanı",
     isManager: false,
     isAdmin: false,
     voteCreditBalance: 21,
     monthlyVoteCredit: 30,
-    badges: ["İlk Fikir", "Müşteri Deneyimi Katkısı"]
+    badges: ["İlk Fikir", "Müşteri Deneyimi Katkısı"],
+    country: "TR"
   },
   {
     id: "u3",
     name: "Can Koç",
-    email: "can.koc@isbank.example",
-    employeeId: "M-22018",
-    company: "İşBank Teknoloji",
-    department: "Operasyon",
-    location: "İstanbul Genel Müdürlük",
+    email: "can.koc@akbank.example",
+    employeeId: "SA-22018",
+    company: "Akbank T.A.Ş.",
+    companyId: "akbank",
+    department: "Dijital Bankacılık",
+    location: "Akbank Genel Müdürlük",
     city: "İstanbul",
     region: "Marmara",
-    role: "Departman Yöneticisi",
+    role: "İnovasyon Yöneticisi",
     roleKey: "manager",
     seniority: "Yönetici",
     isManager: true,
     isAdmin: false,
     voteCreditBalance: 24,
     monthlyVoteCredit: 40,
-    badges: ["Departmanlar Arası Köprü", "Pilot Proje Katılımcısı"]
+    badges: ["Ekipler Arası Köprü", "Pilot Proje Katılımcısı"],
+    country: "TR",
+    supportedIdeas: ["idea-1", "idea-2", "idea-3"]
   },
   {
     id: "u4",
     name: "Kerem Yıldız",
-    email: "kerem.yildiz@isbank.example",
-    employeeId: "H-01004",
-    company: "İşBank Holding",
-    department: "Strateji ve İnovasyon",
-    location: "İstanbul Genel Müdürlük",
+    email: "kerem.yildiz@sabanci.example",
+    employeeId: "SA-01004",
+    company: "Hacı Ömer Sabancı Holding A.Ş.",
+    companyId: "sabanci-holding",
+    department: "Strateji",
+    location: "Sabancı Center",
     city: "İstanbul",
     region: "Marmara",
     role: "Holding Yöneticisi",
@@ -604,26 +596,243 @@ const demoUsers = [
     isAdmin: true,
     voteCreditBalance: 38,
     monthlyVoteCredit: 50,
-    badges: ["İnovasyon Sprinti Kazananı", "Maliyet Azaltma Katkısı", "En Faydalı Yorumcu"]
+    badges: ["İnovasyon Sprinti Kazananı", "Maliyet Azaltma Katkısı", "En Faydalı Yorumcu"],
+    country: "TR"
   },
   {
     id: "u5",
     name: "Merve Aydın",
-    email: "merve.aydin@isbank.example",
-    employeeId: "HR-55102",
-    company: "İşBank Sigorta",
+    email: "merve.aydin@agesa.example",
+    employeeId: "SA-55102",
+    company: "AgeSA Hayat ve Emeklilik A.Ş.",
+    companyId: "agesa",
     department: "İnsan Kaynakları",
-    location: "Ankara Bölge",
-    city: "Ankara",
-    region: "İç Anadolu",
-    role: "İK Yetkilisi",
+    location: "AgeSA Genel Müdürlük",
+    city: "İstanbul",
+    region: "Marmara",
+    role: "İK Yöneticisi",
     roleKey: "hr",
     seniority: "Kıdemli uzman",
     isManager: true,
     isAdmin: false,
     voteCreditBalance: 29,
     monthlyVoteCredit: 35,
-    badges: ["Çalışan Deneyimi Katkısı", "Aktif Katılımcı"]
+    badges: ["Çalışan Deneyimi Katkısı", "Aktif Katılımcı"],
+    country: "TR"
+  },
+  // GB Users
+  {
+    id: "u6",
+    name: "Sarah Jenkins",
+    email: "sarah.jenkins@cimsa.example",
+    employeeId: "SA-UK-021",
+    company: "Çimsa UK Ltd.",
+    companyId: "cimsa-uk",
+    department: "Sales",
+    location: "London HQ",
+    city: "Londra",
+    region: "London",
+    role: "Sales Executive",
+    roleKey: "employee",
+    seniority: "Expert",
+    isManager: false,
+    isAdmin: false,
+    voteCreditBalance: 20,
+    monthlyVoteCredit: 30,
+    badges: ["UK Pioneer"],
+    country: "GB"
+  },
+  {
+    id: "u7",
+    name: "John Sterling",
+    email: "john.sterling@sabanci.example",
+    employeeId: "SA-UK-001",
+    company: "Sabancı Renewables UK Ltd.",
+    companyId: "sabanci-renewables-uk",
+    department: "Operations",
+    location: "London Tech Center",
+    city: "Londra",
+    region: "London",
+    role: "Clean Energy Mgr",
+    roleKey: "manager",
+    seniority: "Manager",
+    isManager: true,
+    isAdmin: false,
+    voteCreditBalance: 30,
+    monthlyVoteCredit: 40,
+    badges: ["Green Pioneer"],
+    country: "GB"
+  },
+  {
+    id: "u8",
+    name: "Oliver Watson",
+    email: "oliver.watson@sabanci.example",
+    employeeId: "SA-UK-002",
+    company: "Hacı Ömer Sabancı Holding A.Ş.",
+    companyId: "sabanci-holding",
+    department: "Strategy",
+    location: "London HQ",
+    city: "Londra",
+    region: "London",
+    role: "Global Strategist",
+    roleKey: "executive",
+    seniority: "C-level",
+    isManager: true,
+    isAdmin: true,
+    voteCreditBalance: 45,
+    monthlyVoteCredit: 50,
+    badges: ["Global Advisor"],
+    country: "GB"
+  },
+  // US Users
+  {
+    id: "u9",
+    name: "Emily Rose",
+    email: "emily.rose@cimsa.example",
+    employeeId: "SA-US-015",
+    company: "Cimsa Americas Inc.",
+    companyId: "cimsa-americas",
+    department: "Operations",
+    location: "Houston Terminal",
+    city: "Houston",
+    region: "Texas",
+    role: "Terminal Supervisor",
+    roleKey: "field",
+    seniority: "Lead",
+    isManager: false,
+    isAdmin: false,
+    voteCreditBalance: 18,
+    monthlyVoteCredit: 30,
+    badges: ["US Pioneer"],
+    country: "US"
+  },
+  {
+    id: "u10",
+    name: "Michael Vance",
+    email: "michael.vance@sabanci.example",
+    employeeId: "SA-US-001",
+    company: "Sabancı Climate Technologies Inc.",
+    companyId: "sabanci-climate-us",
+    department: "Energy Storage",
+    location: "Austin HQ",
+    city: "Austin",
+    region: "Texas",
+    role: "Storage Director",
+    roleKey: "manager",
+    seniority: "Director",
+    isManager: true,
+    isAdmin: false,
+    voteCreditBalance: 35,
+    monthlyVoteCredit: 40,
+    badges: ["Storage Pioneer"],
+    country: "US"
+  },
+  {
+    id: "u11",
+    name: "Jessica Taylor",
+    email: "jessica.taylor@sabanci.example",
+    employeeId: "SA-US-002",
+    company: "Hacı Ömer Sabancı Holding A.Ş.",
+    companyId: "sabanci-holding",
+    department: "Strategy",
+    location: "New York Office",
+    city: "New York",
+    region: "New York",
+    role: "US Market Executive",
+    roleKey: "executive",
+    seniority: "C-level",
+    isManager: true,
+    isAdmin: true,
+    voteCreditBalance: 40,
+    monthlyVoteCredit: 50,
+    badges: ["US Strategist"],
+    country: "US"
+  },
+  // DE Users
+  {
+    id: "u12",
+    name: "Hans Müller",
+    email: "hans.mueller@cimsa.example",
+    employeeId: "SA-DE-012",
+    company: "Cimsa Germany GmbH",
+    companyId: "cimsa-germany",
+    department: "Logistics",
+    location: "Hamburg Terminal",
+    city: "Hamburg",
+    region: "Hamburg",
+    role: "Logistics Coordinator",
+    roleKey: "employee",
+    seniority: "Senior Expert",
+    isManager: false,
+    isAdmin: false,
+    voteCreditBalance: 22,
+    monthlyVoteCredit: 30,
+    badges: ["DE Log-Expert"],
+    country: "DE"
+  },
+  {
+    id: "u13",
+    name: "Dieter Schmidt",
+    email: "dieter.schmidt@temsa.example",
+    employeeId: "SA-DE-001",
+    company: "Temsa Deutschland GmbH",
+    companyId: "temsa-germany",
+    department: "Mobility Lab",
+    location: "München Mobility Lab",
+    city: "Münih",
+    region: "Bayern",
+    role: "Operations Manager",
+    roleKey: "manager",
+    seniority: "Manager",
+    isManager: true,
+    isAdmin: false,
+    voteCreditBalance: 28,
+    monthlyVoteCredit: 40,
+    badges: ["Mobility Pioneer"],
+    country: "DE"
+  },
+  // ES Users
+  {
+    id: "u14",
+    name: "Carlos Ruiz",
+    email: "carlos.ruiz@cimsa.example",
+    employeeId: "SA-ES-001",
+    company: "Cimsa Buñol Cementos S.L.U.",
+    companyId: "cimsa-spain",
+    department: "Production",
+    location: "Buñol Plant",
+    city: "Buñol",
+    region: "Valencia",
+    role: "Buñol Plant Manager",
+    roleKey: "manager",
+    seniority: "Manager",
+    isManager: true,
+    isAdmin: false,
+    voteCreditBalance: 32,
+    monthlyVoteCredit: 40,
+    badges: ["Cement Pioneer"],
+    country: "ES"
+  },
+  {
+    id: "u15",
+    name: "Maria Ortega",
+    email: "maria.ortega@cimsa.example",
+    employeeId: "SA-ES-010",
+    company: "Cimsa Buñol Cementos S.L.U.",
+    companyId: "cimsa-spain",
+    department: "R&D",
+    location: "Buñol Plant",
+    city: "Buñol",
+    region: "Valencia",
+    role: "Sustainability Lead Analyst",
+    roleKey: "employee",
+    seniority: "Senior Analyst",
+    isManager: false,
+    isAdmin: false,
+    voteCreditBalance: 20,
+    monthlyVoteCredit: 30,
+    badges: ["ESG Expert"],
+    country: "ES"
   }
 ];
 
@@ -632,1430 +841,424 @@ demoUsers.forEach(user => {
 });
 
 const initialIdeas = [
+  // TR Ideas (Turkish)
   {
     id: "idea-1",
-    title: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi",
-    summary: "Geçmiş işlem yoğunluğu verilerine göre mağaza vardiyalarının daha doğru planlanmasını öneriyorum.",
-    problem: "Mağazalarda yoğun saatlerde kasa bekleme süresi artıyor ve müşteri memnuniyeti düşüyor.",
-    solution: "İşlem hacmi, saatlik yoğunluk ve personel uygunluk verileriyle öneri üreten küçük bir planlama paneli kurulabilir.",
-    type: "Operasyonel iyileştirme",
-    company: "İşBank Perakende Operasyonları",
-    department: "Mağaza Operasyonları",
-    location: "Bursa Mağaza",
-    city: "Bursa",
-    authorId: "u2",
-    authorLabel: "Anonim Mağaza Çalışanı",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Şirket içi",
-    status: "review",
+    title: "Akbank Mobil kullanıcıları için AI destekli yatırım danışmanı",
+    summary: "Müşterilerin harcama alışkanlıkları ve risk eğilimlerine göre fon ve hisse sepeti öneren yapay zeka entegrasyonu.",
+    problem: "Bireysel yatırımcılar karmaşık piyasa verileri yüzünden yatırım kararı almakta zorlanıyor.",
+    solution: "Mobil şubeye entegre, portföy dağılımını otomatik yapıp öneriler sunan bir AI asistan modülü.",
+    type: "Yeni ürün / hizmet",
+    company: "Akbank T.A.Ş.",
+    companyId: "akbank",
+    department: "Dijital Bankacılık",
+    location: "Akbank Genel Müdürlük",
+    city: "İstanbul",
+    authorId: "u3",
+    authorLabel: "Can Koç",
+    anonymity: "İsmimle paylaş",
+    visibility: "Holding geneli",
+    status: "pilot",
     estimatedImpact: "Yüksek",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Ortalama bekleme süresi ve müşteri şikayeti",
-    riskNotes: "Vardiya kuralları ve çalışan uygunluğu kontrol edilmeli.",
-    communityScore: 86,
-    strategicScore: 78,
-    aiScore: 91,
-    credits: 142,
-    supporters: 38,
+    estimatedCost: "Orta",
+    implementationTime: "3 ay",
+    successMetric: "Aktif yatırımcı sayısı ve ortalama bakiye artışı",
+    riskNotes: "Finansal regülasyonlar ve yatırım tavsiyesi sınırları net çizilmeli.",
+    communityScore: 89,
+    strategicScore: 92,
+    aiScore: 94,
+    credits: 250,
+    supporters: 45,
+    country: "TR",
     comments: [
-      { user: "Elif Şahin", body: "Pilot için müşteri memnuniyeti anketini de ölçüme ekleyebiliriz.", manager: false },
-      { user: "Can Koç", body: "Operasyon verisiyle birlikte değerlendirmeye alındı.", manager: true },
-      { user: "Ahmet Yılmaz", body: "Kesinlikle çok faydalı olacaktır, İzmir şubesinde de test edelim.", manager: false }
+      { user: "Kerem Yıldız", body: "Çok değerli bir çalışma, Akbank Lab ekibiyle test etmeye başlayalım.", manager: true },
+      { user: "Ayşe Yılmaz", body: "Kullanıcı deneyimi akışını basitleştirmek kritik olacaktır.", manager: false }
     ],
-    tags: ["Operasyon", "Mağaza", "Müşteri Deneyimi", "Düşük Maliyet", "Yüksek Etki"],
-    createdAt: "2026-05-29"
+    tags: ["FinTech", "AI", "Akbank", "Yatırım"],
+    createdAt: "2026-06-10"
   },
   {
     id: "idea-2",
-    title: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber",
-    summary: "Onboarding sorularını kurum dokümanlarından yanıtlayan kontrollü bir rehber asistan.",
-    problem: "Yeni çalışanlar bilgiye ulaşmak için farklı ekipleri tekrar tekrar meşgul ediyor.",
-    solution: "İK ve bilgi yönetimi onaylı dokümanlardan yanıt veren, kaynak gösteren bir kurum içi rehber oluşturulabilir.",
-    type: "Eğitim / onboarding önerisi",
-    company: "İşBank Teknoloji",
-    department: "İnsan Kaynakları",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u5",
-    authorLabel: "Merve Aydın",
-    anonymity: "İsmimle paylaş",
-    visibility: "Holding geneli",
-    status: "pilot",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "İlk 30 gün soru çözüm süresi",
-    riskNotes: "Kaynak güncelliği ve yetki sınırları belirlenmeli.",
-    communityScore: 79,
-    strategicScore: 88,
-    aiScore: 93,
-    credits: 118,
-    supporters: 31,
-    comments: [
-      { user: "Zeynep Kaya", body: "Kaynak gösterme zorunlu olursa güven artar.", manager: false },
-      { user: "Can Koç", body: "İK bütçesiyle pilot hazırlığına başladık.", manager: true },
-      { user: "Mert Yılmaz", body: "Uyum ekiplerinin de onay vermesi gerekiyor.", manager: false }
-    ],
-    tags: ["AI", "İK", "Onboarding", "Çalışan Deneyimi"],
-    createdAt: "2026-05-23"
-  },
-  {
-    id: "idea-3",
-    title: "Müşteri şikayetlerinin departmanlara otomatik sınıflandırılması",
-    summary: "Şikayet metinlerini konu, risk ve ilgili departmana göre önceliklendiren iş akışı.",
-    problem: "Müşteri şikayetleri farklı kanallardan geliyor ve doğru ekibe yönlenmesi gecikebiliyor.",
-    solution: "NLP tabanlı sınıflandırma, güven skoruyla birlikte çağrı merkezi ve operasyon ekiplerine öneri sunabilir.",
+    title: "Teknosa mağazalarında akıllı tedarik ve dinamik raf ataması",
+    summary: "Gebze lojistik merkezi verileriyle mağaza stoklarını anlık eşleyip en çok satan ürünleri öne çıkaran akıllı raf sistemi.",
+    problem: "Bazı ürünler rafta uzun süre kalırken popüler teknolojik ürünlerin stoku hızlı bitiyor ve satış kaçıyor.",
+    solution: "Satış hızı ve lojistik transit sürelerini tahminleyen yapay zeka destekli bir mağaza stok paneli.",
     type: "Süreç otomasyonu",
-    company: "İşBank Sigorta",
-    department: "Müşteri Deneyimi",
-    location: "Antalya Operasyon Merkezi",
-    city: "Antalya",
+    company: "Teknosa İç ve Dış Ticaret A.Ş.",
+    companyId: "teknosa",
+    department: "Tedarik Zinciri",
+    location: "Teknosa HQ",
+    city: "İstanbul",
     authorId: "u1",
     authorLabel: "Ayşe Yılmaz",
     anonymity: "İsmimle paylaş",
-    visibility: "İlgili departmanlar",
-    status: "new",
-    estimatedImpact: "Çok yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "İlk yanıt süresi ve doğru departmana yönlenme oranı",
-    riskNotes: "Hatalı sınıflandırma için insan onayı korunmalı.",
-    communityScore: 72,
-    strategicScore: 83,
-    aiScore: 89,
-    credits: 96,
-    supporters: 24,
+    visibility: "İştirak içi",
+    status: "review",
+    estimatedImpact: "Yüksek",
+    estimatedCost: "Düşük",
+    implementationTime: "2 ay",
+    successMetric: "Stoksuz kalma oranı ve ciro artışı",
+    riskNotes: "ERP entegrasyonu gecikebilir.",
+    communityScore: 78,
+    strategicScore: 82,
+    aiScore: 86,
+    credits: 110,
+    supporters: 28,
+    country: "TR",
     comments: [
-      { user: "Mehmet Demir", body: "Veri etiketleme süreci için dış destek alabiliriz.", manager: false },
-      { user: "Ayşe Yılmaz", body: "Antalya ekibi olarak veri setini hazırlamaya hazırız.", manager: false },
-      { user: "Elif Şahin", body: "Mevcut CRM entegrasyonu incelenmeli.", manager: false }
+      { user: "Can Koç", body: "Gebze deposundaki otomasyon sistemleri ile entegre edilirse harika olur.", manager: true }
     ],
-    tags: ["Müşteri Deneyimi", "Otomasyon", "Risk", "AI"],
-    createdAt: "2026-05-31"
+    tags: ["Perakende", "Tedarik", "Teknosa", "Akıllı Raf"],
+    createdAt: "2026-06-12"
   },
   {
+    id: "idea-3",
+    title: "Brisa EV-Lastik: Elektrikli araçlar için optimize edilmiş akıllı lastik sensörü",
+    summary: "Ağır batarya yükü taşıyan elektrikli araç lastiklerinin aşınmasını ve hava basıncını anlık izleyen IoT modülü.",
+    problem: "Elektrikli araçlarda batarya ağırlığı yüzünden lastikler %30 daha hızlı aşınıyor ve sürüş riski oluşuyor.",
+    solution: "Lastik diş derinliğini ve sıcaklığını kablosuz olarak ölçüp araç ekranına ve telefona uyarı gönderen sensör.",
+    type: "Yeni ürün / hizmet",
+    company: "Brisa Bridgestone Sabancı Lastik San. ve Tic. A.Ş.",
+    companyId: "brisa",
+    department: "Ar-Ge",
+    location: "İzmit Fabrika",
+    city: "Kocaeli",
+    authorId: "u2",
+    authorLabel: "Mehmet Demir",
+    anonymity: "Anonim Mağaza Çalışanı",
+    visibility: "Holding geneli",
+    status: "new",
+    estimatedImpact: "Yüksek",
+    estimatedCost: "Yüksek",
+    implementationTime: "6 ay",
+    successMetric: "Lastik kullanım ömrü artışı, müşteri memnuniyeti",
+    riskNotes: "Sensör maliyetleri yüksek olabilir, pazar testi yapılmalı.",
+    communityScore: 84,
+    strategicScore: 88,
+    aiScore: 91,
+    credits: 135,
+    supporters: 31,
+    country: "TR",
+    comments: [],
+    tags: ["Sanayi", "IoT", "Elektrikli Araç", "Brisa"],
+    createdAt: "2026-06-14"
+  },
+  
+  // GB Ideas (English)
+  {
     id: "idea-4",
-    title: "Backend ekibinden gelen frontend performans iyileştirme önerisi",
-    summary: "Kritik ekranlarda yüklenme süresini azaltmak için paket bölme ve cache stratejisi.",
-    problem: "Operasyon panelleri özellikle bölge yoğunluğunda geç yükleniyor.",
-    solution: "Rota bazlı kod bölme, önbellek politikaları ve tablo sanallaştırma ile deneyim iyileştirilebilir.",
+    title: "Off-shore wind forecasting using predictive AI models",
+    summary: "Using historical weather and wind turbine telemetry to predict energy output with 95% accuracy for UK grid matching.",
+    problem: "Wind variability causes power fluctuation, leading to inefficiencies in matching the UK grid demand.",
+    solution: "Implement an AI-based forecast panel in London Tech Center to feed real-time generation forecasts.",
     type: "Teknik geliştirme",
-    company: "İşBank Teknoloji",
-    department: "Yazılım Geliştirme",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u3",
-    authorLabel: "Anonim Yazılım Ekibi Üyesi",
-    anonymity: "Tam anonim",
-    visibility: "Şirket içi",
+    company: "Sabancı Renewables UK Ltd.",
+    companyId: "sabanci-renewables-uk",
+    department: "Operations",
+    location: "London Tech Center",
+    city: "Londra",
+    authorId: "u7",
+    authorLabel: "John Sterling",
+    anonymity: "İsmimle paylaş",
+    visibility: "Holding geneli",
     status: "review",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Core Web Vitals ve ekran açılış süresi",
-    riskNotes: "Regresyon testi planlanmalı.",
-    communityScore: 64,
-    strategicScore: 71,
-    aiScore: 82,
-    credits: 74,
-    supporters: 19,
+    estimatedImpact: "Yüksek",
+    estimatedCost: "Orta",
+    implementationTime: "3 months",
+    successMetric: "Forecasting accuracy increase and grid penalty reduction",
+    riskNotes: "Weather model APIs must be integrated securely.",
+    communityScore: 85,
+    strategicScore: 90,
+    aiScore: 92,
+    credits: 180,
+    supporters: 42,
+    country: "GB",
     comments: [
-      { user: "Emir Arslan", body: "API response cache için de küçük bir ek paket açabiliriz.", manager: false },
-      { user: "Mustafa Kaya", body: "Süreç planlama ekibiyle paylaşıldı.", manager: true }
+      { user: "Oliver Watson", body: "Excellent model. Fits our renewable expansion roadmap in the UK.", manager: true }
     ],
-    tags: ["Teknoloji", "Performans", "Düşük Maliyet"],
-    createdAt: "2026-05-20"
+    tags: ["Energy", "AI", "Renewables", "Wind Grid"],
+    createdAt: "2026-06-11"
   },
   {
     id: "idea-5",
-    title: "Şube içi müşteri yönlendirme ekranlarının sadeleştirilmesi",
-    summary: "Sıra ve işlem yönlendirme ekranlarında daha anlaşılır görsel hiyerarşi kullanılmalı.",
-    problem: "Müşteriler hangi gişeye gideceğini anlamakta zorlanıyor, çalışanlara tekrar soru geliyor.",
-    solution: "Renk, ikon ve işlem adı sadeleştirilerek tüm şubelerde standart bir ekran şablonu kullanılabilir.",
-    type: "Müşteri deneyimi",
-    company: "İşBank Sigorta",
-    department: "Müşteri Deneyimi",
-    location: "İzmir Şube",
-    city: "İzmir",
-    authorId: "u1",
-    authorLabel: "Anonim İstanbul Lokasyonu",
-    anonymity: "İsim gizli, departman görünür",
-    visibility: "Şirket içi",
-    status: "done",
-    estimatedImpact: "Orta",
+    title: "London white cement port bagging speedup through OCR barcode scan",
+    summary: "Implement high-speed OCR cameras at London docks to automatically register incoming Çimsa white cement shipments.",
+    problem: "Manual manifest entries at port warehouse cause logistic bottlenecks and delay deliveries to UK clients.",
+    solution: "Deploy a small OCR camera rig on the crane pathway to scan shipping manifest barcodes automatically.",
+    type: "Süreç otomasyonu",
+    company: "Çimsa UK Ltd.",
+    companyId: "cimsa-uk",
+    department: "Logistics",
+    location: "London White Cement HQ",
+    city: "Londra",
+    authorId: "u6",
+    authorLabel: "Sarah Jenkins",
+    anonymity: "İsmimle paylaş",
+    visibility: "İştirak içi",
+    status: "pilot",
+    estimatedImpact: "Yüksek",
     estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Danışma masası yönlendirme soruları",
-    riskNotes: "Erişilebilirlik kontrastı korunmalı.",
-    communityScore: 91,
-    strategicScore: 73,
-    aiScore: 87,
-    credits: 166,
-    supporters: 44,
-    comments: [
-      { user: "Burak Kaya", body: "İzmir pilotu son derece başarılı geçti, tüm şubelere yaygınlaştırıyoruz.", manager: true },
-      { user: "Deniz Çetin", body: "Uygulaması çok kolay ama etkisi yüksek bir çalışma oldu.", manager: false }
-    ],
-    tags: ["Şube", "Müşteri Deneyimi", "Uygulandı"],
-    createdAt: "2026-05-10"
+    implementationTime: "1 month",
+    successMetric: "Unloading duration reduction by 25%",
+    riskNotes: "Camera hardware must withstand severe UK weather.",
+    communityScore: 82,
+    strategicScore: 85,
+    aiScore: 88,
+    credits: 145,
+    supporters: 35,
+    country: "GB",
+    comments: [],
+    tags: ["Logistics", "Automation", "Cement", "OCR"],
+    createdAt: "2026-06-13"
   },
+
+  // US Ideas (English)
   {
     id: "idea-6",
-    title: "Evrak onay süreçlerini kısaltacak dijital akış önerisi",
-    summary: "Manuel imza bekleyen operasyon adımları için kontrollü dijital onay süreci.",
-    problem: "Kağıt evrak onayları bölge ve şube arasında gecikmeye neden oluyor.",
-    solution: "Yetki matrisiyle uyumlu dijital onay akışı ve audit log ile işlem süresi azaltılabilir.",
+    title: "Texas solar farm utility-scale battery management system (BMS)",
+    summary: "A smart software layer to dynamically charge and discharge lithium iron phosphate battery packs during peak pricing.",
+    problem: "Solar energy generated during midday is sold at low rates, while evening demand pricing spikes.",
+    solution: "Install an AI battery dispatch controller that automatically releases stored energy during grid peak hours.",
     type: "Süreç otomasyonu",
-    company: "İşBank Holding",
-    department: "Operasyon",
-    location: "Ankara Bölge",
-    city: "Ankara",
-    authorId: "u4",
-    authorLabel: "Kerem Yıldız",
+    company: "Sabancı Climate Technologies Inc.",
+    companyId: "sabanci-climate-us",
+    department: "Energy Storage",
+    location: "Texas Solar Farm Office",
+    city: "Houston",
+    authorId: "u10",
+    authorLabel: "Michael Vance",
     anonymity: "İsmimle paylaş",
     visibility: "Holding geneli",
     status: "pilot",
-    estimatedImpact: "Çok yüksek",
+    estimatedImpact: "Yüksek",
     estimatedCost: "Yüksek",
-    implementationTime: "6 ay",
-    successMetric: "Onay çevrim süresi",
-    riskNotes: "Uyum ve elektronik imza gereklilikleri kontrol edilmeli.",
-    communityScore: 83,
-    strategicScore: 92,
-    aiScore: 88,
-    credits: 131,
-    supporters: 35,
+    implementationTime: "4 months",
+    successMetric: "Revenue optimization per megawatt-hour",
+    riskNotes: "Battery wear cycle must be balanced with price arbitrage profit.",
+    communityScore: 91,
+    strategicScore: 95,
+    aiScore: 93,
+    credits: 310,
+    supporters: 55,
+    country: "US",
     comments: [
-      { user: "Mustafa Kaya", body: "Pilot süreci için Ankara Bölge seçildi.", manager: true },
-      { user: "Ebru Aksoy", body: "Elektronik imza uyumluluğu kontrol edildi, onaylandı.", manager: false }
+      { user: "Jessica Taylor", body: "This will solidify Sabanci Renewables position in Texas.", manager: true }
     ],
-    tags: ["Operasyon", "Uyum", "Dijital Akış"],
-    createdAt: "2026-05-16"
+    tags: ["Solar", "BMS", "Climate", "Battery"],
+    createdAt: "2026-06-14"
   },
   {
     id: "idea-7",
-    title: "Çağrı merkezi yoğunluk tahmini paneli",
-    summary: "Gün içi yoğunluğu tahmin ederek ekip liderlerine vardiya ve mola önerisi sunan panel.",
-    problem: "Beklenmeyen yoğunluklarda yanıt süresi yükseliyor.",
-    solution: "Geçmiş çağrı hacmi, kampanya takvimi ve hava durumu gibi sinyallerle kısa vadeli tahmin yapılabilir.",
+    title: "Houston terminal automated dry mortar packing line",
+    summary: "Add a high-speed automatic bagging line at Houston dock warehouse to repack bulk Çimsa cement into US standard bags.",
+    problem: "Bulk cement shipping limits distribution to small US contractors who demand standard palletized bags.",
+    solution: "Deploy an automated bagging machine with robotic pallet arms at the Houston terminal site.",
     type: "Operasyonel iyileştirme",
-    company: "İşBank Sigorta",
-    department: "Veri Analitiği",
-    location: "Antalya Operasyon Merkezi",
-    city: "Antalya",
-    authorId: "u1",
-    authorLabel: "Duru Aksoy",
+    company: "Cimsa Americas Inc.",
+    companyId: "cimsa-americas",
+    department: "Operations",
+    location: "Houston Terminal",
+    city: "Houston",
+    authorId: "u9",
+    authorLabel: "Emily Rose",
     anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
+    visibility: "İştirak içi",
     status: "new",
     estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Ortalama yanıt süresi",
-    riskNotes: "Tahmin doğruluğu düşük günlerde manuel plan korunmalı.",
-    communityScore: 75,
-    strategicScore: 81,
-    aiScore: 86,
-    credits: 84,
-    supporters: 21,
-    comments: [
-      { user: "Hüseyin Çelik", body: "Veri seti için son 3 yılın çağrı kayıtları yüklendi.", manager: false },
-      { user: "Ayşe Öztürk", body: "Kampanya verilerini İletişim departmanından çekebiliriz.", manager: false }
-    ],
-    tags: ["Veri Analitiği", "Çağrı Merkezi", "Planlama"],
-    createdAt: "2026-05-27"
+    estimatedCost: "Yüksek",
+    implementationTime: "5 months",
+    successMetric: "Palletized bagging throughput per hour",
+    riskNotes: "Mechanical hardware requires local parts supplier agreements.",
+    communityScore: 79,
+    strategicScore: 84,
+    aiScore: 81,
+    credits: 95,
+    supporters: 22,
+    country: "US",
+    comments: [],
+    tags: ["Cement", "Houston", "Automation", "Logistics"],
+    createdAt: "2026-06-15"
   },
+
+  // DE Ideas (English/German)
   {
     id: "idea-8",
-    title: "Düşük maliyetli enerji tasarrufu önerileri",
-    summary: "Şube ve mağaza lokasyonlarında tüketim eşiklerine göre uygulanacak hızlı kazanımlar.",
-    problem: "Enerji tüketimi lokasyonlar arasında farklılaşıyor ve küçük önlemler merkezi görünmüyor.",
-    solution: "Aydınlatma saatleri, iklimlendirme eşikleri ve kapanış kontrol listesi tek takip ekranında toplanabilir.",
-    type: "Sürdürülebilirlik",
-    company: "İşBank Holding",
-    department: "Destek Hizmetleri",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u2",
-    authorLabel: "Anonim Çalışan",
-    anonymity: "Tam anonim",
+    title: "Munich clinker automated vertical storage facility",
+    summary: "Optimize Munich clinker depot space by installing a vertical automated storage and retrieval system (ASRS).",
+    problem: "Limited warehouse footprint in Munich logistics center limits the white cement stock volume we can hold.",
+    solution: "Utilize vertical height with a smart robotic lift system that stacks and retrieves pallets automatically.",
+    type: "Maliyet azaltma",
+    company: "Cimsa Germany GmbH",
+    companyId: "cimsa-germany",
+    department: "Logistics",
+    location: "München Sales Hub",
+    city: "Münih",
+    authorId: "u12",
+    authorLabel: "Hans Müller",
+    anonymity: "İsmimle paylaş",
     visibility: "Holding geneli",
-    status: "new",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "Hemen denenebilir",
-    successMetric: "Lokasyon başına aylık enerji tüketimi",
-    riskNotes: "Müşteri konforu ve operasyon saatleri etkilenmemeli.",
-    communityScore: 69,
-    strategicScore: 76,
-    aiScore: 84,
-    credits: 62,
-    supporters: 17,
+    status: "review",
+    estimatedImpact: "Yüksek",
+    estimatedCost: "Orta",
+    implementationTime: "4 months",
+    successMetric: "Warehouse storage capacity increase per square meter",
+    riskNotes: "Requires building permit from Munich city council.",
+    communityScore: 80,
+    strategicScore: 83,
+    aiScore: 85,
+    credits: 120,
+    supporters: 29,
+    country: "DE",
     comments: [
-      { user: "Can Koç", body: "Saha ekiplerine duyuru olarak yayınlayalım.", manager: true },
-      { user: "Zeynep Demir", body: "Kapanış kontrol listesini mobil uygulamaya entegre edelim.", manager: false }
+      { user: "Dieter Schmidt", body: "Excellent layout. Can serve as a template for other European cities.", manager: true }
     ],
-    tags: ["Sürdürülebilirlik", "Maliyet Azaltma", "Hızlı Kazanım"],
-    createdAt: "2026-06-01"
+    tags: ["Logistics", "ASRS", "Munich", "Warehouse"],
+    createdAt: "2026-06-12"
   },
+
+  // ES Ideas (Spanish/English)
   {
     id: "idea-9",
-    title: "Moka ödeme geçidi entegrasyonu hata bildirim otomasyonu",
-    summary: "Ödeme süreçlerinde yaşanan kesintileri anında tespit eden Slack ve e-posta entegrasyonu.",
-    problem: "Ödeme geçidindeki anlık hatalar geç fark ediliyor, ciro kaybı oluşuyor.",
-    solution: "Hata oranları belirlenen eşiği aştığında nöbetçi mühendise otomatik çağrı atanabilir.",
-    type: "Süreç otomasyonu",
-    company: "Moka Ödeme Kuruluşu",
-    department: "Teknik Operasyon",
-    location: "İstanbul Ofis",
-    city: "İstanbul",
-    authorId: "u3",
-    authorLabel: "Mustafa Kaya",
-    anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "review",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Düşük",
-    implementationTime: "2 hafta",
-    successMetric: "Hata fark etme süresinin 15 dakikadan 1 dakikaya inmesi",
-    riskNotes: "Gereksiz bildirimlerin önüne geçmek için alarm eşikleri hassas ayarlanmalı.",
-    communityScore: 88,
-    strategicScore: 85,
-    aiScore: 92,
-    credits: 145,
-    supporters: 32,
-    comments: [
-      { user: "Zeynep Demir", body: "Sistem ekibiyle entegrasyonu konuştuk, altyapı hazır.", manager: false },
-      { user: "Mustafa Kaya", body: "İlk aşamada yalnızca kritik API kodlarını izleyeceğiz.", manager: false }
-    ],
-    tags: ["Moka", "Otomasyon", "API", "Hata İzleme"],
-    createdAt: "2026-06-02"
-  },
-  {
-    id: "idea-10",
-    title: "Şişecam üretim hatlarında IoT tabanlı ısı takibi",
-    summary: "Cam eritme fırınlarında sıcaklık dalgalanmalarını anlık takip ederek fire oranını düşüren sistem.",
-    problem: "Sıcaklık değişimlerinin geç fark edilmesi nedeniyle cam kalitesinde bozulmalar yaşanıyor.",
-    solution: "Fırın çıkışlarına yerleştirilecek termal sensörler ile merkezi bir izleme ekranı tasarlanabilir.",
-    type: "Teknik geliştirme",
-    company: "Şişecam Kimyasallar",
-    department: "Üretim ve Ar-Ge",
-    location: "Mersin Fabrikası",
-    city: "Mersin",
-    authorId: "u4",
-    authorLabel: "Anonim Üretim Mühendisi",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Holding geneli",
-    status: "pilot",
-    estimatedImpact: "Çok yüksek",
-    estimatedCost: "Yüksek",
-    implementationTime: "4 ay",
-    successMetric: "Üretim fire oranında %15 azalma",
-    riskNotes: "Yüksek ısıya dayanıklı sensörlerin temin süreci takip edilmeli.",
-    communityScore: 82,
-    strategicScore: 90,
-    aiScore: 86,
-    credits: 158,
-    supporters: 36,
-    comments: [
-      { user: "Hüseyin Çelik", body: "Mersin fabrikasında 3. fırını pilot için ayırabiliriz.", manager: true },
-      { user: "Ahmet Yılmaz", body: "Sensör tedariği için satın alma süreci başlatıldı.", manager: false }
-    ],
-    tags: ["Şişecam", "IoT", "Verimlilik", "Üretim"],
-    createdAt: "2026-06-03"
-  },
-  {
-    id: "idea-11",
-    title: "TSKB yeşil finansman projeleri raporlama portalı",
-    summary: "Karbon emisyonu azaltımı hedefleyen projelerin sürdürülebilirlik metriklerini izleyen portal.",
-    problem: "Müşterilerin yeşil kredi raporlarını manuel hazırlaması zaman alıyor.",
-    solution: "Enerji ve atık verilerini API üzerinden sisteme yükleyip otomatik grafik üreten portal kurulabilir.",
+    title: "Buñol white cement plant carbon capture and storage (CCS) pilot",
+    summary: "Integrate a compact carbon amine scrubbing pilot loop to capture CO2 directly from clinker rotary kiln stacks in Buñol.",
+    problem: "Clinker manufacturing generates significant carbon footprint, risking future EU ESG penalties.",
+    solution: "A small amine scrubbing pilot loop capturing up to 10 tons of CO2 daily, compressed for local industrial use.",
     type: "Sürdürülebilirlik",
-    company: "TSKB",
-    department: "Yeşil Bankacılık",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u5",
-    authorLabel: "Deniz Çetin",
+    company: "Cimsa Buñol Cementos S.L.U.",
+    companyId: "cimsa-spain",
+    department: "Production",
+    location: "Buñol Plant",
+    city: "Buñol",
+    authorId: "u14",
+    authorLabel: "Carlos Ruiz",
     anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Müşteri raporlama süresinin %50 kısalması",
-    riskNotes: "Verilerin doğruluğunu teyit edecek onay mekanizması eklenmeli.",
-    communityScore: 78,
-    strategicScore: 88,
-    aiScore: 85,
-    credits: 110,
-    supporters: 26,
-    comments: [
-      { user: "Ebru Aksoy", body: "Sürdürülebilirlik hedeflerimiz için harika bir kazanım.", manager: false },
-      { user: "Can Koç", body: "Geliştirici ekiple analiz toplantısını planlıyorum.", manager: true }
-    ],
-    tags: ["TSKB", "Sürdürülebilirlik", "Yeşil Finans", "Portal"],
-    createdAt: "2026-06-04"
-  },
-  {
-    id: "idea-12",
-    title: "Anadolu Hayat emeklilik planı başvuru süreci optimizasyonu",
-    summary: "BES başvuru ekranlarındaki adımların azaltılarak dijital satış dönüşüm oranının artırılması.",
-    problem: "Çok fazla form alanı olması sebebiyle kullanıcılar başvuru sürecini yarıda bırakıyor.",
-    solution: "E-devlet entegrasyonu ile kimlik ve adres bilgilerinin otomatik çekilmesi sağlanabilir.",
-    type: "Müşteri deneyimi",
-    company: "Anadolu Hayat Emeklilik",
-    department: "Dijital Satış Kanalları",
-    location: "İstanbul Ofis",
-    city: "İstanbul",
-    authorId: "u1",
-    authorLabel: "Anonim Ürün Yöneticisi",
-    anonymity: "İsim gizli, departman görünür",
-    visibility: "Şirket içi",
-    status: "review",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "2 ay",
-    successMetric: "Satış hunisi dönüşüm oranında %8 artış",
-    riskNotes: "KVKK izin süreçleri ve e-devlet entegrasyon API limitleri incelenmeli.",
-    communityScore: 84,
-    strategicScore: 81,
-    aiScore: 89,
-    credits: 125,
-    supporters: 29,
-    comments: [
-      { user: "Elif Şahin", body: "Kullanıcı deneyimi test ekibi analize başladı.", manager: false },
-      { user: "Mustafa Kaya", body: "Özellikle mobil web sitesinde adımları 3'e indirmeliyiz.", manager: true }
-    ],
-    tags: ["Anadolu Hayat", "UX", "Dönüşüm", "BES"],
-    createdAt: "2026-06-05"
-  },
-  {
-    id: "idea-13",
-    title: "İşNet üzerinden Moka API entegrasyonu performans iyileştirmesi",
-    summary: "İşNet altyapısındaki ödeme sorgu gecikmelerini düşürmek için ağ geçidi optimizasyonu.",
-    problem: "Ödeme onay süreleri İşNet ağ geçidi trafiği yoğun olduğunda 3 saniyenin üzerine çıkıyor.",
-    solution: "Moka API istekleri için öncelikli kuyruk (QoS) ve dinamik yönlendirme tanımlanabilir.",
-    type: "Teknik geliştirme",
-    company: "İşNet",
-    department: "Altyapı ve Ağ Yönetimi",
-    location: "Ankara Veri Merkezi",
-    city: "Ankara",
-    authorId: "u2",
-    authorLabel: "Ebru Aksoy",
-    anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "pilot",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Ortalama ağ gecikmesinde %40 düşüş",
-    riskNotes: "Ağ kuralları güncellenirken diğer servislerin etkilenmemesi gerekir.",
-    communityScore: 71,
-    strategicScore: 79,
-    aiScore: 83,
-    credits: 90,
-    supporters: 18,
-    comments: [
-      { user: "Deniz Çetin", body: "Ankara ekibi test ortamında kural değişikliklerini başlattı.", manager: false },
-      { user: "Burak Kaya", body: "Müşteriler için anında fark edilecek bir performans artışı olacaktır.", manager: true }
-    ],
-    tags: ["İşNet", "Moka", "Altyapı", "Performans"],
-    createdAt: "2026-06-06"
-  },
-  {
-    id: "idea-14",
-    title: "Yoğun şubelerde evrak tarama işlemlerinin akıllandırılması",
-    summary: "OCR ve AI ile taranan evrakların içeriğine göre otomatik isimlendirilip arşive gönderilmesi.",
-    problem: "Şube çalışanları evrakları manuel sınıflandırıp isimlendirirken zaman kaybediyor.",
-    solution: "Tarayıcı yazılımına eklenecek bir yapay zeka modülü evrak türünü tanıyabilir.",
-    type: "Süreç otomasyonu",
-    company: "İşBank Perakende Operasyonları",
-    department: "Şube Operasyonları",
-    location: "İstanbul Kadıköy Şubesi",
-    city: "İstanbul",
-    authorId: "u3",
-    authorLabel: "Anonim Şube Yetkilisi",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Holding geneli",
-    status: "new",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Şube başına günlük evrak işleme süresinde 40 dakika tasarruf",
-    riskNotes: "Tarama kalitesinin düşük olduğu evraklar için manuel onay ekranı korunmalı.",
-    communityScore: 89,
-    strategicScore: 82,
-    aiScore: 90,
-    credits: 162,
-    supporters: 41,
-    comments: [
-      { user: "Hüseyin Çelik", body: "Şube çalışanlarımızın iş yükünü azaltacak harika bir fikir.", manager: true },
-      { user: "Ahmet Yılmaz", body: "Yapay zeka modellerinin Türkçe metin performansı test ediliyor.", manager: false }
-    ],
-    tags: ["Operasyon", "Şube", "OCR", "Yapay Zeka"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-15",
-    title: "Müşteri çağrı ses kayıtlarının AI ile duygu analizi",
-    summary: "Çağrı sonlarında müşterinin ses tonundan memnuniyetsizlik düzeyini tahmin eden yazılım.",
-    problem: "Kalite değerlendirme ekipleri günde sadece sınırlı sayıda çağrıyı dinleyebiliyor.",
-    solution: "Tüm çağrılar arka planda ses analiz modelinden geçirilerek riskli olanlar ekibe iletilebilir.",
-    type: "Müşteri deneyimi",
-    company: "Anadolu Hayat Emeklilik",
-    department: "Müşteri Hizmetleri",
-    location: "İstanbul Ofis",
-    city: "İstanbul",
-    authorId: "u4",
-    authorLabel: "Anonim Müşteri Temsilcisi",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Orta",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Müşteri geri dönüş hızında %25 artış",
-    riskNotes: "Müşteri ses verisi analizi için yasal onaylar alınmalı.",
-    communityScore: 74,
-    strategicScore: 78,
-    aiScore: 85,
-    credits: 104,
-    supporters: 22,
-    comments: [
-      { user: "Elif Şahin", body: "Köpük durumdaki şikayetleri erken tespit etmek için çok değerli.", manager: false },
-      { user: "Can Koç", body: "Çağrı merkezi sistem sağlayıcısı ile entegrasyonu görüşeceğiz.", manager: true }
-    ],
-    tags: ["Anadolu Hayat", "Çağrı Merkezi", "Yapay Zeka", "Müşteri"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-16",
-    title: "Tuzla veri merkezi enerji tüketimi izleme gösterge paneli",
-    summary: "Veri merkezindeki sunucu kabinlerinin anlık güç tüketimi ve PUE değerlerini gösteren panel.",
-    problem: "Hangi kabinlerin aşırı enerji harcadığı veya verimsiz soğutulduğu merkezi olarak izlenemiyor.",
-    solution: "Akıllı PDU sensör verileri Grafana üzerinde haritalandırılarak optimizasyon yapılabilir.",
-    type: "Sürdürülebilirlik",
-    company: "İşNet",
-    department: "Veri Merkezi Operasyonları",
-    location: "Tuzla Veri Merkezi",
-    city: "İstanbul",
-    authorId: "u5",
-    authorLabel: "Zeynep Demir",
-    anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "pilot",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "2 ay",
-    successMetric: "Veri merkezi PUE oranının 1.45'ten 1.35'e düşürülmesi",
-    riskNotes: "Sensör montajları sırasında kabin elektrik hatlarında kesinti olmamasına dikkat edilmeli.",
-    communityScore: 81,
-    strategicScore: 86,
-    aiScore: 88,
-    credits: 138,
-    supporters: 30,
-    comments: [
-      { user: "Mustafa Kaya", body: "PUE hedeflerimize ulaşmak için çok kritik bir izleme projesi.", manager: true },
-      { user: "Ebru Aksoy", body: "İlk aşamada sadece A blok kabinlerini izlemeye alıyoruz.", manager: false }
-    ],
-    tags: ["İşNet", "Veri Merkezi", "Enerji", "Grafana"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-17",
-    title: "İşBank AG şubeleri arası evrak lojistiği takibi",
-    summary: "Almanya içindeki şubeler arası fiziki evrak gönderimlerini dijital barkodla izleyen sistem.",
-    problem: "Şubeler arası gönderilen fiziki dosyaların kargo durumları merkezi olarak takip edilemiyor.",
-    solution: "Kurum içi portalda basit bir barkod okuyucu ve teslimat loglama modülü geliştirilebilir.",
-    type: "Operasyonel iyileştirme",
-    company: "İşBank AG",
-    department: "Şube Dışı Operasyon",
-    location: "Frankfurt Merkez",
-    city: "Frankfurt",
-    authorId: "u1",
-    authorLabel: "Ahmet Yılmaz",
-    anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Kayıp evrak oranının sıfıra indirilmesi",
-    riskNotes: "Barkod okuyucuların el terminalleriyle entegrasyonu test edilmeli.",
-    communityScore: 68,
-    strategicScore: 73,
-    aiScore: 80,
-    credits: 72,
-    supporters: 15,
-    comments: [
-      { user: "Burak Kaya", body: "Frankfurt ve Berlin şubeleri arasında hızlıca test edebiliriz.", manager: true },
-      { user: "Ahmet Yılmaz", body: "Altyapı gereksinimi minimum düzeyde, hemen başlayabiliriz.", manager: false }
-    ],
-    tags: ["İşBank AG", "Operasyon", "Lojistik", "Barkod"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-18",
-    title: "Çalışan yan hakları seçim portalı mobil uygulaması",
-    summary: "Çalışanların yan hak paketlerini mobil telefonlarından esnetip seçebileceği uygulama.",
-    problem: "Yan hak seçimleri yılda bir kez web portalından yapılıyor ve mobil erişim bulunmuyor.",
-    solution: "İK portalındaki mevcut yan haklar modülünü responsive mobil görünüme kavuşturabiliriz.",
-    type: "Çalışan deneyimi",
-    company: "İşBank Holding",
-    department: "İnsan Kaynakları",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u2",
-    authorLabel: "Anonim İK Uzmanı",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Holding geneli",
-    status: "review",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "2 ay",
-    successMetric: "Çalışan memnuniyet anketinde yan haklar skoru artışı",
-    riskNotes: "Sigorta şirketleri API entegrasyon terminlerinin mobile uyumlu hale getirilmesi.",
-    communityScore: 85,
-    strategicScore: 80,
-    aiScore: 87,
-    credits: 130,
-    supporters: 33,
-    comments: [
-      { user: "Zeynep Demir", body: "İK olarak çalışanlarımızdan bu yönde çok talep alıyorduk.", manager: false },
-      { user: "Mustafa Kaya", body: "Geliştirme takvimine alındı.", manager: true }
-    ],
-    tags: ["İK", "Çalışan Deneyimi", "Mobil", "Portal"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-19",
-    title: "Saha ekipleri için mobil cihaz envanteri yönetim sistemi",
-    summary: "Satış ve teknik saha ekiplerinin tablet/telefon envanterini QR kodla takip eden sistem.",
-    problem: "Cihaz devir teslimleri manuel kağıt formlarla yapılıyor, zimmet takibi zorlaşıyor.",
-    solution: "Saha yöneticilerinin kullanabileceği, QR kod okuyuculu basit bir mobil zimmet ekranı.",
-    type: "Maliyet azaltma",
-    company: "İşNet",
-    department: "Saha Operasyon Destek",
-    location: "İzmir Bölge",
-    city: "İzmir",
-    authorId: "u3",
-    authorLabel: "Deniz Çetin",
-    anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "3 hafta",
-    successMetric: "Kayıp/çalıntı cihaz oranında %90 azalma",
-    riskNotes: "Zimmet loglarının veritabanında güvenli şekilde saklanması gerekmektedir.",
-    communityScore: 72,
-    strategicScore: 75,
-    aiScore: 81,
-    credits: 78,
-    supporters: 19,
-    comments: [
-      { user: "Ebru Aksoy", body: "İzmir ekibi olarak bu sistemin eksikliğini çok hissediyorduk.", manager: false },
-      { user: "Hüseyin Çelik", body: "Uygulaması çok pratik, destekliyorum.", manager: true }
-    ],
-    tags: ["İşNet", "Envanter", "QR Kod", "Maliyet"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-20",
-    title: "Kurum içi API dokümantasyon portalı (Swagger entegrasyonlu)",
-    summary: "Holding iştirakleri arasındaki yazılım entegrasyonlarını hızlandıracak ortak API kataloğu.",
-    problem: "Farklı şirketlerin yazılım ekipleri birbirlerinin servislerini ve parametrelerini tanımıyor.",
-    solution: "Tüm iştiraklerin API Swagger çıktılarını tek bir güvenli portalda birleştirebiliriz.",
-    type: "Teknik geliştirme",
-    company: "İşBank Teknoloji",
-    department: "Yazılım Mimarisi",
-    location: "İstanbul Tuzla Kampüsü",
-    city: "İstanbul",
-    authorId: "u4",
-    authorLabel: "Anonim Yazılım Mimarı",
-    anonymity: "İsim gizli, rol görünür",
     visibility: "Holding geneli",
     status: "pilot",
     estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "İştirakler arası entegrasyon sürelerinde %30 kısalma",
-    riskNotes: "Yetkilendirme mekanizması çok hassas kurulmalı, API detayları sızmamalı.",
-    communityScore: 80,
-    strategicScore: 87,
-    aiScore: 91,
-    credits: 148,
-    supporters: 35,
-    comments: [
-      { user: "Can Koç", body: "Güvenlik standartlarını belirlemek için BT Güvenlik ile görüşelim.", manager: true },
-      { user: "Zeynep Demir", body: "Moka API'lerini bu kataloğa yüklemeye hazırız.", manager: false }
-    ],
-    tags: ["Teknoloji", "API", "Swagger", "Entegrasyon"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-21",
-    title: "Moka üye işyeri onboarding sürecinin kısaltılması",
-    summary: "Üye işyerlerinin başvuru belgelerini yapay zeka ile kontrol edip onay süresini kısaltan akış.",
-    problem: "Evrak kontrolleri manuel yapıldığı için üye işyeri aktivasyonları 2-3 gün sürüyor.",
-    solution: "Vergi levhası ve imza sirkülerini otomatik kontrol eden OCR doğrulama servisi.",
-    type: "Müşteri deneyimi",
-    company: "Moka Ödeme Kuruluşu",
-    department: "Risk ve Uyum",
-    location: "İstanbul Ofis",
-    city: "İstanbul",
-    authorId: "u5",
-    authorLabel: "Anonim Risk Analisti",
-    anonymity: "İsim gizli, departman görünür",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Çok yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "2 ay",
-    successMetric: "Onboarding süresinin 48 saatten 2 saate indirilmesi",
-    riskNotes: "Mevzuat gereği son kararın yine bir uyum uzmanı tarafından verilmesi gerekir.",
-    communityScore: 87,
-    strategicScore: 89,
-    aiScore: 93,
-    credits: 168,
-    supporters: 42,
-    comments: [
-      { user: "Mustafa Kaya", body: "Moka için operasyonel mükemmellik sağlayacak bir proje.", manager: true },
-      { user: "Ahmet Yılmaz", body: "OCR doğruluk oranlarını test etmeye başladık.", manager: false }
-    ],
-    tags: ["Moka", "Müşteri Deneyimi", "Uyum", "OCR"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-22",
-    title: "TSKB sürdürülebilir fon dağıtım algoritması",
-    summary: "Sürdürülebilirlik skoru yüksek şirketlere öncelik veren otomatik portföy optimizasyonu.",
-    problem: "Fon dağıtımları yapılırken ESG kriterleri manuel hesaplanıyor ve hata payı yüksek.",
-    solution: "Şirketlerin karbon salınımı, cinsiyet eşitliği gibi verilerini analiz eden puanlama modeli.",
-    type: "Operasyonel iyileştirme",
-    company: "TSKB",
-    department: "Hazine ve Yatırım",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u1",
-    authorLabel: "Anonim Yatırım Analisti",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "ESG uyumlu portföy oranının %20 artması",
-    riskNotes: "Algoritmanın finansal getiri üzerindeki etkisi simüle edilmeli.",
-    communityScore: 76,
-    strategicScore: 84,
-    aiScore: 88,
-    credits: 98,
-    supporters: 23,
-    comments: [
-      { user: "Deniz Çetin", body: "Sürdürülebilir kalkınma hedeflerimizle son derece uyumlu.", manager: false },
-      { user: "Burak Kaya", body: "Finansal getiriden ödün vermeyecek şekilde kısıtlar eklenmeli.", manager: true }
-    ],
-    tags: ["TSKB", "Yatırım", "ESG", "Algoritma"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-23",
-    title: "Şişecam lojistik planlama yapay zeka asistanı",
-    summary: "Fabrikalardan limanlara konteyner sevkiyat rotalarını optimize eden yapay zeka.",
-    problem: "Konteyner rezervasyonları ve tır rotaları dinamik değişiyor, gecikme maliyeti artıyor.",
-    solution: "Liman doluluk oranları ve hava durumunu takip eden akıllı rota planlayıcı asistan.",
-    type: "Operasyonel iyileştirme",
-    company: "Şişecam Dış Ticaret",
-    department: "Lojistik Planlama",
-    location: "Tuzla Ofis",
-    city: "İstanbul",
-    authorId: "u2",
-    authorLabel: "Hüseyin Çelik",
-    anonymity: "İsmimle paylaş",
-    visibility: "Holding geneli",
-    status: "review",
-    estimatedImpact: "Çok yüksek",
     estimatedCost: "Yüksek",
-    implementationTime: "4 ay",
-    successMetric: "Aylık lojistik gecikme cezalarında %18 tasarruf",
-    riskNotes: "Liman API'lerinin veri aktarım sıklığı doğrulanmalı.",
-    communityScore: 83,
-    strategicScore: 88,
-    aiScore: 89,
-    credits: 140,
-    supporters: 31,
-    comments: [
-      { user: "Mustafa Kaya", body: "Şişecam'ın küresel sevkiyat hacmi düşünüldüğünde devasa bir tasarruf potansiyeli var.", manager: true },
-      { user: "Ebru Aksoy", body: "İlk aşamada Ambarlı limanı sevkiyatlarını test edeceğiz.", manager: false }
-    ],
-    tags: ["Şişecam", "Lojistik", "AI", "Optimizasyon"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-24",
-    title: "Ortak çalışma alanlarında akıllı dolap sistemi",
-    summary: "Mobil uygulama üzerinden boş dolapların rezerve edilmesini sağlayan QR kodlu dolap sistemi.",
-    problem: "Kampüs içi ortak alanlarda çalışanlar eşyalarını bırakacak boş dolap bulamıyor.",
-    solution: "Mevcut dolap kilitlerine takılacak akıllı Bluetooth aparatlar ve basit bir rezervasyon paneli.",
-    type: "Çalışan deneyimi",
-    company: "İşBank Holding",
-    department: "Destek Hizmetleri",
-    location: "İstanbul Tuzla Kampüsü",
-    city: "İstanbul",
-    authorId: "u3",
-    authorLabel: "Zeynep Demir",
-    anonymity: "İsmimle paylaş",
-    visibility: "Holding geneli",
-    status: "new",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Çalışan memnuniyet anketinde kampüs içi imkanlar skoru",
-    riskNotes: "Dolapların uzun süre rezerve edilip kullanılmamasını önleyecek otomatik iptal süresi konmalı.",
-    communityScore: 79,
-    strategicScore: 72,
-    aiScore: 84,
-    credits: 82,
-    supporters: 20,
-    comments: [
-      { user: "Ahmet Yılmaz", body: "Tuzla kampüsünde hemen denemeye başlayabiliriz.", manager: false },
-      { user: "Can Koç", body: "Destek Hizmetleri ekibi bütçe onayını verdi.", manager: true }
-    ],
-    tags: ["Çalışan Deneyimi", "Kampüs", "IoT", "Dolap"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-25",
-    title: "İşNet ağ geçidi siber güvenlik ihlal uyarı sistemi",
-    summary: "Ağ trafiğindeki şüpheli veri çıkışlarını makine öğrenmesi ile anında tespit eden sistem.",
-    problem: "Geleneksel kurallı güvenlik sistemleri yeni nesil siber saldırıları tespit etmekte gecikiyor.",
-    solution: "Ağ anomalilerini gerçek zamanlı öğrenen ve alarm üreten hafif bir model entegre edilebilir.",
-    type: "Teknik geliştirme",
-    company: "İşNet",
-    department: "Siber Güvenlik Operasyon",
-    location: "Ankara Veri Merkezi",
-    city: "Ankara",
-    authorId: "u4",
-    authorLabel: "Anonim Güvenlik Analisti",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Şirket içi",
-    status: "pilot",
-    estimatedImpact: "Çok yüksek",
-    estimatedCost: "Yüksek",
-    implementationTime: "5 ay",
-    successMetric: "Kritik ihlal alarm sürelerinin 2 saatten 5 saniyeye düşmesi",
-    riskNotes: "Yanlış alarmların (false positive) engellenmesi için model ilk 3 ay pasif izlemede kalmalı.",
-    communityScore: 78,
-    strategicScore: 91,
-    aiScore: 92,
-    credits: 135,
-    supporters: 28,
-    comments: [
-      { user: "Ebru Aksoy", body: "Güvenlik altyapımız için çok önemli bir adım.", manager: false },
-      { user: "Burak Kaya", body: "BT Altyapı ekibiyle koordineli ilerliyoruz.", manager: true }
-    ],
-    tags: ["İşNet", "Siber Güvenlik", "Yapay Zeka", "Altyapı"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-26",
-    title: "Yapay zeka ile sözleşme risk analizi modülü",
-    summary: "Hukuk departmanına gelen sözleşme taslaklarını tarayarak riskli maddeleri işaretleyen AI.",
-    problem: "Sözleşme inceleme süreçleri uzun sürüyor, satın alma ve operasyon süreçleri tıkanıyor.",
-    solution: "Geçmiş davalar ve kurum politikalarına göre sözleşmedeki cezai şart ve gizlilik maddelerini inceleyen model.",
-    type: "Süreç otomasyonu",
-    company: "İşBank Holding",
-    department: "Hukuk Müşavirliği",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u5",
-    authorLabel: "Anonim Hukuk Müşaviri",
-    anonymity: "İsim gizli, departman görünür",
-    visibility: "İlgili departmanlar",
-    status: "new",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Sözleşme inceleme sürelerinde %45 kısalma",
-    riskNotes: "Yapay zeka önerilerinin tamamen tavsiye niteliğinde kalması, nihai onayın avukatta olması şarttır.",
-    communityScore: 85,
-    strategicScore: 86,
-    aiScore: 89,
-    credits: 120,
-    supporters: 27,
-    comments: [
-      { user: "Zeynep Demir", body: "Satın alma birimi olarak bu projeyi sabırsızlıkla bekliyoruz.", manager: false },
-      { user: "Mustafa Kaya", body: "Hukuk ekibinin iş yükünü ciddi oranda hafifletecektir.", manager: true }
-    ],
-    tags: ["Hukuk", "Yapay Zeka", "Otomasyon", "Sözleşme"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-27",
-    title: "Müşteri memnuniyet anketleri otomatik özetleme",
-    summary: "Her ay gelen binlerce serbest metin anket cevabını ana temalara göre özetleyen AI motoru.",
-    problem: "Müşterilerin anketlerde yazdığı uzun yorumlar manuel okunup raporlanıyor, gecikmeler yaşanıyor.",
-    solution: "LLM altyapısı kullanarak duygu yönelimleri ve şikayet odaklarını haftalık raporlayan servis.",
-    type: "Müşteri deneyimi",
-    company: "Anadolu Hayat Emeklilik",
-    department: "Müşteri Deneyimi",
-    location: "İstanbul Ofis",
-    city: "İstanbul",
-    authorId: "u1",
-    authorLabel: "Deniz Çetin",
-    anonymity: "İsmimle paylaş",
-    visibility: "Şirket içi",
-    status: "new",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "1 ay",
-    successMetric: "Müşteri geri bildirim analiz raporu hazırlama süresinde %90 kısalma",
-    riskNotes: "Yorumlardaki özel kişisel verilerin (ad, telefon vb.) LLM modeline gitmeden önce maskelenmesi.",
-    communityScore: 83,
-    strategicScore: 80,
-    aiScore: 86,
-    credits: 92,
-    supporters: 21,
-    comments: [
-      { user: "Elif Şahin", body: "Anadolu Hayat müşteri ilişkileri birimi projeye sponsor oldu.", manager: false },
-      { user: "Can Koç", body: "KVKK maskeleme kütüphanelerini öncelikle entegre edelim.", manager: true }
-    ],
-    tags: ["Anadolu Hayat", "Müşteri Deneyimi", "Yapay Zeka", "Anket"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-28",
-    title: "Şube ve bölge ofisleri su tasarruf vanaları montajı",
-    summary: "Tüm fiziki lokasyonlardaki musluklara akıllı tasarruf vanaları yerleştirilmesi.",
-    problem: "Musluklardaki su debisi yüksek olduğu için gereksiz tüketim oluşuyor, fatura maliyeti yüksek.",
-    solution: "Su akışını hava ile karıştırarak debiyi düşüren perlatörlerin tüm musluklara takılması.",
-    type: "Sürdürülebilirlik",
-    company: "İşBank Holding",
-    department: "Destek Hizmetleri",
-    location: "Ankara Bölge",
-    city: "Ankara",
-    authorId: "u2",
-    authorLabel: "Anonim Bölge Sorumlusu",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Holding geneli",
-    status: "done",
-    estimatedImpact: "Orta",
-    estimatedCost: "Düşük",
-    implementationTime: "3 hafta",
-    successMetric: "Aylık su tüketim faturalarında %35 azalma",
-    riskNotes: "Montaj işlemlerinin şube çalışma saatleri dışında yapılması planlanmalı.",
-    communityScore: 88,
-    strategicScore: 74,
-    aiScore: 83,
-    credits: 140,
-    supporters: 39,
-    comments: [
-      { user: "Burak Kaya", body: "Ankara genelinde montajlar tamamlandı, faturalardaki düşüşü gözlemliyoruz.", manager: true },
-      { user: "Ahmet Yılmaz", body: "Çok basit ama yeşil hedeflerimize katkısı net bir proje.", manager: false }
-    ],
-    tags: ["Sürdürülebilirlik", "Su Tasarrufu", "Maliyet", "Uygulandı"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-29",
-    title: "Kağıtsız şube projesi kapsamında dijital formlar",
-    summary: "Şube gişelerindeki para yatırma/çekme fişlerinin tabletten dijital imzayla onaylanması.",
-    problem: "Her gişe işleminde basılan kağıt fişler hem tonlarca kağıt israfına hem de arşivleme yüküne sebep oluyor.",
-    solution: "Müşterinin önündeki imza tableti üzerinden formun onaylanıp müşteriye SMS/E-posta ile gönderilmesi.",
-    type: "Maliyet azaltma",
-    company: "İşBank Perakende Operasyonları",
-    department: "Şube Operasyonları",
-    location: "İstanbul Beşiktaş Şubesi",
-    city: "İstanbul",
-    authorId: "u3",
-    authorLabel: "Anonim Gişe Görevlisi",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Holding geneli",
-    status: "pilot",
-    estimatedImpact: "Çok yüksek",
-    estimatedCost: "Yüksek",
-    implementationTime: "6 ay",
-    successMetric: "Şube kağıt ve arşivleme maliyetlerinde %70 düşüş",
-    riskNotes: "Müşteri yaş gruplarına göre dijital tablet kullanım zorluğu ve alternatif akışlar korunmalı.",
-    communityScore: 92,
-    strategicScore: 90,
-    aiScore: 91,
-    credits: 180,
-    supporters: 51,
-    comments: [
-      { user: "Hüseyin Çelik", body: "Gişe işlemlerini çok hızlandıracak stratejik bir dönüşüm adımı.", manager: true },
-      { user: "Ahmet Yılmaz", body: "Beşiktaş şubesinde pilot başladı, müşteriler çok memnun.", manager: false }
-    ],
-    tags: ["Operasyon", "Şube", "Kağıtsız", "Dijital İmza"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-30",
-    title: "İK eğitim öneri motoru ve kişiselleştirilmiş rota",
-    summary: "Çalışanın rolüne ve eksik yetkinliklerine göre en uygun eğitimleri öneren AI platformu.",
-    problem: "Çalışanlar binlerce eğitimlik katalog içinde kendilerine en faydalı eğitimleri bulmakta zorlanıyor.",
-    solution: "Rol, mevcut beceriler ve kariyer hedeflerini değerlendirip haftalık eğitim öneren motor.",
-    type: "Eğitim / onboarding önerisi",
-    company: "İşBank Holding",
-    department: "İnsan Kaynakları",
-    location: "İstanbul Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "u5",
-    authorLabel: "Anonim İK Uzmanı",
-    anonymity: "İsim gizli, departman görünür",
-    visibility: "Holding geneli",
-    status: "new",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Eğitim tamamlama oranlarında %40 artış",
-    riskNotes: "Önerilerin kalitesinin artması için başlangıçta çalışan ilgi anketleri düzenlenmeli.",
-    communityScore: 81,
-    strategicScore: 85,
-    aiScore: 88,
-    credits: 115,
-    supporters: 28,
-    comments: [
-      { user: "Zeynep Demir", body: "Kendi gelişim rotamızı tasarlamak motivasyonu artıracaktır.", manager: false },
-      { user: "Mustafa Kaya", body: "İK eğitim platformu entegrasyonu için teknik analiz başladı.", manager: true }
-    ],
-    tags: ["İK", "Eğitim", "Öneri", "Kariyer"],
-    createdAt: "2026-06-07"
-  },
-  {
-    id: "idea-31",
-    title: "Leasing Süreçleri İçin Mobil İmza ve Evrak Doğrulama Modülü",
-    summary: "Müşterilerin leasing sözleşmelerini ve ek teminat evraklarını mobil ortamda güvenli e-imza / mobil imza ile onaylamasını sağlayan entegrasyon.",
-    problem: "Fiziki ıslak imza süreçleri ve kurye gönderimleri sözleşme tamamlama süresini ortalama 5 iş günü uzatıyor ve operasyonel maliyet oluşturuyor.",
-    solution: "E-imza sağlayıcıları ve E-Devlet kapısı ile doğrudan entegrasyon kurularak sözleşme onaylama adımının 10 dakikada mobil cihazdan tamamlanması sağlanacaktır.",
-    type: "Operasyonel iyileştirme",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Operasyon",
-    location: "Kurumsal Operasyon",
-    city: "İstanbul",
-    authorId: "p07",
-    authorLabel: "Nazlı Durukan",
-    anonymity: "Açık profil",
-    visibility: "Holding geneli",
-    status: "review",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Düşük",
-    implementationTime: "2 ay",
-    successMetric: "Ortalama sözleşme tamamlama süresinin 5 günden 2 saate düşürülmesi",
-    riskNotes: "Mobil imza sağlayıcı API kesintileri için yedekli altyapı tasarlanmalı.",
-    communityScore: 89,
-    strategicScore: 94,
-    aiScore: 92,
-    credits: 160,
-    supporters: 45,
-    comments: [
-      { user: "Cem Yalın", body: "Operasyonel iş yükünü inanılmaz derecede azaltacak bir proje, Moka ödeme entegrasyonuyla da birleştirilebilir.", manager: false },
-      { user: "Defne Arman", body: "Holding genelinde yaygınlaştırılabilecek çok iyi bir çalışma.", manager: true }
-    ],
-    tags: ["Leasing", "Dijital İmza", "Operasyon", "Hız", "Verimlilik"],
-    createdAt: "2026-06-08"
-  },
-  {
-    id: "idea-32",
-    title: "İkinci El İş Makinesi Değerleme ve Ekspertiz AI Modeli",
-    summary: "İş makinesi leasing taleplerinde, makinenin çalışma saati, model yılı, marka ve hasar geçmişi verilerini işleyerek otomatik piyasa değeri tahmini yapan yapay zeka.",
-    problem: "İkinci el iş makinelerinin ekspertiz ve değerleme süreçleri manuel yapılıyor ve kredi onay süresini 3-4 gün geciktiriyor.",
-    solution: "Geliştirilecek regresyon modeliyle benzer ilanlar ve geçmiş ekspertiz raporları taranarak, makinenin adil piyasa değeri saniyeler içinde hesaplanacak ve tahsis ekiplerine sunulacak.",
-    type: "Yapay zeka / Otomasyon",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Tahsis",
-    location: "Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "p25",
-    authorLabel: "Aras Kılınç",
-    anonymity: "Açık profil",
-    visibility: "Holding geneli",
-    status: "approved",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Değerleme doğruluğu ve ekspertiz süreç süresinde %70 iyileşme",
-    riskNotes: "Uç fiyatlardaki veya nadir iş makinelerindeki veri eksikliği için manuel onay akışı devam etmeli.",
-    communityScore: 95,
-    strategicScore: 91,
-    aiScore: 96,
-    credits: 210,
-    supporters: 68,
-    comments: [
-      { user: "Kaan Öztürk", body: "Araştırma ve makine öğrenimi modellerimizi bu projeye destek için paylaşabiliriz. Çok mantıklı bir kullanım.", manager: true },
-      { user: "Nazlı Durukan", body: "Bursa bölgesindeki tekstil ve sanayi makineleri için de genişletilebilir.", manager: false }
-    ],
-    tags: ["Leasing", "Yapay Zeka", "Değerleme", "Ekspertiz", "Tahsis"],
-    createdAt: "2026-06-09"
-  },
-  {
-    id: "idea-33",
-    title: "Sürdürülebilir Enerji ve GES Yatırımları İçin Dijital Yeşil Leasing",
-    summary: "KOBİ'lerin çatı tipi Güneş Enerjisi Santrali (GES) ve rüzgar enerjisi leasing başvurularında, enerji üretim fizibilite raporuna göre otomatik kredi limiti tanımlayan yeşil portal.",
-    problem: "Yeşil enerji yatırımlarının teknik değerlendirmesi uzun sürüyor, standart leasing süreçleri bu yatırımların doğasına uymuyor.",
-    solution: "Teknik fizibilite verilerini API'ler üzerinden okuyan ve yatırımın geri dönüş süresine göre nakit akışını modelledikten sonra esnek ödeme planı çıkaran bir portal tasarımı.",
-    type: "Yeşil Finans / Sürdürülebilirlik",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Satış",
-    location: "Bursa Bölge",
-    city: "Bursa",
-    authorId: "p07",
-    authorLabel: "Nazlı Durukan",
-    anonymity: "İsim gizli, rol görünür",
-    visibility: "Holding geneli",
-    status: "active",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "4 ay",
-    successMetric: "Yeşil leasing işlem hacminde ilk yıl %25 artış",
-    riskNotes: "Yatırım teşvik belgesi süreçleri ve yasal mevzuatlar portala entegre edilmeli.",
-    communityScore: 97,
+    implementationTime: "8 months",
+    successMetric: "Captured CO2 volume daily and ESG rating improvements",
+    riskNotes: "Extremely high initial investment. Government subsidy support is required.",
+    communityScore: 93,
     strategicScore: 96,
-    aiScore: 94,
+    aiScore: 95,
     credits: 280,
-    supporters: 95,
+    supporters: 48,
+    country: "ES",
     comments: [
-      { user: "Ece Uslu", body: "TSKB olarak sürdürülebilir finansman metodolojimizi buraya aktarabiliriz, ortak çalışma grubu kuralım.", manager: true },
-      { user: "Aras Kılınç", body: "Sanayi bölgelerinde bu araca çok büyük bir talep var, özellikle ihracatçı KOBİ'ler için karbon vergisi öncesi can suyu olur.", manager: false }
+      { user: "Maria Ortega", body: "This will make Buñol the cleanest white cement plant in Spain.", manager: false }
     ],
-    tags: ["Leasing", "Yeşil Finans", "GES", "Sürdürülebilirlik", "KOBİ"],
-    createdAt: "2026-06-05"
-  },
-  {
-    id: "idea-34",
-    title: "Tarım ve Tarım Makineleri Leasingi İçin Esnek Hasat Ödeme Sihirbazı",
-    summary: "Çiftçilerin ve tarımsal işletmelerin traktör, hasat makinesi vb. leasing ödemelerini, yetiştirdikleri ürünlerin hasat dönemine ve bölgedeki kuraklık/verim endeksine göre esnek yapılandıran sihirbaz.",
-    problem: "Tarım sektöründeki gelirlerin dönemsel olması nedeniyle standart aylık leasing ödemeleri çiftçiyi zorluyor ve gecikme oranlarını artırıyor.",
-    solution: "Coğrafi bilgi sistemleri (CBS) ve tarımsal rekolte tahmin verilerini kullanarak, hasat dönemi nakit girişlerine tam uyumlu ve olağanüstü durumlarda ertelemeli ödeme planı hazırlayan müşteri arayüzü.",
-    type: "Müşteri Deneyimi",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Satış",
-    location: "Bursa Bölge",
-    city: "Bursa",
-    authorId: "p25",
-    authorLabel: "Aras Kılınç",
-    anonymity: "Açık profil",
-    visibility: "Holding geneli",
-    status: "review",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Düşük",
-    implementationTime: "2 ay",
-    successMetric: "Tarım leasingi portföy kalitesinde %15 artış ve müşteri memnuniyeti yükselişi",
-    riskNotes: "İklim risklerinin finansal etkilerini modellemek için Tarım Sigortaları (TARSİM) verileriyle entegrasyon yapılmalı.",
-    communityScore: 91,
-    strategicScore: 88,
-    aiScore: 89,
-    credits: 135,
-    supporters: 37,
-    comments: [
-      { user: "Nazlı Durukan", body: "Bursa ve Ege bölgesindeki zeytin/domates hasat dönemleriyle uyumlu şablonlar ekleyebiliriz.", manager: false },
-      { user: "Mustafa Kaya", body: "Finansal risk modelleri için hazine ekibinden de onay almamız gerekecek ama fikir harika.", manager: true }
-    ],
-    tags: ["Leasing", "Tarım", "Esnek Ödeme", "Müşteri Deneyimi", "TARSİM"],
-    createdAt: "2026-06-06"
-  },
-  {
-    id: "idea-35",
-    title: "Sat-Geri-Kirala (Sale and Leaseback) Süreçlerinde Otomatik Tapu ve Gayrimenkul Entegrasyonu",
-    summary: "Sale and Leaseback işlemlerinde tapu sorgulama, harç hesaplama ve ipotek işlemlerini Tapu ve Kadastro Genel Müdürlüğü (TKGM) API'leri ile dijitalleştiren altyapı önerisi.",
-    problem: "Gayrimenkul temelli leasing işlemlerinde tapu müdürlükleriyle yapılan yazışmalar ve fiziki takip süreçleri haftalar sürüyor.",
-    solution: "TKGM Web-Tapu entegrasyonu ile doğrudan sistem üzerinden yetkilendirme yapılarak tapu kayıtlarının sorgulanması ve ipotek tescillerinin online yapılması.",
-    type: "Teknolojik Altyapı",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Kredi",
-    location: "Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "p07",
-    authorLabel: "Nazlı Durukan",
-    anonymity: "Açık profil",
-    visibility: "Holding geneli",
-    status: "review",
-    estimatedImpact: "Yüksek",
-    estimatedCost: "Orta",
-    implementationTime: "3 ay",
-    successMetric: "Tapu tescil ve işlem kapatma süresinde %80 zaman tasarrufu",
-    riskNotes: "Yasal düzenlemeler ve noter onay gereksinimleri iyi analiz edilmeli.",
-    communityScore: 87,
-    strategicScore: 93,
-    aiScore: 90,
-    credits: 195,
-    supporters: 53,
-    comments: [
-      { user: "Ozan Gürel", body: "İş GYO olarak benzer bir tapu entegrasyonunu biz de araştırıyorduk, ortak bir altyapı kurmak maliyetleri çok düşürebilir.", manager: true },
-      { user: "Aras Kılınç", body: "Kesinlikle! İş GYO ile yapılacak ortak çalışma projenin hızını katlar.", manager: false }
-    ],
-    tags: ["Leasing", "Sat-Geri-Kirala", "Tapu Entegrasyonu", "Hukuk", "Hız"],
-    createdAt: "2026-06-08"
-  },
-  {
-    id: "idea-36",
-    title: "KOBİ'ler İçin 'Pay-As-You-Use' (Kullandıkça Öde) Leasing Modeli",
-    summary: "IoT cihazları ile entegre edilen üretim makinelerinin aylık leasing ödemelerini, makinenin fiili çalışma saatine veya ürettiği parça sayısına göre dinamik belirleyen yeni nesil kiralama modeli.",
-    problem: "KOBİ'ler sipariş alamadıkları veya üretimin durduğu aylarda dahi sabit leasing taksitlerini ödemekte zorlanıyor ve finansal sıkıntıya düşüyor.",
-    solution: "Üretim makinelerine takılacak IoT sensörleri ile makinenin kullanım verileri anlık olarak İş Leasing bulut sistemine aktarılacak ve o ayki fatura fiili kullanıma göre kesilecek.",
-    type: "İnovatif Finansman",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Kredi",
-    location: "Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "p07",
-    authorLabel: "Nazlı Durukan",
-    anonymity: "Açık profil",
-    visibility: "Holding geneli",
-    status: "approved",
-    estimatedImpact: "Çok Yüksek",
-    estimatedCost: "Yüksek",
-    implementationTime: "6 ay",
-    successMetric: "Yeni müşteri kazanımında %35 artış ve KOBİ müşteri sadakatinde rekor yükseliş",
-    riskNotes: "IoT verilerinin güvenliği ve manipülasyon riskine karşı blokzincir tabanlı kayıt sistemi kurulmalı.",
-    communityScore: 98,
-    strategicScore: 95,
-    aiScore: 97,
-    credits: 340,
-    supporters: 112,
-    comments: [
-      { user: "Yiğit Bora", body: "İşNet olarak IoT sensör altyapısını ve veri iletim güvenliğini üstlenebiliriz. Çok heyecan verici bir fikir!", manager: true },
-      { user: "Selin Eryılmaz", body: "Şişecam'ın yeni tedarikçi fabrikalarında bu modeli hemen test edebiliriz, bize de büyük esneklik sağlar.", manager: false }
-    ],
-    tags: ["Leasing", "IoT", "Kullandıkça Öde", "KOBİ", "İnovasyon"],
-    createdAt: "2026-06-09"
-  },
-  {
-    id: "idea-rejected-demo",
-    title: "Yasa Dışı Veri Depolama ve Hızlı Kredi Puanlama Algoritması",
-    summary: "Müşterilerin izni olmadan sosyal medya profillerini ve kişisel mesajlarını tarayıp kredi skoru belirleyen sistem.",
-    problem: "Kredi başvurularında veri toplamanın yasal sınırları nedeniyle onay süreçlerinin yavaş kalması.",
-    solution: "Kullanıcı rızası aranmaksızın arka planda çalışan ve veri sızdıran bir mobil SDK entegrasyonu.",
-    type: "İnovatif Finansman",
-    company: "İş Finansal Kiralama",
-    companyId: "is-leasing",
-    department: "Kredi",
-    location: "Genel Müdürlük",
-    city: "İstanbul",
-    authorId: "p25",
-    authorLabel: "Aras Kılınç",
-    anonymity: "Açık profil",
-    visibility: "Holding geneli",
-    status: "rejected",
-    estimatedImpact: "Düşük",
-    estimatedCost: "Yüksek",
-    implementationTime: "6 ay",
-    successMetric: "KVKK ihlali ve yasal davalar",
-    riskNotes: "Yüksek derecede KVKK ihlali ve hapis cezası riski barındırır.",
-    communityScore: 12,
-    strategicScore: 18,
-    aiScore: 45,
-    credits: 0,
-    supporters: 0,
-    comments: [
-      { user: "Yapay Zeka Denetçisi", body: "DİKKAT: Bu proje otomatik olarak REDDEDİLMİŞTİR. Neden: Proje içeriği kurum tüzüğüne veya yasal mevzuata (KVKK) aykırı bulunmuş ve AI skoru (45) baraj altı kalmıştır.", manager: true }
-    ],
-    tags: ["Leasing", "Kredi", "Risk", "KVKK İhlali"],
-    createdAt: "2026-06-12"
+    tags: ["Carbon Capture", "ESG", "Spain", "Cement", "Sustainability"],
+    createdAt: "2026-06-14"
   }
 ];
 
-initialIdeas.forEach((idea, index) => {
-  const companyCycle = ["is-new", "tibas-holding", "sisecam", "tskb", "moka", "is-net", "anadolu-hayat", "isbank-ag"];
-  idea.visualUrl = idea.visualUrl || remoteImages.ideaVisuals[index % remoteImages.ideaVisuals.length];
-  idea.companyId = idea.companyId || ((index % 5 === 0) ? "independent" : companyCycle[index % companyCycle.length]);
-  idea.marketCategory = idea.marketCategory || marketCategories[index % marketCategories.length];
-  idea.area = idea.area || borsaAreas[index % borsaAreas.length];
-  idea.marketTicker = idea.marketTicker || `NIE-${String(index + 1).padStart(2, "0")}`;
-  idea.marketPrice = idea.marketPrice || Math.max(48, Math.round((idea.aiScore * 1.8) + (idea.communityScore * 0.9) + (idea.supporters * 1.6)));
-  idea.marketChange = idea.marketChange !== undefined ? idea.marketChange : [12.4, -3.8, 7.1, 2.6, 18.9, -1.4, 9.6, 4.2][index % 8];
-  idea.marketVolume = idea.marketVolume || 820 + idea.credits * 7 + idea.supporters * 31;
-  idea.marketShares = idea.marketShares || 1200 + idea.supporters * 42;
-  idea.marketSpark = idea.marketSpark || [48, 62, 58, 76, 70, 86, 81, 92].map((point, sparkIndex) => Math.max(18, Math.min(96, point + ((index % 3) - 1) * sparkIndex * 2)));
-  idea.files = idea.files?.length ? idea.files : defaultBundleFiles(idea.marketTicker, idea.marketCategory);
-
-  // Initialize contributors (yapanlar)
-  const author = personById(idea.authorId) || { name: idea.authorLabel || "Fikir Sahibi", role: "Proje Sahibi", photo: "" };
-  idea.contributors = [{
-    userId: idea.authorId,
-    name: author.name,
-    role: author.role || "Proje Lideri",
-    photo: author.photo || ""
-  }];
-
-  // Add multiple makers to some ideas for demonstration
-  if (idea.id === "idea-1") {
-    const cKoc = personById("u3");
-    if (cKoc) idea.contributors.push({ userId: cKoc.id, name: cKoc.name, role: "Süreç Yöneticisi", photo: cKoc.photo });
-  } else if (idea.id === "idea-2") {
-    const dArman = personById("p01");
-    if (dArman) idea.contributors.push({ userId: dArman.id, name: dArman.name, role: "UI/UX Tasarımcısı", photo: dArman.photo });
-  } else if (idea.id === "idea-3") {
-    const mAydin = personById("u5");
-    if (mAydin) idea.contributors.push({ userId: mAydin.id, name: mAydin.name, role: "İK Danışmanı", photo: mAydin.photo });
-  }
-});
-
 const challenges = [
+  // TR Challenges
   {
     id: "challenge-ops-wait",
-    title: "Şube Bekleme Süresi Çözüm Yarışması",
+    title: "Akbank Açık Bankacılık Hackathonu",
     theme: "Müşteri deneyimi",
-    sector: "Operasyon",
-    brief: "Yoğun saatlerde sıra ve gişe bekleme süresini azaltacak uygulanabilir çözümler aranıyor.",
+    sector: "Finans",
+    brief: "Kullanıcıların günlük harcamalarını analiz ederek tasarruf önerileri sunan fintech çözümleri.",
     date: "1 Haz - 30 Haz",
-    deadline: "19 gün kaldı",
-    reward: "₺75.000 proje bütçesi + hızlı terfi kurul görüşmesi",
+    deadline: "12 gün kaldı",
+    reward: "75.000 SA + Hızlı Inovasyon Bütçesi",
     rewardType: "Terfi + Para",
-    sponsor: "İş New Operasyon Ofisi",
+    sponsor: "Akbank İnovasyon Lab",
     status: "Aktif",
-    ideas: 42,
-    participants: 186,
+    ideas: 32,
+    participants: 120,
     prizeIcon: "badge-dollar-sign",
     accent: "blue",
-    shortlist: ["Pilot bütçesi", "Yönetim sunumu", "Terfi mülakatı"]
+    shortlist: ["Pilot bütçesi", "Yönetim sunumu", "Akbank Lab desteği"],
+    country: "TR"
   },
   {
     id: "challenge-ai-docs",
-    title: "AI ile Evrak Onayını Kısalt",
-    theme: "Yapay zekâ",
-    sector: "Yapay Zekâ",
-    brief: "Evrak, sözleşme ve onay süreçlerinde manuel kontrol yükünü azaltacak AI destekli akışlar.",
+    title: "Teknosa Çok Kanallı Lojistik Yarışması",
+    theme: "Süreç otomasyonu",
+    sector: "Perakende",
+    brief: "Online siparişlerin mağaza stoklarıyla anlık eşlenip teslimat süresini yarıya indiren lojistik akışları.",
     date: "5 Haz - 5 Tem",
-    deadline: "24 gün kaldı",
-    reward: "iPad Pro + mentorluk + canlı pilot hakkı",
+    deadline: "18 gün kaldı",
+    reward: "50.000 SA + Gebze Lojistik Pilotu",
     rewardType: "Teknoloji Hediye",
-    sponsor: "TİBAŞ Holding Dijital Dönüşüm",
+    sponsor: "Teknosa Tedarik Zinciri",
     status: "Aktif",
-    ideas: 58,
-    participants: 214,
-    prizeIcon: "tablet",
-    accent: "green",
-    shortlist: ["iPad Pro", "AI mentorluğu", "Pilot hakkı"]
+    ideas: 24,
+    participants: 90,
+    prizeIcon: "laptop",
+    accent: "orange",
+    shortlist: ["MacBook", "Teknosa Pilot", "Tedarik rozeti"],
+    country: "TR"
   },
+  // US Challenges
   {
     id: "challenge-green-finance",
-    title: "Yeşil Finans Ürün Fikri Kupası",
+    title: "Texas utility battery dispatch optimization",
     theme: "Sürdürülebilirlik",
-    sector: "Finans",
-    brief: "KOBİ ve bireysel müşteriler için ölçülebilir çevresel etki yaratan finans ürünleri.",
-    date: "12 Haz - 18 Tem",
-    deadline: "Başlamak üzere",
-    reward: "₺100.000 pilot fonu + yatırım komitesi sunumu",
+    sector: "Enerji",
+    brief: "Algorithms to optimize charge/discharge schedules of Texas solar batteries based on peak grid prices.",
+    date: "10 Jun - 15 Jul",
+    deadline: "27 days left",
+    reward: "100.000 SA + Austin lab pilot project",
     rewardType: "Para",
-    sponsor: "TSKB & İş Yatırım",
-    status: "Yakında",
-    ideas: 24,
-    participants: 93,
+    sponsor: "Sabancı Climate US",
+    status: "Aktif",
+    ideas: 15,
+    participants: 45,
     prizeIcon: "leaf",
     accent: "emerald",
-    shortlist: ["Pilot fonu", "Komite sunumu", "ESG rozeti"]
+    shortlist: ["BMS Pilot Fund", "Committee presentation", "ESG Badge"],
+    country: "US"
   },
+  // GB Challenges
   {
-    id: "challenge-digital-product",
-    title: "Moka Üye İşyeri Akışını Sadeleştir",
-    theme: "Dijital ürün",
-    sector: "FinTech",
-    brief: "Üye işyeri başvuru, evrak kontrolü ve aktivasyon sürecini daha hızlı hale getiren fikirler.",
-    date: "20 May - 20 Haz",
-    deadline: "Final değerlendirme",
-    reward: "MacBook Air + ürün ekibiyle 6 haftalık sprint",
-    rewardType: "Teknoloji Hediye",
-    sponsor: "Moka Ürün Ekibi",
-    status: "Final",
-    ideas: 67,
-    participants: 242,
-    prizeIcon: "laptop",
-    accent: "purple",
-    shortlist: ["MacBook Air", "Ürün sprinti", "Demo günü"]
-  },
-  {
-    id: "challenge-employee",
-    title: "Çalışan Deneyimi Laboratuvarı",
-    theme: "Çalışan deneyimi",
-    sector: "İK",
-    brief: "Oryantasyon, iç iletişim ve ekipler arası görünürlük için küçük ama etkili çözümler.",
-    date: "10 Haz - 10 Tem",
-    deadline: "29 gün kaldı",
-    reward: "Terfi puanı + İK pilot desteği + hediye seti",
-    rewardType: "Terfi + Hediye",
-    sponsor: "İK Deneyim Ofisi",
-    status: "Aktif",
-    ideas: 31,
-    participants: 128,
-    prizeIcon: "sparkles",
-    accent: "amber",
-    shortlist: ["Terfi puanı", "Pilot desteği", "Hediye seti"]
-  },
-  {
-    id: "challenge-security",
-    title: "Güvenli Veri Paylaşımı Hack Sprint",
-    theme: "Risk ve uyum",
-    sector: "Siber Güvenlik",
-    brief: "Dosya, veri seti ve proje bundle paylaşımında güvenliği artıracak pratik çözümler.",
-    date: "1 Tem - 31 Tem",
-    deadline: "Yakında",
-    reward: "₺50.000 ödül + güvenlik sertifika desteği",
+    id: "challenge-renewables-wind",
+    title: "UK Wind Output Prediction Contest",
+    theme: "Yapay zekâ",
+    sector: "Enerji",
+    brief: "AI algorithms to predict next-day wind speed and turbine generation outputs in London grid connections.",
+    date: "15 Jun - 25 Jul",
+    deadline: "35 days left",
+    reward: "60.000 SA + London Tech team support",
     rewardType: "Para + Sertifika",
-    sponsor: "Bilgi Güvenliği",
-    status: "Yakında",
-    ideas: 12,
-    participants: 76,
+    sponsor: "Sabancı Renewables UK",
+    status: "Aktif",
+    ideas: 11,
+    participants: 30,
     prizeIcon: "shield-check",
-    accent: "slate",
-    shortlist: ["Nakit ödül", "Sertifika", "Kurul sunumu"]
-  }
-];
-
-const channels = [
-  {
-    id: "ch-ops",
-    name: "Operasyon Sinyalleri",
-    description: "Şube, mağaza ve çağrı merkezi iyileştirmeleri",
-    messages: [
-      { user: "Ayşe Yılmaz", body: "İstanbul lokasyonlarında sabah yoğunluğu için 3 fikir daha eklendi.", own: false, time: "09:24" },
-      { user: "Can Koç", body: "Bugün hızlı kazanım adaylarını yöneticiler panelinde işaretliyorum.", own: true, time: "09:32" },
-      { user: "Ayşe Yılmaz", body: "Kadıköy şubesindeki akıllı OCR tarama projesinden geri dönüş aldık, doğruluk oranı %94.", own: false, time: "11:05" },
-      { user: "Mustafa Kaya", body: "Moka üye işyeri onay sürecinin kısaltılması fikri için uyum onayı geldi.", own: false, time: "12:15" },
-      { user: "Hüseyin Çelik", body: "İzmir şube su vanası tasarruf montajları bitti, su tüketimi %35 azaldı.", own: false, time: "14:40" }
-    ]
+    accent: "blue",
+    shortlist: ["API Access", "Predictive Certificate", "UK Pilot"],
+    country: "GB"
   },
+  // ES Challenges
   {
-    id: "ch-ai",
-    name: "AI ile Güçlendir",
-    description: "Fikirleri analiz ve pilot önerisiyle geliştirme",
-    messages: [
-      { user: "Zeynep Kaya", body: "Benzer fikir önerileri için kategori seçimini zorunlu yapalım mı?", own: false, time: "10:05" },
-      { user: "Anonim Çalışan", body: "AI özetinin yöneticiler için 5 madde olması çok işe yarıyor.", own: false, time: "10:14" },
-      { user: "Zeynep Kaya", body: "Müşteri çağrılarının duygu analizi yapılması projesinde LLM modellerinin testlerini başlattık.", own: false, time: "13:20" },
-      { user: "Can Koç", body: "Sözleşme risk analizi için eğitilen modelin ilk testi çok başarılı geçti, avukat ekibi çok memnun.", own: true, time: "15:10" },
-      { user: "Deniz Çetin", body: "Anket özetleme AI modülü de KVKK maskelemesini tamamladı, kuruluma hazır.", own: false, time: "16:05" }
-    ]
-  },
-  {
-    id: "ch-istanbul",
-    name: "İstanbul Lokasyonları",
-    description: "Şehir bazlı öneriler ve saha gözlemleri",
-    messages: [
-      { user: "Elif Şahin", body: "Sıra yönlendirme ekranları pilot sonrası daha az soru aldı.", own: false, time: "11:42" },
-      { user: "Elif Şahin", body: "Tuzla kampüsü ortak çalışma alanı akıllı dolap sistemi için dolaplar yerleştirildi.", own: false, time: "13:15" },
-      { user: "Zeynep Demir", body: "QR kod rezervasyon sistemi mobil portalda aktif edildi.", own: false, time: "14:30" },
-      { user: "Burak Kaya", body: "Tuzla veri merkezi PUE izleme Grafana ekranı canlıya alındı, verileri izleyebiliyoruz.", own: false, time: "15:40" },
-      { user: "Merve Aydın", body: "Yeni onboarding asistan rehberi pilotta 50 yeni çalışan tarafından test ediliyor.", own: false, time: "16:22" }
-    ]
+    id: "challenge-es-co2",
+    title: "Buñol plant Carbon Neutral Cement Challenge",
+    theme: "Sürdürülebilirlik",
+    sector: "Sanayi",
+    brief: "Innovative methods to capture carbon or use hydrogen inside cement rotary kilns in Buñol plant.",
+    date: "20 Jun - 20 Aug",
+    deadline: "60 days left",
+    reward: "150.000 SA + Carbon Capture Pilot",
+    rewardType: "Para",
+    sponsor: "Cimsa Spain",
+    status: "Yakında",
+    ideas: 8,
+    participants: 25,
+    prizeIcon: "flame",
+    accent: "purple",
+    shortlist: ["Pilot funding", "Valencia HQ demo", "ESG board award"],
+    country: "ES"
   }
 ];
 
 const initialNotificationsList = [
-  { id: "n1", type: "Fikir", title: "Fikrine 5 yeni destek kredisi geldi", body: "Müşteri şikayetleri sınıflandırma fikri yükseliyor.", unread: true },
-  { id: "n2", type: "Yönetici", title: "Bir fikir yönetici incelemesine alındı", body: "Dinamik vardiya sistemi operasyon kuyruğuna taşındı.", unread: true },
-  { id: "n3", type: "AI", title: "AI analizi tamamlandı", body: "Onboarding rehberi için pilot önerisi oluşturuldu.", unread: false },
-  { id: "n4", type: "Chat", title: "Operasyon kanalında mention aldın", body: "Can Koç hızlı kazanım adaylarını sordu.", unread: false },
-  { id: "n5", type: "Yarışma", title: "Yeni sprint başlıyor", body: "Çalışan Deneyimi Laboratuvarı 10 Haziran'da açılıyor.", unread: false }
+  { id: "n1", type: "Fikir", title: "Fikrine 5 yeni destek kredisi geldi", body: "AI destekli yatırım danışmanı fikri yükseliyor.", unread: true },
+  { id: "n2", type: "Yönetici", title: "Bir fikir yönetici incelemesine alındı", body: "Lojistik dinamik raf sistemi operasyon kuyruğuna taşındı.", unread: true },
+  { id: "n3", type: "AI", title: "AI analizi tamamlandı", body: "Texas solar farm BMS fikri için pilot önerisi oluşturuldu.", unread: false }
 ];
 
 const navItems = [
@@ -2096,130 +1299,88 @@ const wizardSteps = [
 ];
 
 const initialWizard = {
-  title: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi",
-  oneSentence: "Geçmiş işlem verilerine göre yoğun saatlerde kasa personeli planlamasını daha doğru yapan öneri sistemi.",
-  ideaType: "Operasyonel iyileştirme",
+  title: "Akbank Mobil kullanıcıları için AI destekli yatırım danışmanı",
+  oneSentence: "Kullanıcıların harcama alışkanlıkları ve risk eğilimlerine göre fon ve hisse sepeti öneren yapay zeka entegrasyonu.",
+  ideaType: "Yeni ürün / hizmet",
   visibility: "Şirket içi",
   anonymity: "İsim gizli, rol görünür",
-  company: "İşBank Perakende Operasyonları",
-  department: "Mağaza Operasyonları",
-  subDepartment: "Kasa Operasyonları",
-  location: "Bursa Mağaza",
-  cityRegion: "Bursa / Marmara",
-  userGroup: "Mağaza çalışanları ve müşteriler",
+  company: "Akbank T.A.Ş.",
+  department: "Dijital Bankacılık",
+  subDepartment: "Yatırım Operasyonları",
+  location: "Akbank Genel Müdürlük",
+  cityRegion: "İstanbul / Marmara",
+  userGroup: "Mobil şube kullanıcıları",
   otherDepartments: "Müşteri Deneyimi, Veri Analitiği",
-  contributionTeams: "Operasyon planlama, mağaza yönetimi, veri analitiği",
-  problem: "Yoğun saatlerde kasa bekleme süresi artıyor. Çalışanlar manuel gözleme göre vardiya değiştirmeye çalışıyor, ancak yoğunluk önceden görünmediği için müşteri memnuniyeti düşüyor.",
-  currentExperience: "Hafta sonu ve kampanya günlerinde kasa kuyruğu uzuyor, mağaza içi yönlendirme zorlaşıyor.",
+  contributionTeams: "Yatırım planlama, veri analitiği",
+  problem: "Bireysel yatırımcılar karmaşık piyasa verileri yüzünden yatırım kararı almakta zorlanıyor.",
+  currentExperience: "Müşteriler manuel seçimlerde yanlış risk grubu seçebiliyor ve kayıp yaşayabiliyor.",
   frequency: "Haftada birkaç kez",
-  affected: "Müşteriler, kasa çalışanları, mağaza yöneticileri",
-  customerImpact: "Bekleme süresi ve şikayet sayısı artıyor.",
-  employeeImpact: "Kasa çalışanlarının yoğunluk stresi yükseliyor.",
-  operationalImpact: "Mola ve vardiya planı sık sık bozuluyor.",
-  financialImpact: "Yoğunluk anında satış kaybı ve memnuniyetsizlik riski oluşuyor.",
-  ifNotSolved: "Kampanya dönemlerinde aynı yoğunluk tekrar eder ve çalışan deneyimi olumsuz etkilenir.",
-  solution: "Geçmiş işlem hacmi, kampanya takvimi ve saatlik satış yoğunluğu verilerini kullanarak mağaza yöneticisine vardiya önerisi sunan basit bir panel geliştirilebilir.",
-  howItWorks: "Panel yoğunluk tahmini üretir, gerekli kasa sayısını önerir ve pilot mağazalarda vardiya planıyla karşılaştırılır.",
-  resources: "Geçmiş işlem verisi, vardiya planı, mağaza yöneticisi geri bildirimi",
-  technicalNeed: "Evet, küçük bir veri paneli gerekiyor",
-  educationNeed: "Kısa yönetici eğitimi yeterli",
-  processNeed: "Vardiya planlama sürecinde küçük güncelleme",
-  teams: "Veri analitiği, mağaza operasyonları, IT",
-  pilot: "İlk pilot işlem hacmi yüksek 3 mağazada 4 hafta denenebilir.",
+  affected: "Müşteriler, yatırım danışmanları",
+  customerImpact: "Bakiye verimi düşüyor ve şikayet sayısı artıyor.",
+  employeeImpact: "Yatırım danışmanlarının operasyonel yükü artıyor.",
+  operationalImpact: "Çağrı merkezi yatırım sorularıyla kilitleniyor.",
+  financialImpact: "Hacim kaybı ve müşteri terk riski oluşuyor.",
+  ifNotSolved: "Diğer bankaların robo-danışman sistemlerine karşı rekabet gücü zayıflar.",
+  solution: "Akbank Mobil içinde risk grubuna göre otomatik bakiye dağılımı yapan robo-danışman modülü.",
+  howItWorks: "AI risk analizi çıkarır, öneri sepet sunar, müşteri tek tıkla onaylayıp alım yapar.",
+  resources: "Risk modelleri, harcama verisi, portföy getirileri",
+  technicalNeed: "Evet, entegre robo-danışman API'si gerekiyor",
+  educationNeed: "Kısa tanıtım videosu yeterli",
+  processNeed: "Satış onay sürecinde küçük güncelleme",
+  teams: "Veri analitiği, Akbank Lab, IT",
+  pilot: "İlk pilot işlem hacmi yüksek 1000 kullanıcıda 4 hafta denenebilir.",
   impact: "Yüksek",
-  cost: "Düşük",
-  implementationTime: "1 ay",
-  successMetric: "Ortalama kasa bekleme süresi, müşteri şikayet sayısı, yoğunluk anı çalışan memnuniyeti",
-  kpi: "Müşteri bekleme süresi",
-  risks: "Yanlış veriyle planlama yapılması, mağaza yöneticilerinin yeni akışa adapte olamaması",
-  strategicGoal: "Müşteri deneyimini iyileştirmek ve operasyon verimliliğini artırmak",
-  files: ["pilot-plan.pdf", "kpi-notlari.xlsx"]
+  cost: "Orta",
+  implementationTime: "3 ay",
+  successMetric: "Aktif robo-danışman kullanan müşteri sayısı, memnuniyet oranı",
+  kpi: "Robo-yatırım hacmi",
+  risks: "Regülasyon uyumsuzluğu, yanlış tahminleme riski",
+  strategicGoal: "Bireysel bankacılıkta teknoloji liderliğini korumak",
+  files: ["akbank-robo-danisman-pilot.pdf"]
 };
 
 const initialComplaint = {
-  title: "Verimsiz onay adımları yüzünden işin gereksiz uzaması",
+  title: "Tedarik zinciri onay adımları yüzünden ürün girişinin gecikmesi",
   category: "Süreç verimsizliği",
-  body: "Bazı onay adımları aynı bilgiyi tekrar istiyor. Bu yüzden basit işler bile birkaç farklı kişiden dönüş bekliyor ve süreç yavaşlıyor.",
-  department: "Operasyon",
-  location: "İstanbul Genel Müdürlük",
+  body: "Kategori yöneticisi ve bölge depo onayları paralel çalışmıyor. Bu yüzden basit stok girişleri bile günlerce bekliyor ve Teknosa mağazalarında yok satma yaşanıyor.",
+  department: "Tedarik Zinciri",
+  location: "Teknosa HQ",
   frequency: "Haftada birkaç kez",
   impact: "Orta",
   anonymity: "İsim gizli, departman görünür",
-  expectation: "Tekrarlanan onay noktaları sadeleştirilsin ve hangi adımın neden gerekli olduğu görünür olsun.",
+  expectation: "Onay adımlarının sıralı değil paralel yapılması ve gecikmelerin otomatik alarm üretmesi.",
   files: []
 };
 
 const initialTeams = [
   {
     id: "team-001",
-    name: "PropTech Hızlanma",
-    description: "Akıllı bina yönetimi ve IoT tabanlı enerji optimizasyonu üretecek cross-functional ekip. 3 ayda MVP hedefleniyor.",
-    area: "PropTech & Akıllı Şehirler",
-    ideaId: "idea-3",
-    createdBy: "p01",
+    name: "Akbank Robo-Yatırım Hızlanma",
+    description: "Akbank Mobil içinde robo-danışman algoritmasını ve UX akışlarını kuracak cross-functional ekip.",
+    area: "FinTech & Dijital Bankacılık",
+    ideaId: "idea-1",
+    createdBy: "p05",
     status: "active",
     createdAt: "2026-05-15",
     roles: [
-      { id: "tr-1", title: "Ürün Yöneticisi", icon: "briefcase", filled: true, userId: "p01", skills: ["Roadmap", "OKR", "Stakeholder"] },
-      { id: "tr-2", title: "Frontend Mühendisi", icon: "code-2", filled: true, userId: "p03", skills: ["React", "TypeScript"] },
-      { id: "tr-3", title: "UX Designer", icon: "pen-tool", filled: false, userId: null, skills: ["Figma", "User Research"] },
-      { id: "tr-4", title: "Veri Analisti", icon: "bar-chart-2", filled: true, userId: "p07", skills: ["Python", "SQL", "Tableau"] }
+      { id: "tr-1", title: "Ürün Yöneticisi", icon: "briefcase", filled: true, userId: "p05", skills: ["Roadmap", "OKR", "Banking"] },
+      { id: "tr-2", title: "Yapay Zeka Mühendisi", icon: "brain", filled: true, userId: "p02", skills: ["Python", "TensorFlow", "ML"] },
+      { id: "tr-3", title: "UX Designer", icon: "pen-tool", filled: false, userId: null, skills: ["Figma", "User Research"] }
     ],
     messages: [
-      { userId: "p01", body: "PropTech ekibimiz kuruldu! Sprint planlamasına geçiyoruz.", time: "2026-05-15 10:00" },
-      { userId: "p03", body: "Frontend prototype hazır, inceleyebilirsiniz.", time: "2026-05-20 09:30" },
-      { userId: "p07", body: "Bina sensör verisini modellemeye başladım, akıllı enerji tablosu çıktı.", time: "2026-05-25 14:20" },
-      { userId: "p01", body: "UX Designer pozisyonu hâlâ açık. Bilen önersin!", time: "2026-06-01 11:00" }
+      { userId: "p05", body: "Ekibimiz kuruldu! MVP testlerine başlıyoruz.", time: "2026-05-15 10:00" },
+      { userId: "p02", body: "Risk analiz motorunun ilk iterasyonu tamam, AUC 0.88.", time: "2026-05-20 09:30" }
     ],
-    tags: ["PropTech", "IoT", "MVP"]
-  },
-  {
-    id: "team-002",
-    name: "Yeşil Finans Sprint",
-    description: "ESG raporlama, sürdürülebilirlik finansmanı ve karbon takip araçları geliştiren fintech odaklı ekip.",
-    area: "Sürdürülebilirlik & Yeşil Enerji",
-    ideaId: "idea-1",
-    createdBy: "p05",
-    status: "forming",
-    createdAt: "2026-06-02",
-    roles: [
-      { id: "tr-5", title: "Ürün Yöneticisi", icon: "briefcase", filled: true, userId: "p05", skills: ["ESG", "Fintech", "Roadmap"] },
-      { id: "tr-6", title: "Backend Mühendisi", icon: "server", filled: false, userId: null, skills: ["Node.js", "API", "Security"] },
-      { id: "tr-7", title: "Compliance Uzmanı", icon: "shield-check", filled: true, userId: "p11", skills: ["BRSA", "Uyum", "Regülasyon"] },
-      { id: "tr-8", title: "UX Araştırmacısı", icon: "users", filled: false, userId: null, skills: ["User Research", "Interview"] }
-    ],
-    messages: [
-      { userId: "p05", body: "Yeşil finans ekibini kuruyoruz! Backend ve UX pozisyonları açık.", time: "2026-06-02 10:15" },
-      { userId: "p11", body: "Compliance tarafını üstleniyorum. BRSA raporlama standartlarını çıkarıyorum.", time: "2026-06-03 09:00" }
-    ],
-    tags: ["ESG", "Yeşil Finans", "Sürdürülebilirlik"]
-  },
-  {
-    id: "team-003",
-    name: "AI Kredi Skoru Ar-Ge",
-    description: "Yapay zeka tabanlı alternatif kredi skorlama modeli geliştiren araştırma ekibi. Geleneksel skoru %30 daha isabetli yapıyoruz.",
-    area: "Yapay Zekâ & Derin Teknoloji",
-    ideaId: "idea-5",
-    createdBy: "p02",
-    status: "active",
-    createdAt: "2026-04-20",
-    roles: [
-      { id: "tr-9", title: "Veri Bilimcisi (Lead)", icon: "brain", filled: true, userId: "p02", skills: ["ML", "Python", "XGBoost"] },
-      { id: "tr-10", title: "MLOps Mühendisi", icon: "git-branch", filled: true, userId: "p08", skills: ["Docker", "Kubernetes"] },
-      { id: "tr-11", title: "Veri Mühendisi", icon: "database", filled: true, userId: "p17", skills: ["Spark", "Kafka"] },
-      { id: "tr-12", title: "Etik AI Danışmanı", icon: "scale", filled: false, userId: null, skills: ["AI Ethics", "Bias Testing"] }
-    ],
-    messages: [
-      { userId: "p02", body: "İlk model iterasyonu tamam. AUC 0.87'ye ulaştık!", time: "2026-05-10 16:00" },
-      { userId: "p08", body: "MLflow tracking kuruldu, tüm experimentlar loglanıyor.", time: "2026-05-12 10:30" },
-      { userId: "p17", body: "Kafka pipeline real-time scoring için hazır.", time: "2026-05-20 14:00" },
-      { userId: "p02", body: "Etik AI danışmanı arıyoruz, öneriniz var mı?", time: "2026-06-05 09:00" }
-    ],
-    tags: ["AI", "ML", "Kredi", "FinTech"]
+    tags: ["Robo-Yatırım", "FinTech", "MVP"]
   }
 ];
 
 const state = {
+  currentCountry: "TR",
+  loginCountrySelected: false,
+  activeCountry: "TR",
+  affiliationFilter: "all",
+  announcementScopeFilter: "Tümü",
   loggedIn: false,
   onboardingStep: 1,
   accessKeyInput: "",
@@ -2565,7 +1726,7 @@ const state = {
       specialties: ["Ürün Yönetimi", "FinTech", "İş Modeli Geliştirme"],
       bio: "12+ yıllık ürün yönetim deneyimi. Moka ve İşBank dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
       avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-      email: "elif.sahin@isbank.example"
+      email: "elif.sahin@sabanci.example"
     },
     {
       id: "mentor-2",
@@ -2574,7 +1735,7 @@ const state = {
       specialties: ["Yapay Zekâ", "Makine Öğrenmesi", "Teknik Altyapı"],
       bio: "Büyük dil modelleri (LLM), veri analitiği ve akıllı tahminleme altyapıları üzerine uzmanlaşmıştır. Fikirlerin teknik fizibilitesini değerlendirmede destek sağlar.",
       avatar: "https://randomuser.me/api/portraits/men/41.jpg",
-      email: "emir.arslan@isbank.example"
+      email: "emir.arslan@sabanci.example"
     },
     {
       id: "mentor-3",
@@ -2583,7 +1744,7 @@ const state = {
       specialties: ["Yeşil Finans", "ESG Uyum", "Karbon Takip"],
       bio: "Girişimlerin yeşil finansman imkanlarına erişimi, ESG raporlama standartları ve karbon nötrleme projelerinin kurgulanması konularında mentörlük sunuyor.",
       avatar: "https://randomuser.me/api/portraits/women/51.jpg",
-      email: "zeynep.kaya@isbank.example"
+      email: "zeynep.kaya@sabanci.example"
     }
   ],
   mentorApplications: [],
@@ -2634,295 +1795,128 @@ const state = {
   },
   
   // Initial Datasets (Veriler)
-  dataSets: [
+    dataSets: [
     {
       id: "ds-1",
-      title: "2026 Bulut Bilişim ve SaaS Sektör Raporu",
-      summary: "İş-Net tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik sertifikasyon gereksinimleri.",
-      sharedBy: "Defne Arman",
-      companyId: "is-net",
+      title: "2026 Yapay Zeka Sektör Raporu",
+      summary: "SabancıDx tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
+      sharedBy: "Mert Alkan",
+      companyId: "sabancidx",
       type: "Kurumsal",
       area: "Yapay Zekâ & Derin Teknoloji",
       importanceScore: 5,
       date: "2026-06-05",
       comments: [
-        { user: "Mert Alkan", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
+        { user: "Can Koç", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
       ],
       likes: 18,
-      downloads: 42
+      downloads: 42,
+      country: "TR"
     },
     {
       id: "ds-2",
-      title: "Yeni Nesil Ödeme Çözümleri Veri Seti",
+      title: "Akbank QR ve Biyometrik Ödeme Kullanım Analizi",
       summary: "QR ve biyometrik ödeme entegrasyonları için pazar payı, işlem hızları ve müşteri kullanım oranları.",
-      sharedBy: "Aslı Ergin",
-      companyId: "moka",
+      sharedBy: "Can Koç",
+      companyId: "akbank",
       type: "Kurumsal",
       area: "FinTech & Dijital Bankacılık",
       importanceScore: 4,
       date: "2026-06-03",
       comments: [],
       likes: 12,
-      downloads: 29
+      downloads: 29,
+      country: "TR"
     },
     {
       id: "ds-3",
-      title: "Akıllı Binalar Isı Kaybı Enerji Verisi",
-      summary: "Levent Kuleler yerleşkesinde sensörlerden toplanan saatlik sıcaklık, nem ve enerji harcama kayıtları.",
-      sharedBy: "Ozan Gürel",
-      companyId: "is-gyo",
+      title: "Texas Grid Peak Hours Pricing Datetime Set",
+      summary: "Historical grid pricing data for Texas solar farm battery storage management.",
+      sharedBy: "Michael Vance",
+      companyId: "sabanci-climate-us",
       type: "Kurumsal",
       area: "Sürdürülebilirlik & Yeşil Enerji",
       importanceScore: 5,
-      date: "2026-05-28",
-      comments: [
-        { user: "Selin Eryılmaz", body: "Tuzla Ar-Ge ekibi olarak bu verileri kullanarak optimize edilmiş bir HVAC modeli geliştirebiliriz.", manager: false }
-      ],
-      likes: 24,
-      downloads: 58
-    },
-    {
-      id: "ds-4",
-      title: "Depo Sevkiyat Bekleme Süreleri (Q1)",
-      summary: "Trakya yerleşkesi lojistik bekleme ve devir süreleri. Rota optimizasyon çalışması için açık veri seti.",
-      sharedBy: "Baran İleri",
-      companyId: "sisecam",
-      type: "Topluluk",
-      area: "Akıllı Lojistik & Dağıtım",
-      importanceScore: 3,
-      date: "2026-06-02",
+      date: "2026-06-12",
       comments: [],
-      likes: 9,
-      downloads: 14
-    },
-    {
-      id: "ds-5",
-      title: "Şube Onay Devir Kayıpları Çalışan Anketi",
-      summary: "30 şubede 400 operasyon personeliyle yapılan anket sonuçları. Zaman kayıpları ve verimsiz iş adımları.",
-      sharedBy: "Nazlı Durukan",
-      companyId: "is-leasing",
-      type: "Topluluk",
-      area: "Operasyon",
-      importanceScore: 4,
-      date: "2026-05-30",
-      comments: [
-        { user: "Yiğit Bora", body: "Operasyon sekmesinde listelenen vardiya projesine girdi sağlayan harika bir anket.", manager: false }
-      ],
-      likes: 15,
-      downloads: 21
+      likes: 24,
+      downloads: 58,
+      country: "US"
     }
   ],
   
-  // Initial Announcements (Duyurular)
   announcements: [
     {
       id: "ann-rec-1",
-      title: "🚀 AI Destekli Rehber (NIE-02) Projemize Yazılımcı / Geliştirici Arıyoruz!",
-      author: "Defne Arman",
-      authorId: "p01",
-      companyId: "tibas-holding",
+      title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+      author: "Can Koç",
+      authorId: "u3",
+      companyId: "akbank",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Merhabalar! Ben Tasarım ekibinden Defne Arman. 'AI Destekli Onboarding Rehberi' (NIE-02) projesinde UI/UX Tasarımcısı olarak yer alıyorum. Fikrimizin prototipini tamamladık ve pilot öncesi ekranlarımızı tasarladık. Ancak şu an takımımızda Frontend Geliştirici rolü eksik! HTML/JS ve CSS bilgisi olan, bizimle birlikte bu ürünü hayata geçirecek ve ortak bütçeden pay alacak bir takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur / Submission Gönder' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+      body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
       date: "2026-06-08",
       comments: [],
       likes: 42,
-      ideaId: "idea-2",
-      missingRoles: ["Yazılımcı / Geliştirici"],
-      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80"
+      ideaId: "idea-1",
+      missingRoles: ["UX Designer"],
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
+      country: "TR"
     },
     {
       id: "ann-rec-2",
-      title: "🔥 Dinamik Vardiya Sistemi (NIE-01) Projesine Analist/Ürün Yöneticisi Aranıyor!",
-      author: "Mehmet Demir",
-      authorId: "u2",
-      companyId: "sisecam",
+      title: "🚀 Texas Solar Battery Storage System Project (US) - Seeking MLOps Engineer!",
+      author: "Michael Vance",
+      authorId: "u10",
+      companyId: "sabanci-climate-us",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Selamlar! Ben Bursa Mağazadan Mağaza Çalışanı Mehmet Demir. 'Dinamik Vardiya Sistemi' (NIE-01) projesinin fikir sahibiyim. Şu an şubelerdeki bekleme sürelerini analiz edip veri modellerini kuracak ve projenin ürün yönetimini üstlenecek bir Ürün Yöneticisi / Analist takım arkadaşı arıyoruz. Perakende tecrübesine ve iş analiz yeteneğine güvenen arkadaşlarımızın katılımını bekliyoruz!",
-      date: "2026-06-08",
-      comments: [],
-      likes: 29,
-      ideaId: "idea-1",
-      missingRoles: ["Ürün Yöneticisi / Analist"],
-      imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      id: "ann-1",
-      title: "İnovasyon Kampüsü 2026 Eğitim Takvimi Açıklandı",
-      body: "Holding genelinde açık fikir maratonu ve AI asistan tasarımı eğitimlerimiz haftaya başlıyor. Katılım sertifikalıdır.",
-      author: "Mert Alkan",
-      authorId: "p02",
-      companyId: "tibas-holding",
-      type: "Kurumsal",
-      area: "Eğitimler",
-      importanceScore: 5,
-      date: "2026-06-08",
-      comments: [],
-      likes: 31
-    },
-    {
-      id: "ann-2",
-      title: "TSKB Sürdürülebilirlik Hackathonu Dereceleri Belli Oldu",
-      body: "Yeşil finans ve karbon ayak izi azaltım fikirleriyle ilk 3'e giren ekiplerimiz pilot bütçelerini alarak çalışmalara başladı.",
-      author: "Ece Uslu",
-      authorId: "p05",
-      companyId: "tskb",
-      type: "Kurumsal",
-      area: "Dereceler",
-      importanceScore: 5,
-      date: "2026-06-05",
-      comments: [],
-      likes: 27
-    },
-    {
-      id: "ann-3",
-      title: "Yeni FinTech API Altyapısı Yayında",
-      author: "Aslı Ergin",
-      authorId: "p15",
-      companyId: "moka",
-      type: "Kurumsal",
-      area: "Şirket Haberleri",
-      importanceScore: 4,
-      body: "Moka API entegrasyonuyla QR kodlu ödeme ve lot transfer altyapısı tüm test ortamlarında geliştiricilerin kullanımına açıldı.",
-      date: "2026-06-06",
-      comments: [
-        { user: "Kaan Öztürk", body: "Harika! Araştırma ekibi olarak yeni bültene ekliyoruz.", manager: false }
-      ],
-      likes: 19
-    },
-    {
-      id: "ann-4",
-      title: "Topluluk Buluşması: AI ile Fikir Geliştirme Seansı",
-      body: "Bu Cuma Levent Ofisinde gerçekleştireceğimiz beyin fırtınası seansında AI asistanlarını test edeceğiz.",
-      author: "Defne Arman",
-      authorId: "p01",
-      companyId: "independent",
-      type: "Topluluk",
-      area: "Etkinlikler",
-      importanceScore: 4,
-      date: "2026-06-07",
-      comments: [],
-      likes: 22
-    },
-    {
-      id: "ann-5",
-      title: "🌍 Yeşil Mutabakat ve Sürdürülebilirlik Yol Haritamız Tanıtıldı",
-      body: "İştiraklerimizden İş Leasing öncülüğünde geliştirilen karbon nötrleme platformunun entegrasyon takvimi açıklandı. Yeşil finansman projeleri önceliklendirilecektir.",
-      author: "Aras Kılınç",
-      authorId: "p14",
-      companyId: "is-leasing",
-      type: "Kurumsal",
-      area: "Sürdürülebilirlik",
-      importanceScore: 5,
+      body: "Hello! We are looking for an MLOps Engineer to deploy predictive grid models at the Texas solar farm project site. Remote/Austin. Apply below!",
       date: "2026-06-10",
-      comments: [
-        { user: "Nazlı Durukan", body: "İş Leasing projelerimiz için mükemmel bir rehber olacak.", manager: false }
-      ],
-      likes: 54,
-      imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "ann-6",
-      title: "💡 Mobil Ödeme ve QR Altyapısı Entegrasyonu Başarıyla Tamamlandı",
-      body: "Moka API'leri üzerinden çalışan QR kodlu sanal ödeme sistemi tüm pilot şubelerimizde aktif edildi. Müşterilerimiz artık saniyeler içinde işlemlerini tamamlayabiliyor.",
-      author: "Aslı Ergin",
-      authorId: "p15",
-      companyId: "moka",
-      type: "Kurumsal",
-      area: "Teknoloji Entegrasyonu",
-      importanceScore: 4,
-      date: "2026-06-09",
       comments: [],
-      likes: 38,
-      imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "ann-7",
-      title: "🏆 Yılın İnovatif Proje Başvuruları Değerlendirme Sürecinde",
-      body: "Karar kurulu bu ay rekor sayıda 78 yeni öneriyi inceleme listesine aldı. Proje sahiplerine AI ön değerlendirme sonuçları bildirim olarak gönderilmeye başlandı.",
-      author: "Mert Alkan",
-      authorId: "p02",
-      companyId: "tibas-holding",
-      type: "Kurumsal",
-      area: "Değerlendirmeler",
-      importanceScore: 5,
-      date: "2026-06-11",
-      comments: [],
-      likes: 47
+      likes: 20,
+      ideaId: "idea-6",
+      missingRoles: ["MLOps Engineer"],
+      imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80",
+      country: "US"
     }
   ],
   
-  // Initial Social Feed Posts (Sosyal)
   socialPosts: [
     {
       id: "sp-1",
       userId: "p02",
       userName: "Mert Alkan",
       userAvatar: "https://randomuser.me/api/portraits/men/12.jpg",
-      userBio: "İnovasyon Yöneticisi · İş NEW",
-      body: "Yeni başlayan arkadaşlarımız için hazırladığımız AI destekli Onboarding Asistanı projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
+      userBio: "İnovasyon Lideri · SabancıDx",
+      body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
       date: "2 saat önce",
       likes: 12,
       likedByMe: false,
       comments: [
         { id: "sc-1", userName: "Ece Uslu", userAvatar: "https://randomuser.me/api/portraits/women/45.jpg", body: "Harika bir proje olmuş, onboarding süremizi çok kısaltır!", date: "1 saat önce" }
-      ]
+      ],
+      country: "TR"
     },
     {
       id: "sp-2",
-      userId: "p05",
-      userName: "Ece Uslu",
-      userAvatar: "https://randomuser.me/api/portraits/women/45.jpg",
-      userBio: "Sürdürülebilir Finans Lideri · TSKB",
-      body: "Sürdürülebilirlik verilerimizi bugün 'Veri&Bilgi' sekmesinde paylaştık. Yeşil enerji projeleri geliştirmek isteyen tüm ekipler ham veri olarak kullanabilir.",
-      date: "5 saat önce",
-      likes: 9,
-      likedByMe: false,
-      comments: []
-    },
-    {
-      id: "sp-3",
-      userId: "p15",
-      userName: "Aslı Ergin",
-      userAvatar: "https://randomuser.me/api/portraits/women/88.jpg",
-      userBio: "Ürün Sahibi · Moka",
-      body: "Fintech ödeme API altyapımızla ilgili en son duyuruyu Duyurular sekmesinde paylaştık. Detaylı bilgi almak isteyen ekipler doğrudan chat üzerinden bana ulaşabilir.",
-      date: "Dün",
+      userId: "u10",
+      userName: "Michael Vance",
+      userAvatar: "https://randomuser.me/api/portraits/men/22.jpg",
+      userBio: "Energy Storage Director · Sabancı Climate US",
+      body: "Texas utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
+      date: "3 hours ago",
       likes: 15,
-      likedByMe: true,
-      comments: []
-    },
-    {
-      id: "sp-4",
-      userId: "p03",
-      userName: "Selin Eryılmaz",
-      userAvatar: "https://randomuser.me/api/portraits/women/32.jpg",
-      userBio: "Ar-Ge Lideri · Şişecam",
-      body: "Tuzla tesisimizde devreye aldığımız akıllı sensor veri setlerini yayınladık. Enerji verimliliği odaklı yeni projeler tasarlamak için bu verileri serbestçe indirebilirsiniz. Soru ve katkılarınızı yorumlarda bekliyorum!",
-      date: "Dün",
-      likes: 24,
       likedByMe: false,
-      comments: [
-        { id: "sc-2", userName: "Mert Alkan", userAvatar: "https://randomuser.me/api/portraits/men/12.jpg", body: "Bu veri setiyle tahminleme modellerini eğitmeye başladık bile, teşekkürler Selin!", date: "Dün" }
-      ]
-    },
-    {
-      id: "sp-5",
-      userId: "u3",
-      userName: "Can Koç",
-      userAvatar: "https://randomuser.me/api/portraits/men/75.jpg",
-      userBio: "Departman Yöneticisi · İşBank Teknoloji",
-      body: "Haziran dönemi fikir borsa hacmi şimdiden rekor seviyeye ulaştı. Operasyonel verimliliği artıracak tüm projelere katılım başvurusu yapmaktan çekinmeyin. Takım kurmak ve başvuru atmak artık tek tıkla çok daha kolay!",
-      date: "2 gün önce",
-      likes: 35,
-      likedByMe: false,
-      comments: []
+      comments: [],
+      country: "US"
     }
   ]
 };
+
+
 
 function currentUser() {
   return demoUsers.find(user => user.id === state.currentUserId) || demoUsers[0];
@@ -2971,15 +1965,15 @@ function personById(id) {
       return {
         id: du.id,
         name: du.name,
-        companyId: du.company === "İşBank Teknoloji" ? "tibas-holding" : (du.company === "İşBank Perakende Operasyonları" ? "sisecam" : "tibas-holding"),
+        companyId: du.companyId || "sabanci-holding",
         role: du.role,
         team: du.department,
         city: du.city || "İstanbul",
-        campus: du.location || "Levent Genel Müdürlük",
-        photo: du.photo || profilePhotos[du.id] || "https://randomuser.me/api/portraits/men/75.jpg",
+        campus: du.location || "Sabancı Center",
+        photo: du.photo || du.avatarUrl || profilePhotos[du.id] || "https://randomuser.me/api/portraits/men/75.jpg",
         status: "Aktif",
         bio: du.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-        cv: du.cv || "Eğitim: Boğaziçi Üniversitesi. Deneyim: 8 yıl Operasyon ve Süreç İyileştirme.",
+        cv: du.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
         email: du.email,
         badges: du.badges || []
       };
@@ -3100,7 +2094,30 @@ function marketDeltaClass(value) {
 }
 
 function formatCurrency(value) {
-  return `₺${Math.round(value).toLocaleString("tr-TR")}`;
+  return `${Math.round(value).toLocaleString("tr-TR")} SA`;
+}
+
+function formatCurrencyHTML(value, size = "normal") {
+  return `<span class="sa-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${saCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">SA</span></span>`;
+}
+
+function saCoinIcon(size = "normal") {
+  const sizePx = size === "large" ? "20" : size === "small" ? "13" : "16";
+  return `
+    <svg class="sa-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
+      <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
+      <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
+      <text x="18" y="23.5" font-family="'Inter', system-ui, sans-serif" font-weight="900" font-size="13.5" fill="#5C4033" text-anchor="middle" letter-spacing="-0.5">SA</text>
+      <defs>
+        <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFE07D"/>
+          <stop offset="30%" stop-color="#F1C40F"/>
+          <stop offset="70%" stop-color="#D4AC0D"/>
+          <stop offset="100%" stop-color="#9A7D0A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  `;
 }
 
 function marketSparkline(points = [], change = 0) {
@@ -3161,8 +2178,8 @@ function avatar(name, size = "", imageUrl = "") {
 
 function brandLockup(compact = false) {
   return `
-    <span class="isbank-lockup ${compact ? "compact" : ""}" aria-label="Türkiye İş Bankası - NEW IDEA EXCHANGE">
-      <img class="isbank-logo-image" src="${esc(brandLogoSrc)}" alt="Türkiye İş Bankası" />
+    <span class="sabanci-lockup ${compact ? "compact" : ""}" aria-label="Türkiye Sabancı Holding - NEW IDEA EXCHANGE">
+      <img class="sabanci-logo-image" src="${esc(brandLogoSrc)}" alt="Türkiye Sabancı Holding" />
       <small>${esc(state.brandName)}</small>
     </span>
   `;
@@ -3241,33 +2258,16 @@ function resetScroll() {
 }
 
 function renderLogin() {
-  const selected = demoUsers.find(user => user.id === state.selectedLoginUserId) || demoUsers[0];
-  const ready = state.accessKeyAccepted || state.onboardingStep === 2;
-  return `
-    <main class="login-page apple-login">
-      <section class="apple-access-card">
-        <div class="apple-access-brand">
-          ${brandLockup()}
-        </div>
-
-        ${ready ? `
-          <div class="apple-found-user">
-            ${avatar(selected.name, "large", selected.avatarUrl)}
-            <span>
-              <small>Kurumsal profil doğrulandı</small>
-              <strong>Hoş geldin, ${esc(selected.name.split(" ")[0])}.</strong>
-              <em>${esc(selected.department)} · ${esc(selected.role)}</em>
-            </span>
+  if (!state.accessKeyAccepted) {
+    return `
+      <main class="login-page apple-login">
+        <section class="apple-access-card">
+          <div class="apple-access-brand">
+            ${brandLockup()}
           </div>
           <div class="apple-login-copy">
-            <h1>Çalışma alanın hazır.</h1>
-            <p>Fikir havuzu, hızlı değerlendirme ve karar panelleri rolüne göre açıldı.</p>
-          </div>
-          <button class="btn primary block" data-action="login">${icon("arrow-right")} Devam et</button>
-        ` : `
-          <div class="apple-login-copy">
-            <h1>Kurumsal erişim</h1>
-            <p>Türkiye İş Bankası iç inovasyon alanına giriş için exchange key'ini gir.</p>
+            <h1 style="font-family: 'Space Grotesk', sans-serif;">Sabancı Innovation Exchange</h1>
+            <p>Sabancı Holding iç inovasyon alanına giriş için exchange key'ini gir.</p>
           </div>
           <label class="field apple-key-field">
             <span>Exchange key</span>
@@ -3279,9 +2279,82 @@ function renderLogin() {
             <button class="btn ghost" data-action="copy-demo-key">${icon("copy")} Doldur</button>
           </div>
           <button class="btn primary block" data-action="validate-key">${icon("unlock-keyhole")} Girişe devam et</button>
-        `}
+          <p class="security-note">Demo key altta görünür. Gerçek ortamda erişim şirket içi kimlikle doğrulanır.</p>
+        </section>
+      </main>
+    `;
+  }
 
-        <p class="security-note">Demo key altta görünür. Gerçek ortamda erişim şirket içi kimlikle doğrulanır.</p>
+  // Key is accepted! Now select country portal
+  if (!state.loginCountrySelected) {
+    return `
+      <main class="login-page apple-login">
+        <section class="apple-access-card" style="max-width: 500px; width: 90%;">
+          <div class="apple-access-brand">
+            ${brandLockup()}
+          </div>
+          <div class="apple-login-copy" style="margin-bottom: 24px;">
+            <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px;">Ülke Portalı Seçimi</h1>
+            <p>Giriş yapmak istediğiniz ülke inovasyon portalını seçin:</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            ${countriesList.map(c => `
+              <button class="btn secondary block justify-start" style="padding: 16px; display: flex; align-items: center; gap: 12px; height: auto; text-align: left;" data-action="select-login-country" data-code="${c.code}">
+                <span style="font-size: 24px;">${c.flag}</span>
+                <div style="display: flex; flex-direction: column; flex: 1;">
+                  <strong style="font-size: 14.5px; color: var(--ink);">${c.name}</strong>
+                  <small style="font-size: 11.5px; color: var(--muted);">${c.label}</small>
+                </div>
+                ${icon("chevron-right")}
+              </button>
+            `).join("")}
+          </div>
+        </section>
+      </main>
+    `;
+  }
+
+  // Country is selected! Now select user from this country
+  const countryUsers = demoUsers.filter(u => u.country === state.currentCountry);
+  const selected = countryUsers.find(user => user.id === state.selectedLoginUserId) || countryUsers[0] || demoUsers[0];
+  
+  return `
+    <main class="login-page apple-login">
+      <section class="apple-access-card" style="max-width: 450px; width: 90%;">
+        <div class="apple-access-brand">
+          ${brandLockup()}
+        </div>
+        <div class="apple-login-copy" style="margin-bottom: 20px;">
+          <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px;">Kullanıcı Profili Seçin</h1>
+          <p>${state.currentCountry === "TR" ? "Türkiye" : state.currentCountry} portalı için aktif çalışma profilinizi seçin:</p>
+        </div>
+
+        <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding: 4px; border: 1px solid var(--line-soft); border-radius: 12px;">
+          ${countryUsers.map(user => `
+            <div class="user-select-row ${user.id === selected.id ? 'active' : ''}" style="display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 8px; cursor: pointer; border: 1px solid ${user.id === selected.id ? 'var(--primary)' : 'transparent'}; background: ${user.id === selected.id ? 'rgba(var(--primary-rgb), 0.05)' : 'transparent'};" data-action="select-login-user" data-id="${user.id}">
+              ${avatar(user.name, "medium", user.avatarUrl)}
+              <div style="flex: 1; text-align: left; line-height: 1.3;">
+                <strong style="font-size: 13.5px; color: var(--ink); display: block;">${esc(user.name)}</strong>
+                <small style="font-size: 11.5px; color: var(--muted);">${esc(user.company.split(" ")[0])} · ${esc(user.role)}</small>
+              </div>
+              ${user.id === selected.id ? `<span style="color: var(--primary);">${icon("check-circle-2")}</span>` : ""}
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="apple-found-user" style="margin-bottom: 20px; border-top: 1px solid var(--line-soft); padding-top: 16px;">
+          ${avatar(selected.name, "medium", selected.avatarUrl)}
+          <span>
+            <small>Doğrulanan Profil</small>
+            <strong>Hoş geldin, ${esc(selected.name.split(" ")[0])}.</strong>
+            <em>${esc(selected.company.split(" ")[0])} · ${esc(selected.role)}</em>
+          </span>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn secondary" style="flex: 1;" data-action="back-to-countries">${icon("arrow-left")} Geri</button>
+          <button class="btn primary" style="flex: 1;" data-action="login">${icon("arrow-right")} Giriş yap</button>
+        </div>
       </section>
     </main>
   `;
@@ -3670,15 +2743,18 @@ function renderPage() {
 
 function renderDashboard() {
   const user = currentUser();
-  const departmentIdeas = state.ideas.filter(idea => idea.department === user.department || idea.company === user.company);
-  const implemented = state.ideas.filter(idea => idea.status === "done");
-  const highAi = state.ideas.filter(idea => idea.aiScore >= 88);
-  const highlights = [...state.ideas].sort((a, b) => b.aiScore + b.communityScore - (a.aiScore + a.communityScore)).slice(0, 3);
-  const focusIdea = highlights[0] || state.ideas[0];
-  const queueCount = state.ideas.filter(idea => ["new", "review", "pilot"].includes(idea.status)).length;
-  const reviewCount = state.ideas.filter(idea => idea.status === "review").length + 24;
-  const pilotCount = state.ideas.filter(idea => idea.status === "pilot").length + 8;
-  const totalPortfolio = state.ideas.length + 146;
+  const countryIdeas = state.ideas.filter(idea => idea.country === state.activeCountry);
+  const departmentIdeas = countryIdeas.filter(idea => idea.department === user.department || idea.company === user.company);
+  const implemented = countryIdeas.filter(idea => idea.status === "done");
+  const highAi = countryIdeas.filter(idea => idea.aiScore >= 88);
+  const highlights = [...countryIdeas].sort((a, b) => b.aiScore + b.communityScore - (a.aiScore + a.communityScore)).slice(0, 3);
+  const focusIdea = highlights[0] || countryIdeas[0] || state.ideas[0];
+  
+  const countMultiplier = state.activeCountry === "TR" ? 12 : state.activeCountry === "US" ? 6 : state.activeCountry === "GB" ? 4 : 2;
+  const queueCount = countryIdeas.filter(idea => ["new", "review", "pilot"].includes(idea.status)).length;
+  const reviewCount = countryIdeas.filter(idea => idea.status === "review").length + countMultiplier * 2;
+  const pilotCount = countryIdeas.filter(idea => idea.status === "pilot").length + countMultiplier;
+  const totalPortfolio = countryIdeas.length + countMultiplier * 15;
 
   return `
     <div class="view-stack apple-page">
@@ -3756,7 +2832,7 @@ function renderDashboard() {
             </div>
           </div>
           <div class="apple-idea-list">
-            ${[...state.ideas].sort((a, b) => (b.likes || b.supporters || 0) - (a.likes || a.supporters || 0)).slice(0, 3).map(idea => simpleIdeaRow(idea)).join("")}
+            ${[...countryIdeas].sort((a, b) => (b.likes || b.supporters || 0) - (a.likes || a.supporters || 0)).slice(0, 3).map(idea => simpleIdeaRow(idea)).join("")}
           </div>
         </article>
 
@@ -3949,8 +3025,8 @@ function renderQuickFlow() {
         <div style="display: flex; gap: 16px; align-items: center;">
           <div class="market-wallet" style="text-align: right;">
             <span>Bütçe</span>
-            <strong style="display: block; font-size: 22px; color: var(--ink);">${formatCurrency(state.marketBudget)}</strong>
-            <small style="color: var(--muted);">Portföy ${formatCurrency(portfolioValue)}</small>
+            <strong style="display: block; font-size: 22px; color: var(--ink);">${formatCurrencyHTML(state.marketBudget, "large")}</strong>
+            <small style="color: var(--muted);">Portföy ${formatCurrencyHTML(portfolioValue, "small")}</small>
           </div>
           <button class="btn primary" data-action="open-market-composer" data-context="quickFlow">${icon("plus")} Proje Ekle</button>
         </div>
@@ -4042,7 +3118,7 @@ function renderMarketLeader(idea, index) {
       <h3>${esc(idea.title)}</h3>
       <div class="market-line">
         ${marketSparkline(idea.marketSpark, change)}
-        <span class="market-price">${formatCurrency(marketPrice(idea))}</span>
+        <span class="market-price">${formatCurrencyHTML(marketPrice(idea))}</span>
       </div>
       <footer>
         <span>${esc(idea.marketCategory || "Fikir")}</span>
@@ -4067,7 +3143,7 @@ function renderMarketRow(idea, index) {
         </span>
       </div>
       ${marketSparkline(idea.marketSpark, change)}
-      <span class="market-price">${formatCurrency(marketPrice(idea))}</span>
+      <span class="market-price">${formatCurrencyHTML(marketPrice(idea))}</span>
       <span class="market-change ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</span>
       <span class="market-volume">${Number(idea.marketVolume || 0).toLocaleString("tr-TR")} hacim</span>
       <span class="market-owned">${owned} lot</span>
@@ -4560,7 +3636,7 @@ function renderMarketDesk(rows, wallet, stats) {
         ` : ""}
         <p>${esc(selected.summary || selected.problem || "")}</p>
         <div class="market-desk-metrics">
-          <span><small>Son</small><strong>${formatCurrency(quote.last)}</strong></span>
+          <span><small>Son</small><strong>${formatCurrencyHTML(quote.last, "large")}</strong></span>
           <span><small>Hacim</small><strong>${formatMarketVolume(quote.volume)}</strong></span>
           <span><small>Portföy</small><strong>${owned} lot</strong></span>
         </div>
@@ -4574,7 +3650,7 @@ function renderMarketDesk(rows, wallet, stats) {
       <article class="market-desk-chart">
         <div class="market-chart-head">
           <span>Fikir Borsası · 1D</span>
-          <strong>${formatCurrency(wallet.total)}</strong>
+          <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
           <em class="${marketDeltaClass(stats.averageChange)}">${stats.averageChange >= 0 ? "+" : ""}${stats.averageChange.toFixed(2)}%</em>
         </div>
         ${renderTradingChart([selected])}
@@ -4605,10 +3681,10 @@ function renderMarketDepth(idea) {
     <div class="market-depth-book">
       ${rows.map(row => `
         <div>
-          <span class="bid" style="--w:${Math.min(100, row.bidVol / baseVolume * 100)}%">${formatCurrency(row.bid)}</span>
+          <span class="bid" style="--w:${Math.min(100, row.bidVol / baseVolume * 100)}%">${formatCurrencyHTML(row.bid)}</span>
           <small>${row.bidVol.toLocaleString("tr-TR")}</small>
           <small>${row.askVol.toLocaleString("tr-TR")}</small>
-          <span class="ask" style="--w:${Math.min(100, row.askVol / baseVolume * 100)}%">${formatCurrency(row.ask)}</span>
+          <span class="ask" style="--w:${Math.min(100, row.askVol / baseVolume * 100)}%">${formatCurrencyHTML(row.ask)}</span>
         </div>
       `).join("")}
     </div>
@@ -4791,14 +3867,14 @@ function renderLevelWallets(wallet) {
           <small>Wallet</small>
           <strong>Seviye paraları</strong>
         </span>
-        <em>${formatCurrency(wallet.total)}</em>
+        <em>${formatCurrencyHTML(wallet.total)}</em>
       </div>
       <div class="level-wallet-grid">
         ${levelWallets.map(level => `
           <article>
             <small>${esc(level.scope)}</small>
             <strong>${esc(level.label)}</strong>
-            <span>${formatCurrency(level.balance)}</span>
+            <span>${formatCurrencyHTML(level.balance)}</span>
             <em class="${marketDeltaClass(level.delta)}">${level.delta >= 0 ? "+" : ""}${level.delta.toFixed(1)}%</em>
           </article>
         `).join("")}
@@ -4871,10 +3947,10 @@ function renderAssetTradingBoard(rows) {
                 </span>
               </button>
               <span class="market-board-title">${esc(idea.title)}</span>
-              <strong class="market-board-last">${formatCurrency(quote.last)}</strong>
+              <strong class="market-board-last">${formatCurrencyHTML(quote.last, "large")}</strong>
               <span class="market-board-spread">
-                <em>${formatCurrency(quote.bid)}</em>
-                <em>${formatCurrency(quote.ask)}</em>
+                <em>${formatCurrencyHTML(quote.bid)}</em>
+                <em>${formatCurrencyHTML(quote.ask)}</em>
               </span>
               <span class="market-board-volume">${formatMarketVolume(quote.volume)}</span>
               ${renderAssetMiniChart(idea)}
@@ -4912,7 +3988,7 @@ function renderTradingTabPanel(rows, wallet, stats, holdings) {
       </div>
       ${active === "portfolio" ? `
         <div class="portfolio-detail-grid">
-          <article><small>Yatırımlarım</small><strong>${formatCurrency(wallet.portfolio)}</strong><span>${holdings.length || 0} aktif destek</span></article>
+          <article><small>Yatırımlarım</small><strong>${formatCurrencyHTML(wallet.portfolio)}</strong><span>${holdings.length || 0} aktif destek</span></article>
           <article><small>Günlük P/L</small><strong class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))}</strong><span>Fiyat değişimi anlık</span></article>
           <article><small>Hacim</small><strong>${Math.round(stats.volume / 1000)}K</strong><span>bugünkü işlem</span></article>
         </div>
@@ -4986,7 +4062,7 @@ function renderTradingHolding(idea) {
     <article class="trading-holding-row">
       <span>
         <strong>${esc(idea.marketTicker)}</strong>
-        <small>${quantity} lot · maliyet ${formatCurrency(quantity * marketPrice(idea))}</small>
+        <small>${quantity} lot · maliyet ${formatCurrencyHTML(quantity * marketPrice(idea))}</small>
       </span>
       <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
     </article>
@@ -5062,8 +4138,8 @@ function renderTradingExchange() {
 
           <section class="stock-balance-card">
             <span>Bakiye ve Varlıklar</span>
-            <strong>${formatCurrency(wallet.total)}</strong>
-            <small class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))} bugün · Nakit ${formatCurrency(state.marketBudget)}</small>
+            <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
+            <small class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))} bugün · Nakit ${formatCurrencyHTML(state.marketBudget, "large")}</small>
           </section>
 
           ${renderTradingChart(rows)}
@@ -5095,7 +4171,7 @@ function renderTradingExchange() {
                 <small>Portfolio</small>
                 <strong>Elindeki varlıklar</strong>
               </span>
-              <em>${formatCurrency(wallet.portfolio)}</em>
+              <em>${formatCurrencyHTML(wallet.portfolio)}</em>
             </div>
             <div class="trading-holdings">
               ${holdings.join("") || `<div class="trading-empty">Henüz varlık yok. Watchlist üzerinden alım yap.</div>`}
@@ -5248,7 +4324,7 @@ function renderProIdeaExchange() {
             <div class="terminal-selected-copy">
               <span>${esc(company.shortName)} · ${esc(selected.marketCategory || "Fikir")}</span>
               <h3>${esc(selected.marketTicker)}</h3>
-              <strong>${formatCurrency(marketPrice(selected))}</strong>
+              <strong>${formatCurrencyHTML(marketPrice(selected), "large")}</strong>
               <em class="${marketDeltaClass(change)}">${change >= 0 ? "▲" : "▼"} ${Math.abs(change).toFixed(2)}% bugün</em>
             </div>
             <div class="terminal-head-tools">
@@ -5289,8 +4365,8 @@ function renderProIdeaExchange() {
         <aside class="terminal-right-rail">
           <section class="terminal-side-module compact">
             <span>Portfolio</span>
-            <strong>${formatCurrency(wallet.total)}</strong>
-            <small>${selectedOwned} ${esc(selected.marketTicker)} lot · Nakit ${formatCurrency(state.marketBudget)}</small>
+            <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
+            <small>${selectedOwned} ${esc(selected.marketTicker)} lot · Nakit ${formatCurrencyHTML(state.marketBudget, "large")}</small>
           </section>
           <section class="terminal-side-module">
             <div class="terminal-module-head">
@@ -5322,7 +4398,7 @@ function renderProIdeaExchange() {
             ${levelWallets.slice(0, 4).map(level => `
               <button data-action="set-market-panel" data-panel="wallet">
                 <span>${esc(level.label)}</span>
-                <strong>${formatCurrency(level.balance)}</strong>
+                <strong>${formatCurrencyHTML(level.balance)}</strong>
                 <em class="${marketDeltaClass(level.delta)}">${level.delta >= 0 ? "+" : ""}${level.delta.toFixed(1)}%</em>
               </button>
             `).join("")}
@@ -5383,8 +4459,8 @@ function renderTerminalPanel(rows, wallet, holdings) {
       ` : ""}
       ${active === "portfolio" ? `
         <div class="drawer-metric-grid">
-          <article><span>Toplam</span><strong>${formatCurrency(wallet.total)}</strong></article>
-          <article><span>Portföy</span><strong>${formatCurrency(wallet.portfolio)}</strong></article>
+          <article><span>Toplam</span><strong>${formatCurrencyHTML(wallet.total, "large")}</strong></article>
+          <article><span>Portföy</span><strong>${formatCurrencyHTML(wallet.portfolio)}</strong></article>
           <article><span>P/L</span><strong class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))}</strong></article>
         </div>
         <div class="trading-holdings expanded">${holdings.join("") || `<div class="trading-empty">Henüz pozisyon yok.</div>`}</div>
@@ -5402,7 +4478,7 @@ function renderTerminalPanel(rows, wallet, holdings) {
       ` : ""}
       ${active === "wallet" ? `
         <div class="drawer-metric-grid">
-          ${levelWallets.map(level => `<article><span>${esc(level.scope)}</span><strong>${formatCurrency(level.balance)}</strong><em>${esc(level.label)}</em></article>`).join("")}
+          ${levelWallets.map(level => `<article><span>${esc(level.scope)}</span><strong>${formatCurrencyHTML(level.balance)}</strong><em>${esc(level.label)}</em></article>`).join("")}
         </div>
         <div class="reward-strip">
           ${marketCategories.map(category => `<span><strong>${esc(category)}</strong>${formatCurrency(marketRewardByCategory[category] || 500)} katkı değeri</span>`).join("")}
@@ -5484,6 +4560,7 @@ function filterSelect(key, values) {
 
 function filteredIdeas() {
   let ideas = [...state.ideas];
+  ideas = ideas.filter(idea => idea.country === state.activeCountry);
   const search = state.filters.search.trim().toLocaleLowerCase("tr-TR");
   if (search) {
     ideas = ideas.filter(idea => [
@@ -5551,7 +4628,11 @@ function renderIdeaCard(idea, compact = false) {
         </div>
         <div class="idea-footer">
           <button class="btn ghost" data-action="open-idea" data-id="${esc(idea.id)}">${icon("arrow-up-right")} Aç</button>
-          <button class="btn primary" data-action="support-idea" data-id="${esc(idea.id)}">${icon("heart")} Destekle</button>
+          ${(() => {
+            const u = currentUser();
+            const hasSupported = u.supportedIdeas && u.supportedIdeas.includes(idea.id);
+            return `<button class="btn ${hasSupported ? 'success' : 'primary'}" data-action="support-idea" data-id="${esc(idea.id)}" style="${hasSupported ? 'background: #2ecc71; border-color: #2ecc71; color: white;' : ''}">${icon(hasSupported ? "heart-off" : "heart")} ${hasSupported ? 'Desteklendi' : 'Destekle'}</button>`;
+          })()}
         </div>
       </div>
     </article>
@@ -5688,6 +4769,13 @@ function renderNewIdea() {
             </h3>
 
             <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+              <label class="field" style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 13px; font-weight: 500; color: var(--ink);">Hedef Ülke Portalı</span>
+                <select class="select" id="wizard-country" style="padding: 10px; font-size: 14px;">
+                  ${countriesList.map(c => `<option value="${c.code}" ${w.country === c.code || (!w.country && c.code === state.activeCountry) ? 'selected' : ''}>${c.flag} ${c.name}</option>`).join("")}
+                </select>
+              </label>
+
               <label class="field" style="display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 13px; font-weight: 500; color: var(--ink);">İlgili Şirket</span>
                 <select class="select" id="wizard-company" style="padding: 10px; font-size: 14px;">
@@ -5979,7 +5067,11 @@ function renderIdeaDetail() {
         </div>
         <div class="field-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn ghost" data-page="ideas">${icon("arrow-left")} Fikirlere dön</button>
-          <button class="btn soft" data-action="support-idea" data-id="${esc(idea.id)}">${icon("thumbs-up")} Bu fikri destekle</button>
+          ${(() => {
+            const u = currentUser();
+            const hasSupported = u.supportedIdeas && u.supportedIdeas.includes(idea.id);
+            return `<button class="btn ${hasSupported ? 'success' : 'soft'}" data-action="support-idea" data-id="${esc(idea.id)}" style="${hasSupported ? 'background: #2ecc71; border-color: #2ecc71; color: white;' : ''}">${icon(hasSupported ? "heart-off" : "heart")} ${hasSupported ? 'Bu fikri destekledin' : 'Bu fikri destekle'}</button>`;
+          })()}
           <button class="btn soft" data-action="toggle-pin-idea" data-id="${esc(idea.id)}" style="color: ${state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? 'var(--primary)' : 'var(--muted)'};">
             ${icon(state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? "pin-off" : "pin")} ${state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? "Sabitlemeyi Kaldır" : "Sabitle"}
           </button>
@@ -7120,6 +6212,8 @@ function renderTeamsDirectory() {
 function filteredTeams() {
   const q = (state.filters.teamSearch || "").trim().toLocaleLowerCase("tr-TR");
   return state.teams.filter(team => {
+    const linkedIdea = state.ideas.find(i => i.id === team.ideaId);
+    if (linkedIdea && linkedIdea.country !== state.activeCountry) return false;
     const text = [team.name, team.description, team.area, ...(team.tags || [])].join(" ").toLocaleLowerCase("tr-TR");
     return (!q || text.includes(q))
       && (state.filters.teamArea === "Tümü" || team.area === state.filters.teamArea)
@@ -8464,6 +7558,7 @@ function renderChallenges() {
 function filteredChallenges() {
   const q = (state.filters.challengeSearch || "").trim().toLocaleLowerCase("tr-TR");
   return challenges.filter(item => {
+    if (item.country !== state.activeCountry) return false;
     const text = [item.title, item.theme, item.sector, item.reward, item.sponsor, item.brief].join(" ").toLocaleLowerCase("tr-TR");
     const searchMatch = !q || text.includes(q);
     const sectorMatch = !state.filters.challengeSector || state.filters.challengeSector === "Tümü" || item.sector === state.filters.challengeSector;
@@ -8818,8 +7913,8 @@ function renderProfileV2() {
         </div>
         <div class="profile-wallet">
           <span>Borsa bütçesi</span>
-          <strong>${formatCurrency(state.marketBudget)}</strong>
-          <small>Portföy ${formatCurrency(portfolioValue)}</small>
+          <strong>${formatCurrencyHTML(state.marketBudget, "large")}</strong>
+          <small>Portföy ${formatCurrencyHTML(portfolioValue, "small")}</small>
         </div>
       </section>
 
@@ -9142,7 +8237,7 @@ function renderManagerV2() {
             <span><strong>${esc(focusIdea.estimatedImpact)}</strong> etki</span>
             <span><strong>${esc(focusIdea.estimatedCost)}</strong> maliyet</span>
             <span><strong>${esc(focusIdea.implementationTime)}</strong> süre</span>
-            <span><strong>${formatCurrency(marketPrice(focusIdea))}</strong> hisse fiyatı</span>
+            <span><strong>${formatCurrencyHTML(focusIdea.marketPrice || marketPrice(focusIdea), "large")}</strong> hisse fiyatı</span>
             <span><strong>${Math.round((focusIdea.credits || 100) / 10)}</strong> destekçi</span>
           </div>
           <div class="manager-actions">
@@ -9247,7 +8342,7 @@ function managerDecisionCardV2(idea) {
       <div class="decision-card-meta" style="flex-wrap: wrap; gap: 4px;">
         <span>${esc(idea.estimatedImpact)}</span>
         <span>${esc(idea.implementationTime)}</span>
-        <span>Fiyat: ${formatCurrency(marketPrice(idea))}</span>
+        <span>Fiyat: ${formatCurrencyHTML(marketPrice(idea))}</span>
         <span>Destek: ${Math.round((idea.credits || 100) / 10)} Oy</span>
       </div>
       <div class="decision-card-meta" style="margin-top: 4px; font-size: 11px; color: #8b94a7;">
@@ -10218,6 +9313,7 @@ document.addEventListener("click", event => {
     const successMetricVal = document.getElementById("wizard-successMetric")?.value || "";
     const visibilityVal = document.getElementById("wizard-visibility")?.value || "Holding geneli";
     const anonymityVal = document.getElementById("wizard-anonymity")?.value || "İsmimle paylaş";
+    const countryVal = document.getElementById("wizard-country")?.value || state.activeCountry;
 
     if (!titleVal.trim() || !oneSentenceVal.trim()) {
       alert("Lütfen en azından Başlık ve Kısa Açıklama alanlarını doldurun.");
@@ -10244,7 +9340,7 @@ document.addEventListener("click", event => {
       type: marketCategoryVal,
       company: companyVal,
       department: departmentVal,
-      location: user.location || "İstanbul Genel Müdürlük",
+      location: user.location || "Sabancı Center",
       city: user.city || "İstanbul",
       authorId: user.id,
       authorLabel: anonymityVal === "İsmimle paylaş" ? user.name : anonymityVal === "Tam anonim" ? "Anonim Çalışan" : `Anonim ${user.role || 'Çalışan'}`,
@@ -10264,7 +9360,7 @@ document.addEventListener("click", event => {
       comments: [],
       tags: [departmentVal || "İnovasyon", marketCategoryVal, impactVal + " Etki", costVal + " Maliyet"],
       createdAt: new Date().toISOString().slice(0, 10),
-      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "is-new"),
+      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "sabanci-holding"),
       marketCategory: marketCategoryVal,
       marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
       marketPrice: Math.round(mockAiScore * 2.2),
@@ -10273,7 +9369,8 @@ document.addEventListener("click", event => {
       marketShares: 1000,
       marketSpark: [mockAiScore, mockAiScore, mockAiScore, mockAiScore],
       files: defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, marketCategoryVal),
-      applications: []
+      applications: [],
+      country: countryVal
     };
 
     state.ideas.unshift(newIdea);
@@ -10340,7 +9437,7 @@ document.addEventListener("click", event => {
           if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
           state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
 
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
         } else {
           alert("Yetersiz bütçe!");
         }
@@ -10358,7 +9455,7 @@ document.addEventListener("click", event => {
           const fraction = quantity / (ownedBefore || 1);
           state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
 
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
         } else {
           alert("Yetersiz destek birimi!");
         }
@@ -11014,7 +10111,31 @@ document.addEventListener("click", event => {
     return;
   }
 
-  if (action === "login") {
+    if (action === "select-login-country") {
+    state.currentCountry = actionButton.dataset.code;
+    state.activeCountry = actionButton.dataset.code;
+    state.loginCountrySelected = true;
+    const users = demoUsers.filter(u => u.country === state.currentCountry);
+    if (users.length) {
+      state.selectedLoginUserId = users[0].id;
+    }
+    render();
+    return;
+  }
+
+  if (action === "back-to-countries") {
+    state.loginCountrySelected = false;
+    render();
+    return;
+  }
+
+  if (action === "select-login-user") {
+    state.selectedLoginUserId = actionButton.dataset.id;
+    render();
+    return;
+  }
+
+if (action === "login") {
     if (!state.accessKeyAccepted && state.accessKeyInput.trim().toLocaleUpperCase("tr-TR") !== demoAccessKey) {
       state.onboardingStep = 1;
       state.loginError = "Exchange'e girmek için demo key gerekiyor.";
@@ -11154,7 +10275,7 @@ document.addEventListener("click", event => {
         if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
         state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
 
-        state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+        state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
       }
       if (action === "sell-market" && (state.marketHoldings[idea.id] || 0) > 0) {
         const sellQuantity = Math.min(quantity, state.marketHoldings[idea.id] || 0);
@@ -11169,7 +10290,7 @@ document.addEventListener("click", event => {
         const fraction = sellQuantity / (ownedBefore || 1);
         state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
 
-        state.quickFlowFeedback = `${sellQuantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+        state.quickFlowFeedback = `${sellQuantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
       }
       render();
     }
@@ -12113,6 +11234,12 @@ document.addEventListener("change", event => {
   const actionEl = event.target.closest("[data-action]");
   if (actionEl) {
     const action = actionEl.dataset.action;
+        if (action === "change-active-country") {
+      state.activeCountry = event.target.value;
+      render();
+      return;
+    }
+
     if (action === "filter-ledger-user") {
       state.ledgerUserFilter = event.target.value;
       render();
@@ -12431,10 +11558,31 @@ document.addEventListener("change", event => {
 function supportIdea(id) {
   const idea = state.ideas.find(item => item.id === id);
   const user = currentUser();
-  if (!idea || user.voteCreditBalance <= 0) return;
-  idea.credits += 1;
-  idea.supporters += 1;
-  idea.communityScore = Math.min(100, idea.communityScore + 1);
+  if (!idea) return;
+  
+  if (!user.supportedIdeas) {
+    user.supportedIdeas = [];
+  }
+  
+  if (user.supportedIdeas.includes(id)) {
+    // Already supported, toggle off
+    user.supportedIdeas = user.supportedIdeas.filter(x => x !== id);
+    idea.credits = Math.max(0, (idea.credits || 0) - 1);
+    idea.supporters = Math.max(0, (idea.supporters || 0) - 1);
+    idea.communityScore = Math.max(0, (idea.communityScore || 0) - 1);
+    user.voteCreditBalance = (user.voteCreditBalance || 0) + 1;
+    return;
+  }
+  
+  if (user.voteCreditBalance <= 0) {
+    alert("Yeterli oylama krediniz bulunmamaktadır!");
+    return;
+  }
+  
+  user.supportedIdeas.push(id);
+  idea.credits = (idea.credits || 0) + 1;
+  idea.supporters = (idea.supporters || 0) + 1;
+  idea.communityScore = Math.min(100, (idea.communityScore || 0) + 1);
   user.voteCreditBalance -= 1;
 }
 
@@ -12649,6 +11797,7 @@ function getIdeaPredictionProbability(ideaId) {
 
 function filteredBorsaIdeas() {
   let list = [...state.ideas];
+  list = list.filter(idea => idea.country === state.activeCountry);
   
   if (state.marketSearch && state.marketSearch.trim()) {
     const q = state.marketSearch.toLowerCase();
@@ -13206,6 +12355,7 @@ function renderSuggestionsSection() {
 
 function filteredDataSets() {
   let list = [...(state.dataSets || [])];
+  list = list.filter(d => d.country === state.activeCountry);
   
   if (state.filters.dataSearch && state.filters.dataSearch.trim()) {
     const q = state.filters.dataSearch.toLowerCase();
@@ -13387,6 +12537,7 @@ function renderDataComposer() {
 
 function filteredAnnouncements() {
   let list = [...(state.announcements || [])];
+  list = list.filter(ann => ann.country === state.activeCountry);
   
   if (state.filters.announcementSearch && state.filters.announcementSearch.trim()) {
     const q = state.filters.announcementSearch.toLowerCase();
@@ -14063,7 +13214,7 @@ function createRichSocialPost(kind, bodyText, photoFile = null) {
     base.link = {
       title: "Fikir doğrulama notları",
       description: "Kısa problem tanımı, veri ihtiyacı ve beklenen etki özeti.",
-      url: "https://www.isbank.com.tr/"
+      url: "https://www.sabanci.com/"
     };
   }
   return base;
@@ -14105,7 +13256,7 @@ function createRichMessage(kind) {
       link: {
         title: "İşBank dijital kanallar notu",
         description: "Süreç iyileştirme için referans bağlantı.",
-        url: "https://www.isbank.com.tr/"
+        url: "https://www.sabanci.com/"
       }
     };
   }
@@ -14157,6 +13308,12 @@ function renderProfileV2() {
           <div style="flex: 1; line-height: 1.4;">
             <h2 style="font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">${esc(user.name)}</h2>
             <strong style="font-size: 14.5px; color: var(--primary); display: block; margin-bottom: 4px;">${esc(user.role || user.title || "Kullanıcı")}</strong>
+            <div style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 13.5px; color: var(--ink-soft); font-weight: 600;">Aktif Portal:</span>
+              <select class="select" style="padding: 4px 8px; font-size: 13px; font-weight: 600; border-radius: 8px; border: 1px solid var(--line-soft); background: var(--surface);" data-action="change-active-country">
+                ${countriesList.map(c => `<option value="${c.code}" ${c.code === state.activeCountry ? 'selected' : ''}>${c.flag} ${c.name}</option>`).join("")}
+              </select>
+            </div>
             <span style="font-size: 13.5px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
               ${icon("building", "14")} ${company ? esc(company.name) : "Bağımsız / Topluluk"}
             </span>
@@ -14209,9 +13366,16 @@ function renderProfileV2() {
             Gönderiler (${(state.socialPosts || []).filter(s => s.userId === user.id).length})
           </button>
           ${isMe ? `
-            <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'liked' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'liked' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="liked">
-              Beğenilen Fikirler (${Object.values(state.quickEvalLikes || {}).filter(v => v === "like").length})
-            </button>
+            ${(() => {
+              const quickEvalLikedIds = Object.entries(state.quickEvalLikes || {}).filter(([, val]) => val === "like").map(([id]) => id);
+              const userSupportedIds = user.supportedIdeas || [];
+              const totalLikedCount = new Set([...quickEvalLikedIds, ...userSupportedIds]).size;
+              return `
+                <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'liked' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'liked' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="liked">
+                  Beğenilen Fikirler (${totalLikedCount})
+                </button>
+              `;
+            })()}
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'pinned' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'pinned' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="pinned">
               Sabitli Fikirler (${(state.pinnedIdeaIds || []).length})
             </button>
@@ -14340,21 +13504,40 @@ function renderProfileTabContent(user, tab) {
   }
 
   if (tab === "liked") {
-    const likedIds = Object.entries(state.quickEvalLikes || {})
+    const quickEvalLikedIds = Object.entries(state.quickEvalLikes || {})
       .filter(([, val]) => val === "like")
       .map(([id]) => id);
-    const list = state.ideas.filter(i => likedIds.includes(i.id));
-    if (list.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz beğendiğiniz (AL dediğiniz) bir fikir bulunmamaktadır.</p>`;
-    return `<div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
-      ${list.map(i => `
-        <div style="background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" data-action="open-idea" data-id="${i.id}">
-          <div style="flex: 1; min-width: 0; margin-right: 12px;">
-            <h4 style="font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--ink);">${esc(i.title)}</h4>
-            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(i.summary)}</p>
+    const userSupportedIds = user.supportedIdeas || [];
+    const combinedIds = Array.from(new Set([...quickEvalLikedIds, ...userSupportedIds]));
+    const list = state.ideas.filter(i => combinedIds.includes(i.id));
+    if (list.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz beğendiğiniz veya desteklediğiniz bir fikir bulunmamaktadır.</p>`;
+    return `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;">
+      ${list.map(i => {
+        const authorUser = demoUsers.find(u => u.id === i.authorId);
+        const isAnonymous = String(i.authorLabel || "").toLocaleLowerCase("tr-TR").startsWith("anonim");
+        const authorName = isAnonymous ? "Anonim" : (i.authorLabel || authorUser?.name || "Çalışan");
+        return `
+          <div style="background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; transition: transform 0.2s;" data-action="open-idea" data-id="${i.id}" class="table-hover-row">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="background: rgba(var(--primary-rgb, 99, 102, 241), 0.15); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">${esc(i.marketCategory || 'Fikir')}</span>
+                <span style="font-size: 11px; color: var(--muted); font-family: monospace;">${esc(i.marketTicker)}</span>
+              </div>
+              <h4 style="font-weight: 600; font-size: 14.5px; margin: 0 0 6px 0; color: var(--ink); line-height: 1.4;">${esc(i.title)}</h4>
+              <p style="font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${esc(i.summary)}</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 10px; margin-top: 4px;">
+              <span style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--ink-soft);">
+                ${avatar(authorName, "micro", isAnonymous ? "" : authorUser?.avatarUrl)}
+                ${esc(authorName)}
+              </span>
+              <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #ffd700; font-weight: 600;">
+                ${icon("heart")} <span>${i.supporters || 0}</span>
+              </span>
+            </div>
           </div>
-          <span class="status-badge new" style="font-size: 11px;">${esc(i.marketCategory || "Fikir")}</span>
-        </div>
-      `).join("")}
+        `;
+      }).join("")}
     </div>`;
   }
 
@@ -14370,32 +13553,67 @@ function renderProfileTabContent(user, tab) {
           </div>
           <span class="status-badge" style="font-size: 11px; background: rgba(var(--primary-rgb), 0.1); color: var(--primary); font-weight: 600; border: 1px solid rgba(var(--primary-rgb), 0.2);">Sabitli</span>
         </div>
-        </div>
       `).join("")}
     </div>`;
   }
 
   if (tab === "portfolio") {
-    const holdings = Object.entries(state.marketHoldings || {}).filter(([, qty]) => qty > 0);
-    if (holdings.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz portföyünüzde hisse bulunmamaktadır.</p>`;
-    return `<div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
-      ${holdings.map(([id, qty]) => {
-        const i = state.ideas.find(x => x.id === id);
-        if (!i) return "";
-        const val = (i.marketPrice || 100) * qty;
-        return `
-        <div style="background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" data-action="open-idea" data-id="${i.id}">
-          <div style="flex: 1; min-width: 0; margin-right: 12px;">
-            <h4 style="font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--ink);">${esc(i.title)}</h4>
-            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(i.summary)}</p>
-          </div>
-          <div style="text-align: right; min-width: 80px;">
-            <div style="font-weight: 700; color: var(--ink);">${qty} Hisse</div>
-            <div style="font-size: 12px; color: var(--positive);">${formatCurrency(val)}</div>
-          </div>
-        </div>`;
-      }).join("")}
-    </div>`;
+    const holdings = Object.entries(state.marketHoldings || {})
+      .filter(([, qty]) => qty > 0)
+      .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
+      .filter(item => item.idea);
+    if (holdings.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz portföyünüzde hisse bulunmamaktadır. Borsa sekmesinden projelere yatırım yapabilirsiniz.</p>`;
+    
+    return `
+      <div style="overflow-x: auto; background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; min-width: 700px;">
+          <thead>
+            <tr style="border-bottom: 2px solid rgba(255,255,255,0.08); color: var(--muted); font-weight: 600;">
+              <th style="padding: 12px 8px;">Proje / Kod</th>
+              <th style="padding: 12px 8px; text-align: right;">Miktar (Lot)</th>
+              <th style="padding: 12px 8px; text-align: right;">Ort. Maliyet</th>
+              <th style="padding: 12px 8px; text-align: right;">Güncel Fiyat</th>
+              <th style="padding: 12px 8px; text-align: right;">Yatırım</th>
+              <th style="padding: 12px 8px; text-align: right;">Güncel Değer</th>
+              <th style="padding: 12px 8px; text-align: right;">Kâr / Zarar</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${holdings.map(({ idea, qty }) => {
+              const currentPrice = marketPrice(idea);
+              const totalValue = qty * currentPrice;
+              const invested = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
+              const avgCost = qty > 0 ? (invested / qty) : 0;
+              const profitLoss = totalValue - invested;
+              const profitLossPercent = invested > 0 ? (profitLoss / invested) * 100 : 0;
+              const isProfit = profitLoss >= 0;
+              
+              return `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;" data-action="open-idea" data-id="${idea.id}" class="table-hover-row">
+                  <td style="padding: 12px 8px; display: flex; align-items: center; gap: 8px;">
+                    <span style="background: rgba(255,215,0,0.1); color: #ffd700; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-family: monospace;">${esc(idea.marketTicker)}</span>
+                    <div>
+                      <span style="font-weight: 600; display: block; color: var(--text);">${esc(idea.title)}</span>
+                      <span style="font-size: 11px; color: var(--muted);">${esc(idea.department)}</span>
+                    </div>
+                  </td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${qty}</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} SA</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} SA</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} SA</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} SA</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isProfit ? '#2ecc71' : '#e74c3c'};">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isProfit ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
+                      ${isProfit ? '▲ +' : '▼ '}${formatCurrency(profitLoss)} (${isProfit ? '+' : ''}${profitLossPercent.toFixed(1)}%)
+                    </span>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
   return "";
@@ -14887,7 +14105,7 @@ function renderRulesPage() {
           <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; margin-top: 0;">
             ${icon("eye-off")} 3. Bilgi Güvenliği ve Gizlilik
           </h3>
-          <p>İş Bankası iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
+          <p>Sabancı Holding iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
         </div>
 
         <div style="border-top: 1px solid var(--line-soft); padding-top: 16px;">
@@ -15073,7 +14291,7 @@ function ensureSocialEnhancements() {
     dataPost.link = {
       title: "Yeşil finans veri notu",
       description: "ESG veri alanları, örnek KPI seti ve proje kullanım senaryoları.",
-      url: "https://www.isbank.com.tr/"
+      url: "https://www.sabanci.com/"
     };
   }
 
@@ -15102,7 +14320,7 @@ function ensureSocialEnhancements() {
       link: {
         title: "API akış kontrol listesi",
         description: "Onay, test, hata izleme ve canlıya geçiş adımları.",
-        url: "https://www.isbank.com.tr/"
+        url: "https://www.sabanci.com/"
       }
     })
   ];
@@ -15136,7 +14354,7 @@ function ensureSocialEnhancements() {
         link: {
           title: "Haftalık karar notu",
           description: "Fikir üretimi, al/sat hareketi ve bekleyen pilotlar.",
-          url: "https://www.isbank.com.tr/"
+          url: "https://www.sabanci.com/"
         }
       },
       {
