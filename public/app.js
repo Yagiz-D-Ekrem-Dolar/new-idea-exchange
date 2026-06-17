@@ -2068,7 +2068,7 @@ const navItems = [
   { id: "challenges", label: "Yarışmalar", icon: "trophy" },
   { id: "education", label: "Eğitim & Mentörlük", icon: "graduation-cap" },
   { id: "events", label: "Etkinlikler", icon: "calendar" },
-  { id: "studio", label: "Girişim Stüdyosu", icon: "layers" },
+  { id: "studio", label: "Stüdyo", icon: "layers" },
   { id: "profile", label: "Profil", icon: "user-round" },
   { id: "messages", label: "Mesajlar", icon: "message-square-text" },
   { id: "managerDashboard", label: "Yönetici Dashboardu", icon: "chart-no-axes-combined", managerOnly: true },
@@ -2271,6 +2271,7 @@ const state = {
   quickFlowFeedback: "",
   fastCommentDraft: "",
   quickEvalLikes: {},
+  pinnedIdeaIds: [],
   quickEvalCommentDraft: "",
   notifications: structuredClone(initialNotificationsList),
   filters: {
@@ -2296,6 +2297,7 @@ const state = {
     announcementArea: "Tümü",
     announcementSort: "En yeni",
     socialSearch: "",
+    socialRole: "Tüm Roller",
     challengeSearch: "",
     challengeSector: "Tümü",
     challengeStatus: "Tümü",
@@ -3399,7 +3401,7 @@ function renderGlobalSearchPanel() {
 
       ${matchingTeams.length ? `
         <div class="global-search-group">
-          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Girişim Takımları</span>
+          <span class="panel-kicker" style="font-size: 10px; margin-bottom: 2px;">Ekipler</span>
           ${matchingTeams.map(team => `
             <button class="global-search-result" data-action="go-to-search-result" data-type="team" data-id="${esc(team.id)}">
               <i>${icon("users-round")}</i>
@@ -3567,7 +3569,7 @@ function renderMobileNav(nav) {
     messages: "Mesaj",
     data: "Veri&Bilgi",
     agenda: "Gündem",
-    studio: "Girişim Stüdyosu",
+    studio: "Stüdyo",
     social: "Sosyal",
     quickFlow: "Borsa",
     profile: "Profil"
@@ -3990,7 +3992,7 @@ function renderQuickFlow() {
             </select>
 
             <select class="select" data-market-filter="sort" aria-label="Sıralama">
-              ${optionList(["En yeni", "En Pahalılar", "En Yüksek AI Skoru", "En İyi Tahmin Edilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
+              ${optionList(["En yeni", "En Pahalılar", "En Yüksek AI Skoru", "En Çok Beğenilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
             </select>
 
             <button class="btn ghost slim-btn" data-action="clear-borsa-filters" style="padding: 6px 12px; font-size: 13px;">
@@ -5966,6 +5968,9 @@ function renderIdeaDetail() {
         <div class="field-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn ghost" data-page="ideas">${icon("arrow-left")} Fikirlere dön</button>
           <button class="btn soft" data-action="support-idea" data-id="${esc(idea.id)}">${icon("thumbs-up")} Bu fikri destekle</button>
+          <button class="btn soft" data-action="toggle-pin-idea" data-id="${esc(idea.id)}" style="color: ${state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? 'var(--primary)' : 'var(--muted)'};">
+            ${icon(state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? "pin-off" : "pin")} ${state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? "Sabitlemeyi Kaldır" : "Sabitle"}
+          </button>
           <button class="btn primary" data-action="apply-to-idea" data-id="${esc(idea.id)}" style="background: linear-gradient(135deg, var(--primary), var(--indigo)); border: none; color: #fff; font-weight: 600;">
             ${icon("briefcase")} Fikre Başvuru At
           </button>
@@ -6906,7 +6911,7 @@ function renderStudioPage() {
     <div class="view-stack studio-hub-page">
       <section class="studio-hero" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
         <div class="studio-hero-left" style="flex: 1; min-width: 280px;">
-          <span class="panel-kicker" style="color: var(--primary); font-weight: 700;">Kurumsal Girişim Stüdyoları</span>
+          <span class="panel-kicker" style="color: var(--primary); font-weight: 700;">Stüdyolar</span>
           <h2 style="font-size: 24px; font-weight: 700; color: var(--ink); margin: 6px 0 8px 0; font-family: 'Space Grotesk', sans-serif;">Fikirlerin Girişime ve Ürüne Dönüştüğü Merkez</h2>
           <p style="color: var(--ink-soft); font-size: 13.5px; margin: 0; line-height: 1.5;">İştiraklerimizin iş modellerini olgunlaştırdığı, nitelikli sinerji takımları kurduğu ve yenilikçi çözümleri ölçeklediği kurumsal girişimcilik ekosistemi.</p>
         </div>
@@ -6931,10 +6936,10 @@ function renderStudioPage() {
           ${icon("package-check")} Ürünler
         </button>
         <button class="btn ${tab === 'studios' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="studios" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'studios' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'studios' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'studios' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("layers")} Girişim Stüdyoları
+          ${icon("layers")} Stüdyolar
         </button>
         <button class="btn ${tab === 'teams' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="teams" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'teams' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'teams' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'teams' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("users-round")} Sinerji & Girişim Takımları
+          ${icon("users-round")} Ekipler
         </button>
       </div>
 
@@ -7060,7 +7065,7 @@ function renderUnifiedTeamsTab() {
   return `
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <h3 style="font-size: 15px; font-weight: 700; color: var(--ink); margin: 0;">Proje Geliştirme Ekipleri</h3>
+        <h3 style="font-size: 15px; font-weight: 700; color: var(--ink); margin: 0;">Ekipler</h3>
         <button class="btn primary slim-btn" data-action="start-create-team">${icon("plus")} Yeni Ekip Kur</button>
       </div>
       <section class="challenge-filterbar" style="margin-bottom: 0;">
@@ -9749,6 +9754,19 @@ document.addEventListener("click", event => {
     return;
   }
 
+  if (action === "toggle-pin-idea") {
+    const id = actionButton.dataset.id;
+    if (!state.pinnedIdeaIds) state.pinnedIdeaIds = [];
+    const idx = state.pinnedIdeaIds.indexOf(id);
+    if (idx > -1) {
+      state.pinnedIdeaIds.splice(idx, 1);
+    } else {
+      state.pinnedIdeaIds.push(id);
+    }
+    render();
+    return;
+  }
+
   if (action === "search-cluster") {
     const query = actionButton.dataset.query;
     state.marketSearch = query;
@@ -10083,7 +10101,7 @@ document.addEventListener("click", event => {
       },
       {
         title: "Yeşil Enerji Projeleri Yatırım Trendleri",
-        body: "Girişim stüdyolarımızda kuluçkalanan Yeşil Enerji ve Karbon Takip projelerine olan bireysel yatırım hacmi son iki haftada %40 arttı. ESG raporlama standartlarına uyum sağlayan girişimler öncelikli destek alıyor.",
+        body: "Stüdyolarımızda kuluçkalanan Yeşil Enerji ve Karbon Takip projelerine olan bireysel yatırım hacmi son iki haftada %40 arttı. ESG raporlama standartlarına uyum sağlayan girişimler öncelikli destek alıyor.",
         category: "Strateji",
         tags: ["YeşilFinans", "ESG", "Yatırım"]
       },
@@ -11640,6 +11658,18 @@ document.addEventListener("click", event => {
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea) {
       idea.status = actionButton.dataset.status;
+      
+      // Trigger status-change notification
+      if (!state.notifications) state.notifications = [];
+      const statusLabel = (statusMeta[idea.status] && statusMeta[idea.status].label) || idea.status;
+      state.notifications.unshift({
+        id: "n-status-" + Date.now(),
+        type: "Fikir",
+        title: `Proje Durumu Güncellendi`,
+        body: `"${idea.title}" projesinin yeni durumu: "${statusLabel}" olarak güncellendi.`,
+        unread: true
+      });
+
       if (idea.status === "done") {
         idea.communityScore = Math.min(100, idea.communityScore + 4);
         const investedAmount = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
@@ -11870,11 +11900,11 @@ document.addEventListener("pointermove", event => {
     // Smooth glow based on drag progress
     const intensity = Math.min(0.3, Math.abs(deltaX) / 300);
     if (deltaX > 0) {
-      quickEvalPointer.card.style.boxShadow = `0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 40px rgba(59, 130, 246, ${intensity})`;
-      quickEvalPointer.card.style.borderColor = `rgba(59, 130, 246, ${intensity * 1.5})`;
+      quickEvalPointer.card.style.boxShadow = `0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 40px rgba(16, 185, 129, ${intensity})`;
+      quickEvalPointer.card.style.borderColor = `rgba(16, 185, 129, ${intensity * 1.5})`;
     } else {
-      quickEvalPointer.card.style.boxShadow = `0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 40px rgba(148, 163, 184, ${intensity})`;
-      quickEvalPointer.card.style.borderColor = `rgba(148, 163, 184, ${intensity * 1.5})`;
+      quickEvalPointer.card.style.boxShadow = `0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 40px rgba(239, 68, 68, ${intensity})`;
+      quickEvalPointer.card.style.borderColor = `rgba(239, 68, 68, ${intensity * 1.5})`;
     }
 
     // Dynamic overlay indicator opacities
@@ -12129,6 +12159,16 @@ document.addEventListener("change", event => {
     }
     render();
     return;
+  }
+
+  const socialFilter = event.target.closest("[data-social-filter]");
+  if (socialFilter) {
+    const filterName = socialFilter.dataset.socialFilter;
+    if (filterName === "role") {
+      state.filters.socialRole = event.target.value;
+      render();
+      return;
+    }
   }
 
   const challengeFilter = event.target.closest("[data-challenge-filter]");
@@ -12414,11 +12454,11 @@ function renderQuickEval() {
           <div class="eval-stats">
             <div class="stat-pill">
               <strong>${likedCount}</strong>
-              <span>Beğenilen</span>
+              <span>Alınan</span>
             </div>
             <div class="stat-pill">
               <strong>${swipedCount - likedCount}</strong>
-              <span>Pas Geçilen</span>
+              <span>Alınmayan</span>
             </div>
           </div>
           
@@ -12448,7 +12488,7 @@ function renderQuickEval() {
         <div class="speedy-badge-row">
           <span class="speedy-count-badge">${remainingCount} fikir kaldı</span>
         </div>
-        <p class="speedy-subtitle">Sağa Kaydır: Beğendim · Sola Kaydır: Pas Geç</p>
+        <p class="speedy-subtitle">Sağa Kaydır: Al · Sola Kaydır: Alma</p>
       </div>
 
       <div class="speedy-main">
@@ -12524,24 +12564,26 @@ function renderQuickEval() {
             </footer>
 
             <!-- Swiping Indicators Overlay -->
-            <div class="swipe-overlay like-overlay">BEĞENDİM</div>
-            <div class="swipe-overlay pass-overlay">PAS</div>
+            <div class="swipe-overlay like-overlay" style="color: #10b981; border-color: #10b981;">AL</div>
+            <div class="swipe-overlay pass-overlay" style="color: #ef4444; border-color: #ef4444;">ALMA</div>
           </article>
         </div>
 
         <!-- Action Control Buttons under stack -->
         <div class="tinder-controls">
-          <button class="tinder-btn dislike-btn" data-action="quickEval-dislike" data-id="${esc(idea.id)}" title="Beğenmedim (Sola Kaydır)">
-            ${icon("thumbs-down")}
+          <button class="tinder-btn dislike-btn" data-action="quickEval-dislike" data-id="${esc(idea.id)}" title="Alma (Sola Kaydır)" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto; padding: 12px; gap: 4px;">
+            ${icon("x-circle")}
+            <span style="font-size: 11px; font-weight: 600; color: var(--negative);">Alma</span>
           </button>
           
-          <button class="tinder-btn comment-btn" data-action="quickEval-show-comments" data-id="${esc(idea.id)}" title="Yorumlar">
+          <button class="tinder-btn comment-btn" data-action="quickEval-show-comments" data-id="${esc(idea.id)}" title="Yorumlar" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto; padding: 12px; gap: 4px;">
             ${icon("message-square-text")}
-            ${comments.length ? `<span class="comments-badge">${comments.length}</span>` : ""}
+            <span style="font-size: 11px; font-weight: 600; color: var(--muted);">${comments.length || 0} Yorum</span>
           </button>
           
-          <button class="tinder-btn like-btn" data-action="quickEval-like" data-id="${esc(idea.id)}" title="Beğendim (Sağa Kaydır)">
-            ${icon("thumbs-up")}
+          <button class="tinder-btn like-btn" data-action="quickEval-like" data-id="${esc(idea.id)}" title="Al (Sağa Kaydır)" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: auto; padding: 12px; gap: 4px;">
+            ${icon("check-circle-2")}
+            <span style="font-size: 11px; font-weight: 600; color: var(--emerald);">Al</span>
           </button>
         </div>
 
@@ -12647,12 +12689,8 @@ function filteredBorsaIdeas() {
     list.sort((a, b) => marketPrice(b) - marketPrice(a));
   } else if (sortType === "En Yüksek AI Skoru") {
     list.sort((a, b) => (b.aiScore || 0) - (a.aiScore || 0));
-  } else if (sortType === "En İyi Tahmin Edilenler") {
-    list.sort((a, b) => {
-      const probB = getIdeaPredictionProbability(b.id);
-      const probA = getIdeaPredictionProbability(a.id);
-      return probB - probA;
-    });
+  } else if (sortType === "En Çok Beğenilenler") {
+    list.sort((a, b) => (b.likes || b.supporters || 0) - (a.likes || a.supporters || 0));
   }
 
   return list;
@@ -12674,7 +12712,10 @@ function renderBorsaCard(idea) {
         <span class="borsa-league-badge" style="font-size: 11px; font-weight: 600; text-transform: uppercase; background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 20px;">
           ${esc(idea.marketCategory || "Fikir")}
         </span>
-        <div style="display: flex; align-items: center; gap: 6px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn ghost slim-btn" data-action="toggle-pin-idea" data-id="${idea.id}" style="padding: 2px 4px; border: none; background: transparent; color: ${state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? 'var(--primary)' : 'var(--muted)'}; cursor: pointer;" title="${state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? 'Sabitlemeyi Kaldır' : 'Sabitle'}">
+            ${icon(state.pinnedIdeaIds && state.pinnedIdeaIds.includes(idea.id) ? "pin-off" : "pin")}
+          </button>
           ${company ? companyLogo(company, "mini") : `<span class="independent-pill" style="font-size: 11px; background: var(--line-soft); color: var(--ink-soft); padding: 4px 8px; border-radius: 4px; font-weight: 500;">Bağımsız</span>`}
         </div>
       </div>
@@ -13456,6 +13497,14 @@ function renderSocial() {
     feedList = feedList.filter(post => post.userId === user.id || state.connectedUserIds.includes(post.userId));
   }
 
+  if (state.filters.socialRole && state.filters.socialRole !== "Tüm Roller") {
+    feedList = feedList.filter(post => {
+      const person = personById(post.userId);
+      const role = person?.role || (post.userBio ? post.userBio.split("·")[0].trim() : "");
+      return role === state.filters.socialRole;
+    });
+  }
+
   if (state.filters.socialSearch && state.filters.socialSearch.trim()) {
     const q = state.filters.socialSearch.toLowerCase();
     feedList = feedList.filter(post => 
@@ -13515,11 +13564,24 @@ function renderSocial() {
               ${avatar(user.name, "medium", user.photo || "")}
               <textarea class="textarea" id="social-composer-textarea" rows="2" placeholder="Bugün inovasyon adına ne paylaşıyorsun?" style="flex: 1; resize: none; border-radius: 12px; padding: 10px; font-size: 14px; border-color: var(--line-soft);"></textarea>
             </div>
-            <div class="social-composer-actions">
-              <label class="search-box" style="width: 220px; font-size: 12px;">
+            <div class="social-composer-actions" style="gap: 8px; flex-wrap: wrap;">
+              <label class="search-box" style="width: 200px; font-size: 12px;">
                 ${icon("search")}
                 <input class="input" placeholder="Akışta ara..." data-social-filter="search" value="${esc(state.filters.socialSearch || '')}" style="padding: 4px 8px 4px 28px; font-size: 12.5px;" />
               </label>
+              
+              <select class="select" data-social-filter="role" style="width: 160px; font-size: 12.5px; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--ink);">
+                <option value="Tüm Roller" ${state.filters.socialRole === "Tüm Roller" ? "selected" : ""}>Rol: Tüm Roller</option>
+                ${Array.from(new Set(state.socialPosts.map(post => {
+                  const person = personById(post.userId);
+                  if (person && person.role) return person.role;
+                  if (post.userBio) return post.userBio.split("·")[0].trim();
+                  return "";
+                }).filter(Boolean))).map(role => `
+                  <option value="${esc(role)}" ${state.filters.socialRole === role ? "selected" : ""}>Rol: ${esc(role)}</option>
+                `).join("")}
+              </select>
+
               <div class="social-composer-tools">
                 <button class="btn ghost" data-action="submit-social-rich-post" data-kind="poll">${icon("list-checks")} Anket</button>
                 <label class="btn ghost social-photo-upload">
@@ -14135,6 +14197,12 @@ function renderProfileV2() {
             Gönderiler (${(state.socialPosts || []).filter(s => s.userId === user.id).length})
           </button>
           ${isMe ? `
+            <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'liked' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'liked' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="liked">
+              Beğenilen Fikirler (${Object.values(state.quickEvalLikes || {}).filter(v => v === "like").length})
+            </button>
+            <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'pinned' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'pinned' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="pinned">
+              Sabitli Fikirler (${(state.pinnedIdeaIds || []).length})
+            </button>
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'applications' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'applications' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="applications">
               Başvurularım (${state.ideas.filter(i => i.applications && i.applications.some(a => a.userId === user.id)).length})
             </button>
@@ -14251,6 +14319,41 @@ function renderProfileTabContent(user, tab) {
             <span>·</span>
             <span>Tarih: ${esc(item.application.date)}</span>
           </div>
+        </div>
+      `).join("")}
+    </div>`;
+  }
+
+  if (tab === "liked") {
+    const likedIds = Object.entries(state.quickEvalLikes || {})
+      .filter(([, val]) => val === "like")
+      .map(([id]) => id);
+    const list = state.ideas.filter(i => likedIds.includes(i.id));
+    if (list.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz beğendiğiniz (AL dediğiniz) bir fikir bulunmamaktadır.</p>`;
+    return `<div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+      ${list.map(i => `
+        <div style="background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" data-action="open-idea" data-id="${i.id}">
+          <div style="flex: 1; min-width: 0; margin-right: 12px;">
+            <h4 style="font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--ink);">${esc(i.title)}</h4>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(i.summary)}</p>
+          </div>
+          <span class="status-badge new" style="font-size: 11px;">${esc(i.marketCategory || "Fikir")}</span>
+        </div>
+      `).join("")}
+    </div>`;
+  }
+
+  if (tab === "pinned") {
+    const list = state.ideas.filter(i => (state.pinnedIdeaIds || []).includes(i.id));
+    if (list.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz sabitlediğiniz bir fikir bulunmamaktadır.</p>`;
+    return `<div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+      ${list.map(i => `
+        <div style="background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" data-action="open-idea" data-id="${i.id}">
+          <div style="flex: 1; min-width: 0; margin-right: 12px;">
+            <h4 style="font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--ink);">${esc(i.title)}</h4>
+            <p style="font-size: 13px; color: var(--ink-soft); line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(i.summary)}</p>
+          </div>
+          <span class="status-badge" style="font-size: 11px; background: rgba(var(--primary-rgb), 0.1); color: var(--primary); font-weight: 600; border: 1px solid rgba(var(--primary-rgb), 0.2);">Sabitli</span>
         </div>
       `).join("")}
     </div>`;
