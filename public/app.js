@@ -2227,6 +2227,14 @@ const state = {
   loginError: "",
   currentUserId: "u3",
   selectedLoginUserId: "u3",
+  investmentLedger: [
+    { id: "tx-1", user: "Nazlı Durukan", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, date: "2026-06-10" },
+    { id: "tx-2", user: "Aras Kılınç", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 800, date: "2026-06-11" },
+    { id: "tx-3", user: "Nazlı Durukan", project: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 450, date: "2026-06-12" },
+    { id: "tx-4", user: "Mert Alkan", project: "Akıllı Harcama ve Karbon Nötrleme Kart Entegrasyonu", amount: 1500, date: "2026-06-14" }
+  ],
+  ledgerUserFilter: "Tümü",
+  ledgerProjectFilter: "Tümü",
   page: "quickFlow",
   previousPage: "quickFlow",
   selectedIdeaId: "idea-1",
@@ -3504,7 +3512,7 @@ function renderQuickFlow() {
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
-          <li><strong>Hayata Geçirilme Ödülü (30 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>30 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
+          <li><strong>Hayata Geçirilme Ödülü (41 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>41 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
         </ul>
       </section>
 
@@ -4586,7 +4594,7 @@ function renderTradingExchange() {
         </div>
         <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
           <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
-          <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın 30 katı oylama kredisi (ödül) aktarılır.</span>
+          <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın 41 katı oylama kredisi (ödül) aktarılır.</span>
         </div>
       </section>
 
@@ -6230,17 +6238,58 @@ function renderManagerDashboard() {
         </article>
       </section>
 
-      <section class="manager-panel">
-        <div class="manager-panel-head"><span class="panel-kicker">Kullanıcı Bazlı</span><strong>Oy geçmişi</strong></div>
-        <div class="manager-history-table">
-          <div class="head">Kullanıcı</div><div class="head">Fikir/Ürün</div><div class="head">Oy</div><div class="head">Değer</div><div class="head">Tarih</div>
-          ${votes.map(row => `
-            <div>${esc(row.userName)}</div>
-            <div>${esc(row.ideaTitle)}</div>
-            <div>${Number(row.quantity || 0)}</div>
-            <div>${formatCurrency(row.amount || 0)}</div>
-            <div>${esc(row.date)}</div>
-          `).join("")}
+      <section class="manager-panel" style="margin-top: 24px;">
+        <div class="manager-panel-head" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line-soft); padding-bottom: 12px; margin-bottom: 16px;">
+          <div>
+            <span class="panel-kicker">Karar Analitiği</span>
+            <strong>Detaylı Yatırım Defteri</strong>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <label style="font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
+              <span style="color: var(--ink-soft); font-weight: 500;">Kullanıcı:</span>
+              <select class="select" data-action="filter-ledger-user" style="font-size: 12px; padding: 4px 8px; height: 32px; border-radius: 8px;">
+                ${["Tümü", ...Array.from(new Set(votes.map(v => v.userName)))].map(u => `<option value="${esc(u)}" ${state.ledgerUserFilter === u ? "selected" : ""}>${esc(u)}</option>`).join("")}
+              </select>
+            </label>
+            <label style="font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
+              <span style="color: var(--ink-soft); font-weight: 500;">Proje:</span>
+              <select class="select" data-action="filter-ledger-project" style="font-size: 12px; padding: 4px 8px; height: 32px; border-radius: 8px;">
+                ${["Tümü", ...Array.from(new Set(votes.map(v => v.ideaTitle)))].map(p => `<option value="${esc(p)}" ${state.ledgerProjectFilter === p ? "selected" : ""}>${esc(p)}</option>`).join("")}
+              </select>
+            </label>
+            <button class="btn ghost slim-btn" data-action="reset-ledger-filters" style="font-size: 12px; padding: 6px 12px; height: 32px; display: flex; align-items: center; gap: 4px;">
+              ${icon("refresh-cw")} Sıfırla
+            </button>
+          </div>
+        </div>
+
+        <div class="manager-history-table" style="display: grid; grid-template-columns: 1.5fr 3fr 1fr 1.5fr 1.5fr; gap: 8px; background: var(--surface); border-radius: 12px; overflow: hidden;">
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Kullanıcı</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Proje Yatırımı</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Birim</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Yatırım Tutarı</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">İşlem Tarihi</div>
+          
+          ${(function() {
+            let filteredVotes = [...votes];
+            if (state.ledgerUserFilter && state.ledgerUserFilter !== "Tümü") {
+              filteredVotes = filteredVotes.filter(v => v.userName === state.ledgerUserFilter);
+            }
+            if (state.ledgerProjectFilter && state.ledgerProjectFilter !== "Tümü") {
+              filteredVotes = filteredVotes.filter(v => v.ideaTitle === state.ledgerProjectFilter);
+            }
+            return filteredVotes.length > 0 ? filteredVotes.map(row => `
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft);">${esc(row.userName)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); font-weight: 500; color: var(--ink);">${esc(row.ideaTitle)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right;">${Number(row.quantity || 0)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--primary); font-weight: 600;">${formatCurrency(row.amount || 0)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--muted);">${esc(row.date)}</div>
+            `).join("") : `
+              <div style="grid-column: span 5; text-align: center; padding: 30px; color: var(--muted); font-size: 13.5px;">
+                ${icon("alert-circle", "style='display:block; margin: 0 auto 8px; opacity:0.5;'")} Filtrelere uygun yatırım kaydı bulunamadı.
+              </div>
+            `;
+          })()}
         </div>
       </section>
     </div>
@@ -10304,11 +10353,11 @@ document.addEventListener("click", event => {
         idea.communityScore = Math.min(100, idea.communityScore + 4);
         const investedAmount = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
         if (investedAmount > 0) {
-          const reward = investedAmount * 30;
+          const reward = investedAmount * 41;
           state.marketBudget += reward;
           state.marketInvestedAmount[idea.id] = 0;
           setTimeout(() => {
-            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 30 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!`);
+            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 41 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!`);
           }, 100);
         }
       }
@@ -10695,6 +10744,21 @@ document.addEventListener("keydown", event => {
 });
 
 document.addEventListener("change", event => {
+  const actionEl = event.target.closest("[data-action]");
+  if (actionEl) {
+    const action = actionEl.dataset.action;
+    if (action === "filter-ledger-user") {
+      state.ledgerUserFilter = event.target.value;
+      render();
+      return;
+    }
+    if (action === "filter-ledger-project") {
+      state.ledgerProjectFilter = event.target.value;
+      render();
+      return;
+    }
+  }
+
   const marketFilter = event.target.closest("[data-market-filter]");
   if (marketFilter) {
     const filterName = marketFilter.dataset.marketFilter;
@@ -13183,7 +13247,7 @@ function renderRulesPage() {
           <p>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
-            • <strong>Hayata Geçirilme Ödülü (30 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>30 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.
+            • <strong>Hayata Geçirilme Ödülü (41 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>41 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.
           </p>
         </div>
       </section>
