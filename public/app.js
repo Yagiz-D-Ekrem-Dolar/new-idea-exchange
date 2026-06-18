@@ -2240,6 +2240,7 @@ const state = {
   },
   fileInspector: null,
   portalDropdownOpen: false,
+  selectedBranchId: null,
   quickFlowIndex: 0,
   quickFlowFeedback: "",
   fastCommentDraft: "",
@@ -3637,6 +3638,199 @@ function renderPage() {
   }
 }
 
+function getSubsidiariesByCountry(code) {
+  const mapping = {
+    TR: ["Türkiye"],
+    GB: ["Birleşik Krallık", "United Kingdom"],
+    US: ["Amerika Birleşik Devletleri", "United States"],
+    DE: ["Almanya", "Germany"],
+    ES: ["İspanya", "Spain"]
+  };
+  const names = mapping[code] || [];
+  return affiliationCompanies.filter(comp => {
+    return comp.countries.some(cName => names.includes(cName));
+  });
+}
+
+function renderSubsidiaryBranchingPanel() {
+  const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
+  const subsidiaries = getSubsidiariesByCountry(state.activeCountry);
+  
+  // Calculate stats
+  const allCities = new Set();
+  const allCampuses = new Set();
+  const allTypes = new Set();
+  subsidiaries.forEach(sub => {
+    if (sub.cities) sub.cities.forEach(c => allCities.add(c));
+    if (sub.campuses) sub.campuses.forEach(camp => allCampuses.add(camp));
+    if (sub.type) allTypes.add(sub.type);
+  });
+  
+  // Find selected subsidiary for detail view (state.selectedBranchId)
+  if (!state.selectedBranchId && subsidiaries.length > 0) {
+    state.selectedBranchId = subsidiaries[0].id;
+  }
+  
+  const activeBranchExists = subsidiaries.some(sub => sub.id === state.selectedBranchId);
+  if (!activeBranchExists && subsidiaries.length > 0) {
+    state.selectedBranchId = subsidiaries[0].id;
+  }
+
+  const activeBranch = subsidiaries.find(sub => sub.id === state.selectedBranchId) || subsidiaries[0];
+
+  return `
+    <section class="content-panel" style="margin-top: 24px; padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); position: relative; overflow: hidden; box-shadow: var(--shadow-soft);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+        <div>
+          <span class="panel-kicker" style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent);">
+            <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 18px; height: 12px; object-fit: cover; border-radius: 2px;" alt="" />
+            SABANCI ${activeC.name.toUpperCase()} EKOSİSTEMİ
+          </span>
+          <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--ink);">Şubeleşme, İştirakler ve Yerleşke Yapısı</h3>
+          <p style="color: var(--muted); font-size: 13px; margin-top: 2px;">Aktif portala bağlı iştiraklerin coğrafi yerleşke, departman ve inovasyon ağacı.</p>
+        </div>
+        
+        <!-- Stats Row -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <div style="background: rgba(var(--primary-rgb), 0.03); border: 1px solid var(--line-soft); padding: 8px 16px; border-radius: 12px; text-align: center; min-width: 90px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);">
+            <small style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">İştirak</small>
+            <strong style="font-size: 18px; font-family: 'Space Grotesk', sans-serif; color: var(--text);">${subsidiaries.length}</strong>
+          </div>
+          <div style="background: rgba(var(--primary-rgb), 0.03); border: 1px solid var(--line-soft); padding: 8px 16px; border-radius: 12px; text-align: center; min-width: 90px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);">
+            <small style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Şehir</small>
+            <strong style="font-size: 18px; font-family: 'Space Grotesk', sans-serif; color: var(--text);">${allCities.size}</strong>
+          </div>
+          <div style="background: rgba(var(--primary-rgb), 0.03); border: 1px solid var(--line-soft); padding: 8px 16px; border-radius: 12px; text-align: center; min-width: 90px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);">
+            <small style="color: var(--muted); display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Yerleşke</small>
+            <strong style="font-size: 18px; font-family: 'Space Grotesk', sans-serif; color: var(--text);">${allCampuses.size}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Visual Branching Grid -->
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-top: 20px;" class="subsidiary-grid">
+        
+        <!-- Left Side: Interactive Branch Tree & Org Map -->
+        <div style="display: flex; flex-direction: column; gap: 16px; background: rgba(var(--primary-rgb), 0.015); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; min-height: 380px; justify-content: center; position: relative; overflow: hidden;">
+          
+          <!-- Root Parent Node: Sabancı Holding -->
+          <div style="display: flex; justify-content: center; margin-bottom: 28px; position: relative; z-index: 2;">
+            <div style="display: flex; align-items: center; gap: 12px; background: var(--surface); border: 2px solid var(--accent); padding: 10px 24px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 93, 170, 0.12); text-align: left;">
+              <img src="/assets/company-logos/sabanci-holding.svg" style="height: 22px; width: auto;" alt="" />
+              <span>
+                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">H.Ö. Sabancı Holding</strong>
+                <small style="color: var(--muted); font-size: 11px; font-weight: 500;">Holding Merkez Çatısı</small>
+              </span>
+            </div>
+          </div>
+          
+          <!-- Branches Horizontal / Grid layout -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px; position: relative; z-index: 2;">
+            ${subsidiaries.map(sub => {
+              const isSelected = activeBranch && sub.id === activeBranch.id;
+              return `
+                <button class="branch-node-btn ${isSelected ? "active" : ""}" data-action="select-branch" data-id="${esc(sub.id)}" style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 8px;
+                  background: ${isSelected ? "rgba(0, 93, 170, 0.06)" : "var(--surface)"};
+                  border: 1px solid ${isSelected ? "var(--accent)" : "var(--line-soft)"};
+                  border-radius: 12px;
+                  padding: 14px 8px;
+                  cursor: pointer;
+                  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+                  box-shadow: ${isSelected ? "0 8px 20px rgba(0, 93, 170, 0.1)" : "0 2px 4px rgba(0,0,0,0.02)"};
+                  width: 100%;
+                  text-align: center;
+                  outline: none;
+                ">
+                  <div style="width: 44px; height: 44px; border-radius: 10px; background: #fff; border: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: center; padding: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.2s;">
+                    <img src="${esc(sub.logo)}" style="max-width: 100%; max-height: 100%; object-fit: contain;" alt="" />
+                  </div>
+                  <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <strong style="font-size: 12.5px; font-weight: 600; color: var(--text); display: block; max-width: 115px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(sub.shortName)}</strong>
+                    <small style="color: var(--muted); font-size: 10.5px; margin-top: 2px; font-weight: 500;">${esc(sub.type)}</small>
+                  </div>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        </div>
+
+        <!-- Right Side: Branch Information Panel (Deep Details Card) -->
+        <div style="background: rgba(var(--primary-rgb), 0.015); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; min-height: 380px;">
+          ${activeBranch ? `
+            <div>
+              <div style="display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line-soft); padding-bottom: 16px; margin-bottom: 16px;">
+                <div style="width: 56px; height: 56px; border-radius: 12px; background: #fff; border: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: center; padding: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.06);">
+                  <img src="${esc(activeBranch.logo)}" style="max-width: 100%; max-height: 100%; object-fit: contain;" alt="" />
+                </div>
+                <div>
+                  <h4 style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.25;">${esc(activeBranch.name)}</h4>
+                  <a href="https://${esc(activeBranch.domain)}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; text-decoration: none;">
+                    ${icon("globe", "style='width: 12px; height: 12px;'")} ${esc(activeBranch.domain)}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Locations and Campuses list -->
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                  <span style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: flex; align-items: center; gap: 4px; letter-spacing: 0.5px;">
+                    ${icon("map-pin", "style='width: 12px; height: 12px; color: var(--accent);'")} AKTİF ŞEHİRLER & ŞUBELER
+                  </span>
+                  <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;">
+                    ${activeBranch.cities.map(city => `
+                      <span style="font-size: 11.5px; background: var(--surface); border: 1px solid var(--line-soft); padding: 4px 12px; border-radius: 20px; font-weight: 600; color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">${esc(city)}</span>
+                    `).join("")}
+                  </div>
+                </div>
+
+                <div>
+                  <span style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: flex; align-items: center; gap: 4px; letter-spacing: 0.5px; margin-top: 4px;">
+                    ${icon("building-2", "style='width: 12px; height: 12px; color: var(--accent);'")} YERLEŞKE & TESİSLER
+                  </span>
+                  <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                    ${activeBranch.campuses.map(camp => `
+                      <div style="font-size: 12px; display: flex; align-items: center; gap: 8px; color: var(--text); background: var(--surface); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line-soft); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                        <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent);"></div>
+                        <span style="font-weight: 500;">${esc(camp)}</span>
+                      </div>
+                    `).join("")}
+                  </div>
+                </div>
+
+                <div>
+                  <span style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: flex; align-items: center; gap: 4px; letter-spacing: 0.5px; margin-top: 4px;">
+                    ${icon("users", "style='width: 12px; height: 12px; color: var(--accent);'")} İNOVASYON & AR-GE ODAKLARI
+                  </span>
+                  <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;">
+                    ${activeBranch.departments.map(dept => `
+                      <span style="font-size: 11px; background: rgba(0, 93, 170, 0.08); border: 1px solid rgba(0, 93, 170, 0.15); padding: 4px 10px; border-radius: 6px; font-weight: 600; color: var(--accent);">${esc(dept)}</span>
+                    `).join("")}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- AI Synergy Analysis Footer -->
+            <div style="margin-top: 18px; padding: 12px; background: rgba(0, 93, 170, 0.04); border: 1px solid rgba(0, 93, 170, 0.08); border-radius: 12px; font-size: 12px; line-height: 1.45; color: var(--ink-soft);">
+              <strong>${icon("sparkles", "style='width: 12px; height: 12px; color: var(--accent); margin-right: 4px;'")} İnovasyon Sinerji Analizi:</strong>
+              ${activeBranch.shortName} iştirakinin ${activeC.name} genelindeki operasyonları, yeşil dönüşüm, dijitalleşme ve verimlilik odaklı inovasyon hedeflerini yerel yerleşkelerindeki Ar-Ge ve mühendislik faaliyetleriyle doğrudan desteklemektedir.
+            </div>
+          ` : `
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--muted); font-size: 13px;">
+              İştirak detaylarını görmek için soldan seçim yapın.
+            </div>
+          `}
+        </div>
+
+      </div>
+    </section>
+  `;
+}
+
 function renderDashboard() {
   const user = currentUser();
   const countryIdeas = state.ideas.filter(idea => idea.country === state.activeCountry);
@@ -3748,6 +3942,8 @@ function renderDashboard() {
           </div>
         </aside>
       </section>
+
+      ${renderSubsidiaryBranchingPanel()}
     </div>
   `;
 }
@@ -9758,6 +9954,12 @@ document.addEventListener("click", event => {
     const code = actionButton.dataset.code;
     state.activeCountry = code;
     state.portalDropdownOpen = false;
+    render();
+    return;
+  }
+
+  if (action === "select-branch") {
+    state.selectedBranchId = actionButton.dataset.id;
     render();
     return;
   }

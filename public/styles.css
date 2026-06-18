@@ -15020,3 +15020,33 @@ body[data-theme="dark"] .ai-chat-box {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4) !important;
 }
+
+/* Interactive Organogram & Subsidiary Branching node styling */
+.branch-node-btn:hover {
+  border-color: var(--accent) !important;
+  transform: translateY(-2px);
+  background: rgba(var(--primary-rgb), 0.03) !important;
+}
+.branch-node-btn:hover div {
+  transform: scale(1.05);
+}
+.branch-node-btn.active div {
+  transform: scale(1.05);
+  border-color: var(--accent) !important;
+}
+body[data-theme="dark"] .branch-node-btn {
+  background: #171717 !important;
+}
+body[data-theme="dark"] .branch-node-btn:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+body[data-theme="dark"] .branch-node-btn.active {
+  background: rgba(0, 93, 170, 0.15) !important;
+  border-color: var(--accent) !important;
+}
+
+@media (max-width: 992px) {
+  .subsidiary-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
