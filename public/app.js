@@ -3100,6 +3100,7 @@ function pageSubtitle() {
 
 function render() {
   document.body.dataset.theme = state.theme;
+  translateIdeasInState();
   app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
   if (window.lucide) window.lucide.createIcons();
 
@@ -5765,6 +5766,7 @@ function renderIdeaCard(idea, compact = false) {
         <div class="idea-card-header">
           <h3>${esc(idea.title)}</h3>
           <p>${esc(idea.summary)}</p>
+          ${renderTranslationButton(idea)}
         </div>
         <div class="apple-chip-row">
           <span>${esc(idea.type)}</span>
@@ -6209,6 +6211,7 @@ function renderIdeaDetail() {
         <div>
           <h2>${esc(idea.title)}</h2>
           <p>${esc(idea.summary)}</p>
+          ${renderTranslationButton(idea)}
         </div>
         <div class="field-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn ghost" data-page="ideas">${icon("arrow-left")} Fikirlere dön</button>
@@ -9964,6 +9967,14 @@ document.addEventListener("click", event => {
     return;
   }
 
+  if (action === "toggle-idea-translation") {
+    const id = actionButton.dataset.id;
+    state.showOriginalIdeas = state.showOriginalIdeas || {};
+    state.showOriginalIdeas[id] = !state.showOriginalIdeas[id];
+    render();
+    return;
+  }
+
   if (action === "close-global-search") {
     state.globalSearchQuery = "";
     const inputs = document.querySelectorAll("[data-global-search]");
@@ -13140,6 +13151,7 @@ function renderBorsaCard(idea) {
       <div style="flex: 1;">
         <h3 class="borsa-card-title" style="font-size: 18px; font-weight: 600; margin: 4px 0 8px 0; color: var(--ink); line-height: 1.4;">${esc(idea.title)}</h3>
         <p class="borsa-card-summary" style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 12px;">${esc(idea.summary)}</p>
+        ${renderTranslationButton(idea)}
         
         <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
           <span style="font-size: 12px; background: rgba(var(--primary-rgb), 0.05); color: var(--ink-soft); padding: 3px 8px; border-radius: 6px;">
@@ -15658,5 +15670,527 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
   };
 }
 
+function getActiveLanguage() {
+  const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
+  return activeC.lang || "tr";
+}
+
+function getTranslatedField(idea, field) {
+  if (!idea) return "";
+  const activeLang = getActiveLanguage();
+  const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+  
+  const showOriginal = state.showOriginalIdeas && state.showOriginalIdeas[idea.id];
+  if (showOriginal || activeLang === originalLang) {
+    return idea[field] || "";
+  }
+  
+  if (idea.translations && idea.translations[activeLang] && idea.translations[activeLang][field]) {
+    return idea.translations[activeLang][field];
+  }
+  
+  return idea[field] || "";
+}
+
+function renderTranslationButton(idea) {
+  if (!idea) return "";
+  const activeLang = getActiveLanguage();
+  const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+  
+  if (activeLang === originalLang) return "";
+  
+  const showOriginal = state.showOriginalIdeas && state.showOriginalIdeas[idea.id];
+  return `
+    <button class="btn tiny ghost translate-toggle-btn" data-action="toggle-idea-translation" data-id="${esc(idea.id)}" style="padding: 4px 10px; font-size: 11px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--accent); cursor: pointer; outline: none; margin-top: 6px;" title="Çeviri seçeneği">
+      ${icon("languages", "style='width: 12px; height: 12px;'")}
+      <span>${showOriginal ? "Çeviriyi Göster" : "Orijinal Dilde Göster"}</span>
+    </button>
+  `;
+}
+
+function translateIdeasInState() {
+  const activeLang = getActiveLanguage();
+  state.showOriginalIdeas = state.showOriginalIdeas || {};
+  
+  state.ideas.forEach(idea => {
+    if (idea.originalTitle === undefined) {
+      idea.originalTitle = idea.title || "";
+      idea.originalSummary = idea.summary || "";
+      idea.originalProblem = idea.problem || "";
+      idea.originalSolution = idea.solution || "";
+    }
+    
+    const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+    const showOriginal = state.showOriginalIdeas[idea.id];
+    
+    if (showOriginal || activeLang === originalLang) {
+      idea.title = idea.originalTitle;
+      idea.summary = idea.originalSummary;
+      idea.problem = idea.originalProblem;
+      idea.solution = idea.originalSolution;
+    } else {
+      if (idea.translations && idea.translations[activeLang]) {
+        const trans = idea.translations[activeLang];
+        idea.title = trans.title || idea.originalTitle;
+        idea.summary = trans.summary || idea.originalSummary;
+        idea.problem = trans.problem || idea.originalProblem;
+        idea.solution = trans.solution || idea.originalSolution;
+      } else {
+        idea.title = idea.originalTitle;
+        idea.summary = idea.originalSummary;
+        idea.problem = idea.originalProblem;
+        idea.solution = idea.originalSolution;
+      }
+    }
+  });
+}
+
+function scaleMockDataset() {
+  // 1. Add new iştirakler (subsidiaries) dynamically
+  const newSubs = [
+    {
+      id: "ak-yatirim",
+      name: "Ak Yatırım Menkul Değerler A.Ş.",
+      shortName: "Ak Yatırım",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-ay' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23e74c3c'/><stop offset='100%25' stop-color='%23c0392b'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-ay)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AY</text></svg>",
+      domain: "akyatirim.com.tr",
+      type: "Yatırım & Finans",
+      countries: ["Türkiye"],
+      cities: ["İstanbul", "Ankara", "İzmir"],
+      campuses: ["Ak Yatırım Genel Müdürlük", "Akatlar Ofis"],
+      departments: ["Araştırma", "Portföy Yönetimi", "Kurumsal Finansman", "Hisse Senedi Piyasaları"]
+    },
+    {
+      id: "ak-portfoy",
+      name: "Ak Portföy Yönetimi A.Ş.",
+      shortName: "Ak Portföy",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-ap' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%239b59b6'/><stop offset='100%25' stop-color='%238e44ad'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-ap)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AP</text></svg>",
+      domain: "akportfoy.com.tr",
+      type: "Varlık Yönetimi",
+      countries: ["Türkiye"],
+      cities: ["İstanbul"],
+      campuses: ["Ak Portföy HQ"],
+      departments: ["Yatırım Komitesi", "Risk Yönetimi", "Fon Yönetimi"]
+    },
+    {
+      id: "akcansa",
+      name: "Akçansa Çimento Sanayi ve Ticaret A.Ş.",
+      shortName: "Akçansa",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-ac' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%233498db'/><stop offset='100%25' stop-color='%232980b9'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-ac)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AC</text></svg>",
+      domain: "akcansa.com.tr",
+      type: "Yapı Malzemeleri",
+      countries: ["Türkiye"],
+      cities: ["İstanbul", "Çanakkale", "Samsun"],
+      campuses: ["Çanakkale Fabrika", "Büyükçekmece Fabrika", "Ambarlı Liman Terminali"],
+      departments: ["Sürdürülebilirlik", "Üretim", "Lojistik", "Ar-Ge"]
+    },
+    {
+      id: "aklease",
+      name: "Ak Finansal Kiralama A.Ş.",
+      shortName: "Aklease",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-al' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231abc9c'/><stop offset='100%25' stop-color='%2316a085'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-al)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AL</text></svg>",
+      domain: "aklease.com",
+      type: "Finansal Kiralama",
+      countries: ["Türkiye"],
+      cities: ["İstanbul"],
+      campuses: ["Aklease HQ"],
+      departments: ["Kredi Tahsis", "Satış", "Finans"]
+    },
+    {
+      id: "enerjisa-uretim",
+      name: "Enerjisa Üretim Santralleri A.Ş.",
+      shortName: "Enerjisa Üretim",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-eu' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23f1c40f'/><stop offset='100%25' stop-color='%23f39c12'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-eu)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='black' text-anchor='middle'>EÜ</text></svg>",
+      domain: "enerjisauretim.com.tr",
+      type: "Enerji Üretimi",
+      countries: ["Türkiye"],
+      cities: ["Adana", "Çanakkale", "Aydın", "Balıkesir"],
+      campuses: ["Tufanbeyli Termik Santrali", "Bandırma Doğalgaz Santrali", "Çanakkale Rüzgar Santrali"],
+      departments: ["Yeşil Enerji Operasyonları", "Santral Yönetimi", "Ar-Ge"]
+    },
+    {
+      id: "sabanci-univ",
+      name: "Sabancı Üniversitesi",
+      shortName: "Sabancı Üni.",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-su' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2334495e'/><stop offset='100%25' stop-color='%232c3e50'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-su)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>SÜ</text></svg>",
+      domain: "sabanciuniv.edu",
+      type: "Eğitim & Akademi",
+      countries: ["Türkiye"],
+      cities: ["İstanbul"],
+      campuses: ["Tuzla Kampüsü", "Karaköy İletişim Merkezi"],
+      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme (TÜMER)"]
+    },
+    {
+      id: "sabanci-vakfi",
+      name: "Hacı Ömer Sabancı Vakfı",
+      shortName: "Sabancı Vakfı",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-sv' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23e67e22'/><stop offset='100%25' stop-color='%23d35400'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-sv)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>SV</text></svg>",
+      domain: "sabancivakfi.org",
+      type: "Sosyal Sorumluluk",
+      countries: ["Türkiye"],
+      cities: ["İstanbul", "Ankara"],
+      campuses: ["Sabancı Vakfı Merkez"],
+      departments: ["Sosyal Programlar", "Hibe Programları", "Ortaklıklar"]
+    },
+    {
+      id: "akbank-uk",
+      name: "Akbank AG London Branch",
+      shortName: "Akbank UK",
+      logo: "/assets/company-logos/akbank.svg",
+      domain: "akbank.co.uk",
+      type: "Banka",
+      countries: ["Birleşik Krallık"],
+      cities: ["Londra"],
+      campuses: ["London City Office"],
+      departments: ["International Trade Finance", "Treasury", "Compliance"]
+    },
+    {
+      id: "akcansa-uk",
+      name: "Akcansa UK Cement Trading Ltd.",
+      shortName: "Akçansa UK",
+      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-acuk' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%233498db'/><stop offset='100%25' stop-color='%232980b9'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-acuk)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AC</text></svg>",
+      domain: "akcansa.co.uk",
+      type: "Yapı Malzemeleri",
+      countries: ["Birleşik Krallık"],
+      cities: ["Londra", "Bristol"],
+      campuses: ["Bristol Port Terminal"],
+      departments: ["Logistics", "Wholesale Sales"]
+    },
+    {
+      id: "akbank-us",
+      name: "Akbank US Representative Office",
+      shortName: "Akbank US",
+      logo: "/assets/company-logos/akbank.svg",
+      domain: "akbank.com",
+      type: "Banka",
+      countries: ["Amerika Birleşik Devletleri"],
+      cities: ["New York"],
+      campuses: ["Manhattan Office"],
+      departments: ["Investor Relations", "Corporate Banking Linkage"]
+    },
+    {
+      id: "temsa-us",
+      name: "Temsa North America Inc.",
+      shortName: "Temsa US",
+      logo: "/assets/company-logos/temsa.svg",
+      domain: "temsa.com",
+      type: "Otomotiv",
+      countries: ["Amerika Birleşik Devletleri"],
+      cities: ["Orlando", "Houston"],
+      campuses: ["Orlando Distribution Center"],
+      departments: ["Electric Bus Sales", "Spare Parts Logistics", "Customer Support"]
+    },
+    {
+      id: "akbank-de",
+      name: "Akbank AG (Frankfurt)",
+      shortName: "Akbank DE",
+      logo: "/assets/company-logos/akbank.svg",
+      domain: "akbank.de",
+      type: "Banka",
+      countries: ["Almanya"],
+      cities: ["Frankfurt", "Münih"],
+      campuses: ["Frankfurt HQ"],
+      departments: ["Retail Banking", "Risk Management", "Operations"]
+    },
+    {
+      id: "kordsa-de",
+      name: "Kordsa Germany GmbH",
+      shortName: "Kordsa DE",
+      logo: "/assets/company-logos/kordsa.svg",
+      domain: "kordsa.com",
+      type: "Sanayi",
+      countries: ["Almanya"],
+      cities: ["Münih"],
+      campuses: ["Munich Composite Research Lab"],
+      departments: ["Composite Engineering", "Quality Control"]
+    },
+    {
+      id: "akbank-es",
+      name: "Akbank Representative Office Spain",
+      shortName: "Akbank ES",
+      logo: "/assets/company-logos/akbank.svg",
+      domain: "akbank.com",
+      type: "Banka",
+      countries: ["İspanya"],
+      cities: ["Madrid"],
+      campuses: ["Madrid Financial District Office"],
+      departments: ["Corporate Relations", "Compliance"]
+    },
+    {
+      id: "temsa-es",
+      name: "Temsa España S.L.",
+      shortName: "Temsa ES",
+      logo: "/assets/company-logos/temsa.svg",
+      domain: "temsa.es",
+      type: "Otomotiv",
+      countries: ["İspanya"],
+      cities: ["Madrid", "Barcelona"],
+      campuses: ["Madrid Hub"],
+      departments: ["Mobility Sales", "Technical Service Operations"]
+    }
+  ];
+
+  newSubs.forEach(sub => {
+    if (!affiliationCompanies.some(c => c.id === sub.id)) {
+      affiliationCompanies.push(sub);
+    }
+  });
+
+  // 2. Generate 100+ unique users across countries
+  const extraFirstNames = ["Ahmet", "Mehmet", "Ali", "Can", "Burak", "Eser", "Murat", "Selim", "Volkan", "Deniz", "Ayşe", "Zeynep", "Merve", "Fatma", "Selin", "Gizem", "Büşra", "Elif", "Derya", "Seda", "John", "Sarah", "David", "Robert", "Emily", "Michael", "Hans", "Dieter", "Carlos", "Maria", "Laura", "Pedro", "Emma", "Thomas", "Paul", "Sofia"];
+  const extraLastNames = ["Yılmaz", "Demir", "Koç", "Yıldız", "Aydın", "Öztürk", "Kaya", "Şahin", "Çelik", "Arslan", "Smith", "Miller", "Vance", "Ruiz", "Ortega", "Müller", "Schmidt", "Weber", "García", "López", "Rodriguez"];
+  
+  const companyList = affiliationCompanies;
+  const currentCount = demoUsers.length;
+  const targetUserCount = 120;
+  
+  for (let i = currentCount; i < targetUserCount; i++) {
+    const fn = extraFirstNames[i % extraFirstNames.length];
+    const ln = extraLastNames[(i + 3) % extraLastNames.length];
+    const fullName = `${fn} ${ln}`;
+    const randCompany = companyList[i % companyList.length];
+    const randCountry = randCompany.countries[0] || "Türkiye";
+    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
+    
+    const userRole = randCompany.type === "Banka" ? "Müşteri İlişkileri Yöneticisi" : (randCompany.type === "Sanayi" ? "Mühendis" : "Uzman");
+    const dept = randCompany.departments[i % randCompany.departments.length];
+    const avatarPhoto = `https://randomuser.me/api/portraits/${(i % 2 === 0) ? 'men' : 'women'}/${20 + (i % 60)}.jpg`;
+    
+    const u = {
+      id: `u-${i}`,
+      name: fullName,
+      email: `${fn.toLowerCase()}.${ln.toLowerCase()}@${randCompany.domain}`,
+      employeeId: `SA-${15000 + i}`,
+      company: randCompany.name,
+      companyId: randCompany.id,
+      department: dept,
+      location: randCompany.campuses[0] || "Ofis",
+      city: randCompany.cities[0] || "İstanbul",
+      region: "Marmara",
+      role: userRole,
+      roleKey: "employee",
+      seniority: "Uzman",
+      isManager: false,
+      isAdmin: false,
+      voteCreditBalance: Math.floor(Math.random() * 40) + 10,
+      monthlyVoteCredit: 30,
+      badges: ["Aktif Katılımcı"],
+      country: countryCode,
+      avatarUrl: avatarPhoto
+    };
+    
+    demoUsers.push(u);
+    namedAvatarPhotos[fullName] = avatarPhoto;
+  }
+
+  // 3. Generate 150+ ideas (10x original scale)
+  const industryTrends = [
+    {
+      area: "FinTech & Dijital Bankacılık",
+      tr: {
+        title: "Açık Bankacılık ile KOBİ Alacak Sigortası",
+        summary: "KOBİ bankacılığı işlemlerinde açık bankacılık verileriyle alacak riskini saniyeler içinde hesaplayıp poliçe kesen modül.",
+        problem: "KOBİ'ler ticari alacak risklerini sigortalamak için çok fazla evrak ve uzun bekleme süreleriyle karşılaşıyor.",
+        solution: "Akbank API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
+      },
+      en: {
+        title: "SME Receivables Insurance with Open Banking",
+        summary: "A module that calculates receivables risk in seconds using open banking data in SME banking transactions and issues policies.",
+        problem: "SMEs face a lot of paperwork and long waiting times to insure commercial receivables risk.",
+        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through Akbank APIs."
+      },
+      de: {
+        title: "KMU-Forderungsversicherung mit Open Banking",
+        summary: "Ein Modul, das das Forderungsrisiko im KMU-Geschäft mithilfe von Open-Banking-Daten in Sekundenschnelle berechnet und Policen ausstellt.",
+        problem: "KMU sind mit viel Papierkram und langen Wartezeiten konfrontiert, um das gewerbliche Forderungsrisiko abzusichern.",
+        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über Akbank-APIs sofortige Kredite und Forderungsversicherungen anbietet."
+      },
+      es: {
+        title: "Seguro de Cuentas por Cobrar para Pymes con Banca Abierta",
+        summary: "Un módulo que calcula el riesgo de cuentas por cobrar en segundos utilizando datos de banca abierta en transacciones de pymes.",
+        problem: "Las pymes enfrentan mucho papeleo y largos tiempos de espera para asegurar el riesgo de cuentas por cobrar comerciales.",
+        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de Akbank."
+      }
+    },
+    {
+      area: "Sürdürülebilirlik & Yeşil Enerji",
+      tr: {
+        title: "Fabrika Bacaları İçin Akıllı Karbon İzleme Ağı",
+        summary: "Çimsa ve Kordsa üretim tesislerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
+        problem: "Karbon salınımı beyanları periyodik ve manuel yapıldığı için hata payı yüksek ve optimizasyon gecikiyor.",
+        solution: "Fabrika bacalarına takılan IoT sensörleriyle emisyonu saniyelik kaydeden ve sınır aşımında uyaran akıllı yazılım."
+      },
+      en: {
+        title: "Smart Carbon Monitoring Network for Factory Chimneys",
+        summary: "Green technology that measures carbon emissions in Cimsa and Kordsa production facilities with instant IoT sensors and reports to the cloud.",
+        problem: "Since carbon emission statements are periodic and manual, the margin of error is high and optimization is delayed.",
+        solution: "Smart software that records emissions in seconds with IoT sensors attached to factory chimneys and warns in case of limit violations."
+      },
+      de: {
+        title: "Intelligentes Kohlenstoff-Überwachungsnetzwerk für Schornsteine",
+        summary: "Grüne Technologie, die Kohlenstoffemissionen in Cimsa- und Kordsa-Produktionsstätten mit IoT-Sensoren misst und in der Cloud meldet.",
+        problem: "Da CO2-Meldungen periodisch und manuell erfolgen, ist die Fehlerquote hoch und die Optimierung verzögert sich.",
+        solution: "Intelligente Software, die Emissionen im Sekundentakt mit an Schornsteinen angebrachten IoT-Sensoren erfasst und bei Überschreitungen warnt."
+      },
+      es: {
+        title: "Red de Monitoreo de Carbono Inteligente para Chimeneas",
+        summary: "Tecnología verde que mide las emisiones de carbono en las plantas de Cimsa y Kordsa con sensores IoT instantáneos y reporta a la nube.",
+        problem: "Dado que las declaraciones de emisión de carbono son periódicas and manuales, el margen de error es alto y la optimización se retrasa.",
+        solution: "Software inteligente que registra las emisiones en segundos con sensores IoT conectados a las chimeneas y advierte en caso de infracciones."
+      }
+    },
+    {
+      area: "Yapay Zekâ & Derin Teknoloji",
+      tr: {
+        title: "AI Destekli Lojistik Rota Optimizasyonu",
+        summary: "CarrefourSA sevkiyat kamyonları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
+        problem: "Statik rotalar nedeniyle teslimat süreleri uzuyor ve yakıt tüketimi artıyor.",
+        solution: "Her sabah siparişleri ve yol durumunu analiz ederek en verimli teslimat haritasını çıkaran yapay zeka motoru."
+      },
+      en: {
+        title: "AI-Powered Logistics Route Optimization",
+        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for CarrefourSA delivery trucks.",
+        problem: "Delivery times are prolonged and fuel consumption increases due to static routes.",
+        solution: "An AI engine that analyzes orders and road conditions every morning to create the most efficient delivery map."
+      },
+      de: {
+        title: "KI-gestützte Logistik-Routenoptimierung",
+        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für CarrefourSA-Lieferwagen verarbeitet.",
+        problem: "Statische Routen verlängern die Lieferzeiten und erhöhen den Kraftstoffverbrauch.",
+        solution: "Eine KI-Engine, die jeden Morgen Bestellungen und Straßenverhältnisse analysiert, um die effizienteste Lieferkarte zu erstellen."
+      },
+      es: {
+        title: "Optimización de Rutas Logísticas con IA",
+        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para camiones de CarrefourSA.",
+        problem: "Los tiempos de entrega se prolongan y el consumo de combustible aumenta debido a rutas estáticas.",
+        solution: "Un motor de IA que analiza los pedidos y las condiciones de la carretera cada mañana para generar el mapa de entrega más eficiente."
+      }
+    },
+    {
+      area: "PropTech & Akıllı Şehirler",
+      tr: {
+        title: "Akıllı Binalar İçin Dinamik HVAC Kontrolü",
+        summary: "Sabancı Center ve iştirak plazalarında sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
+        problem: "Binalar boş olduğunda bile HVAC sistemleri çalışıyor ve yüksek enerji israfına yol açıyor.",
+        solution: "Kat doluluk oranları ve dış ortam sıcaklık tahminlerini işleyerek iklimlendirmeyi optimize eden AI entegrasyonu."
+      },
+      en: {
+        title: "Dynamic HVAC Control for Smart Buildings",
+        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Sabanci Center and affiliate plazas.",
+        problem: "HVAC systems run even when buildings are empty, leading to high energy waste.",
+        solution: "AI integration that optimizes climatization by processing floor occupancy rates and outdoor temperature forecasts."
+      },
+      de: {
+        title: "Dynamische HVAC-Steuerung für intelligente Gebäude",
+        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Sabanci Center und in Partner-Plazas mit Sensordaten automatisch anpasst.",
+        problem: "Klimaanlagen laufen auch bei leeren Gebäuden, was zu einer hohen Energieverschwendung führt.",
+        solution: "KI-Integration, die die Klimatisierung durch Verarbeitung der Belegungsraten und Außentemperaturprognosen optimiert."
+      },
+      es: {
+        title: "Control Dinámico de HVAC para Edificios Inteligentes",
+        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Sabanci Center.",
+        problem: "Los sistemas de HVAC funcionan incluso cuando los edificios están vacíos, lo que genera un gran desperdicio de energía.",
+        solution: "Integración de IA que optimiza la climatización procesando las tasas de ocupación de pisos y los pronósticos de temperatura exterior."
+      }
+    }
+  ];
+
+  const currentIdeaCount = initialIdeas.length;
+  const targetIdeaCount = 150;
+  
+  for (let i = currentIdeaCount; i < targetIdeaCount; i++) {
+    const trend = industryTrends[i % industryTrends.length];
+    const randCompany = companyList[i % companyList.length];
+    const randCountry = randCompany.countries[0] || "Türkiye";
+    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
+    
+    const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
+    const id = `idea-gen-${i}`;
+    const ticker = `NIE-${100 + i}`;
+    
+    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+    const title = trend[originalLang].title + ` (${randCompany.shortName})`;
+    const summary = trend[originalLang].summary;
+    const problem = trend[originalLang].problem;
+    const solution = trend[originalLang].solution;
+    
+    const translations = {
+      tr: { title: trend.tr.title + ` (${randCompany.shortName})`, summary: trend.tr.summary, problem: trend.tr.problem, solution: trend.tr.solution },
+      en: { title: trend.en.title + ` (${randCompany.shortName})`, summary: trend.en.summary, problem: trend.en.problem, solution: trend.en.solution },
+      de: { title: trend.de.title + ` (${randCompany.shortName})`, summary: trend.de.summary, problem: trend.de.problem, solution: trend.de.solution },
+      es: { title: trend.es.title + ` (${randCompany.shortName})`, summary: trend.es.summary, problem: trend.es.problem, solution: trend.es.solution }
+    };
+
+    initialIdeas.push({
+      id: id,
+      title: title,
+      summary: summary,
+      problem: problem,
+      solution: solution,
+      type: i % 2 === 0 ? "Yeni ürün / hizmet" : "Süreç otomasyonu",
+      company: randCompany.name,
+      companyId: randCompany.id,
+      department: randCompany.departments[0] || "İnovasyon",
+      location: randCompany.campuses[0] || "Yerleşke",
+      city: randCompany.cities[0] || "İstanbul",
+      authorId: randomUser.id,
+      authorLabel: randomUser.name,
+      anonymity: "İsmimle paylaş",
+      visibility: "Holding geneli",
+      status: i % 3 === 0 ? "done" : (i % 3 === 1 ? "pilot" : "review"),
+      estimatedImpact: "Yüksek",
+      estimatedCost: i % 2 === 0 ? "Orta" : "Düşük",
+      implementationTime: "3 ay",
+      successMetric: "Performans ve verimlilik artışı",
+      riskNotes: "Süreç entegrasyonu gecikmeleri.",
+      communityScore: 70 + (i % 25),
+      strategicScore: 75 + (i % 20),
+      aiScore: 72 + (i % 23),
+      credits: 100 + (i % 200),
+      supporters: 10 + (i % 40),
+      country: countryCode,
+      comments: [
+        { user: "Can Koç", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
+      ],
+      tags: [trend.area.split(" ")[0], randCompany.shortName],
+      createdAt: `2026-06-${10 + (i % 8)}`,
+      marketTicker: ticker,
+      marketShares: 1000,
+      marketVolume: 1200 + (i * 15),
+      marketChange: (i % 2 === 0 ? 1 : -1) * (1.5 + (i % 12)),
+      translations: translations
+    });
+  }
+
+  // 4. Generate 35+ teams (10x original scale)
+  const currentTeamCount = initialTeams.length;
+  const targetTeamCount = 35;
+  for (let i = currentTeamCount; i < targetTeamCount; i++) {
+    const randCompany = companyList[i % companyList.length];
+    const randIdea = initialIdeas[i % initialIdeas.length];
+    const creatorUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
+    
+    initialTeams.push({
+      id: `team-gen-${i}`,
+      name: `${randCompany.shortName} İnovasyon Takımı ${i}`,
+      description: `${randCompany.shortName} bünyesinde ${randIdea.title} projesinin hayata geçirilmesi için kurulan teknik ekip.`,
+      area: randIdea.tags[0] || "Teknoloji",
+      ideaId: randIdea.id,
+      createdBy: creatorUser.id,
+      status: "active",
+      createdAt: `2026-05-${10 + (i % 15)}`,
+      roles: [
+        { id: `tr-gen-${i}-1`, title: "Ürün Lideri", icon: "briefcase", filled: true, userId: creatorUser.id, skills: ["Yönetim", "İnovasyon"] },
+        { id: `tr-gen-${i}-2`, title: "Geliştirici", icon: "brain", filled: false, userId: null, skills: ["Python", "JS"] }
+      ],
+      messages: [
+        { userId: creatorUser.id, body: "Takım çalışmalarına başladık. Katkılarınızı bekliyoruz.", time: "10:30" }
+      ],
+      tags: [randCompany.shortName, "İnovasyon"]
+    });
+  }
+}
+
+scaleMockDataset();
 ensureSocialEnhancements();
 render();
