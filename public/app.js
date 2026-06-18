@@ -2239,6 +2239,7 @@ const state = {
     country: "TR"
   },
   fileInspector: null,
+  portalDropdownOpen: false,
   quickFlowIndex: 0,
   quickFlowFeedback: "",
   fastCommentDraft: "",
@@ -3476,15 +3477,36 @@ function renderShell() {
             <input class="input" data-global-search placeholder="Ara" value="${esc(state.globalSearchQuery || '')}" />
           </label>
           <div class="top-actions">
-            ${(() => {
-              const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
-              return `
-                <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 99px; font-size: 13px; font-weight: 600; color: var(--text);">
-                  <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 20px; height: 13px; object-fit: cover; border-radius: 2px;" alt="" />
-                  <span>${activeC.name}</span>
+            <div class="portal-dropdown-container">
+              ${(() => {
+                const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
+                return `
+                  <button class="btn ghost" data-action="toggle-portal-dropdown" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(var(--primary-rgb), 0.04); border: 1px solid var(--line-soft); padding: 6px 14px; border-radius: 99px; font-size: 13px; font-weight: 600; color: var(--text); transition: background 0.2s, transform 0.2s; cursor: pointer; height: auto;" aria-label="Portal değiştir">
+                    <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 18px; height: 12px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" alt="" />
+                    <span>${esc(activeC.name)}</span>
+                    ${icon("chevron-down", "style='width: 14px; height: 14px; color: var(--muted); margin-left: 2px;'")}
+                  </button>
+                `;
+              })()}
+              ${state.portalDropdownOpen ? `
+                <div class="portal-dropdown">
+                  <div style="padding: 6px 10px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Ülke Portalları</div>
+                  ${countriesList.map(c => {
+                    const isActive = c.code === state.activeCountry;
+                    const subCount = c.subsidiaries ? c.subsidiaries.length : 0;
+                    return `
+                      <button class="portal-dropdown-item ${isActive ? "active" : ""}" data-action="change-active-portal" data-code="${esc(c.code)}">
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                          <img src="/assets/flags/${c.code.toLowerCase()}.svg" style="width: 20px; height: 13px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" alt="" />
+                          <span>${esc(c.name)}</span>
+                        </span>
+                        <span style="font-size: 11px; color: var(--muted); background: rgba(var(--primary-rgb), 0.05); padding: 2px 6px; border-radius: 6px;">${subCount} İştirak</span>
+                      </button>
+                    `;
+                  }).join("")}
                 </div>
-              `;
-            })()}
+              ` : ""}
+            </div>
             <span class="credit-pill">${icon("coins")} ${user.voteCreditBalance}</span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
             <button class="icon-button position-relative" data-page="notifications" aria-label="Bildirimler">
@@ -3873,6 +3895,38 @@ function quickFlowIdeas() {
   });
 }
 
+function renderStockTicker() {
+  const list = state.ideas.filter(idea => idea.marketTicker);
+  if (!list.length) return "";
+  
+  // Duplicate list to make scrolling infinite and smooth
+  const items = [...list, ...list, ...list];
+  
+  return `
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <div class="ticker__move">
+          ${items.map(idea => {
+            const price = marketPrice(idea);
+            const change = Number(idea.marketChange || 0);
+            const isUp = change >= 0;
+            return `
+              <span class="ticker__item">
+                <span style="color: var(--muted); margin-right: 4px;">$</span>
+                <strong>${esc(idea.marketTicker)}</strong>
+                <span style="margin-left: 6px; font-weight: 500;">${price} SA</span>
+                <span class="ticker-change ${isUp ? "up" : "down"}">
+                  ${isUp ? "▲" : "▼"} ${Math.abs(change).toFixed(1)}%
+                </span>
+              </span>
+            `;
+          }).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderQuickFlow() {
   if (state.ideaView === "table") {
     return renderTradingExchange();
@@ -3906,6 +3960,8 @@ function renderQuickFlow() {
           <button class="btn primary" data-action="open-market-composer" data-context="quickFlow">${icon("plus")} Proje Ekle</button>
         </div>
       </section>
+
+      ${renderStockTicker()}
 
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
       <section class="info-banner" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 16px; margin: 16px 0 8px 0; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; line-height: 1.5;">
@@ -4990,6 +5046,7 @@ function renderTradingExchange() {
         </div>
       </section>
 
+      ${renderStockTicker()}
       ${renderMarketTickerTape(rows, wallet, stats)}
 
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
@@ -9644,6 +9701,11 @@ async function analyzeIdea() {
 let quickFlowPointer = null;
 
 document.addEventListener("click", event => {
+  if (state.portalDropdownOpen && !event.target.closest(".portal-dropdown-container")) {
+    state.portalDropdownOpen = false;
+    render();
+  }
+
   const triggerGlobalSearch = event.target.closest("[data-trigger-global-search]");
   if (triggerGlobalSearch) {
     state.globalSearchQuery = " ";
@@ -9685,6 +9747,20 @@ document.addEventListener("click", event => {
   if (!actionButton) return;
 
   const action = actionButton.dataset.action;
+
+  if (action === "toggle-portal-dropdown") {
+    state.portalDropdownOpen = !state.portalDropdownOpen;
+    render();
+    return;
+  }
+
+  if (action === "change-active-portal") {
+    const code = actionButton.dataset.code;
+    state.activeCountry = code;
+    state.portalDropdownOpen = false;
+    render();
+    return;
+  }
 
   if (action === "close-global-search") {
     state.globalSearchQuery = "";
@@ -14895,14 +14971,14 @@ function formatAIMessage(text) {
 function renderAIAssistantWidget() {
   state.aiAssistantOpen = !!state.aiAssistantOpen;
   state.aiAssistantMessages = state.aiAssistantMessages || [
-    { role: 'assistant', text: 'Merhaba. Ben İş NEW AI Host; yalnızca platform içindeki fikirler, gündem, duyurular, gelişmiş ürünler ve yönetici kaynaklarından özet çıkarırım. Demo kapsamında internette arama yapmam veya dış haber çekmem.' },
+    { role: 'assistant', text: 'Merhaba. Ben Sabancı AI Asistanı; yalnızca platform içindeki fikirler, gündem, duyurular, gelişmiş ürünler ve yönetici kaynaklarından özet çıkarırım. Demo kapsamında internette arama yapmam veya dış haber çekmem.' },
     { role: 'user', text: 'Şu an platform içinde hype hangi alana kayıyor?' },
     { role: 'assistant', text: '**Platform içi trend okuması:**\n\nBorsa hareketleri, gündem başlıkları ve ürünleşen fikirler birlikte bakıldığında operasyon verimliliği, AI destekli özetleme ve yeşil finans başlıkları öne çıkıyor. Bu yorum yalnızca demo içindeki kayıtlar üzerinden üretilmiştir.' }
   ];
 
   if (!state.aiAssistantOpen) {
     return `
-      <div class="ai-assistant-bubble" data-action="toggle-ai-assistant">
+      <div class="ai-assistant-bubble ai-chat-bubble-trigger" data-action="toggle-ai-assistant">
         ${icon("bot")}
       </div>
     `;
@@ -14925,13 +15001,13 @@ function renderAIAssistantWidget() {
   }
 
   return `
-    <div class="ai-assistant-chat-panel" style="${panelStyle}">
+    <div class="ai-assistant-chat-panel ai-chat-box" style="${panelStyle}">
       
       <!-- Header -->
-      <header style="background: var(--primary); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+      <header style="background: linear-gradient(135deg, #005daa 0%, #3730a3 100%); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 8px;">
           ${icon("bot")}
-          <span style="font-weight: 600; font-size: 14.5px;">İş NEW AI Asistanı</span>
+          <span style="font-weight: 600; font-size: 14.5px;">Sabancı AI Asistanı</span>
         </div>
         <button data-action="toggle-ai-assistant" style="background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 0;">&times;</button>
       </header>
@@ -14954,7 +15030,7 @@ function renderAIAssistantWidget() {
       <!-- Quick Prompt Suggestions -->
       <div style="padding: 8px 12px; display: flex; gap: 6px; overflow-x: auto; background: var(--surface); border-top: 1px solid var(--line-soft); white-space: nowrap;">
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Yeni bir FinTech fikir öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">FinTech Fikri Öner</button>
-        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="İş Leasing kiralama fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">İş Leasing Önerisi Al</button>
+        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Çimsa karbon emisyonu azaltım fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Çimsa Önerisi Al</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Borsadaki en önemli projeleri listele" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Borsayı Özetle</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Kurumsal veri setlerini özetle" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Veri&Bilgi Listele</button>
       </div>
