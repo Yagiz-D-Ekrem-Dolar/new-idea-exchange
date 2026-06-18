@@ -418,6 +418,483 @@ const initialAnnouncements = [
     time: "Dün 14:20",
     priority: "İştirak"
   },
+  {
+    id: "ann-7",
+    title: "Teknosa Yapay Zeka Destekli Talep Tahminleme Çalışması",
+    body: "E-ticaret ve fiziksel mağaza stok seviyelerini optimize eden, mevsimsel geçişleri tahminleyen algoritmalar aranıyor. Kategori ekibine duyurulur.",
+    scope: "İştirak",
+    companyId: "teknosa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Teknosa HQ",
+    department: "Kategori Yönetimi",
+    authorId: "p02",
+    time: "Dün 16:40",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-8",
+    title: "CarrefourSA Taze Gıda Tedarik Zinciri Takibi",
+    body: "Tarladan rafa taze gıda fire oranlarını %50 azaltacak akıllı lojistik ve soğuk zincir IoT sensör entegrasyonu fikir havuzu açıldı.",
+    scope: "İştirak",
+    companyId: "carrefoursa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "CarrefourSA Plaza",
+    department: "Tedarik Zinciri",
+    authorId: "u2",
+    time: "Bugün 10:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-9",
+    title: "Enerjisa Akıllı Şebeke Yük Dağıtımı Projesi",
+    body: "Dağıtım şebekesindeki anlık pik yükleri dengeleyecek ve kesintileri minimize edecek akıllı algoritmaların test aşaması başlıyor.",
+    scope: "İştirak",
+    companyId: "enerjisa",
+    country: "TR",
+    city: "Ankara",
+    campus: "Dağıtım Kontrol Merkezi",
+    department: "Şebeke Operasyonları",
+    authorId: "p05",
+    time: "2 gün önce",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-10",
+    title: "Brisa İzmit Fabrikası Lastik Sensör Testleri",
+    body: "Binek ve ticari araçlar için geliştirilen akıllı lastik sensör verilerinin bulut sistemlerine aktarım hızı optimize ediliyor.",
+    scope: "İştirak",
+    companyId: "brisa",
+    country: "TR",
+    city: "Kocaeli",
+    campus: "İzmit Fabrika",
+    department: "Ar-Ge",
+    authorId: "u4",
+    time: "Bugün 11:15",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-11",
+    title: "Kordsa Grafen Katkılı Kompozit Geliştirme Çalışmaları",
+    body: "Havacılık ve otomotiv endüstrisi için aşırı hafif ve dayanıklı yeni nesil karbon fiber takviyeli kompozit formülleri test edilecek.",
+    scope: "İştirak",
+    companyId: "kordsa",
+    country: "TR",
+    city: "Kocaeli",
+    campus: "İzmit HQ",
+    department: "Kompozit Teknolojileri",
+    authorId: "p03",
+    time: "Dün 10:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-12",
+    title: "Çimsa Mersin Fabrikası Alternatif Yakıt Kullanımı",
+    body: "Kalsinasyon fırınlarında fosil yakıt yerine endüstriyel atık çamuru ve atık lastik kullanım oranını %65'e çıkarma teknik tasarımı.",
+    scope: "İştirak",
+    companyId: "cimsa",
+    country: "TR",
+    city: "Mersin",
+    campus: "Mersin Fabrika",
+    department: "Sürdürülebilirlik",
+    authorId: "p03",
+    time: "Bugün 13:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-13",
+    title: "Temsa Batarya Yönetim Sistemi (BMS) Yazılım Sprinti",
+    body: "Elektrikli otobüslerin şehir içi dur-kalk çevrimlerinde hücre ömrünü %15 uzatan rejeneratif frenleme algoritması entegre ediliyor.",
+    scope: "İştirak",
+    companyId: "temsa",
+    country: "TR",
+    city: "Adana",
+    campus: "Adana Fabrika",
+    department: "Elektrikli Araçlar Ar-Ge",
+    authorId: "p04",
+    time: "Dün 15:45",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-14",
+    title: "SabancıDx GenAI Asistanı Entegrasyonu",
+    body: "Platform içi tüm veri katmanlarını (fikirler, borsa, tahminler) özetleyen yapay zeka asistanı model güncellemeleri tamamlandı.",
+    scope: "İştirak",
+    companyId: "sabancidx",
+    country: "TR",
+    city: "İstanbul",
+    campus: "SabancıDx Dijital Kampüs",
+    department: "Yapay Zekâ",
+    authorId: "p02",
+    time: "Bugün 09:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-15",
+    title: "Aksigorta Yapay Zeka Destekli Hasar Analizi",
+    body: "Oto kazalarında çekilen fotoğraflardan hasar boyutunu ve tahmini maliyeti 5 saniyede çıkaran derin öğrenme modeli devreye alındı.",
+    scope: "İştirak",
+    companyId: "aksigorta",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Aksigorta Genel Müdürlük",
+    department: "Hasar Yönetimi",
+    authorId: "p05",
+    time: "Dün 09:25",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-16",
+    title: "AgeSA Dijital Bireysel Emeklilik Asistanı",
+    body: "Genç kitlelerin BES tasarruflarını otomatik fon dağılımıyla yönetmesini sağlayan akıllı mobil arayüz prototipi test ediliyor.",
+    scope: "İştirak",
+    companyId: "agesa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "AgeSA Genel Müdürlük",
+    department: "Dijital Kanallar",
+    authorId: "u5",
+    time: "3 gün önce",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-23",
+    title: "Sabancı Center Genç Yetenek İnovasyon Programı",
+    body: "Tüm iştiraklerdeki genç mühendis ve uzmanlar için yalın girişim metotları eğitimi ve proje hızlandırıcı başvuruları açıldı.",
+    scope: "Holding geneli",
+    companyId: "sabanci-holding",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Sabancı Center",
+    department: "İnsan Kaynakları",
+    authorId: "p01",
+    time: "4 gün önce",
+    priority: "Yönetici duyurusu"
+  },
+  {
+    id: "ann-24",
+    title: "Akbank Açık Bankacılık API Entegrasyon Kampanyası",
+    body: "Akbank API altyapısı üzerinden üçüncü parti finansal uygulamalar geliştirecek dış geliştirici fikirleri borsa havuzuna alınıyor.",
+    scope: "İştirak",
+    companyId: "akbank",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Akbank Genel Müdürlük",
+    department: "Dijital Bankacılık",
+    authorId: "u3",
+    time: "Dün 16:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-25",
+    title: "Teknosa Mağaza İçi Akıllı Kiosk Pilot Uygulaması",
+    body: "Müşterilerin kuyruk beklemeden ürün barkodu okutup mobil ödemeyle çıkış yapabileceği otonom kioskların tasarımı onaylandı.",
+    scope: "İştirak",
+    companyId: "teknosa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Teknosa HQ",
+    department: "Müşteri Deneyimi",
+    authorId: "u1",
+    time: "Bugün 10:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-26",
+    title: "CarrefourSA Atık Gıda Azaltımı & Kompost Projesi",
+    body: "Son tüketim tarihi yaklaşan gıdaların akıllı fiyatlandırma motoruyla anlık indirimlenmesi projesi Maltepe pilot mağazasında başlıyor.",
+    scope: "İştirak",
+    companyId: "carrefoursa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "CarrefourSA Plaza",
+    department: "Mağaza Operasyonları",
+    authorId: "u2",
+    time: "Dün 11:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-27",
+    title: "Enerjisa Çatı Üstü Güneş Enerjisi (GES) Çözümleri",
+    body: "Sanayi sitelerinde atıl duran çatı alanlarının Enerjisa finansmanıyla güneş paneli tarlalarına dönüştürülmesi modeli.",
+    scope: "İştirak",
+    companyId: "enerjisa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Enerjisa HQ",
+    department: "Yeşil Enerji",
+    authorId: "p05",
+    time: "Bugün 08:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-28",
+    title: "Brisa Aksaray Fabrikası Otonom Taşıma Robotları (AGV)",
+    body: "Hammadde taşıma bandındaki otonom yönlendirmeli araçların rota verimliliği AI simülasyonuyla %20 artırıldı.",
+    scope: "İştirak",
+    companyId: "brisa",
+    country: "TR",
+    city: "Aksaray",
+    campus: "Aksaray Akıllı Fabrika",
+    department: "Üretim",
+    authorId: "u4",
+    time: "2 gün önce",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-29",
+    title: "Kordsa Sürdürülebilir Naylon İplik Geliştirme",
+    body: "Geri dönüştürülmüş plastik hammaddelerden lastik kord bezi üretiminde kullanılacak yüksek mukavemetli naylon iplik prototipi hazır.",
+    scope: "İştirak",
+    companyId: "kordsa",
+    country: "TR",
+    city: "Kocaeli",
+    campus: "İzmit HQ",
+    department: "Ar-Ge",
+    authorId: "p03",
+    time: "Dün 14:10",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-30",
+    title: "Çimsa Düşük Karbonlu Kalsine Kil Geliştirme",
+    body: "Çimento klinker ikamesi olarak kalsine kil kullanarak beton üretimindeki CO2 ayak izini %30 azaltan yeşil beton formülü.",
+    scope: "İştirak",
+    companyId: "cimsa",
+    country: "TR",
+    city: "Mersin",
+    campus: "Mersin Fabrika",
+    department: "Ar-Ge",
+    authorId: "p03",
+    time: "5 gün önce",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-31",
+    title: "Temsa Hidrojen Yakıt Hücreli Otobüs Tanıtımı",
+    body: "Geliştirilen hidrojen prototip otobüsün sürüş menzili ve tank güvenlik sensörleri saha simülasyonlarıyla onaylanmıştır.",
+    scope: "İştirak",
+    companyId: "temsa",
+    country: "TR",
+    city: "Adana",
+    campus: "Adana Fabrika",
+    department: "Elektrikli Araçlar Ar-Ge",
+    authorId: "p04",
+    time: "Dün 10:15",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-32",
+    title: "SabancıDx Siber Güvenlik Tehdit Algılama",
+    body: "Holding ve tüm iştiraklerin bulut ağlarındaki anormal giriş denemelerini tespit eden yapay zeka siber kalkanı kuruldu.",
+    scope: "İştirak",
+    companyId: "sabancidx",
+    country: "TR",
+    city: "İstanbul",
+    campus: "SabancıDx Dijital Kampüs",
+    department: "Siber Güvenlik",
+    authorId: "p02",
+    time: "Bugün 12:45",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-33",
+    title: "Aksigorta Mobil Hasar Tespit Uygulaması",
+    body: "Saha eksperlerinin mobil tabletler üzerinden hızlıca hasar dosyası açmasını sağlayan bulut veri tabanı senkronizasyonu tamamlandı.",
+    scope: "İştirak",
+    companyId: "aksigorta",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Aksigorta Genel Müdürlük",
+    department: "Hasar Yönetimi",
+    authorId: "p05",
+    time: "Bugün 14:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-34",
+    title: "AgeSA Müşteri Kaybı (Churn) Tahminleme Modeli",
+    body: "Yapay zeka modelleriyle BES iptal eğiliminde olan müşterileri 3 ay önceden belirleyen proaktif arama robotu.",
+    scope: "İştirak",
+    companyId: "agesa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "AgeSA Genel Müdürlük",
+    department: "Dijital Kanallar",
+    authorId: "u5",
+    time: "Dün 17:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-44",
+    title: "Sabancı Altın Yaka İnovasyon Ödülleri Açıklandı",
+    body: "Bu yılki Altın Yaka inovasyon kategorilerinde dereceye giren fikir sahiplerine toplamda 500.000 SA ödül dağıtılacaktır.",
+    scope: "Holding geneli",
+    companyId: "sabanci-holding",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Sabancı Center",
+    department: "İnovasyon",
+    authorId: "p01",
+    time: "Bugün 09:30",
+    priority: "Yönetici duyurusu"
+  },
+  {
+    id: "ann-45",
+    title: "Akbank Yeşil Finansman Kredi Paketleri",
+    body: "Sürdürülebilirlik skoru yüksek olan grup şirketlerine özel fonlama ve yeşil tahvil ihracı borsa tahtasına eklenmiştir.",
+    scope: "İştirak",
+    companyId: "akbank",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Akbank Genel Müdürlük",
+    department: "Kurumsal Bankacılık",
+    authorId: "u3",
+    time: "Dün 10:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-46",
+    title: "Teknosa TeknoGaranti Otomasyonu",
+    body: "Kullanıcıların satın aldığı elektronik cihazların garanti ve servis takibini tamamen dijitalleştiren altyapı devreye girdi.",
+    scope: "İştirak",
+    companyId: "teknosa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Teknosa HQ",
+    department: "Müşteri Deneyimi",
+    authorId: "u1",
+    time: "3 gün önce",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-47",
+    title: "CarrefourSA Kart Mobil Kampanya Önerileri",
+    body: "Müşterinin geçmiş satın alma alışkanlıklarına göre markette yürürken anlık bildirimle kupon sunan AI motoru.",
+    scope: "İştirak",
+    companyId: "carrefoursa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "CarrefourSA Plaza",
+    department: "Kategori Yönetimi",
+    authorId: "u2",
+    time: "Dün 15:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-48",
+    title: "Enerjisa Eşarj İstasyon Ağı Genişlemesi",
+    body: "Türkiye genelindeki otoban ve AVM otoparklarına kurulacak yeni DC yüksek hızlı şarj istasyon yerleşim optimizasyon fikirleri.",
+    scope: "İştirak",
+    companyId: "enerjisa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Enerjisa HQ",
+    department: "Yeşil Enerji",
+    authorId: "p05",
+    time: "Bugün 11:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-49",
+    title: "Brisa İzmit Fabrikası IoT Bulut Entegrasyonu",
+    body: "Üretim hattındaki pres makinelerinin titreşim sensör verileri Azure bulut ortamına anlık olarak aktarılmaya başlandı.",
+    scope: "İştirak",
+    companyId: "brisa",
+    country: "TR",
+    city: "Kocaeli",
+    campus: "İzmit Fabrika",
+    department: "Üretim",
+    authorId: "u4",
+    time: "Bugün 12:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-50",
+    title: "Kordsa Havacılık İçin Hafif Prepreg Malzemeler",
+    body: "Boeing ve Airbus parça standartlarına tam uyumlu, epoksi reçineli karbon elyaf kompozitlerin seri üretimi onaylandı.",
+    scope: "İştirak",
+    companyId: "kordsa",
+    country: "TR",
+    city: "Kocaeli",
+    campus: "İzmit HQ",
+    department: "Kompozit Teknolojileri",
+    authorId: "p03",
+    time: "Dün 13:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-51",
+    title: "Çimsa Enerji Verimli Öğütme Teknolojisi",
+    body: "Mersin fabrikasındaki dikey çimento değirmenlerinin tahrik motorlarında yapılan modifikasyonla elektrik tüketimi %12 azaltıldı.",
+    scope: "İştirak",
+    companyId: "cimsa",
+    country: "TR",
+    city: "Mersin",
+    campus: "Mersin Fabrika",
+    department: "Üretim",
+    authorId: "p03",
+    time: "Bugün 10:45",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-52",
+    title: "Temsa Fabrika İçi Dijital İkiz (Digital Twin)",
+    body: "Adana otobüs montaj hattının tüm fiziksel süreçleri 3D dijital ikiz simülasyonuna aktarılarak darboğazlar tespit edildi.",
+    scope: "İştirak",
+    companyId: "temsa",
+    country: "TR",
+    city: "Adana",
+    campus: "Adana Fabrika",
+    department: "Üretim",
+    authorId: "p04",
+    time: "Dün 14:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-53",
+    title: "SabancıDx Blokzincir Tabanlı Akıllı Tedarik",
+    body: "İştirakler arası malzeme tedarik sözleşmelerinin akıllı kontratlarla otomatik onaylanmasını sağlayan blokzincir altyapısı.",
+    scope: "İştirak",
+    companyId: "sabancidx",
+    country: "TR",
+    city: "İstanbul",
+    campus: "SabancıDx Dijital Kampüs",
+    department: "Bulut Teknolojileri",
+    authorId: "p02",
+    time: "Bugün 13:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-54",
+    title: "Aksigorta Evcil Hayvan Sigortası Yenilikçi Ekranlar",
+    body: "Mobil uygulama üzerinden pati fotoğraflarıyla evcil hayvan kimlik tespiti ve hızlı sigorta poliçesi oluşturma modülü.",
+    scope: "İştirak",
+    companyId: "aksigorta",
+    country: "TR",
+    city: "İstanbul",
+    campus: "Aksigorta Genel Müdürlük",
+    department: "Müşteri Deneyimi",
+    authorId: "p05",
+    time: "Bugün 15:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-55",
+    title: "AgeSA Robotik Süreç Otomasyonu (RPA)",
+    body: "İşe alım, bordrolama ve çalışan kartı basım gibi standart İK süreçleri robot yazılımlarla saniyeler içinde tamamlanıyor.",
+    scope: "İştirak",
+    companyId: "agesa",
+    country: "TR",
+    city: "İstanbul",
+    campus: "AgeSA Genel Müdürlük",
+    department: "İnsan Kaynakları",
+    authorId: "u5",
+    time: "Dün 11:30",
+    priority: "İştirak"
+  },
+
   // United Kingdom (GB)
   {
     id: "ann-3",
@@ -433,6 +910,63 @@ const initialAnnouncements = [
     time: "Dün 10:45",
     priority: "Yönetici duyurusu"
   },
+  {
+    id: "ann-17",
+    title: "Çimsa UK Sales Portal Goes Live",
+    body: "Distributors across the UK can now order high-strength white cement via our integrated B2B online sales platform.",
+    scope: "İştirak",
+    companyId: "cimsa-uk",
+    country: "GB",
+    city: "Londra",
+    campus: "London White Cement HQ",
+    department: "Sales",
+    authorId: "p07",
+    time: "Bugün 10:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-18",
+    title: "Kordsa UK Aerospace Composites Collaboration",
+    body: "Partnering with UK aerospace engineering hubs to prototype ultra-thin epoxy prepregs for next-gen commercial jet wings.",
+    scope: "İştirak",
+    companyId: "kordsa-uk",
+    country: "GB",
+    city: "Londra",
+    campus: "London Tech Center",
+    department: "R&D",
+    authorId: "p08",
+    time: "Dün 14:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-35",
+    title: "Sabancı Renewables UK Wind Farm Expansion Study",
+    body: "Conducting feasibility checks for offshore wind farm grid connections in the North Sea. Submit storage optimization plans.",
+    scope: "Holding geneli",
+    companyId: "sabanci-renewables-uk",
+    country: "GB",
+    city: "Londra",
+    campus: "London Tech Center",
+    department: "Investment",
+    authorId: "p06",
+    time: "Dün 16:30",
+    priority: "Yönetici duyurusu"
+  },
+  {
+    id: "ann-36",
+    title: "Çimsa UK Carbon Emission Ledger Integration",
+    body: "Import logistics fleet fuel optimization will be tracked using blockchain data. Submit routing suggestions.",
+    scope: "İştirak",
+    companyId: "cimsa-uk",
+    country: "GB",
+    city: "Londra",
+    campus: "London White Cement HQ",
+    department: "Logistics",
+    authorId: "p07",
+    time: "2 gün önce",
+    priority: "İştirak"
+  },
+
   // United States (US)
   {
     id: "ann-4",
@@ -448,6 +982,77 @@ const initialAnnouncements = [
     time: "Bugün 08:00",
     priority: "İştirak"
   },
+  {
+    id: "ann-19",
+    title: "Sabancı Climate US Energy Storage Investment Campaign",
+    body: "Inviting proposals for software logic to manage utility-scale battery dispatch operations in Austin solar farms.",
+    scope: "Holding geneli",
+    companyId: "sabanci-climate-us",
+    country: "US",
+    city: "Austin",
+    campus: "Austin HQ",
+    department: "Energy Storage",
+    authorId: "p10",
+    time: "Bugün 09:15",
+    priority: "Yönetici duyurusu"
+  },
+  {
+    id: "ann-20",
+    title: "Kordsa USA Cord Fabric Capacity Boost",
+    body: "Chattanooga facility is expanding high-tenacity nylon yarn dipping lines to meet surging EV tire market demand.",
+    scope: "İştirak",
+    companyId: "kordsa-usa",
+    country: "US",
+    city: "Chattanooga",
+    campus: "Chattanooga Facility",
+    department: "Technical Services",
+    authorId: "p12",
+    time: "Dün 13:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-37",
+    title: "Sabancı Climate US Solar Battery Storage Pilot",
+    body: "Testing modular battery containers in our Texas facility. Submit predictive thermal cooling algorithm ideas.",
+    scope: "Holding geneli",
+    companyId: "sabanci-climate-us",
+    country: "US",
+    city: "Austin",
+    campus: "Austin HQ",
+    department: "Energy Storage",
+    authorId: "p10",
+    time: "3 gün önce",
+    priority: "Yönetici duyurusu"
+  },
+  {
+    id: "ann-38",
+    title: "Cimsa Americas Houston Order Tracking App",
+    body: "Customer portal launch allows dry bulk trucks to register pickup times, cutting waiting queues in terminal by 40%.",
+    scope: "İştirak",
+    companyId: "cimsa-americas",
+    country: "US",
+    city: "Houston",
+    campus: "Houston Terminal",
+    department: "Operations",
+    authorId: "p11",
+    time: "Bugün 10:20",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-39",
+    title: "Kordsa USA Industry 4.0 IoT Enabler Project",
+    body: "Vibration sensors installed on yarn twisting spindles detect early mechanical failures, boosting runtime safety.",
+    scope: "İştirak",
+    companyId: "kordsa-usa",
+    country: "US",
+    city: "Chattanooga",
+    campus: "Chattanooga Facility",
+    department: "Technical Services",
+    authorId: "p12",
+    time: "Dün 15:40",
+    priority: "İştirak"
+  },
+
   // Germany (DE)
   {
     id: "ann-5",
@@ -458,11 +1063,54 @@ const initialAnnouncements = [
     country: "DE",
     city: "Münih",
     campus: "München Mobility Lab",
-    department: "Electric Buses Sales",
+    department: "Mobility Lab",
     authorId: "p14",
     time: "2 gün önce",
     priority: "İştirak"
   },
+  {
+    id: "ann-21",
+    title: "Cimsa Germany Hamburg Terminal Capacity Expansion",
+    body: "New bulk silo installations are complete. Looking for high-throughput dry packaging system vendor recommendations.",
+    scope: "İştirak",
+    companyId: "cimsa-germany",
+    country: "DE",
+    city: "Hamburg",
+    campus: "Hamburg Terminal",
+    department: "Logistics",
+    authorId: "p13",
+    time: "Bugün 11:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-40",
+    title: "Cimsa Germany Digital Logistics System Upgrade",
+    body: "Integrating SAP logistics module with Hamburg port terminal scheduler to automate customs clearance documentation.",
+    scope: "İştirak",
+    companyId: "cimsa-germany",
+    country: "DE",
+    city: "Hamburg",
+    campus: "Hamburg Terminal",
+    department: "Logistics",
+    authorId: "p13",
+    time: "Dün 16:15",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-41",
+    title: "Temsa Germany Autonomous Suburban Shuttle Track",
+    body: "Testing level-4 self-driving buses on designated Munich lab courses. Submit sensor fusion algorithm ideas.",
+    scope: "İştirak",
+    companyId: "temsa-germany",
+    country: "DE",
+    city: "Münih",
+    campus: "München Mobility Lab",
+    department: "Mobility Lab",
+    authorId: "p14",
+    time: "Dün 10:00",
+    priority: "İştirak"
+  },
+
   // Spain (ES)
   {
     id: "ann-6",
@@ -476,6 +1124,48 @@ const initialAnnouncements = [
     department: "Production",
     authorId: "p15",
     time: "Bugün 11:30",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-22",
+    title: "Madrid Hub Sustainable Cement Workshop",
+    body: "Join our R&D meeting next week regarding alternative fuel feeds. Registration is open to all Spanish regional teams.",
+    scope: "İştirak",
+    companyId: "cimsa-spain",
+    country: "ES",
+    city: "Madrid",
+    campus: "Madrid Hub",
+    department: "R&D",
+    authorId: "p16",
+    time: "Dün 14:00",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-42",
+    title: "Çimsa Spain Buñol Alternative Fuel Licensing",
+    body: "Approved by local government to substitute 50% of kiln fuel with non-hazardous waste wood. Submit feed logic plans.",
+    scope: "İştirak",
+    companyId: "cimsa-spain",
+    country: "ES",
+    city: "Buñol",
+    campus: "Buñol Plant",
+    department: "Production",
+    authorId: "p15",
+    time: "Bugün 14:15",
+    priority: "İştirak"
+  },
+  {
+    id: "ann-43",
+    title: "Çimsa Spain Digital White Cement Catalog",
+    body: "Launching our interactive digital spec sheets for architects and contractors across Western Europe. Feedbacks are welcome.",
+    scope: "İştirak",
+    companyId: "cimsa-spain",
+    country: "ES",
+    city: "Madrid",
+    campus: "Madrid Hub",
+    department: "R&D",
+    authorId: "p16",
+    time: "Dün 15:30",
     priority: "İştirak"
   }
 ];
@@ -493,6 +1183,126 @@ const initialMessageSpaces = [
       { userId: "p01", body: "Harika! Akbank sürdürülebilirlik fonlama fikrini de borsa tahtasına aldık, SA Coin bakiyelerinizi kontrol edin.", time: "09:27" },
       { userId: "p10", body: "Texas solar farm energy storage designs are uploaded. Ready for group strategy review.", time: "10:14" },
       { userId: "p15", body: "We started carbon capture trials in Buñol. Cement clinker performance remains excellent.", time: "11:35" }
+    ]
+  },
+  {
+    id: "msg-akbank",
+    name: "Akbank FinTech Room",
+    description: "Akbank açık bankacılık ve finansal teknolojiler grubu.",
+    companyId: "akbank",
+    scope: "İştirak",
+    members: ["p02", "p05", "u3", "u4", "u5"],
+    messages: [
+      { userId: "u3", body: "KOBİ'ler için geliştirdiğimiz yeşil finansman API'leri test ortamında stabil çalışıyor. Fikirlerinizi bekliyoruz.", time: "10:05" },
+      { userId: "p05", body: "Can Bey, sürdürülebilirlik puan kartı servisini de bu API ile bağlayabiliriz. Entegrasyon dokümanını inceledim.", time: "10:14" },
+      { userId: "p02", body: "Yapay zeka analiz modelimiz de KOBİ işlem geçmişini tarayıp karbon emisyon katsayısı üretebiliyor. Akbank veritabanıyla entegre edebiliriz.", time: "10:30" },
+      { userId: "u5", body: "BES tarafındaki tasarruf verilerini de buraya akıtıp bireysel kullanıcılara çevre rozeti dağıtabiliriz.", time: "11:15" }
+    ]
+  },
+  {
+    id: "msg-cimsa",
+    name: "Çimsa Green Tech",
+    description: "Çimsa sürdürülebilirlik, alternatif yakıt ve karbon emisyonu azaltma grubu.",
+    companyId: "cimsa",
+    scope: "İştirak",
+    members: ["p03", "p07", "p11", "p13", "p15", "p16"],
+    messages: [
+      { userId: "p15", body: "We are preparing tests for hydrogen injection in Buñol plant. I hope we can reduce CO2 emissions by another 8%.", time: "11:12" },
+      { userId: "p16", body: "Carlos, I uploaded the chemical analysis of the clinker from the preliminary test. The mineral properties remain solid.", time: "11:25" },
+      { userId: "p03", body: "Mersin fabrikasından selamlar! Biz de döner fırınlarda atık çamur yakma otomasyon projesinin verilerini sisteme yükledik.", time: "12:00" },
+      { userId: "p13", body: "Hamburg terminal stands ready to receive the low-carbon white cement batches from Spain. German clients are asking for ESG metrics.", time: "12:45" },
+      { userId: "p11", body: "Houston packing automation will also reduce dust emissions. Ready to trial this month.", time: "13:10" }
+    ]
+  },
+  {
+    id: "msg-kordsa",
+    name: "Kordsa Material Lab",
+    description: "Kordsa kompozit malzemeler ve yeni nesil tekstil geliştirme grubu.",
+    companyId: "kordsa",
+    scope: "İştirak",
+    members: ["p03", "p08", "p12", "u9", "u10"],
+    messages: [
+      { userId: "p12", body: "We have finalized testing the graphene-infused nylon yarn in Chattanooga. Tensile strength increased by 18%.", time: "14:20" },
+      { userId: "p08", body: "Excellent Robert! London Tech team is interested in testing these fibers for aviation grade composites. Send us the raw data.", time: "14:45" },
+      { userId: "p03", body: "İzmit Fabrika Ar-Ge ekibi olarak, geri dönüştürülmüş PET hammaddeli kord bezlerimizin yorulma test sonuçlarını sisteme kaydettik.", time: "15:15" }
+    ]
+  },
+  {
+    id: "msg-temsa",
+    name: "Temsa Smart Mobility",
+    description: "Temsa elektrikli ve hidrojen otobüs prototip analizleri.",
+    companyId: "temsa",
+    scope: "İştirak",
+    members: ["p04", "p14", "u13"],
+    messages: [
+      { userId: "p14", body: "The hydrogen suburban bus trials in Munich are starting next Monday. We need to verify tank pressure telemetries.", time: "09:30" },
+      { userId: "p04", body: "Dieter, Adana ekibi olarak otobüsün BMS (Batarya Yönetim) yazılımındaki rejeneratif frenleme güncellemesini pushladık. Uzaktan güncelleyebilirsiniz.", time: "10:15" },
+      { userId: "u13", body: "Telemetry system is online. We can monitor everything from the Munich lab console. Let's run the first battery cycle.", time: "10:45" }
+    ]
+  },
+  {
+    id: "msg-teknosa",
+    name: "Teknosa Retail Circle",
+    description: "Teknosa mağaza içi deneyim ve omni-channel perakende teknolojileri.",
+    companyId: "teknosa",
+    scope: "İştirak",
+    members: ["u1", "u2", "p02"],
+    messages: [
+      { userId: "u1", body: "Mağaza içi otonom ödeme kiosklarımızın tasarımı tamamlandı. Kadıköy pilot mağazamızda kuruluma başlıyoruz.", time: "13:10" },
+      { userId: "u2", body: "CarrefourSA olarak biz de kasasız mağaza konseptini inceliyoruz. Lojistik ve etiket entegrasyonunda ortak çalışabiliriz.", time: "13:30" },
+      { userId: "p02", body: "Yapay zeka ekibimiz kiosk ekranlarına kişiye özel ürün öneri motoru entegre edebilir. API bağlantılarını hazırladık.", time: "14:05" }
+    ]
+  },
+  {
+    id: "msg-dx",
+    name: "SabancıDx AI & Analytics Hub",
+    description: "SabancıDx yapay zekâ, GenAI ve büyük veri analitiği hub'ı.",
+    companyId: "sabancidx",
+    scope: "İştirak",
+    members: ["p02", "p05", "u3", "u4"],
+    messages: [
+      { userId: "p02", body: "Borsa verilerindeki dalgalanmaları ve AI sinyal skorlarını tahminleyen yeni bir GenAI asistan modeli üzerinde çalışıyoruz.", time: "15:12" },
+      { userId: "u4", body: "Harika Mert. Bu modeli holding genel kurulunda strateji sunumuna dahil edelim. Canlı demo yapabilir miyiz?", time: "15:30" },
+      { userId: "p02", body: "Tabii Kerem Bey, arayüze özel bir widget ekledik. Canlı veri özetleme fonksiyonu şu an aktif.", time: "15:45" }
+    ]
+  },
+  {
+    id: "msg-renewables",
+    name: "Renewables Clean Energy",
+    description: "Sabancı Renewables temiz enerji ve batarya optimizasyonu grubu.",
+    companyId: "sabanci-renewables-uk",
+    scope: "Holding geneli",
+    members: ["p06", "p10", "u7", "u8"],
+    messages: [
+      { userId: "p10", body: "We are installing utility-scale battery dispatch logic in our Austin solar farm. This will trade power during peak hours.", time: "16:22" },
+      { userId: "p06", body: "Michael, UK wind grids are also implementing similar battery storage dispatch. We should share the pricing models.", time: "16:45" },
+      { userId: "u8", body: "Agreed. I am compiling the regulatory framework for energy trading in both markets to build a unified algorithm.", time: "17:15" }
+    ]
+  },
+  {
+    id: "msg-insurance",
+    name: "InsurTech Circle",
+    description: "Aksigorta ve AgeSA yeni nesil dijital sigortacılık fikir odası.",
+    companyId: "aksigorta",
+    scope: "İştirak",
+    members: ["p05", "u5", "u11"],
+    messages: [
+      { userId: "p05", body: "Yapay zeka tabanlı oto hasar tespiti pilot projemiz hasar ödeme sürelerini %80 kısalttı.", time: "11:20" },
+      { userId: "u5", body: "Bu teknolojiyi AgeSA'nın hayat sigortası sağlık beyanı doğrulama süreçlerine de uyarlayabilir miyiz?", time: "11:45" },
+      { userId: "u11", body: "US insurtech trends show image based claim validation is rising fast. We should coordinate a joint workshop.", time: "12:15" }
+    ]
+  },
+  {
+    id: "msg-holding-hr",
+    name: "Sabancı Global HR & Talent",
+    description: "Holding geneli çalışan deneyimi ve yetenek yönetimi grubu.",
+    companyId: "sabanci-holding",
+    scope: "Holding geneli",
+    members: ["p01", "p09", "u5"],
+    messages: [
+      { userId: "p01", body: "Altın Yaka inovasyon ödüllerinin kapsamını genişlettik. Tüm ülkelerdeki çalışanlar katılabilecek.", time: "09:30" },
+      { userId: "u5", body: "Merve Hanım İK süreç otomasyon raporunu ekledi. Evrak yükü %60 azaldı, ekipler inovasyona daha çok vakit ayırabiliyor.", time: "09:45" },
+      { userId: "p01", body: "Harika. Genç yetenek programına gelen çoklu dil başvurularını değerlendirmeye başlıyoruz.", time: "10:12" }
     ]
   }
 ];
@@ -1425,7 +2235,8 @@ const state = {
     category: "Proje",
     companyId: "is-new",
     scope: "Holding geneli",
-    files: []
+    files: [],
+    country: "TR"
   },
   fileInspector: null,
   quickFlowIndex: 0,
@@ -1443,6 +2254,7 @@ const state = {
     type: "Tümü",
     scope: "Tümü",
     sort: "En yeni",
+    country: "Aktif Portal",
     
     // New structural filters
     league: "Tümü",
@@ -1524,7 +2336,7 @@ const state = {
       { userId: "p02", body: "Harika olur Can Bey, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
     ],
     "p03": [
-      { userId: "p03", body: "Can Bey, Şişecam Tuzla Ar-Ge tesisindeki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
+      { userId: "p03", body: "Can Bey, Çimsa Mersin fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
       { own: true, body: "Eline sağlık Selin, verileri inceledim. Oldukça temiz görünüyor. Hemen onay verdim.", time: "Dün 16:45" },
       { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir hammadde optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
     ],
@@ -1532,10 +2344,56 @@ const state = {
       { userId: "p05", body: "Sürdürülebilir finans sprinti için borsa bütçesini kullanabilir miyiz? Sponsor arıyoruz.", time: "Bugün 10:12" },
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
-    "p09": [
-      { userId: "p09", body: "BES başvuru ekranları optimizasyonu pilot aşamasında %30 oranında dönüşüm artışı sağladı.", time: "2 gün önce" },
-      { own: true, body: "Muhteşem bir sonuç İpek! Bu başarıyı holding genel kurulunda sunmamız gerekiyor.", time: "2 gün önce" },
-      { userId: "p09", body: "Çok iyi olur, sunum slaytlarını hazırlayıp sizinle paylaşacağım.", time: "Dün 11:15" }
+    "p06": [
+      { userId: "p06", body: "Hi Can, I've updated the UK wind farm grid connection proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
+      { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
+      { userId: "p06", body: "Thank you. The engineering team is eager to start prototyping.", time: "Yesterday 10:12" }
+    ],
+    "p07": [
+      { userId: "p07", body: "Hi Can, the UK cement logistics portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
+      { own: true, body: "Sure Sarah, I will request SabancıDx AI lead to run a query for UK portal statistics.", time: "Yesterday 11:45" }
+    ],
+    "p10": [
+      { userId: "p10", body: "Hello Can, Austin solar battery testing is going well. We need to align our pricing algorithm with the UK team.", time: "Yesterday 14:10" },
+      { own: true, body: "Hi Michael, good progress. Let's arrange a joint call with John Sterling tomorrow.", time: "Yesterday 14:30" }
+    ],
+    "p11": [
+      { userId: "p11", body: "Can, we started testing the packing automation in Houston. It has reduced dust emissions significantly.", time: "Yesterday 15:40" },
+      { own: true, body: "That is fantastic news Emily! Let's submit this as a case study to the sustainability board.", time: "Yesterday 16:00" }
+    ],
+    "p12": [
+      { userId: "p12", body: "Hello Can, Chattanooga composite tests are finalized. The graphene nylon yarn performance is excellent.", time: "2 days ago" },
+      { own: true, body: "Thanks Robert. I saw the stress reports. We will feature this in the Kordsa global showcase.", time: "2 days ago" }
+    ],
+    "p13": [
+      { userId: "p13", body: "Hallo Can, der neue Bulk-Silo-Entwurf für Hamburg Terminal ist fertig. Können wir das Budget freigeben?", time: "Dün 10:12" },
+      { own: true, body: "Hallo Hans, ich werde das Budget prüfen. Wir müssen sicherstellen, dass die EU-Normen eingehalten werden.", time: "Dün 10:45" },
+      { userId: "p13", body: "Perfekt, danke. Die Dokumentation ist bereits im System hinterlegt.", time: "Dün 11:00" }
+    ],
+    "p14": [
+      { userId: "p14", body: "Hallo Can, die Teststrecke für den Wasserstoffbus in München ist betriebsbereit. Die Sensoren laufen.", time: "Dün 13:00" },
+      { own: true, body: "Klasse Dieter! Bitte teile die ersten Telemetriedaten mit der Adana Software-Gruppe.", time: "Dün 13:20" }
+    ],
+    "p15": [
+      { userId: "p15", body: "Hola Can, hemos completado el diseño del microgrid solar para Buñol. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
+      { own: true, body: "Hola Carlos, excelente. Por favor, súbelo usando el Borsa Composer seleccionando España como país objetivo.", time: "Bugün 09:45" },
+      { userId: "p15", body: "Entendido, ya está publicado. Gracias por el soporte.", time: "Bugün 10:00" }
+    ],
+    "p16": [
+      { userId: "p16", body: "Can, I uploaded the carbon metrics for Çimsa Spain alternative fuels. It's ready for strategic score review.", time: "Dün 15:00" },
+      { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
+    ],
+    "u1": [
+      { userId: "u1", body: "Can Bey, Teknosa mağaza içi kiosk projemize 100 SA bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
+    ],
+    "u2": [
+      { userId: "u2", body: "Can Bey, CarrefourSA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
+      { own: true, body: "Eline sağlık Mehmet, lojistik ekibiyle koordine edip bütçe onayını veriyorum.", time: "Dün 17:00" }
+    ],
+    "u4": [
+      { userId: "u4", body: "Can, Altın Yaka inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
+      { own: true, body: "Çok teşekkürler Kerem Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
     ]
   },
   messageDraft: "",
@@ -1568,6 +2426,7 @@ const state = {
   followedChallenges: ["challenge-ops-wait"],
   socialActiveTab: "all",
   socialLeaderboardMode: "total",
+  socialScopeFilter: "Yerel",
   socialPhotoDraft: null,
   agendaEditId: null,
   agendaDraft: {
@@ -2057,6 +2916,11 @@ function marketTrendScore(idea) {
 function marketVisibleIdeas() {
   const companyIds = companyIdsInScope();
   let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "is-new"));
+  if (state.filters.country === "Aktif Portal") {
+    ideas = ideas.filter(idea => idea.country === state.activeCountry);
+  } else if (state.filters.country !== "Tüm Ülkeler") {
+    ideas = ideas.filter(idea => idea.country === state.filters.country);
+  }
   if (state.marketCategoryFilter !== "Tümü") ideas = ideas.filter(idea => (idea.marketCategory || "Fikir") === state.marketCategoryFilter);
   const marketSearch = state.marketSearch.trim().toLocaleLowerCase("tr-TR");
   if (marketSearch) {
@@ -2146,7 +3010,8 @@ function resetMarketDraft(context = state.marketComposerContext || "quickFlow") 
     category: context === "announcements" ? "Araştırma" : "Proje",
     companyId: state.affiliationFilter === "all" ? "is-new" : state.affiliationFilter,
     scope: "Holding geneli",
-    files: []
+    files: [],
+    country: state.activeCountry || "TR"
   };
 }
 
@@ -2983,6 +3848,7 @@ function renderIdeas() {
           </div>
         </div>
         <div class="filter-row">
+          ${filterSelect("country", [])}
           ${filterSelect("department", uniqueFromIdeas("department"))}
           ${filterSelect("status", ["Tümü", ...Object.values(statusMeta).map(meta => meta.label)])}
           ${filterSelect("type", ["Tümü", ...ideaTypes])}
@@ -3065,6 +3931,7 @@ function renderQuickFlow() {
           </label>
           
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            ${filterSelect("country", [])}
             <select class="select" data-market-filter="company" aria-label="Şirket Filtresi">
               <option value="Tümü" ${state.filters.company === 'Tümü' ? 'selected' : ''}>Şirket: Tümü</option>
               <option value="Şirketler" ${state.filters.company === 'Şirketler' ? 'selected' : ''}>Şirketler</option>
@@ -4560,6 +5427,18 @@ function moveQuickFlow(delta, feedback = "") {
 }
 
 function filterSelect(key, values) {
+  if (key === "country") {
+    const options = [
+      { value: "Aktif Portal", label: "Portal: Aktif" },
+      { value: "Tüm Ülkeler", label: "Tüm Ülkeler (Global)" },
+      ...countriesList.map(c => ({ value: c.code, label: `${c.flag} ${c.name}` }))
+    ];
+    return `
+      <select class="select" data-idea-filter="country" aria-label="Ülke Filtresi" style="width: auto; min-width: 160px;">
+        ${options.map(opt => `<option value="${esc(opt.value)}" ${opt.value === state.filters.country ? "selected" : ""}>${esc(opt.label)}</option>`).join("")}
+      </select>
+    `;
+  }
   return `
     <select class="select" data-idea-filter="${esc(key)}" aria-label="${esc(key)}" style="width: auto; min-width: 160px;">
       ${optionList(values, state.filters[key])}
@@ -4569,7 +5448,11 @@ function filterSelect(key, values) {
 
 function filteredIdeas() {
   let ideas = [...state.ideas];
-  ideas = ideas.filter(idea => idea.country === state.activeCountry);
+  if (state.filters.country === "Aktif Portal") {
+    ideas = ideas.filter(idea => idea.country === state.activeCountry);
+  } else if (state.filters.country !== "Tüm Ülkeler") {
+    ideas = ideas.filter(idea => idea.country === state.filters.country);
+  }
   const search = state.filters.search.trim().toLocaleLowerCase("tr-TR");
   if (search) {
     ideas = ideas.filter(idea => [
@@ -8726,7 +9609,8 @@ function createMarketListing(context) {
     marketShares: 1000,
     marketSpark: [26, 34, 39, 48, 55, 62, 68, 78],
     files: draft.files?.length ? draft.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, draft.category),
-    sourceContext: context
+    sourceContext: context,
+    country: draft.country || state.activeCountry || "TR"
   };
 }
 
@@ -9329,6 +10213,32 @@ document.addEventListener("click", event => {
       return;
     }
 
+    let fee = 0;
+    let challengeObj = null;
+    if (state.wizard.ideaType === "Yarışma başvurusu" && state.wizard.challengeId) {
+      challengeObj = challenges.find(c => c.id === state.wizard.challengeId);
+      if (challengeObj) {
+        fee = challengeObj.entryFee || 1000;
+      }
+    } else if (marketCategoryVal === "Proje") {
+      fee = 100;
+    }
+
+    if (state.marketBudget < fee) {
+      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} SA (Mevcut: ${state.marketBudget} SA)`);
+      return;
+    }
+
+    state.marketBudget -= fee;
+    if (challengeObj) {
+      challengeObj.participants = (challengeObj.participants || 0) + 1;
+      challengeObj.ideas = (challengeObj.ideas || 0) + 1;
+      state.followedChallenges = state.followedChallenges || [];
+      if (!state.followedChallenges.includes(challengeObj.id)) {
+        state.followedChallenges.push(challengeObj.id);
+      }
+    }
+
     const user = currentUser();
     const id = `idea-${Date.now()}`;
     
@@ -9426,6 +10336,13 @@ document.addEventListener("click", event => {
       const price = marketPrice(idea);
       const totalPrice = price * quantity;
       if (action === "buy-market-qty") {
+        const currentOwned = state.marketHoldings[idea.id] || 0;
+        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
+        if (currentOwned + quantity > maxLimit) {
+          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
+          return;
+        }
+
         if (state.marketBudget >= totalPrice) {
           state.marketBudget -= totalPrice;
           state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
@@ -9447,6 +10364,20 @@ document.addEventListener("click", event => {
           state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
 
           state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+          
+          const royalty = Math.round(totalPrice * 0.05);
+          if (royalty > 0) {
+            if (idea.authorId === currentUser().id) {
+              state.marketBudget += royalty;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
+            } else {
+              const authorUser = demoUsers.find(u => u.id === idea.authorId);
+              if (authorUser) {
+                authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
+              }
+            }
+          }
         } else {
           alert("Yetersiz bütçe!");
         }
@@ -10243,6 +11174,13 @@ if (action === "login") {
 
   if (action === "submit-market-listing") {
     if (state.marketDraft.title.trim() && state.marketDraft.summary.trim()) {
+      const isProject = state.marketDraft.category === "Proje";
+      const fee = isProject ? 100 : 0;
+      if (state.marketBudget < fee) {
+        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} SA olmalıdır! (Mevcut: ${state.marketBudget} SA)`);
+        return;
+      }
+      state.marketBudget -= fee;
       const listing = createMarketListing(actionButton.dataset.context || state.marketComposerContext || "quickFlow");
       state.ideas.unshift(listing);
       state.marketCategoryFilter = listing.marketCategory;
@@ -10264,27 +11202,52 @@ if (action === "login") {
       const price = marketPrice(idea);
       const quantity = Math.max(1, Number(actionButton.dataset.quantity || 1));
       const totalPrice = price * quantity;
-      if (action === "buy-market" && state.marketBudget >= totalPrice) {
-        state.marketBudget -= totalPrice;
-        state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
-        idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
-        idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
-        state.marketSelectedId = idea.id;
-        
-        if (!state.investmentLedger) state.investmentLedger = [];
-        state.investmentLedger.push({
-          userId: currentUser().id,
-          userName: currentUser().name,
-          ideaId: idea.id,
-          ideaTitle: idea.title,
-          amount: totalPrice,
-          quantity: quantity,
-          date: new Date().toLocaleDateString("tr-TR")
-        });
-        if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
-        state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
+      if (action === "buy-market") {
+        const currentOwned = state.marketHoldings[idea.id] || 0;
+        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
+        if (currentOwned + quantity > maxLimit) {
+          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
+          return;
+        }
 
-        state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+        if (state.marketBudget >= totalPrice) {
+          state.marketBudget -= totalPrice;
+          state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
+          idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
+          idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
+          state.marketSelectedId = idea.id;
+          
+          if (!state.investmentLedger) state.investmentLedger = [];
+          state.investmentLedger.push({
+            userId: currentUser().id,
+            userName: currentUser().name,
+            ideaId: idea.id,
+            ideaTitle: idea.title,
+            amount: totalPrice,
+            quantity: quantity,
+            date: new Date().toLocaleDateString("tr-TR")
+          });
+          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
+          state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
+
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+          
+          const royalty = Math.round(totalPrice * 0.05);
+          if (royalty > 0) {
+            if (idea.authorId === currentUser().id) {
+              state.marketBudget += royalty;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
+            } else {
+              const authorUser = demoUsers.find(u => u.id === idea.authorId);
+              if (authorUser) {
+                authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
+              }
+            }
+          }
+        } else {
+          alert("Yetersiz bütçe!");
+        }
       }
       if (action === "sell-market" && (state.marketHoldings[idea.id] || 0) > 0) {
         const sellQuantity = Math.min(quantity, state.marketHoldings[idea.id] || 0);
@@ -10314,7 +11277,8 @@ if (action === "login") {
       status: "Tümü",
       type: "Tümü",
       scope: "Tümü",
-      sort: "En yeni"
+      sort: "En yeni",
+      country: "Aktif Portal"
     });
     render();
   }
@@ -10325,6 +11289,7 @@ if (action === "login") {
     state.filters.league = "Tümü";
     state.filters.area = "Tümü";
     state.marketSort = "En yeni";
+    state.filters.country = "Aktif Portal";
     render();
     return;
   }
@@ -11806,7 +12771,11 @@ function getIdeaPredictionProbability(ideaId) {
 
 function filteredBorsaIdeas() {
   let list = [...state.ideas];
-  list = list.filter(idea => idea.country === state.activeCountry);
+  if (state.filters.country === "Aktif Portal") {
+    list = list.filter(idea => idea.country === state.activeCountry);
+  } else if (state.filters.country !== "Tüm Ülkeler") {
+    list = list.filter(idea => idea.country === state.filters.country);
+  }
   
   if (state.marketSearch && state.marketSearch.trim()) {
     const q = state.marketSearch.toLowerCase();
