@@ -84,7 +84,7 @@ const affiliationCompanies = [
     id: "sabanci-holding",
     name: "Hacı Ömer Sabancı Holding A.Ş.",
     shortName: "Sabancı Holding",
-    logo: "/assets/company-logos/sabanci-holding.svg",
+    logo: "./assets/company-logos/sabanci-holding.svg",
     domain: "sabanci.com",
     type: "Holding",
     countries: ["Türkiye", "Birleşik Krallık", "Amerika Birleşik Devletleri", "Almanya", "İspanya"],
@@ -96,7 +96,7 @@ const affiliationCompanies = [
     id: "akbank",
     name: "Akbank T.A.Ş.",
     shortName: "Akbank",
-    logo: "/assets/company-logos/akbank.svg",
+    logo: "./assets/company-logos/akbank.svg",
     domain: "akbank.com",
     type: "Banka",
     countries: ["Türkiye"],
@@ -108,7 +108,7 @@ const affiliationCompanies = [
     id: "teknosa",
     name: "Teknosa İç ve Dış Ticaret A.Ş.",
     shortName: "Teknosa",
-    logo: "/assets/company-logos/teknosa.svg",
+    logo: "./assets/company-logos/teknosa.svg",
     domain: "teknosa.com",
     type: "Perakende",
     countries: ["Türkiye"],
@@ -120,7 +120,7 @@ const affiliationCompanies = [
     id: "carrefoursa",
     name: "CarrefourSA Carrefour Sabancı Ticaret Merkezi A.Ş.",
     shortName: "CarrefourSA",
-    logo: "/assets/company-logos/carrefoursa.svg",
+    logo: "./assets/company-logos/carrefoursa.svg",
     domain: "carrefoursa.com",
     type: "Gıda Perakendeciliği",
     countries: ["Türkiye"],
@@ -132,7 +132,7 @@ const affiliationCompanies = [
     id: "enerjisa",
     name: "Enerjisa Enerji A.Ş.",
     shortName: "Enerjisa",
-    logo: "/assets/company-logos/enerjisa.svg",
+    logo: "./assets/company-logos/enerjisa.svg",
     domain: "enerjisa.com.tr",
     type: "Enerji",
     countries: ["Türkiye"],
@@ -144,7 +144,7 @@ const affiliationCompanies = [
     id: "brisa",
     name: "Brisa Bridgestone Sabancı Lastik San. ve Tic. A.Ş.",
     shortName: "Brisa",
-    logo: "/assets/company-logos/brisa.svg",
+    logo: "./assets/company-logos/brisa.svg",
     domain: "brisa.com.tr",
     type: "Sanayi",
     countries: ["Türkiye"],
@@ -156,7 +156,7 @@ const affiliationCompanies = [
     id: "kordsa",
     name: "Kordsa Teknik Tekstil A.Ş.",
     shortName: "Kordsa",
-    logo: "/assets/company-logos/kordsa.svg",
+    logo: "./assets/company-logos/kordsa.svg",
     domain: "kordsa.com",
     type: "Sanayi",
     countries: ["Türkiye"],
@@ -168,7 +168,7 @@ const affiliationCompanies = [
     id: "cimsa",
     name: "Çimsa Çimento San. ve Tic. A.Ş.",
     shortName: "Çimsa",
-    logo: "/assets/company-logos/cimsa.svg",
+    logo: "./assets/company-logos/cimsa.svg",
     domain: "cimsa.com.tr",
     type: "Sanayi",
     countries: ["Türkiye"],
@@ -180,7 +180,7 @@ const affiliationCompanies = [
     id: "temsa",
     name: "Temsa Skoda Ulaşım Araçları A.Ş.",
     shortName: "Temsa",
-    logo: "/assets/company-logos/temsa.svg",
+    logo: "./assets/company-logos/temsa.svg",
     domain: "temsa.com",
     type: "Otomotiv",
     countries: ["Türkiye"],
@@ -192,7 +192,7 @@ const affiliationCompanies = [
     id: "sabancidx",
     name: "Sabancı Dijital Teknoloji Hizmetleri A.Ş.",
     shortName: "SabancıDx",
-    logo: "/assets/company-logos/sabancidx.svg",
+    logo: "./assets/company-logos/sabancidx.svg",
     domain: "sabancidx.com",
     type: "Teknoloji",
     countries: ["Türkiye"],
@@ -204,7 +204,7 @@ const affiliationCompanies = [
     id: "aksigorta",
     name: "Aksigorta A.Ş.",
     shortName: "Aksigorta",
-    logo: "/assets/company-logos/aksigorta.svg",
+    logo: "./assets/company-logos/aksigorta.svg",
     domain: "aksigorta.com.tr",
     type: "Sigorta",
     countries: ["Türkiye"],
@@ -216,7 +216,7 @@ const affiliationCompanies = [
     id: "agesa",
     name: "AgeSA Hayat ve Emeklilik A.Ş.",
     shortName: "AgeSA",
-    logo: "/assets/company-logos/agesa.svg",
+    logo: "./assets/company-logos/agesa.svg",
     domain: "agesa.com.tr",
     type: "Finans",
     countries: ["Türkiye"],
@@ -229,7 +229,7 @@ const affiliationCompanies = [
     id: "sabanci-renewables-uk",
     name: "Sabancı Renewables UK Ltd.",
     shortName: "Sabancı Renewables UK",
-    logo: "/assets/company-logos/sabanci-holding.svg",
+    logo: "./assets/company-logos/sabanci-holding.svg",
     domain: "sabanci.com",
     type: "Enerji",
     countries: ["Birleşik Krallık"],
@@ -241,7 +241,7 @@ const affiliationCompanies = [
     id: "cimsa-uk",
     name: "Çimsa UK Ltd.",
     shortName: "Çimsa UK",
-    logo: "/assets/company-logos/cimsa.svg",
+    logo: "./assets/company-logos/cimsa.svg",
     domain: "cimsa.com.tr",
     type: "Sanayi",
     countries: ["Birleşik Krallık"],
@@ -253,7 +253,7 @@ const affiliationCompanies = [
     id: "kordsa-uk",
     name: "Kordsa UK Ltd.",
     shortName: "Kordsa UK",
-    logo: "/assets/company-logos/kordsa.svg",
+    logo: "./assets/company-logos/kordsa.svg",
     domain: "kordsa.com",
     type: "Sanayi",
     countries: ["Birleşik Krallık"],
@@ -265,7 +265,7 @@ const affiliationCompanies = [
     id: "sabanci-climate-us",
     name: "Sabancı Climate Technologies Inc.",
     shortName: "Sabancı Climate US",
-    logo: "/assets/company-logos/sabanci-holding.svg",
+    logo: "./assets/company-logos/sabanci-holding.svg",
     domain: "sabanciclimatetech.com",
     type: "Enerji",
     countries: ["Amerika Birleşik Devletleri"],
@@ -277,7 +277,7 @@ const affiliationCompanies = [
     id: "cimsa-americas",
     name: "Cimsa Americas Inc.",
     shortName: "Cimsa Americas",
-    logo: "/assets/company-logos/cimsa.svg",
+    logo: "./assets/company-logos/cimsa.svg",
     domain: "cimsa.com.tr",
     type: "Sanayi",
     countries: ["Amerika Birleşik Devletleri"],
@@ -289,7 +289,7 @@ const affiliationCompanies = [
     id: "kordsa-usa",
     name: "Kordsa Inc. (USA)",
     shortName: "Kordsa USA",
-    logo: "/assets/company-logos/kordsa.svg",
+    logo: "./assets/company-logos/kordsa.svg",
     domain: "kordsa.com",
     type: "Sanayi",
     countries: ["Amerika Birleşik Devletleri"],
@@ -301,7 +301,7 @@ const affiliationCompanies = [
     id: "cimsa-germany",
     name: "Cimsa Germany GmbH",
     shortName: "Cimsa Germany",
-    logo: "/assets/company-logos/cimsa.svg",
+    logo: "./assets/company-logos/cimsa.svg",
     domain: "cimsa.de",
     type: "Sanayi",
     countries: ["Almanya"],
@@ -313,7 +313,7 @@ const affiliationCompanies = [
     id: "temsa-germany",
     name: "Temsa Deutschland GmbH",
     shortName: "Temsa Germany",
-    logo: "/assets/company-logos/temsa.svg",
+    logo: "./assets/company-logos/temsa.svg",
     domain: "temsa.de",
     type: "Otomotiv",
     countries: ["Almanya"],
@@ -325,7 +325,7 @@ const affiliationCompanies = [
     id: "cimsa-spain",
     name: "Cimsa Buñol Cementos S.L.U.",
     shortName: "Çimsa Spain",
-    logo: "/assets/company-logos/cimsa.svg",
+    logo: "./assets/company-logos/cimsa.svg",
     domain: "cimsa.es",
     type: "Sanayi",
     countries: ["İspanya"],
@@ -2186,6 +2186,9 @@ const initialTeams = [
 ];
 
 const state = {
+  appLanguage: "",
+  userTokens: 24,
+  leaderboardScope: "country",
   currentCountry: "TR",
   loginCountrySelected: false,
   activeCountry: "TR",
@@ -2780,7 +2783,86 @@ const state = {
 
 
 function currentUser() {
-  return demoUsers.find(user => user.id === state.currentUserId) || demoUsers[0];
+  const baseUser = {
+    id: "u3",
+    name: "Can Koç",
+    email: "can.koc@sabanci.example",
+    employeeId: "SA-22018",
+    roleKey: "manager",
+    seniority: "Yönetici",
+    isManager: true,
+    isAdmin: false,
+    voteCreditBalance: 24,
+    monthlyVoteCredit: 40,
+    badges: ["Ekipler Arası Köprü", "Pilot Proje Katılımcısı"],
+    supportedIdeas: ["idea-1", "idea-2", "idea-3"],
+    photo: "https://randomuser.me/api/portraits/men/32.jpg"
+  };
+
+  const c = state.activeCountry || state.currentCountry || "TR";
+  const adapted = { ...baseUser, country: c };
+  Object.defineProperty(adapted, "voteCreditBalance", {
+    get: function() { return state.userTokens; },
+    set: function(val) { state.userTokens = val; },
+    enumerable: true
+  });
+
+  switch (c) {
+    case "TR":
+      adapted.company = "Akbank T.A.Ş.";
+      adapted.companyId = "akbank";
+      adapted.department = "Dijital Bankacılık";
+      adapted.location = "Akbank Genel Müdürlük";
+      adapted.city = "İstanbul";
+      adapted.region = "Marmara";
+      adapted.role = "İnovasyon Yöneticisi";
+      break;
+    case "UK":
+      adapted.company = "Çimsa UK";
+      adapted.companyId = "cimsa-uk";
+      adapted.department = "Strategy";
+      adapted.location = "London Office";
+      adapted.city = "London";
+      adapted.region = "England";
+      adapted.role = "Strategy Manager";
+      break;
+    case "US":
+      adapted.company = "Kordsa Inc.";
+      adapted.companyId = "kordsa-us";
+      adapted.department = "Operations";
+      adapted.location = "Chattanooga Plant";
+      adapted.city = "Chattanooga";
+      adapted.region = "TN";
+      adapted.role = "Operations Director";
+      break;
+    case "DE":
+      adapted.company = "Akbank AG";
+      adapted.companyId = "akbank-de";
+      adapted.department = "Corporate Banking";
+      adapted.location = "Frankfurt HQ";
+      adapted.city = "Frankfurt";
+      adapted.region = "Hesse";
+      adapted.role = "Corporate Manager";
+      break;
+    case "ES":
+      adapted.company = "Çimsa Spain";
+      adapted.companyId = "cimsa-spain";
+      adapted.department = "Sales";
+      adapted.location = "Madrid Office";
+      adapted.city = "Madrid";
+      adapted.region = "Madrid";
+      adapted.role = "Sales Director";
+      break;
+    default:
+      adapted.company = "Hacı Ömer Sabancı Holding A.Ş.";
+      adapted.companyId = "sabanci-holding";
+      adapted.department = "Strateji";
+      adapted.location = "Sabancı Center";
+      adapted.city = "İstanbul";
+      adapted.region = "Marmara";
+      adapted.role = "Yönetici";
+  }
+  return adapted;
 }
 
 function esc(value) {
@@ -2793,8 +2875,24 @@ function esc(value) {
   })[char]);
 }
 
-function icon(name) {
-  return `<i data-lucide="${name}" aria-hidden="true"></i>`;
+function icon(name, extraAttrs = "") {
+  if (name === "coins") {
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="sa-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
+      <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
+      <ellipse cx="44" cy="46" rx="14" ry="10" fill="none" stroke="#8b6508" stroke-width="2" transform="rotate(-30 44 46)" />
+      <ellipse cx="56" cy="54" rx="14" ry="10" fill="none" stroke="#8b6508" stroke-width="2" transform="rotate(-30 56 54)" />
+      <text x="50" y="62" font-family="Space Grotesk, sans-serif" font-weight="bold" font-size="34" fill="#8b6508" text-anchor="middle">SA</text>
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffe066" />
+          <stop offset="50%" stop-color="#f1c40f" />
+          <stop offset="100%" stop-color="#d4ac0d" />
+        </linearGradient>
+      </defs>
+    </svg>`;
+  }
+  return `<i data-lucide="${name}" aria-hidden="true" ${extraAttrs}></i>`;
 }
 
 function initials(name) {
@@ -2820,6 +2918,25 @@ function companyById(id) {
 
 function personById(id) {
   if (!id) return null;
+  if (id === state.currentUserId || id === "u3") {
+    const cUser = currentUser();
+    return {
+      id: cUser.id,
+      name: cUser.name,
+      companyId: cUser.companyId,
+      role: cUser.role,
+      team: cUser.department,
+      city: cUser.city,
+      campus: cUser.location,
+      photo: cUser.photo,
+      status: "Aktif",
+      bio: cUser.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
+      cv: cUser.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+      email: cUser.email,
+      badges: cUser.badges || [],
+      country: cUser.country
+    };
+  }
   if (id.startsWith("u")) {
     const du = demoUsers.find(user => user.id === id);
     if (du) {
@@ -2836,7 +2953,8 @@ function personById(id) {
         bio: du.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
         cv: du.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
         email: du.email,
-        badges: du.badges || []
+        badges: du.badges || [],
+        country: du.country || "TR"
       };
     }
   }
@@ -3495,7 +3613,17 @@ function renderShell() {
                   <div style="padding: 6px 10px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Ülke Portalları</div>
                   ${countriesList.map(c => {
                     const isActive = c.code === state.activeCountry;
-                    const subCount = c.subsidiaries ? c.subsidiaries.length : 0;
+                    
+                    const countryNameMap = {
+                      "TR": "Türkiye",
+                      "GB": "Birleşik Krallık",
+                      "US": "Amerika Birleşik Devletleri",
+                      "DE": "Almanya",
+                      "ES": "İspanya"
+                    };
+                    const searchCountry = countryNameMap[c.code] || c.name;
+                    const subCount = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(searchCountry)).length;
+                    
                     return `
                       <button class="portal-dropdown-item ${isActive ? "active" : ""}" data-action="change-active-portal" data-code="${esc(c.code)}">
                         <span style="display: flex; align-items: center; gap: 8px;">
@@ -11344,11 +11472,10 @@ document.addEventListener("click", event => {
     state.currentCountry = actionButton.dataset.code;
     state.activeCountry = actionButton.dataset.code;
     state.loginCountrySelected = true;
-    const users = demoUsers.filter(u => u.country === state.currentCountry);
-    if (users.length) {
-      state.selectedLoginUserId = users[0].id;
-    }
+    state.currentUserId = "u3"; // Always Can Koç
+    state.loggedIn = true; // Auto login
     render();
+    resetScroll();
     return;
   }
 
@@ -11800,6 +11927,12 @@ if (action === "login") {
 
   if (action === "set-social-leaderboard-mode") {
     state.socialLeaderboardMode = actionButton.dataset.mode || "total";
+    render();
+    return;
+  }
+
+  if (action === "set-leaderboard-scope") {
+    state.leaderboardScope = actionButton.dataset.scope;
     render();
     return;
   }
@@ -12497,8 +12630,14 @@ document.addEventListener("change", event => {
   const actionEl = event.target.closest("[data-action]");
   if (actionEl) {
     const action = actionEl.dataset.action;
-        if (action === "change-active-country") {
+    if (action === "change-active-country") {
       state.activeCountry = event.target.value;
+      render();
+      return;
+    }
+
+    if (action === "change-app-language") {
+      state.appLanguage = event.target.value;
       render();
       return;
     }
@@ -14354,6 +14493,10 @@ function renderSocialLeaderboard() {
         </div>
         <strong>${formatCurrency(leaderboardValue(rows[0], mode))}</strong>
       </div>
+      <div class="social-leaderboard-scope-tabs" style="display: flex; gap: 8px; margin-bottom: 12px; background: var(--surface); padding: 4px; border-radius: 8px; border: 1px solid var(--line-soft);">
+        <button class="btn ${state.leaderboardScope !== 'global' ? 'active' : 'ghost'}" data-action="set-leaderboard-scope" data-scope="country" style="flex: 1; justify-content: center; height: 32px; font-size: 13px;">Ülke Tablosu</button>
+        <button class="btn ${state.leaderboardScope === 'global' ? 'active' : 'ghost'}" data-action="set-leaderboard-scope" data-scope="global" style="flex: 1; justify-content: center; height: 32px; font-size: 13px;">Global Tablo</button>
+      </div>
       <div class="social-leaderboard-tabs">
         ${modes.map(item => `
           <button class="btn ${mode === item.id ? "active" : ""}" data-action="set-social-leaderboard-mode" data-mode="${item.id}">
@@ -14393,14 +14536,18 @@ function socialLeaderboardRows() {
   ];
   return rows.map(row => {
     const person = personById(row.userId) || {};
-    const company = companyById(person.companyId || "tibas-holding");
+    const company = companyById(person.companyId || "sabanci-holding");
     return {
       ...row,
       name: person.name || "NEW IDEA EXCHANGE Üyesi",
       role: person.role || person.title || "Katılımcı",
       company: company.shortName || company.name,
-      photo: person.photo || ""
+      photo: person.photo || "",
+      country: person.country || "TR"
     };
+  }).filter(row => {
+    if (state.leaderboardScope === "global") return true;
+    return row.country === state.activeCountry;
   });
 }
 
@@ -15143,9 +15290,12 @@ function renderSettings() {
               <strong>Dil Ayarları</strong>
               <p style="font-size: 12px; color: var(--muted); margin-top: 2px;">Sistem dilini belirleyin.</p>
             </div>
-            <select class="select slim-select" style="width: 100px;">
-              <option value="tr">Türkçe</option>
-              <option value="en">English</option>
+            <select class="select slim-select" style="width: 130px;" data-action="change-app-language">
+              <option value="" ${!state.appLanguage ? "selected" : ""}>Portal Dili</option>
+              <option value="tr" ${state.appLanguage === "tr" ? "selected" : ""}>Türkçe</option>
+              <option value="en" ${state.appLanguage === "en" ? "selected" : ""}>English</option>
+              <option value="de" ${state.appLanguage === "de" ? "selected" : ""}>Deutsch</option>
+              <option value="es" ${state.appLanguage === "es" ? "selected" : ""}>Español</option>
             </select>
           </div>
         </div>
@@ -15671,6 +15821,7 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
 }
 
 function getActiveLanguage() {
+  if (state.appLanguage) return state.appLanguage;
   const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
   return activeC.lang || "tr";
 }
@@ -15752,7 +15903,7 @@ function scaleMockDataset() {
       id: "ak-yatirim",
       name: "Ak Yatırım Menkul Değerler A.Ş.",
       shortName: "Ak Yatırım",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-ay' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23e74c3c'/><stop offset='100%25' stop-color='%23c0392b'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-ay)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AY</text></svg>",
+      logo: "./assets/company-logos/ak-yatirim.svg",
       domain: "akyatirim.com.tr",
       type: "Yatırım & Finans",
       countries: ["Türkiye"],
@@ -15764,7 +15915,7 @@ function scaleMockDataset() {
       id: "ak-portfoy",
       name: "Ak Portföy Yönetimi A.Ş.",
       shortName: "Ak Portföy",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-ap' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%239b59b6'/><stop offset='100%25' stop-color='%238e44ad'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-ap)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AP</text></svg>",
+      logo: "./assets/company-logos/ak-portfoy.svg",
       domain: "akportfoy.com.tr",
       type: "Varlık Yönetimi",
       countries: ["Türkiye"],
@@ -15776,7 +15927,7 @@ function scaleMockDataset() {
       id: "akcansa",
       name: "Akçansa Çimento Sanayi ve Ticaret A.Ş.",
       shortName: "Akçansa",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-ac' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%233498db'/><stop offset='100%25' stop-color='%232980b9'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-ac)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AC</text></svg>",
+      logo: "./assets/company-logos/akcansa.svg",
       domain: "akcansa.com.tr",
       type: "Yapı Malzemeleri",
       countries: ["Türkiye"],
@@ -15788,7 +15939,7 @@ function scaleMockDataset() {
       id: "aklease",
       name: "Ak Finansal Kiralama A.Ş.",
       shortName: "Aklease",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-al' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231abc9c'/><stop offset='100%25' stop-color='%2316a085'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-al)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AL</text></svg>",
+      logo: "./assets/company-logos/aklease.svg",
       domain: "aklease.com",
       type: "Finansal Kiralama",
       countries: ["Türkiye"],
@@ -15800,7 +15951,7 @@ function scaleMockDataset() {
       id: "enerjisa-uretim",
       name: "Enerjisa Üretim Santralleri A.Ş.",
       shortName: "Enerjisa Üretim",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-eu' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23f1c40f'/><stop offset='100%25' stop-color='%23f39c12'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-eu)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='black' text-anchor='middle'>EÜ</text></svg>",
+      logo: "./assets/company-logos/enerjisa-uretim.svg",
       domain: "enerjisauretim.com.tr",
       type: "Enerji Üretimi",
       countries: ["Türkiye"],
@@ -15812,7 +15963,7 @@ function scaleMockDataset() {
       id: "sabanci-univ",
       name: "Sabancı Üniversitesi",
       shortName: "Sabancı Üni.",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-su' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2334495e'/><stop offset='100%25' stop-color='%232c3e50'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-su)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>SÜ</text></svg>",
+      logo: "./assets/company-logos/sabanci-univ.svg",
       domain: "sabanciuniv.edu",
       type: "Eğitim & Akademi",
       countries: ["Türkiye"],
@@ -15824,7 +15975,7 @@ function scaleMockDataset() {
       id: "sabanci-vakfi",
       name: "Hacı Ömer Sabancı Vakfı",
       shortName: "Sabancı Vakfı",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-sv' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23e67e22'/><stop offset='100%25' stop-color='%23d35400'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-sv)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>SV</text></svg>",
+      logo: "./assets/company-logos/sabanci-vakfi.svg",
       domain: "sabancivakfi.org",
       type: "Sosyal Sorumluluk",
       countries: ["Türkiye"],
@@ -15836,7 +15987,7 @@ function scaleMockDataset() {
       id: "akbank-uk",
       name: "Akbank AG London Branch",
       shortName: "Akbank UK",
-      logo: "/assets/company-logos/akbank.svg",
+      logo: "./assets/company-logos/akbank.svg",
       domain: "akbank.co.uk",
       type: "Banka",
       countries: ["Birleşik Krallık"],
@@ -15848,7 +15999,7 @@ function scaleMockDataset() {
       id: "akcansa-uk",
       name: "Akcansa UK Cement Trading Ltd.",
       shortName: "Akçansa UK",
-      logo: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g-acuk' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%233498db'/><stop offset='100%25' stop-color='%232980b9'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g-acuk)'/><text x='50' y='62' font-family='Space Grotesk, sans-serif' font-size='38' font-weight='bold' fill='white' text-anchor='middle'>AC</text></svg>",
+      logo: "./assets/company-logos/akcansa.svg",
       domain: "akcansa.co.uk",
       type: "Yapı Malzemeleri",
       countries: ["Birleşik Krallık"],
@@ -15860,7 +16011,7 @@ function scaleMockDataset() {
       id: "akbank-us",
       name: "Akbank US Representative Office",
       shortName: "Akbank US",
-      logo: "/assets/company-logos/akbank.svg",
+      logo: "./assets/company-logos/akbank.svg",
       domain: "akbank.com",
       type: "Banka",
       countries: ["Amerika Birleşik Devletleri"],
@@ -15872,7 +16023,7 @@ function scaleMockDataset() {
       id: "temsa-us",
       name: "Temsa North America Inc.",
       shortName: "Temsa US",
-      logo: "/assets/company-logos/temsa.svg",
+      logo: "./assets/company-logos/temsa.svg",
       domain: "temsa.com",
       type: "Otomotiv",
       countries: ["Amerika Birleşik Devletleri"],
@@ -15884,7 +16035,7 @@ function scaleMockDataset() {
       id: "akbank-de",
       name: "Akbank AG (Frankfurt)",
       shortName: "Akbank DE",
-      logo: "/assets/company-logos/akbank.svg",
+      logo: "./assets/company-logos/akbank.svg",
       domain: "akbank.de",
       type: "Banka",
       countries: ["Almanya"],
@@ -15896,7 +16047,7 @@ function scaleMockDataset() {
       id: "kordsa-de",
       name: "Kordsa Germany GmbH",
       shortName: "Kordsa DE",
-      logo: "/assets/company-logos/kordsa.svg",
+      logo: "./assets/company-logos/kordsa.svg",
       domain: "kordsa.com",
       type: "Sanayi",
       countries: ["Almanya"],
@@ -15908,7 +16059,7 @@ function scaleMockDataset() {
       id: "akbank-es",
       name: "Akbank Representative Office Spain",
       shortName: "Akbank ES",
-      logo: "/assets/company-logos/akbank.svg",
+      logo: "./assets/company-logos/akbank.svg",
       domain: "akbank.com",
       type: "Banka",
       countries: ["İspanya"],
@@ -15920,7 +16071,7 @@ function scaleMockDataset() {
       id: "temsa-es",
       name: "Temsa España S.L.",
       shortName: "Temsa ES",
-      logo: "/assets/company-logos/temsa.svg",
+      logo: "./assets/company-logos/temsa.svg",
       domain: "temsa.es",
       type: "Otomotiv",
       countries: ["İspanya"],
@@ -16189,8 +16340,57 @@ function scaleMockDataset() {
       tags: [randCompany.shortName, "İnovasyon"]
     });
   }
+
+  // 5. Generate Announcements
+  const aiImages = [
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1531297172867-11b2413e1de2?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80"
+  ];
+
+  for (let i = 0; i < 20; i++) {
+    const randCompany = companyList[i % companyList.length];
+    const randCountry = randCompany.countries[0] || "Türkiye";
+    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
+    const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
+    
+    state.announcements.push({
+      id: `ann-gen-${i}`,
+      title: `Yeni Proje Lansmanı: ${randCompany.shortName} AI İnisiyatifi`,
+      author: randomUser.name,
+      authorId: randomUser.id,
+      companyId: randCompany.id,
+      type: "Topluluk",
+      area: "Yenilikçi Fikirler",
+      importanceScore: 4,
+      body: `Merhaba ${randCompany.shortName} ekibi, verimliliği artıracak yeni nesil araçlarımızı kullanıma sunuyoruz. Proje #${i+10} kapsamında yeni denemeler yapılıyor! Desteklerinizi bekliyoruz.`,
+      date: `2026-06-${(10 + (i % 15)).toString().padStart(2, '0')}`,
+      comments: [],
+      likes: 15 + i * 2,
+      imageUrl: i % 2 === 0 ? aiImages[i % aiImages.length] : "",
+      country: countryCode
+    });
+  }
+
+  // 6. Generate AI Agenda Items
+  for (let i = 0; i < 15; i++) {
+    const randCompany = companyList[i % companyList.length];
+    state.agendaItems.push({
+      id: `ag-gen-ai-${i}`,
+      title: `AI Analizi: ${randCompany.shortName} Sürdürülebilirlik Trendleri`,
+      body: `${randCompany.shortName} bünyesinde sunulan son ${10 + i} fikrin analizi sonucunda yenilikçi projelerde %30 artış tespit edildi. Stratejik hedef uyumu 85/100 seviyesindedir.`,
+      category: "AI Host",
+      date: `2026-06-${(10 + (i % 15)).toString().padStart(2, '0')}`,
+      tags: ["ai-raporu", "trend", randCompany.shortName.toLowerCase().replace(/\s+/g, '')],
+      author: "AI Denetçi",
+      isAiGenerated: true
+    });
+  }
 }
 
 scaleMockDataset();
 ensureSocialEnhancements();
 render();
+
