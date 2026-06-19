@@ -13234,9 +13234,9 @@ function renderAIAssistantWidget() {
   ];
 
   if (!state.aiAssistantOpen) {
-    const isGlobalTranslated = !!state.globalTranslateAll;
-    const tooltipText = isGlobalTranslated ? "Orijinal Dile Dön" : "Tüm Fikirleri Çevir";
-    let translateStyle = `position: fixed; z-index: 999; width: 44px; height: 44px; border-radius: 50%; background: ${isGlobalTranslated ? 'var(--primary)' : 'var(--surface)'} !important; border: 1px solid var(--line-soft); color: ${isGlobalTranslated ? 'white' : 'var(--primary)'}; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); transition: transform 0.2s, background-color 0.2s;`;
+    const isGlobalOriginal = !!state.globalTranslateAll;
+    const tooltipText = isGlobalOriginal ? "Türkçe Çevirilere Dön" : "Tümünü Orijinal Dilde Göster";
+    let translateStyle = `position: fixed; z-index: 999; width: 44px; height: 44px; border-radius: 50%; background: ${isGlobalOriginal ? 'var(--primary)' : 'var(--surface)'} !important; border: 1px solid var(--line-soft); color: ${isGlobalOriginal ? 'white' : 'var(--primary)'}; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); transition: transform 0.2s, background-color 0.2s;`;
     let aiStyle = ``;
 
     if (state.aiBubblePos) {
@@ -13248,7 +13248,7 @@ function renderAIAssistantWidget() {
 
     return `
       <div class="global-translate-bubble" data-action="toggle-global-translation" style="${translateStyle}" title="${tooltipText}" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        ${icon("languages", `style="width: 20px; height: 20px; color: ${isGlobalTranslated ? 'white' : 'var(--primary)'};"`)}
+        ${icon("languages", `style="width: 20px; height: 20px; color: ${isGlobalOriginal ? 'white' : 'var(--primary)'};"`)}
       </div>
       <div class="ai-assistant-bubble ai-chat-bubble-trigger" data-action="toggle-ai-assistant" style="${aiStyle}">
         ${icon("bot")}
@@ -13768,16 +13768,16 @@ function renderTranslationButton(idea) {
   if (activeLang === originalLang) return "";
   
   state.translatedIdeaIds = state.translatedIdeaIds || {};
-  const isTranslated = state.translatedIdeaIds[idea.id];
+  const showOriginal = !!state.translatedIdeaIds[idea.id];
   
   const labels = {
-    tr: { translate: "Otomatik Çevir", original: "Orijinal Dile Dön" },
-    en: { translate: "Auto Translate", original: "Show Original" },
-    de: { translate: "Automatisch übersetzen", original: "Original anzeigen" },
-    es: { translate: "Traducir automáticamente", original: "Ver original" }
+    tr: { showOriginal: "Orijinal Dilde Göster", showTranslation: "Türkçe Çeviriyi Göster" },
+    en: { showOriginal: "Show Original", showTranslation: "Show English" },
+    de: { showOriginal: "Original anzeigen", showTranslation: "Auf Deutsch anzeigen" },
+    es: { showOriginal: "Ver en original", showTranslation: "Ver en español" }
   };
   const activeLabels = labels[activeLang] || labels.tr;
-  const buttonText = isTranslated ? activeLabels.original : activeLabels.translate;
+  const buttonText = showOriginal ? activeLabels.showTranslation : activeLabels.showOriginal;
   
   return `
     <button class="btn tiny ghost translate-toggle-btn" data-action="toggle-idea-translation" data-id="${esc(idea.id)}" style="padding: 4px 10px; font-size: 11px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--accent); cursor: pointer; outline: none; margin-top: 6px;" title="Çeviri seçeneği">
@@ -13800,26 +13800,33 @@ function translateIdeasInState() {
     }
     
     const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
-    const showTranslated = state.translatedIdeaIds[idea.id] && (activeLang !== originalLang);
+    const showOriginal = !!state.translatedIdeaIds[idea.id];
     
-    if (showTranslated) {
-      if (idea.translations && idea.translations[activeLang]) {
-        const trans = idea.translations[activeLang];
-        idea.title = trans.title || idea.originalTitle;
-        idea.summary = trans.summary || idea.originalSummary;
-        idea.problem = trans.problem || idea.originalProblem;
-        idea.solution = trans.solution || idea.originalSolution;
-      } else {
-        idea.title = idea.originalTitle;
-        idea.summary = idea.originalSummary;
-        idea.problem = idea.originalProblem;
-        idea.solution = idea.originalSolution;
-      }
-    } else {
+    if (showOriginal) {
       idea.title = idea.originalTitle;
       idea.summary = idea.originalSummary;
       idea.problem = idea.originalProblem;
       idea.solution = idea.originalSolution;
+    } else {
+      if (activeLang === originalLang) {
+        idea.title = idea.originalTitle;
+        idea.summary = idea.originalSummary;
+        idea.problem = idea.originalProblem;
+        idea.solution = idea.originalSolution;
+      } else {
+        const trans = idea.translations && idea.translations[activeLang];
+        if (trans) {
+          idea.title = trans.title || idea.originalTitle;
+          idea.summary = trans.summary || idea.originalSummary;
+          idea.problem = trans.problem || idea.originalProblem;
+          idea.solution = trans.solution || idea.originalSolution;
+        } else {
+          idea.title = idea.originalTitle;
+          idea.summary = idea.originalSummary;
+          idea.problem = idea.originalProblem;
+          idea.solution = idea.originalSolution;
+        }
+      }
     }
   });
 }
