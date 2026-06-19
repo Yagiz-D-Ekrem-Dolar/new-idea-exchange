@@ -2880,9 +2880,11 @@ function icon(name, extraAttrs = "") {
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="sa-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
       <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
       <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
-      <ellipse cx="44" cy="46" rx="14" ry="10" fill="none" stroke="#8b6508" stroke-width="2" transform="rotate(-30 44 46)" />
-      <ellipse cx="56" cy="54" rx="14" ry="10" fill="none" stroke="#8b6508" stroke-width="2" transform="rotate(-30 56 54)" />
-      <text x="50" y="62" font-family="Space Grotesk, sans-serif" font-weight="bold" font-size="34" fill="#8b6508" text-anchor="middle">SA</text>
+      <g transform="translate(22.22, 34.8) scale(0.6)">
+        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#8b6508"/>
+        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
+        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
+      </g>
       <defs>
         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#ffe066" />
@@ -3091,7 +3093,11 @@ function saCoinIcon(size = "normal") {
     <svg class="sa-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
       <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
       <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
-      <text x="18" y="23.5" font-family="'Inter', system-ui, sans-serif" font-weight="900" font-size="13.5" fill="#5C4033" text-anchor="middle" letter-spacing="-0.5">SA</text>
+      <g transform="translate(7.35, 12.17) scale(0.23)">
+        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#5C4033"/>
+        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
+        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
+      </g>
       <defs>
         <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#FFE07D"/>
@@ -10097,8 +10103,8 @@ document.addEventListener("click", event => {
 
   if (action === "toggle-idea-translation") {
     const id = actionButton.dataset.id;
-    state.showOriginalIdeas = state.showOriginalIdeas || {};
-    state.showOriginalIdeas[id] = !state.showOriginalIdeas[id];
+    state.translatedIdeaIds = state.translatedIdeaIds || {};
+    state.translatedIdeaIds[id] = !state.translatedIdeaIds[id];
     render();
     return;
   }
@@ -15850,18 +15856,29 @@ function renderTranslationButton(idea) {
   
   if (activeLang === originalLang) return "";
   
-  const showOriginal = state.showOriginalIdeas && state.showOriginalIdeas[idea.id];
+  state.translatedIdeaIds = state.translatedIdeaIds || {};
+  const isTranslated = state.translatedIdeaIds[idea.id];
+  
+  const labels = {
+    tr: { translate: "Otomatik Çevir", original: "Orijinal Dile Dön" },
+    en: { translate: "Auto Translate", original: "Show Original" },
+    de: { translate: "Automatisch übersetzen", original: "Original anzeigen" },
+    es: { translate: "Traducir automáticamente", original: "Ver original" }
+  };
+  const activeLabels = labels[activeLang] || labels.tr;
+  const buttonText = isTranslated ? activeLabels.original : activeLabels.translate;
+  
   return `
     <button class="btn tiny ghost translate-toggle-btn" data-action="toggle-idea-translation" data-id="${esc(idea.id)}" style="padding: 4px 10px; font-size: 11px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line-soft); background: var(--surface); color: var(--accent); cursor: pointer; outline: none; margin-top: 6px;" title="Çeviri seçeneği">
       ${icon("languages", "style='width: 12px; height: 12px;'")}
-      <span>${showOriginal ? "Çeviriyi Göster" : "Orijinal Dilde Göster"}</span>
+      <span>${buttonText}</span>
     </button>
   `;
 }
 
 function translateIdeasInState() {
   const activeLang = getActiveLanguage();
-  state.showOriginalIdeas = state.showOriginalIdeas || {};
+  state.translatedIdeaIds = state.translatedIdeaIds || {};
   
   state.ideas.forEach(idea => {
     if (idea.originalTitle === undefined) {
@@ -15872,14 +15889,9 @@ function translateIdeasInState() {
     }
     
     const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
-    const showOriginal = state.showOriginalIdeas[idea.id];
+    const showTranslated = state.translatedIdeaIds[idea.id] && (activeLang !== originalLang);
     
-    if (showOriginal || activeLang === originalLang) {
-      idea.title = idea.originalTitle;
-      idea.summary = idea.originalSummary;
-      idea.problem = idea.originalProblem;
-      idea.solution = idea.originalSolution;
-    } else {
+    if (showTranslated) {
       if (idea.translations && idea.translations[activeLang]) {
         const trans = idea.translations[activeLang];
         idea.title = trans.title || idea.originalTitle;
@@ -15892,6 +15904,11 @@ function translateIdeasInState() {
         idea.problem = idea.originalProblem;
         idea.solution = idea.originalSolution;
       }
+    } else {
+      idea.title = idea.originalTitle;
+      idea.summary = idea.originalSummary;
+      idea.problem = idea.originalProblem;
+      idea.solution = idea.originalSolution;
     }
   });
 }
@@ -16388,6 +16405,149 @@ function scaleMockDataset() {
       isAiGenerated: true
     });
   }
+
+  // Assign ideas and teams directly to the active state so they populate
+  const equities = [15, 20, 25, 30, 35, 40];
+  state.ideas = initialIdeas.map((idea, idx) => {
+    idea.openEquity = idea.openEquity || equities[idx % equities.length];
+    return idea;
+  });
+  state.teams = initialTeams;
+
+  // Initialize the 12 studios
+  state.studios = [
+    { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Moka, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-industry", name: "Sanayi & Malzeme İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Kordsa ve Çimsa bünyesindeki kompozit malzeme ve çimento Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-energy", name: "Enerji Teknolojileri Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "Enerjisa Üretim yenilenebilir enerji, rüzgar ve hidrojen depolama teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-mobility", name: "Mobilite & Otomotiv Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Temsa elektrikli ve otonom otobüs yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "Teknosa ve CarrefourSA müşteri deneyimi, akıllı raf ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-sme", name: "KOBİ Destek ve Çözüm Stüdyosu", category: "KOBİ", status: "Kuruluyor", popularity: 72, createdAt: "2026-06-04", description: "KOBİ bankacılığı, sigortacılık ve finansman çözümleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-proptech", name: "Akıllı Şehirler & PropTech Stüdyosu", category: "PropTech", status: "Aktif", popularity: 80, createdAt: "2026-05-22", description: "Akıllı bina yönetim sistemleri, HVAC ve plaza iklimlendirme projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Agesa ve Aksigorta müşteri edinimi, poliçe pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-cloud", name: "Derin Teknoloji & Bulut Girişim Stüdyosu", category: "Derin Teknoloji", status: "Aktif", popularity: 89, createdAt: "2026-05-30", description: "Büyük veri analitiği, siber güvenlik ve kurumsal bulut çözümleri Ar-Ge stüdyosu.", linkedTeams: [], linkedIdeas: [] }
+  ];
+
+  // Link a subset of ideas and teams to studios to avoid cluttering but show rich data
+  state.ideas.forEach(idea => {
+    let matchedStudio = state.studios.find(s => idea.tags && idea.tags.some(tag => s.category.toLowerCase().includes(tag.toLowerCase())));
+    if (!matchedStudio) {
+      matchedStudio = state.studios.find(s => s.category.toLowerCase().includes(idea.type.toLowerCase()));
+    }
+    if (!matchedStudio) {
+      matchedStudio = state.studios[Math.floor(Math.random() * state.studios.length)];
+    }
+    if (matchedStudio && matchedStudio.linkedIdeas.length < 5 && !matchedStudio.linkedIdeas.includes(idea.id)) {
+      matchedStudio.linkedIdeas.push(idea.id);
+    }
+  });
+
+  state.teams.forEach(team => {
+    const idea = state.ideas.find(i => i.id === team.ideaId);
+    let matchedStudio;
+    if (idea) {
+      matchedStudio = state.studios.find(s => s.linkedIdeas.includes(idea.id));
+    }
+    if (!matchedStudio) {
+      matchedStudio = state.studios.find(s => s.category.toLowerCase() === team.area.toLowerCase());
+    }
+    if (!matchedStudio) {
+      matchedStudio = state.studios[Math.floor(Math.random() * state.studios.length)];
+    }
+    if (matchedStudio && matchedStudio.linkedTeams.length < 4 && !matchedStudio.linkedTeams.includes(team.id)) {
+      matchedStudio.linkedTeams.push(team.id);
+    }
+  });
+
+  // 7. Generate datasets for Veri&Bilgi (dataSets)
+  state.dataSets = [];
+  const datasetTrends = [
+    {
+      area: "FinTech & Dijital Bankacılık",
+      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "Akbank API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
+      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of Akbank API transition times, load tests, and monthly call logs." },
+      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von Akbank-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
+      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de Akbank, pruebas de carga y registros de llamadas mensuales." }
+    },
+    {
+      area: "Sürdürülebilirlik & Yeşil Enerji",
+      tr: { title: "Rüzgar Enerjisi Üretim Verimliliği Raporu", summary: "Enerjisa Üretim Çanakkale santralinin rüzgar hızı ve anlık megavat üretim ilişkisi ham verisi." },
+      en: { title: "Wind Energy Generation Efficiency Report", summary: "Raw data of wind speed and instantaneous megawatt generation relationship of Enerjisa Uretim Canakkale power plant." },
+      de: { title: "Effizienzbericht für Windkraftanlagen", summary: "Rohdaten zum Verhältnis von Windgeschwindigkeit und momentaner Megawatt-Erzeugung des Kraftwerks Enerjisa Uretim Canakkale." },
+      es: { title: "Informe de Eficiencia de Generación de Energía Eólica", summary: "Datos brutos de la velocidad del viento y la relación de generación de megavatios instantáneos de la planta de energía Enerjisa Uretim Canakkale." }
+    },
+    {
+      area: "Yapay Zekâ & Derin Teknoloji",
+      tr: { title: "SaaS LLM Entegrasyonu Güvenlik Logları", summary: "Kurumsal yapay zeka asistanı isteklerinin anonimleştirilmiş güvenlik audit ve token harcama dökümü." },
+      en: { title: "SaaS LLM Integration Security Logs", summary: "Anonymized security audit and token expenditure breakdown of corporate AI assistant requests." },
+      de: { title: "SaaS LLM-Integration Sicherheitslogs", summary: "Anonymisiertes Sicherheitsaudit und Token-Ausgabenaufschlüsselung der Anfragen des KI-Assistenten." },
+      es: { title: "Registros de Seguridad de Integración SaaS LLM", summary: "Auditoría de seguridad anonimizada y desglose de gastos de tokens de solicitudes del asistente de IA corporativo." }
+    },
+    {
+      area: "PropTech & Akıllı Şehirler",
+      tr: { title: "Sabancı Center Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
+      en: { title: "Sabanci Center Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
+      de: { title: "Sabanci Center Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
+      es: { title: "Serie Temporal de Ocupación de Sabanci Center", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
+    },
+    {
+      area: "Akıllı Lojistik & Dağıtım",
+      tr: { title: "CarrefourSA Gebze Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
+      en: { title: "CarrefourSA Gebze Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
+      de: { title: "CarrefourSA Gebze Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
+      es: { title: "Conjunto de Tiempos de Despacho de Almacén CarrefourSA Gebze", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
+    },
+    {
+      area: "Operasyon",
+      tr: { title: "Müşteri İlişkileri Yanıt Süresi Dağılımı", summary: "Çağrı merkezi ve e-posta taleplerinin öncelik derecelerine göre çözümlenme süreleri ham verisi." },
+      en: { title: "Customer Relations Response Time Distribution", summary: "Raw data of resolution times of call center and email requests according to priority levels." },
+      de: { title: "Verteilung der Antwortzeiten im Kundenservice", summary: "Rohdaten der Bearbeitungszeiten von Callcenter- und E-Mail-Anfragen nach Prioritätsstufen." },
+      es: { title: "Distribución del Tiempo de Respuesta de Relaciones con Clientes", summary: "Datos brutos de los tiempos de resolución de llamadas del centro de contacto y solicitudes de correo electrónico según niveles de prioridad." }
+    },
+    {
+      area: "Borsa",
+      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Borsa İstanbul'da işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
+      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on Borsa Istanbul for the last 1 year." },
+      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Borsa Istanbul gehandelten Gruppenunternehmen für das letzte Jahr." },
+      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en Borsa Istanbul durante el último año." }
+    },
+    {
+      area: "Diğer",
+      tr: { title: "Grup İçi İnovasyon Yarışması Başvuru İstatistikleri", summary: "Yıllara göre sunulan fikir sayıları, iştirak bazlı katılım yüzdeleri ve ödül alan projelerin kategorik dağılımı." },
+      en: { title: "In-Group Innovation Challenge Application Statistics", summary: "Number of ideas submitted by year, participation percentages based on affiliates, and categorical distribution of award-winning projects." },
+      de: { title: "Bewerbungsstatistiken für den konzerneigenen Innovationspreis", summary: "Anzahl der eingereichten Ideen nach Jahren, Beteiligungsquoten nach Tochtergesellschaften und Verteilung der prämierten Projekte." },
+      es: { title: "Estadísticas de Solicitud de Desafío de Innovación Interno del Grupo", summary: "Número de ideas enviadas por año, porcentajes de participación según afiliadas y distribución categórica de proyectos galardonados." }
+    }
+  ];
+
+  const countries = ["TR", "US", "GB", "DE", "ES"];
+  let datasetIdCount = 0;
+  countries.forEach(country => {
+    const lang = country === "TR" ? "tr" : (country === "DE" ? "de" : (country === "ES" ? "es" : "en"));
+    for (let i = 0; i < 12; i++) {
+      const trend = datasetTrends[i % datasetTrends.length];
+      const randCompany = companyList[i % companyList.length];
+      const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
+      
+      state.dataSets.push({
+        id: `ds-gen-${datasetIdCount++}`,
+        title: trend[lang].title + ` (${randCompany.shortName})`,
+        summary: trend[lang].summary,
+        sharedBy: randomUser.name,
+        companyId: randCompany.id,
+        type: i % 2 === 0 ? "Kurumsal" : "Topluluk",
+        area: trend.area,
+        importanceScore: 3 + (i % 3),
+        date: `2026-06-${(10 + (i % 10)).toString().padStart(2, '0')}`,
+        comments: [],
+        likes: 10 + i * 3,
+        downloads: 20 + i * 5,
+        country: country
+      });
+    }
+  });
 }
 
 scaleMockDataset();
