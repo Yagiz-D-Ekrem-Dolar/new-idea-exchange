@@ -16247,7 +16247,7 @@ function scaleMockDataset() {
   ];
 
   const currentIdeaCount = initialIdeas.length;
-  const targetIdeaCount = 150;
+  const targetIdeaCount = 800;
   
   for (let i = currentIdeaCount; i < targetIdeaCount; i++) {
     const trend = industryTrends[i % industryTrends.length];
@@ -16350,7 +16350,7 @@ function scaleMockDataset() {
     "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80"
   ];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 400; i++) {
     const randCompany = companyList[i % companyList.length];
     const randCountry = randCompany.countries[0] || "Türkiye";
     const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
@@ -16375,7 +16375,7 @@ function scaleMockDataset() {
   }
 
   // 6. Generate AI Agenda Items
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 300; i++) {
     const randCompany = companyList[i % companyList.length];
     state.agendaItems.push({
       id: `ag-gen-ai-${i}`,
