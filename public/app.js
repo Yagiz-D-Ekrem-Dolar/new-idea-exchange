@@ -10090,7 +10090,19 @@ document.addEventListener("click", event => {
   if (action === "change-active-portal") {
     const code = actionButton.dataset.code;
     state.activeCountry = code;
+    state.translatedIdeaIds = {};
+    state.globalTranslateAll = false;
     state.portalDropdownOpen = false;
+    render();
+    return;
+  }
+
+  if (action === "toggle-global-translation") {
+    state.globalTranslateAll = !state.globalTranslateAll;
+    state.translatedIdeaIds = state.translatedIdeaIds || {};
+    state.ideas.forEach(idea => {
+      state.translatedIdeaIds[idea.id] = !!state.globalTranslateAll;
+    });
     render();
     return;
   }
@@ -15347,8 +15359,23 @@ function renderAIAssistantWidget() {
   ];
 
   if (!state.aiAssistantOpen) {
+    const isGlobalTranslated = !!state.globalTranslateAll;
+    const tooltipText = isGlobalTranslated ? "Orijinal Dile Dön" : "Tüm Fikirleri Çevir";
+    let translateStyle = `position: fixed; z-index: 999; width: 44px; height: 44px; border-radius: 50%; background: ${isGlobalTranslated ? 'var(--primary)' : 'var(--surface)'} !important; border: 1px solid var(--line-soft); color: ${isGlobalTranslated ? 'white' : 'var(--primary)'}; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); transition: transform 0.2s, background-color 0.2s;`;
+    let aiStyle = ``;
+
+    if (state.aiBubblePos) {
+      translateStyle += ` left: ${state.aiBubblePos.x + 6}px; top: ${state.aiBubblePos.y - 56}px; right: auto; bottom: auto;`;
+      aiStyle += ` left: ${state.aiBubblePos.x}px; top: ${state.aiBubblePos.y}px; right: auto; bottom: auto;`;
+    } else {
+      translateStyle += ` bottom: 92px; right: 30px;`;
+    }
+
     return `
-      <div class="ai-assistant-bubble ai-chat-bubble-trigger" data-action="toggle-ai-assistant">
+      <div class="global-translate-bubble" data-action="toggle-global-translation" style="${translateStyle}" title="${tooltipText}" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        ${icon("languages", `style="width: 20px; height: 20px; color: ${isGlobalTranslated ? 'white' : 'var(--primary)'};"`)}
+      </div>
+      <div class="ai-assistant-bubble ai-chat-bubble-trigger" data-action="toggle-ai-assistant" style="${aiStyle}">
         ${icon("bot")}
       </div>
     `;
@@ -15665,6 +15692,15 @@ function initAIBubbleDraggability() {
     bubble.style.bottom = 'auto';
     bubble.style.left = dragX + 'px';
     bubble.style.top = dragY + 'px';
+
+    const transBubble = document.querySelector(".global-translate-bubble");
+    if (transBubble) {
+      transBubble.style.right = 'auto';
+      transBubble.style.bottom = 'auto';
+      transBubble.style.left = (dragX + 6) + 'px';
+      transBubble.style.top = (dragY - 56) + 'px';
+    }
+
     hasMoved = true;
     
     if (e.cancelable) e.preventDefault();
