@@ -1,6 +1,8 @@
 const state = {
   visibleIdeasCount: 12,
   visibleBorsaIdeasCount: 12,
+  clubs: structuredClone(initialClubs),
+  teamsTab: "projectTeams",
   appLanguage: "",
   userTokens: 24,
   leaderboardScope: "country",
@@ -140,10 +142,10 @@ const state = {
     title: "",
     body: "",
     scope: "Holding geneli",
-    companyId: "tibas-holding",
+    companyId: "sabanci-holding",
     country: "Türkiye",
     city: "İstanbul",
-    campus: "Levent Genel Müdürlük",
+    campus: "Sabancı Center",
     department: "Tüm ekipler"
   },
   selectedMessageSpaceId: "msg-holding",
@@ -598,10 +600,20 @@ const state = {
 
 
 function currentUser() {
+  const c = state.activeCountry || state.currentCountry || "TR";
+  const userConfigs = {
+    TR: { id: "u3", name: "Can Koç", email: "can.koc@sabanci.example", photo: "https://randomuser.me/api/portraits/men/32.jpg" },
+    GB: { id: "u7", name: "John Sterling", email: "john.sterling@sabanci.example", photo: "https://randomuser.me/api/portraits/men/44.jpg" },
+    US: { id: "u10", name: "Michael Vance", email: "michael.vance@sabanci.example", photo: "https://randomuser.me/api/portraits/men/22.jpg" },
+    DE: { id: "u12", name: "Hans Müller", email: "hans.mueller@sabanci.example", photo: "https://randomuser.me/api/portraits/men/72.jpg" },
+    ES: { id: "u14", name: "Carlos Ruiz", email: "carlos.ruiz@sabanci.example", photo: "https://randomuser.me/api/portraits/men/38.jpg" }
+  };
+  const config = userConfigs[c] || userConfigs.TR;
+
   const baseUser = {
-    id: "u3",
-    name: "Can Koç",
-    email: "can.koc@sabanci.example",
+    id: config.id,
+    name: config.name,
+    email: config.email,
     employeeId: "SA-22018",
     roleKey: "manager",
     seniority: "Yönetici",
@@ -611,10 +623,9 @@ function currentUser() {
     monthlyVoteCredit: 40,
     badges: ["Ekipler Arası Köprü", "Pilot Proje Katılımcısı"],
     supportedIdeas: ["idea-1", "idea-2", "idea-3"],
-    photo: "https://randomuser.me/api/portraits/men/32.jpg"
+    photo: config.photo
   };
 
-  const c = state.activeCountry || state.currentCountry || "TR";
   const adapted = { ...baseUser, country: c };
   Object.defineProperty(adapted, "voteCreditBalance", {
     get: function() { return state.userTokens; },
@@ -633,6 +644,7 @@ function currentUser() {
       adapted.role = "İnovasyon Yöneticisi";
       break;
     case "UK":
+    case "GB":
       adapted.company = "Çimsa UK";
       adapted.companyId = "cimsa-uk";
       adapted.department = "Strategy";
@@ -794,7 +806,9 @@ function companyLogo(company, size = "") {
 }
 
 function companyIdsInScope() {
-  if (state.affiliationFilter === "all") return affiliationCompanies.map(company => company.id);
+  const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
+  const countryCompanies = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(activeC.name));
+  if (state.affiliationFilter === "all") return countryCompanies.map(company => company.id);
   return [state.affiliationFilter];
 }
 
@@ -814,7 +828,7 @@ function announcementsInScope() {
 
 function spacesInScope() {
   const ids = companyIdsInScope();
-  return state.messageSpaces.filter(space => state.affiliationFilter === "all" || ids.includes(space.companyId) || space.companyId === "tibas-holding");
+  return state.messageSpaces.filter(space => state.affiliationFilter === "all" || ids.includes(space.companyId) || space.companyId === "sabanci-holding");
 }
 
 function syncAnnouncementDraftCompany(companyId) {
@@ -4359,11 +4373,14 @@ function timelineItem(iconName, title, meta) {
 }
 
 function renderAffiliationFilter() {
+  const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
+  const countryCompanies = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(activeC.name));
+
   return `
     <section class="corp-filter-panel">
       <div class="corp-filter-head">
         <div>
-          <span class="panel-kicker">TİBAŞ HOLDİNG VE İŞTİRAK FİLTRESİ</span>
+          <span class="panel-kicker">SABANCI HOLDİNG VE İŞTİRAK FİLTRESİ</span>
           <h3>Kurumsal kapsam</h3>
         </div>
         <label class="field compact-field">
@@ -4375,10 +4392,10 @@ function renderAffiliationFilter() {
       </div>
       <div class="affiliate-strip" aria-label="İştirakler">
         <button class="affiliate-chip ${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">
-          ${companyLogo(companyById("tibas-holding"), "mini")}
+          ${companyLogo(companyById("sabanci-holding"), "mini")}
           <span>Tümü</span>
         </button>
-        ${affiliationCompanies.map(company => `
+        ${countryCompanies.map(company => `
           <button class="affiliate-chip ${state.affiliationFilter === company.id ? "active" : ""}" data-action="set-affiliation" data-id="${esc(company.id)}">
             ${companyLogo(company, "mini")}
             <span>${esc(company.shortName)}</span>
@@ -4543,7 +4560,7 @@ function renderMessages() {
   const messages = selectedPerson
     ? (state.directThreads[selectedPerson.id] || [])
     : (selectedSpace?.messages || []);
-  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "tibas-holding");
+  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "sabanci-holding");
 
   return `
     <div class="view-stack corp-page">
@@ -5115,7 +5132,12 @@ function renderAgendaComposer() {
 
 function filteredAgendaItems() {
   const q = (state.filters.agendaSearch || "").trim().toLocaleLowerCase("tr-TR");
+  const countryName = countriesList.find(c => c.code === state.activeCountry)?.name || "Türkiye";
   return [...state.agendaItems].filter(item => {
+    if (item.companyId) {
+      const comp = affiliationCompanies.find(c => c.id === item.companyId);
+      if (comp && comp.countries && !comp.countries.includes(countryName)) return false;
+    }
     const text = [item.title, item.body, item.category, ...(item.tags || [])].join(" ").toLocaleLowerCase("tr-TR");
     const searchMatch = !q || text.includes(q);
     const categoryMatch = state.filters.agendaCategory === "Tümü" || item.category === state.filters.agendaCategory;
@@ -5292,28 +5314,97 @@ function renderUnifiedStudiosTab() {
   `;
 }
 
-function renderUnifiedTeamsTab() {
-  if (state.teamsView === "detail") return renderTeamDetail();
-  if (state.teamsView === "create") return renderCreateTeam();
-  const list = filteredTeams();
+function filteredClubs() {
+  const q = (state.filters.clubSearch || "").trim().toLocaleLowerCase("tr-TR");
+  const category = state.filters.clubCategory || "Tümü";
+  return state.clubs.filter(club => {
+    if (club.country !== state.activeCountry) return false;
+    const text = [club.name, club.description, club.category].join(" ").toLocaleLowerCase("tr-TR");
+    const searchMatch = !q || text.includes(q);
+    const catMatch = category === "Tümü" || club.category === category;
+    return searchMatch && catMatch;
+  });
+}
+
+function renderClubCard(club) {
+  const user = currentUser();
+  const isMember = club.members && club.members.includes(user.id);
+  const categoriesMap = {
+    "Spor": "var(--positive)",
+    "Kültür & Sanat": "var(--primary)",
+    "Teknoloji": "var(--accent)",
+    "Sosyal Sorumluluk": "var(--warning)"
+  };
+  const color = categoriesMap[club.category] || "var(--primary)";
+
   return `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <h3 style="font-size: 15px; font-weight: 700; color: var(--ink); margin: 0;">Ekipler</h3>
-        <button class="btn primary slim-btn" data-action="start-create-team">${icon("plus")} Yeni Ekip Kur</button>
+    <article class="studio-card-v2" style="display:flex; flex-direction:column; justify-content:space-between; height: 100%; min-height: 200px;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <span style="font-size:10px; font-weight:700; color:${color}; text-transform:uppercase; letter-spacing:0.05em; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:4px;">
+            ${esc(club.category)}
+          </span>
+          <span style="font-size:11px; color:var(--muted);">${esc(club.createdAt)}</span>
+        </div>
+        <h3 style="font-size:16px; font-weight:700; color:var(--ink); margin:12px 0 6px 0;">${esc(club.name)}</h3>
+        <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:6px 0 12px 0;">${esc(club.description)}</p>
       </div>
-      <section class="challenge-filterbar" style="margin-bottom: 0;">
-        <label class="search-box">${icon("search")}<input class="input" data-team-filter="search" value="${esc(state.filters.teamSearch || "")}" placeholder="Ekip ara..." /></label>
-        <select class="select" data-team-filter="area">${["Tümü", ...Array.from(new Set(state.teams.map(t => t.area)))].map(v => `<option value="${esc(v)}" ${state.filters.teamArea === v ? "selected" : ""}>Alan: ${esc(v)}</option>`).join("")}</select>
-        <select class="select" data-team-filter="status">${["Tümü", "active", "forming", "disbanded"].map(v => `<option value="${esc(v)}" ${state.filters.teamStatus === v ? "selected" : ""}>Durum: ${esc(teamStatusLabel(v))}</option>`).join("")}</select>
-      </section>
-      <section class="teams-grid">
-        ${list.map(team => renderTeamCard(team, isMyTeam(team))).join("") || `
-          <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft); grid-column: span 3;">
-            ${icon("users-round", "36")}
-            <p style="margin-top: 10px; font-size: 14px;">Eşleşen ekip bulunamadı.</p>
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid var(--line-soft); padding-top: 12px; margin-top: 12px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            ${renderAvatarStack(club.members, 3)}
+            <span style="font-size:12px; color:var(--muted); font-weight:500;">${club.members.length} Üye</span>
           </div>
-        `}
+          <button class="btn ${isMember ? "secondary" : "primary"} slim-btn" data-action="toggle-club-join" data-id="${club.id}">
+            ${isMember ? icon("check") + " Üyesiniz" : icon("plus") + " Katıl"}
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderCreateClub() {
+  state.clubDraft = state.clubDraft || { name: "", description: "", category: "Spor" };
+  const draft = state.clubDraft;
+  const categories = ["Spor", "Kültür & Sanat", "Teknoloji", "Sosyal Sorumluluk"];
+
+  return `
+    <div class="view-stack create-team-page">
+      <button class="btn ghost" data-action="back-to-teams" style="display:flex;align-items:center;gap:6px;margin-bottom:12px;">
+        ${icon("arrow-left")} Geri Dön
+      </button>
+
+      <section class="create-team-card" style="max-width: 600px; margin: 0 auto; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px;">
+        <div class="create-team-header" style="margin-bottom: 20px;">
+          <span class="panel-kicker">YENİ KULÜP</span>
+          <h2>Kulüp Kur</h2>
+          <p>Çalışanları bir araya getirecek, sosyal veya teknik odağı olan bir topluluk oluşturun.</p>
+        </div>
+
+        <div class="create-step-body" style="display: flex; flex-direction: column; gap: 16px;">
+          <label class="field">
+            <span>Kulüp Adı *</span>
+            <input class="input" placeholder="Örn: Akbank Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
+          </label>
+          <label class="field">
+            <span>Kulüp Açıklaması / Amacı *</span>
+            <textarea class="input" rows="3" placeholder="Kulübün faaliyetleri, kimlerin katılabileceği ve hedefleri..." data-club-draft-desc>${esc(draft.description)}</textarea>
+          </label>
+          <label class="field">
+            <span>Kategori</span>
+            <select class="select" data-club-draft-category>
+              ${categories.map(c => `<option value="${esc(c)}" ${draft.category === c ? "selected" : ""}>${esc(c)}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; border-top: 1px solid var(--line-soft); padding-top: 16px;">
+          <button class="btn ghost" data-action="back-to-teams">İptal</button>
+          <button class="btn primary" data-action="club-create-submit" ${!draft.name.trim() || !draft.description.trim() ? "disabled" : ""}>
+            Kulübü Oluştur
+          </button>
+        </div>
       </section>
     </div>
   `;
@@ -5322,19 +5413,101 @@ function renderUnifiedTeamsTab() {
 function renderTeamsDirectory() {
   if (state.teamsView === "detail") return renderTeamDetail();
   if (state.teamsView === "create") return renderCreateTeam();
-  const list = filteredTeams();
+  if (state.teamsView === "createClub") return renderCreateClub();
+
+  state.teamsTab = state.teamsTab || "projectTeams";
+  state.filters.clubSearch = state.filters.clubSearch || "";
+  state.filters.clubCategory = state.filters.clubCategory || "Tümü";
+
+  const isTeams = state.teamsTab === "projectTeams";
+  const teamList = filteredTeams();
+  const clubList = filteredClubs();
+
   return `
     <div class="view-stack teams-page">
       <section class="apple-page-head">
-        <div><span class="panel-kicker">Ekipler</span><h2>Ekipler ayrı bir bölüm.</h2><p>Ekip listesi, üyeler, açık roller ve bağlı proje/stüdyo bilgisi.</p></div>
-        <button class="btn primary" data-action="start-create-team">${icon("plus")} Yeni Ekip Kur</button>
+        <div>
+          <span class="panel-kicker">EKİPLER & KULÜPLER</span>
+          <h2>Ortak çalışma ve sosyal topluluklar.</h2>
+          <p>İştirak genelinde proje ekiplerine katıl veya ilgi alanlarına özel kulüplere üye ol.</p>
+        </div>
+        ${isTeams ? `
+          <button class="btn primary" data-action="start-create-team">${icon("plus")} Yeni Ekip Kur</button>
+        ` : `
+          <button class="btn primary" data-action="start-create-club">${icon("plus")} Yeni Kulüp Kur</button>
+        `}
       </section>
-      <section class="challenge-filterbar">
-        <label class="search-box">${icon("search")}<input class="input" data-team-filter="search" value="${esc(state.filters.teamSearch || "")}" placeholder="Ekip ara..." /></label>
-        <select class="select" data-team-filter="area">${["Tümü", ...Array.from(new Set(state.teams.map(t => t.area)))].map(v => `<option value="${esc(v)}" ${state.filters.teamArea === v ? "selected" : ""}>Alan: ${esc(v)}</option>`).join("")}</select>
-        <select class="select" data-team-filter="status">${["Tümü", "active", "forming", "disbanded"].map(v => `<option value="${esc(v)}" ${state.filters.teamStatus === v ? "selected" : ""}>Durum: ${esc(teamStatusLabel(v))}</option>`).join("")}</select>
-      </section>
-      <section><div class="teams-section-head"><span class="panel-kicker">Liste</span><strong>${list.length} ekip</strong></div><div class="teams-grid">${list.map(team => renderTeamCard(team, isMyTeam(team))).join("")}</div></section>
+
+      <!-- Segmented Tab Switcher -->
+      <div class="segmented" style="margin-bottom: 20px; width: 100%; max-width: 400px; display: flex;">
+        <button class="btn ${isTeams ? "active" : ""}" data-action="set-teams-tab" data-tab="projectTeams" style="flex: 1; font-size: 13.5px; font-weight: 600;">
+          ${icon("users")} Proje Ekipleri
+        </button>
+        <button class="btn ${!isTeams ? "active" : ""}" data-action="set-teams-tab" data-tab="clubs" style="flex: 1; font-size: 13.5px; font-weight: 600;">
+          ${icon("shapes")} Kulüpler
+        </button>
+      </div>
+
+      ${isTeams ? `
+        <!-- Project Teams Filters -->
+        <section class="challenge-filterbar">
+          <label class="search-box">
+            ${icon("search")}
+            <input class="input" data-team-filter="search" value="${esc(state.filters.teamSearch || "")}" placeholder="Ekip ara..." />
+          </label>
+          <select class="select" data-team-filter="area">
+            ${["Tümü", ...Array.from(new Set(state.teams.map(t => t.area)))].map(v => `
+              <option value="${esc(v)}" ${state.filters.teamArea === v ? "selected" : ""}>Alan: ${esc(v)}</option>
+            `).join("")}
+          </select>
+          <select class="select" data-team-filter="status">
+            ${["Tümü", "active", "forming", "disbanded"].map(v => `
+              <option value="${esc(v)}" ${state.filters.teamStatus === v ? "selected" : ""}>Durum: ${esc(teamStatusLabel(v))}</option>
+            `).join("")}
+          </select>
+        </section>
+
+        <!-- Project Teams Grid -->
+        <section>
+          <div class="teams-section-head">
+            <span class="panel-kicker">Liste</span>
+            <strong>${teamList.length} ekip</strong>
+          </div>
+          <div class="teams-grid">
+            ${teamList.map(team => renderTeamCard(team, isMyTeam(team))).join("")}
+          </div>
+        </section>
+      ` : `
+        <!-- Clubs Filters -->
+        <section class="challenge-filterbar">
+          <label class="search-box">
+            ${icon("search")}
+            <input class="input" data-club-filter="search" value="${esc(state.filters.clubSearch)}" placeholder="Kulüp ara..." />
+          </label>
+          <select class="select" data-club-filter="category">
+            <option value="Tümü" ${state.filters.clubCategory === "Tümü" ? "selected" : ""}>Kategori: Tümü</option>
+            ${["Spor", "Kültür & Sanat", "Teknoloji", "Sosyal Sorumluluk"].map(v => `
+              <option value="${esc(v)}" ${state.filters.clubCategory === v ? "selected" : ""}>Kategori: ${esc(v)}</option>
+            `).join("")}
+          </select>
+        </section>
+
+        <!-- Clubs Grid -->
+        <section>
+          <div class="teams-section-head">
+            <span class="panel-kicker">Liste</span>
+            <strong>${clubList.length} kulüp</strong>
+          </div>
+          <div class="teams-grid">
+            ${clubList.map(club => renderClubCard(club)).join("") || `
+              <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft); grid-column: span 3;">
+                ${icon("shapes", "36")}
+                <p style="margin-top: 10px; font-size: 14px;">Eşleşen kulüp bulunamadı.</p>
+              </div>
+            `}
+          </div>
+        </section>
+      `}
     </div>
   `;
 }
@@ -5343,7 +5516,12 @@ function filteredTeams() {
   const q = (state.filters.teamSearch || "").trim().toLocaleLowerCase("tr-TR");
   return state.teams.filter(team => {
     const linkedIdea = state.ideas.find(i => i.id === team.ideaId);
-    if (linkedIdea && linkedIdea.country !== state.activeCountry) return false;
+    if (linkedIdea) {
+      if (linkedIdea.country !== state.activeCountry) return false;
+    } else {
+      const creator = peopleDirectory.find(p => p.id === team.createdBy);
+      if (creator && creator.country !== state.activeCountry) return false;
+    }
     const text = [team.name, team.description, team.area, ...(team.tags || [])].join(" ").toLocaleLowerCase("tr-TR");
     return (!q || text.includes(q))
       && (state.filters.teamArea === "Tümü" || team.area === state.filters.teamArea)
@@ -7930,6 +8108,57 @@ document.addEventListener("click", event => {
 
   const action = actionButton.dataset.action;
 
+  if (action === "set-teams-tab") {
+    state.teamsTab = actionButton.dataset.tab;
+    render();
+    return;
+  }
+
+  if (action === "start-create-club") {
+    state.teamsView = "createClub";
+    state.clubDraft = { name: "", description: "", category: "Spor" };
+    render();
+    return;
+  }
+
+  if (action === "toggle-club-join") {
+    const clubId = actionButton.dataset.id;
+    const club = state.clubs.find(c => c.id === clubId);
+    if (club) {
+      const userId = currentUser().id;
+      club.members = club.members || [];
+      if (club.members.includes(userId)) {
+        club.members = club.members.filter(uid => uid !== userId);
+      } else {
+        club.members.push(userId);
+      }
+      render();
+    }
+    return;
+  }
+
+  if (action === "club-create-submit") {
+    const draft = state.clubDraft || {};
+    if (draft.name && draft.name.trim() && draft.description && draft.description.trim()) {
+      const newClub = {
+        id: "club-" + Date.now(),
+        name: draft.name.trim(),
+        description: draft.description.trim(),
+        category: draft.category || "Spor",
+        country: state.activeCountry,
+        createdAt: new Date().toLocaleDateString("tr-TR"),
+        createdBy: currentUser().id,
+        members: [currentUser().id]
+      };
+      state.clubs = state.clubs || [];
+      state.clubs.push(newClub);
+      state.teamsView = null;
+      state.clubDraft = null;
+      render();
+    }
+    return;
+  }
+
   if (action === "toggle-portal-dropdown") {
     state.portalDropdownOpen = !state.portalDropdownOpen;
     render();
@@ -10189,6 +10418,27 @@ document.addEventListener("input", event => {
     render();
     return;
   }
+  if (event.target.matches("[data-club-filter='search']")) {
+    state.filters.clubSearch = event.target.value;
+    render();
+    return;
+  }
+  if (event.target.matches("[data-club-draft-name]")) {
+    state.clubDraft = state.clubDraft || { name: "", description: "", category: "Spor" };
+    state.clubDraft.name = event.target.value;
+    const submitBtn = document.querySelector("[data-action='club-create-submit']");
+    if (submitBtn) {
+      submitBtn.disabled = !state.clubDraft.name.trim() || !state.clubDraft.description.trim();
+    }
+  }
+  if (event.target.matches("[data-club-draft-desc]")) {
+    state.clubDraft = state.clubDraft || { name: "", description: "", category: "Spor" };
+    state.clubDraft.description = event.target.value;
+    const submitBtn = document.querySelector("[data-action='club-create-submit']");
+    if (submitBtn) {
+      submitBtn.disabled = !state.clubDraft.name.trim() || !state.clubDraft.description.trim();
+    }
+  }
   if (event.target.matches("[data-product-filter='search']")) {
     state.filters.productSearch = event.target.value;
     render();
@@ -10644,6 +10894,19 @@ document.addEventListener("change", event => {
     if (filterName === "status") state.filters.teamStatus = event.target.value;
     render();
     return;
+  }
+
+  const clubFilter = event.target.closest("[data-club-filter]");
+  if (clubFilter) {
+    const filterName = clubFilter.dataset.clubFilter;
+    if (filterName === "category") state.filters.clubCategory = event.target.value;
+    render();
+    return;
+  }
+
+  if (event.target.matches("[data-club-draft-category]")) {
+    state.clubDraft = state.clubDraft || { name: "", description: "", category: "Spor" };
+    state.clubDraft.category = event.target.value;
   }
 
   const productFilter = event.target.closest("[data-product-filter]");
@@ -13719,7 +13982,7 @@ function ensureSocialEnhancements() {
 
 function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
   const person = personById(userId) || {};
-  const company = companyById(person.companyId || "tibas-holding");
+  const company = companyById(person.companyId || "sabanci-holding");
   return {
     id,
     userId,
@@ -14320,7 +14583,8 @@ function scaleMockDataset() {
       date: `2026-06-${(10 + (i % 15)).toString().padStart(2, '0')}`,
       tags: ["ai-raporu", "trend", randCompany.shortName.toLowerCase().replace(/\s+/g, '')],
       author: "AI Denetçi",
-      isAiGenerated: true
+      isAiGenerated: true,
+      companyId: randCompany.id
     });
   }
 

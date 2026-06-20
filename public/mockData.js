@@ -2551,3 +2551,67 @@ const initialTeams = [
   }
 ];
 
+const initialClubs = [
+  {
+    id: "club-001",
+    name: "Akbank Tenis Kulübü",
+    description: "Tenis severlerin buluştuğu, antrenman ve turnuva organizasyonları düzenleyen sosyal kulüp.",
+    category: "Spor",
+    country: "TR",
+    createdBy: "u3",
+    createdAt: "2026-05-10",
+    members: ["u3", "p01", "p05"],
+    memberCount: 3,
+    tags: ["Tenis", "Spor", "Sosyal"]
+  },
+  {
+    id: "club-002",
+    name: "Sabancı Kitap Kulübü",
+    description: "Her ay belirlenen bir kitabı okuyup tartıştığımız, edebiyat severler kulübü.",
+    category: "Kültür & Sanat",
+    country: "TR",
+    createdBy: "u1",
+    createdAt: "2026-05-15",
+    members: ["u1", "p03", "p05"],
+    memberCount: 3,
+    tags: ["Kitap", "Edebiyat", "Kültür"]
+  },
+  {
+    id: "club-003",
+    name: "Enerjisa Koşu Grubu",
+    description: "Hafta sonları maratonlara hazırlanan ve sabah koşuları organize eden spor topluluğu.",
+    category: "Spor",
+    country: "TR",
+    createdBy: "u2",
+    createdAt: "2026-06-01",
+    members: ["u2", "p02"],
+    memberCount: 2,
+    tags: ["Koşu", "Sağlık", "Spor"]
+  },
+  {
+    id: "club-004",
+    name: "Sabancı Tech Club",
+    description: "A community for technology enthusiasts exploring AI, robotics, and emerging software development.",
+    category: "Teknoloji",
+    country: "GB",
+    createdBy: "u7",
+    createdAt: "2026-05-20",
+    members: ["u7", "p02"],
+    memberCount: 2,
+    tags: ["Tech", "AI", "UK"]
+  },
+  {
+    id: "club-005",
+    name: "Texas Solar Volunteers",
+    description: "Sabanci Climate volunteers working on local environmental cleanups and renewable workshops.",
+    category: "Sosyal Sorumluluk",
+    country: "US",
+    createdBy: "u10",
+    createdAt: "2026-06-02",
+    members: ["u10", "p04"],
+    memberCount: 2,
+    tags: ["Environment", "Volunteering", "Texas"]
+  }
+];
+
+
