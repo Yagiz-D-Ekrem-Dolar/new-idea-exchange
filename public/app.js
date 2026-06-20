@@ -13671,6 +13671,7 @@ function renderSystemDetails() {
       </section>
     `;
   } else if (state.systemDetailsTab === "Belgeler") {
+    const currentReportHref = "/NIE-Kurumsal-Teknik-Rapor-2026.pdf";
     const docCard = (iconName, title, desc, links) => `
       <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 18px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
         <div style="display: flex; align-items: center; gap: 10px;">
@@ -13681,7 +13682,7 @@ function renderSystemDetails() {
         <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
           ${links.map(l => l.page
             ? `<button data-page="${esc(l.page)}" class="btn ghost slim-btn" style="display: inline-flex; align-items: center; gap: 6px;">${icon("arrow-right", "style='width:13px;height:13px;'")} ${esc(l.label)}</button>`
-            : `<a href="${esc(l.href)}" target="_blank" rel="noopener" class="btn ghost slim-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">${icon("external-link", "style='width:13px;height:13px;'")} ${esc(l.label)}</a>`
+            : `<a href="${esc(l.href)}" ${l.download ? "download" : `target="_blank" rel="noopener"`} class="btn ghost slim-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">${icon(l.download ? "download" : "external-link", "style='width:13px;height:13px;'")} ${esc(l.label)}</a>`
           ).join("")}
         </div>
       </div>
@@ -13695,15 +13696,17 @@ function renderSystemDetails() {
           Sabancı Holding New Idea Exchange platformuna ait teknik rapor, sunum, sistem raporu ve proje dokümanları bu sayfada toplanmıştır.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-          ${docCard("file-text", "Teknik Rapor", "Platform mimarisi, teknoloji yığını, güvenlik ve aylık altyapı maliyet analizini içeren teknik mimari raporu (v2.5.0).", [
-            { href: "/NIE-Technical-Report.pdf", label: "PDF İndir" },
-            { href: "/technical-report.html", label: "Tarayıcıda Görüntüle" }
+          ${docCard("file-text", "Güncel Teknik Rapor", "20 Haziran 2026 tarihli mimari inceleme, ürün mantığı, borsa fiyatlama modeli, AI kapsamı, teknik borçlar ve önerilen yol haritasını içeren güncel PDF raporu.", [
+            { href: currentReportHref, label: "PDF Görüntüle" },
+            { href: currentReportHref, label: "PDF İndir", download: true },
+            { href: "/technical-report.html", label: "HTML Rapor" }
           ])}
           ${docCard("presentation", "Sunumlar", "Platformun yönetici özetini, coğrafi kapsamını ve v2.5.0 ile gelen yeni özellikleri (Ekipler, Kulüpler, Karar Kurulu coin kuralları) anlatan kısa sunum.", [
             { href: "/sabanci-nie-sunum.html", label: "Sunumu Aç" }
           ])}
           ${docCard("database", "Sistem Raporları", "Borsa mantığı, sanal para/ödül kuralları, veri modeli, stüdyo/ekip/ürün modeli ve operasyonel akışları kapsayan kapsamlı kurumsal ürün raporu.", [
-            { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF İndir" }
+            { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF Görüntüle" },
+            { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF İndir", download: true }
           ])}
           ${docCard("file-stack", "Proje Dokümanları", "Her projenin kendi AI raporu, proje raporu, sunumu ve dosya bundle'ı ilgili fikrin detay sayfasından indirilebilir. Kapsamlı ürün dokümantasyonu için Sistem Raporları kartına bakın.", [
             { page: "ideas", label: "Fikir Havuzuna Git" }
@@ -13712,6 +13715,25 @@ function renderSystemDetails() {
             { href: "/Aras-Kilinc-Fikirlerin-Verimliligi-Makalesi.pdf", label: "Fikirlerin Verimliliği — Aras Kılınç (PDF)" }
           ])}
         </div>
+        <section class="report-viewer-panel" aria-label="Güncel teknik rapor PDF görüntüleyici">
+          <div class="report-viewer-head">
+            <div>
+              <span class="panel-kicker">PDF RAPOR</span>
+              <h4>Güncel Teknik ve Ürün Raporu</h4>
+              <p>Raporu uygulama içinde inceleyebilir, tam ekranda açabilir veya PDF olarak indirebilirsiniz.</p>
+            </div>
+            <div class="report-viewer-actions">
+              <a href="${currentReportHref}" target="_blank" rel="noopener" class="btn ghost slim-btn">${icon("external-link")} Tam Ekran</a>
+              <a href="${currentReportHref}" download class="btn primary slim-btn">${icon("download")} PDF İndir</a>
+            </div>
+          </div>
+          <object class="report-pdf-frame" data="${currentReportHref}#toolbar=1&navpanes=0" type="application/pdf">
+            <div class="report-fallback">
+              <strong>PDF önizleyici bu tarayıcıda açılamadı.</strong>
+              <a href="${currentReportHref}" target="_blank" rel="noopener">Raporu yeni sekmede aç</a>
+            </div>
+          </object>
+        </section>
       </section>
     `;
   }
