@@ -379,7 +379,7 @@ const state = {
       title: "Sıfırdan İleri Seviyeye Yalın Girişim Metodolojisi",
       category: "Girişimcilik Eğitimi",
       description: "Girişim fikirlerinizi nasıl doğrularsınız, MVP (Minimum Uygulanabilir Ürün) nasıl kurgulanır ve müşteri görüşmeleri nasıl yürütülür sorularına pratik yanıtlar.",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      link: "https://www.youtube.com/watch?v=fEvKo90qBns",
       date: "Her Çarşamba, 14:00",
       organizer: "Sabancı İnovasyon Ofisi"
     },
@@ -397,7 +397,7 @@ const state = {
       title: "B2B SaaS Girişimlerinde Fiyatlandırma ve Büyüme Stratejileri",
       category: "Atölye",
       description: "Kullanıcı başına lisanslama, kullanım tabanlı fiyatlandırma modelleri ve kurumsal SaaS satış kanallarını optimize etme üzerine atölye çalışması.",
-      link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      link: "https://www.youtube.com/watch?v=0H73Z1tCeeM",
       date: "Kayıttan İzle (1.5 Saat)",
       organizer: "SabancıDx Bulut Bilişim Grubu"
     }
@@ -5731,11 +5731,15 @@ function renderEducationPage() {
           <h2>Eğitim & Mentörlük Akademisi</h2>
           <p>Girişimcilik eğitimleri, uzman webinarları ve kurum içi mentörlük eşleştirme platformu.</p>
         </div>
-        ${(isManager && state.educationActiveTab === "programs") ? `
+        ${(state.educationActiveTab === "programs") ? `
           <button class="btn primary" data-action="toggle-education-composer" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
             ${icon("plus")} Yeni Program Ekle
           </button>
-        ` : ""}
+        ` : `
+          <button class="btn primary" data-action="toggle-mentor-composer" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
+            ${icon("plus")} Mentör İlanı Aç / Mentör Ol
+          </button>
+        `}
       </section>
 
       <div class="segmented" style="width: 100%; max-width: 400px; margin-bottom: 8px;">
@@ -5747,7 +5751,7 @@ function renderEducationPage() {
         </button>
       </div>
 
-      ${(isManager && state.educationComposerOpen && state.educationActiveTab === "programs") ? `
+      ${(state.educationComposerOpen && state.educationActiveTab === "programs") ? `
         <article class="manager-panel" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow-soft);">
           <div style="border-bottom: 1px solid var(--line-soft); padding-bottom: 10px;">
             <strong style="font-size: 15px; color: var(--ink);">Yeni Eğitim Programı Tanımla</strong>
@@ -5824,6 +5828,39 @@ function renderEducationPage() {
           `}
         </div>
       ` : `
+        \${state.mentorComposerOpen ? \`
+          <article class="manager-panel" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow-soft); margin-bottom: 20px; width: 100%; grid-column: 1 / -1;">
+            <div style="border-bottom: 1px solid var(--line-soft); padding-bottom: 10px;">
+              <strong style="font-size: 15px; color: var(--ink);">Mentörlük İlanı Aç / Profil Oluştur</strong>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+              <label class="field">
+                <span>Ad Soyad</span>
+                <input class="input" id="mentor-composer-name" value="\${esc(user.name)}" placeholder="Adınız Soyadınız" />
+              </label>
+              <label class="field">
+                <span>Unvan / Şirket</span>
+                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (Akbank)" />
+              </label>
+              <label class="field" style="grid-column: 1 / -1;">
+                <span>Uzmanlık Alanları (Virgülle ayırın)</span>
+                <input class="input" id="mentor-composer-specialties" placeholder="Örn: Ürün Yönetimi, FinTech, İş Geliştirme" />
+              </label>
+              <label class="field">
+                <span>E-posta</span>
+                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@sabanci.example')}" placeholder="E-posta adresiniz" />
+              </label>
+              <label class="field full" style="grid-column: 1 / -1;">
+                <span>Hakkımda / Mentörlük Kapsamı</span>
+                <textarea class="textarea" id="mentor-composer-bio" rows="3" placeholder="Kendinizden, uzmanlığınızdan ve mentörlükte nasıl destek olabileceğinizden bahsedin..."></textarea>
+              </label>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 14px;">
+              <button class="btn ghost" data-action="toggle-mentor-composer">Vazgeç</button>
+              <button class="btn primary" data-action="submit-mentor-item" style="font-weight: 600;">İlanı Yayınla</button>
+            </div>
+          </article>
+        \` : ""}
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
           ${mentorsList.map(mentor => `
             <article style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; position: relative; transition: transform 0.2s, box-shadow 0.2s;">
@@ -8785,6 +8822,43 @@ document.addEventListener("click", event => {
     
     state.educationComposerOpen = false;
     alert("Yeni eğitim programı başarıyla eklendi.");
+    render();
+    return;
+  }
+
+  if (action === "toggle-mentor-composer") {
+    state.mentorComposerOpen = !state.mentorComposerOpen;
+    render();
+    return;
+  }
+
+  if (action === "submit-mentor-item") {
+    const name = document.getElementById("mentor-composer-name")?.value.trim();
+    const title = document.getElementById("mentor-composer-title")?.value.trim();
+    const specialtiesStr = document.getElementById("mentor-composer-specialties")?.value.trim();
+    const bio = document.getElementById("mentor-composer-bio")?.value.trim();
+    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@sabanci.example";
+    
+    if (!name || !title || !specialtiesStr || !bio) {
+      alert("Lütfen tüm alanları doldurun.");
+      return;
+    }
+    
+    const specialties = specialtiesStr.split(",").map(s => s.trim()).filter(Boolean);
+    
+    state.mentors = state.mentors || [];
+    state.mentors.unshift({
+      id: `mentor-${Date.now()}`,
+      name,
+      title,
+      specialties,
+      bio,
+      avatar: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 90) + 10}.jpg`,
+      email
+    });
+    
+    state.mentorComposerOpen = false;
+    alert("Mentörlük profiliniz/ilanınız başarıyla eklendi.");
     render();
     return;
   }
