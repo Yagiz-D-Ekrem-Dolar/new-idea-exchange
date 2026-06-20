@@ -628,8 +628,8 @@ function currentUser() {
 
   const adapted = { ...baseUser, country: c };
   Object.defineProperty(adapted, "voteCreditBalance", {
-    get: function() { return state.userTokens; },
-    set: function(val) { state.userTokens = val; },
+    get: function() { return state.marketBudget; },
+    set: function(val) { state.marketBudget = val; },
     enumerable: true
   });
 
@@ -1472,7 +1472,11 @@ function renderShell() {
                 </div>
               ` : ""}
             </div>
-            <span class="credit-pill">${icon("coins")} ${user.voteCreditBalance}</span>
+            <span class="credit-pill" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); padding: 6px 12px; border-radius: 99px;">
+              ${saCoinIcon("normal")}
+              <span>${Math.round(state.marketBudget).toLocaleString("tr-TR")}</span>
+              <span style="font-size: 10px; font-weight: 900; opacity: 0.8; color: var(--primary);">SA</span>
+            </span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
             <button class="icon-button position-relative" data-page="notifications" aria-label="Bildirimler">
               ${icon("bell")}
@@ -4875,7 +4879,10 @@ function managerVoteEvents() {
     { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
     { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
   ];
-  return [...base, ...seeded];
+  return [...base, ...seeded].filter(tx => {
+    const idea = state.ideas.find(i => i.id === tx.ideaId);
+    return idea && idea.country === state.activeCountry;
+  });
 }
 
 function renderManagerDashboard() {
@@ -7082,7 +7089,7 @@ function renderProfile() {
         ${metricCard("badge-check", "Uygulamaya alınan", `${myIdeas.filter(idea => idea.status === "done").length + 1}`, "Katkının somut etkisi.", "+1", "green")}
         ${metricCard("thumbs-up", "Desteklediğin", "42", "Oy kredisiyle katkı verdiğin fikirler.", "+6", "purple")}
         ${metricCard("message-circle", "Yorum", "28", "Tartışmalara yaptığın katkılar.", "+4", "amber")}
-        ${metricCard("coins", "Kalan kredi", `${user.voteCreditBalance}`, "Aylık kredi bakiyen.", "+0", "green")}
+        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} SA`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
       </section>
       <section class="analytics-grid">
         <article class="analytics-card">
@@ -7697,7 +7704,7 @@ function renderAdminContent() {
                 <td>${esc(user.role)}</td>
                 <td>${esc(user.department)}</td>
                 <td>${esc(user.location)}</td>
-                <td>${user.voteCreditBalance} / ${user.monthlyVoteCredit}</td>
+                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} SA</td>
                 <td><span class="status-badge done">Aktif</span></td>
               </tr>
             `).join("")}
@@ -8171,8 +8178,25 @@ document.addEventListener("click", event => {
     state.translatedIdeaIds = {};
     state.globalTranslateAll = false;
     state.portalDropdownOpen = false;
+
+    // Reset filters
+    state.filters.search = "";
+    state.filters.company = "Tümü";
+    state.filters.department = "Tümü";
+    state.filters.status = "Tümü";
+    state.filters.type = "Tümü";
+    state.filters.scope = "Tümü";
+
     state.visibleIdeasCount = 12;
     state.visibleBorsaIdeasCount = 12;
+
+    // Reset messaging
+    state.selectedDirectPersonId = null;
+    const countrySpaces = spacesInScope();
+    if (countrySpaces && countrySpaces.length > 0) {
+      state.selectedMessageSpaceId = countrySpaces[0].id;
+    }
+
     render();
     return;
   }
@@ -9109,6 +9133,7 @@ document.addEventListener("click", event => {
         likes: 0,
         likedByMe: false,
         comments: [],
+        country: state.activeCountry,
         ...(attachedPhoto ? {
           imageUrl: attachedPhoto.objectUrl,
           imageCaption: attachedPhoto.name
@@ -10769,8 +10794,25 @@ document.addEventListener("change", event => {
       state.activeCountry = event.target.value;
       state.translatedIdeaIds = {};
       state.globalTranslateAll = false;
+
+      // Reset filters
+      state.filters.search = "";
+      state.filters.company = "Tümü";
+      state.filters.department = "Tümü";
+      state.filters.status = "Tümü";
+      state.filters.type = "Tümü";
+      state.filters.scope = "Tümü";
+
       state.visibleIdeasCount = 12;
       state.visibleBorsaIdeasCount = 12;
+
+      // Reset messaging
+      state.selectedDirectPersonId = null;
+      const countrySpaces = spacesInScope();
+      if (countrySpaces && countrySpaces.length > 0) {
+        state.selectedMessageSpaceId = countrySpaces[0].id;
+      }
+
       render();
       return;
     }
@@ -11128,12 +11170,12 @@ function supportIdea(id) {
     idea.credits = Math.max(0, (idea.credits || 0) - 1);
     idea.supporters = Math.max(0, (idea.supporters || 0) - 1);
     idea.communityScore = Math.max(0, (idea.communityScore || 0) - 1);
-    user.voteCreditBalance = (user.voteCreditBalance || 0) + 1;
+    user.voteCreditBalance = (user.voteCreditBalance || 0) + 100;
     return;
   }
   
-  if (user.voteCreditBalance <= 0) {
-    alert("Yeterli oylama krediniz bulunmamaktadır!");
+  if (user.voteCreditBalance < 100) {
+    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 SA gereklidir.");
     return;
   }
   
@@ -11141,7 +11183,7 @@ function supportIdea(id) {
   idea.credits = (idea.credits || 0) + 1;
   idea.supporters = (idea.supporters || 0) + 1;
   idea.communityScore = Math.min(100, (idea.communityScore || 0) + 1);
-  user.voteCreditBalance -= 1;
+  user.voteCreditBalance -= 100;
 }
 
 function handleQuickEvalSwipe(ideaId, action) {
@@ -12214,10 +12256,10 @@ function renderAnnComposer() {
 
 function renderSocial() {
   const user = currentUser();
-  const recommendedPeople = peopleDirectory.filter(p => p.id !== user.id && !state.connectedUserIds.includes(p.id)).slice(0, 4);
+  const recommendedPeople = peopleDirectory.filter(p => p.id !== user.id && p.country === state.activeCountry && !state.connectedUserIds.includes(p.id)).slice(0, 4);
   
   state.socialActiveTab = state.socialActiveTab || "all";
-  let feedList = [...(state.socialPosts || [])];
+  let feedList = [...(state.socialPosts || [])].filter(post => post.country === state.activeCountry);
   
   if (state.socialActiveTab === "network") {
     feedList = feedList.filter(post => post.userId === user.id || state.connectedUserIds.includes(post.userId));
@@ -12767,7 +12809,8 @@ function createRichSocialPost(kind, bodyText, photoFile = null) {
     date: "Şimdi",
     likes: 0,
     likedByMe: false,
-    comments: []
+    comments: [],
+    country: state.activeCountry
   };
   if (kind === "poll") {
     base.poll = {
@@ -14729,6 +14772,12 @@ function scaleMockDataset() {
         country: country
       });
     }
+  });
+
+  // Scale demo user credits to SA Coins scale
+  demoUsers.forEach(u => {
+    if (u.voteCreditBalance < 100) u.voteCreditBalance = (u.voteCreditBalance || 0) * 100;
+    if (u.monthlyVoteCredit < 100) u.monthlyVoteCredit = (u.monthlyVoteCredit || 0) * 100;
   });
 }
 
