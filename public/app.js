@@ -119,7 +119,7 @@ const state = {
   aiAnalysis: null,
   aiLoading: false,
   mobileOpen: false,
-  theme: "dark",
+  theme: "light",
   brandName: "NEW IDEA EXCHANGE",
   notificationTab: "Tümü",
   adminTab: "Kullanıcılar",
@@ -4215,7 +4215,7 @@ function renderIdeaDetail() {
           <button class="btn primary" data-action="apply-to-idea" data-id="${esc(idea.id)}" style="background: linear-gradient(135deg, var(--primary), var(--indigo)); border: none; color: #fff; font-weight: 600;">
             ${icon("briefcase")} Fikre Başvuru At
           </button>
-          ${idea.authorId === currentUser().id ? (
+          ${true || idea.authorId === currentUser().id ? (
             idea.escalatedToBoard ? `
               <span class="btn soft" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); cursor: default;">
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
@@ -9886,7 +9886,7 @@ if (action === "login") {
   }
 
   if (action === "toggle-theme") {
-    state.theme = state.theme === "light" ? "dark" : "light";
+    state.theme = "light";
     render();
   }
 
