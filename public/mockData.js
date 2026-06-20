@@ -1698,6 +1698,7 @@ const initialIdeas = [
     aiScore: 94,
     credits: 250,
     supporters: 45,
+    marketChange: 5.2,
     country: "TR",
     comments: [
       { user: "Kerem Yıldız", body: "Çok değerli bir çalışma, Akbank Lab ekibiyle test etmeye başlayalım.", manager: true },
@@ -1759,6 +1760,7 @@ const initialIdeas = [
     aiScore: 86,
     credits: 110,
     supporters: 28,
+    marketChange: 3.8,
     country: "TR",
     comments: [
       { user: "Can Koç", body: "Gebze deposundaki otomasyon sistemleri ile entegre edilirse harika olur.", manager: true }
@@ -1819,6 +1821,7 @@ const initialIdeas = [
     aiScore: 91,
     credits: 135,
     supporters: 31,
+    marketChange: -1.4,
     country: "TR",
     comments: [],
     tags: ["Sanayi", "IoT", "Elektrikli Araç", "Brisa"],
@@ -1879,6 +1882,7 @@ const initialIdeas = [
     aiScore: 92,
     credits: 180,
     supporters: 42,
+    marketChange: 8.1,
     country: "GB",
     comments: [
       { user: "Oliver Watson", body: "Excellent model. Fits our renewable expansion roadmap in the UK.", manager: true }
@@ -1939,6 +1943,7 @@ const initialIdeas = [
     aiScore: 88,
     credits: 145,
     supporters: 35,
+    marketChange: 2.6,
     country: "GB",
     comments: [],
     tags: ["Logistics", "Automation", "Cement", "OCR"],
@@ -1999,6 +2004,7 @@ const initialIdeas = [
     aiScore: 93,
     credits: 310,
     supporters: 55,
+    marketChange: -2.9,
     country: "US",
     comments: [
       { user: "Jessica Taylor", body: "This will solidify Sabanci Renewables position in Texas.", manager: true }
@@ -2059,6 +2065,7 @@ const initialIdeas = [
     aiScore: 81,
     credits: 95,
     supporters: 22,
+    marketChange: 6.3,
     country: "US",
     comments: [],
     tags: ["Cement", "Houston", "Automation", "Logistics"],
@@ -2119,6 +2126,7 @@ const initialIdeas = [
     aiScore: 85,
     credits: 120,
     supporters: 29,
+    marketChange: 1.1,
     country: "DE",
     comments: [
       { user: "Dieter Schmidt", body: "Excellent layout. Can serve as a template for other European cities.", manager: true }
@@ -2181,6 +2189,7 @@ const initialIdeas = [
     aiScore: 95,
     credits: 280,
     supporters: 48,
+    marketChange: 4.7,
     country: "ES",
     comments: [
       { user: "Maria Ortega", body: "This will make Buñol the cleanest white cement plant in Spain.", manager: false }

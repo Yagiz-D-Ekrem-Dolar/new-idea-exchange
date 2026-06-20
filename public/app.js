@@ -341,7 +341,7 @@ const state = {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: ["team-001"], linkedIdeas: ["idea-1", "idea-3"] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: ["team-003"], linkedIdeas: ["idea-2", "idea-5"] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: ["team-002"], linkedIdeas: ["idea-1"] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Moka, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
   ],
   predictions: [
     {
@@ -381,7 +381,7 @@ const state = {
       description: "Girişim fikirlerinizi nasıl doğrularsınız, MVP (Minimum Uygulanabilir Ürün) nasıl kurgulanır ve müşteri görüşmeleri nasıl yürütülür sorularına pratik yanıtlar.",
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       date: "Her Çarşamba, 14:00",
-      organizer: "İş New İnovasyon Ofisi"
+      organizer: "Sabancı İnovasyon Ofisi"
     },
     {
       id: "edu-2",
@@ -390,7 +390,7 @@ const state = {
       description: "KVKK, BDDK lisanslama süreçleri, açık bankacılık regülasyonları ve ödeme kuruluşları mevzuatları hakkında bilgilendirici oturum.",
       link: "https://zoom.us/j/demo-fintech",
       date: "24 Haziran 2026, 11:00",
-      organizer: "Moka Hukuk & Uyum Departmanı"
+      organizer: "Akbank Mobil Hukuk & Uyum Departmanı"
     },
     {
       id: "edu-3",
@@ -399,23 +399,23 @@ const state = {
       description: "Kullanıcı başına lisanslama, kullanım tabanlı fiyatlandırma modelleri ve kurumsal SaaS satış kanallarını optimize etme üzerine atölye çalışması.",
       link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       date: "Kayıttan İzle (1.5 Saat)",
-      organizer: "İş-Net Bulut Bilişim Grubu"
+      organizer: "SabancıDx Bulut Bilişim Grubu"
     }
   ],
   mentors: [
     {
       id: "mentor-1",
       name: "Elif Şahin",
-      title: "FinTech & Ürün Yönetimi Müdürü (İş New)",
+      title: "FinTech & Ürün Yönetimi Müdürü (Akbank)",
       specialties: ["Ürün Yönetimi", "FinTech", "İş Modeli Geliştirme"],
-      bio: "12+ yıllık ürün yönetim deneyimi. Moka ve İşBank dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
+      bio: "12+ yıllık ürün yönetim deneyimi. Akbank Mobil dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
       avatar: "https://randomuser.me/api/portraits/women/22.jpg",
       email: "elif.sahin@sabanci.example"
     },
     {
       id: "mentor-2",
       name: "Emir Arslan",
-      title: "Yapay Zekâ Çözüm Mimarı (İşBank Teknoloji)",
+      title: "Yapay Zekâ Çözüm Mimarı (SabancıDx)",
       specialties: ["Yapay Zekâ", "Makine Öğrenmesi", "Teknik Altyapı"],
       bio: "Büyük dil modelleri (LLM), veri analitiği ve akıllı tahminleme altyapıları üzerine uzmanlaşmıştır. Fikirlerin teknik fizibilitesini değerlendirmede destek sağlar.",
       avatar: "https://randomuser.me/api/portraits/men/41.jpg",
@@ -424,7 +424,7 @@ const state = {
     {
       id: "mentor-3",
       name: "Zeynep Kaya",
-      title: "Sürdürülebilirlik & ESG Koordinatörü (TSKB)",
+      title: "Sürdürülebilirlik & ESG Koordinatörü (Enerjisa)",
       specialties: ["Yeşil Finans", "ESG Uyum", "Karbon Takip"],
       bio: "Girişimlerin yeşil finansman imkanlarına erişimi, ESG raporlama standartları ve karbon nötrleme projelerinin kurgulanması konularında mentörlük sunuyor.",
       avatar: "https://randomuser.me/api/portraits/women/51.jpg",
@@ -440,16 +440,16 @@ const state = {
       date: "28 Haziran 2026, 14:00 - 17:00",
       description: "İştirak stüdyolarında kuluçkaya alınan en iyi 5 projenin üst yönetim ve jüri karşısında sunum yapacağı, demo ve soru-cevap oturumlarının düzenleneceği büyük final.",
       link: "https://zoom.us/j/demo-day-2026",
-      organizer: "İş New İnovasyon Ofisi"
+      organizer: "Sabancı İnovasyon Ofisi"
     },
     {
       id: "event-2",
       title: "FinTech & Yapay Zekâ Fikir Maratonu (Hackathon)",
       topic: "Yarışmalar",
       date: "10-12 Temmuz 2026",
-      description: "TİBAŞ Holding iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
+      description: "Sabancı Holding iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
       link: "https://fikirkovani.com/hackathon-kayit",
-      organizer: "İşBank Teknoloji"
+      organizer: "SabancıDx"
     },
     {
       id: "event-3",
@@ -861,7 +861,12 @@ function marketCompanyForIdea(idea) {
 }
 
 function marketPrice(idea) {
-  return Math.max(20, Math.round(Number(idea.marketPrice || 100)));
+  // Every idea starts from the same 100 SA base valuation; marketChange (driven by
+  // buy/sell activity and per-idea performance drift) is applied on top so prices
+  // actually move with trading instead of staying frozen at the base forever.
+  const base = Number(idea.marketPrice || 100);
+  const change = Number(idea.marketChange || 0);
+  return Math.max(20, Math.round(base * (1 + change / 100)));
 }
 
 function marketTrendScore(idea) {
@@ -5767,7 +5772,7 @@ function renderEducationPage() {
             </label>
             <label class="field">
               <span>Düzenleyen Birim</span>
-              <input class="input" id="edu-composer-organizer" placeholder="Örn: Moka İnovasyon Ekibi" />
+              <input class="input" id="edu-composer-organizer" placeholder="Örn: Akbank Mobil İnovasyon Ekibi" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, YouTube vb.)</span>
@@ -5949,7 +5954,7 @@ function renderEventsPage() {
             </label>
             <label class="field">
               <span>Düzenleyen / Organizatör</span>
-              <input class="input" id="evt-organizer" placeholder="Örn: İşBank Teknoloji" />
+              <input class="input" id="evt-organizer" placeholder="Örn: SabancıDx" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, Teams, Kayıt formu vb.)</span>
@@ -11773,12 +11778,15 @@ function renderBorsaCard(idea) {
       </div>
 
       <!-- Raporlar -->
-      <div class="borsa-reports-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+      <div class="borsa-reports-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 4px;">
         <button class="btn ghost btn-sm" data-action="view-report" data-type="ai" data-id="${idea.id}" style="font-size: 12px; padding: 6px; display: flex; align-items: center; justify-content: center; gap: 4px;">
           ${icon("cpu")} AI Raporu
         </button>
         <button class="btn ghost btn-sm" data-action="view-report" data-type="project" data-id="${idea.id}" style="font-size: 12px; padding: 6px; display: flex; align-items: center; justify-content: center; gap: 4px;">
           ${icon("file-text")} Proje Raporu
+        </button>
+        <button class="btn ghost btn-sm" data-action="view-report" data-type="presentation" data-id="${idea.id}" style="font-size: 12px; padding: 6px; display: flex; align-items: center; justify-content: center; gap: 4px;">
+          ${icon("presentation")} Sunum
         </button>
       </div>
 
@@ -11878,7 +11886,8 @@ function renderReportModal() {
   const idea = state.ideas.find(item => item.id === state.selectedIdeaReportId);
   if (!idea) return "";
   const isAi = state.reportType === "ai";
-  
+  const isPresentation = state.reportType === "presentation";
+
   const content = isAi ? `
     <div style="font-size: 14px; line-height: 1.6; color: var(--ink-soft);">
       <h4 style="color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 16px;">Yapay Zekâ Analiz ve Fizibilite Raporu</h4>
@@ -11902,6 +11911,34 @@ function renderReportModal() {
         <li>Kullanıcı geri bildirimlerine göre model optimizasyonu (3 hafta).</li>
         <li>Grup genelinde kademeli dağıtım.</li>
       </ol>
+    </div>
+  ` : isPresentation ? `
+    <div style="font-size: 14px; line-height: 1.6; color: var(--ink-soft);">
+      <h4 style="color: var(--ink); font-weight: 600; margin-bottom: 4px; font-size: 16px;">${esc(idea.marketTicker || "NIE")}-sunum.pptx</h4>
+      <p style="margin-bottom: 14px; font-size: 12px; color: var(--muted);">Proje sunum slaytlarının özet akışı.</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
+          <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 1 · Başlık</strong>
+          <span style="color: var(--ink); font-weight: 600;">${esc(idea.title)}</span>
+          <span style="display:block; font-size: 12px; margin-top: 2px;">${esc(idea.authorLabel || "—")} · ${esc(idea.company || "")}</span>
+        </div>
+        <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
+          <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 2 · Problem</strong>
+          <span>${esc(idea.problem || "Belirtilmemiş.")}</span>
+        </div>
+        <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
+          <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 3 · Çözüm</strong>
+          <span>${esc(idea.solution || "Belirtilmemiş.")}</span>
+        </div>
+        <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
+          <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 4 · Etki & Maliyet</strong>
+          <span>${esc(idea.estimatedImpact || "Yüksek")} etki · ${esc(idea.estimatedCost || "Düşük")} maliyet · ${esc(idea.implementationTime || "1-2 ay")}</span>
+        </div>
+        <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
+          <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 5 · Borsa Özeti</strong>
+          <span>${esc(idea.marketTicker || "NIE")} · ${formatCurrencyHTML(marketPrice(idea))} · ${idea.supporters || 0} destekçi · AI ${idea.aiScore || 70}/100</span>
+        </div>
+      </div>
     </div>
   ` : `
     <div style="font-size: 14px; line-height: 1.6; color: var(--ink-soft);">
@@ -12053,20 +12090,20 @@ function renderSuggestionsSection() {
   state.suggestionsPool = state.suggestionsPool || [
     {
       id: "sug-1",
-      title: "Moka Ödeme API Dokümantasyonu Güncellemesi",
+      title: "Akbank Mobil Ödeme API Dokümantasyonu Güncellemesi",
       category: "Veri Seti İsteği",
-      description: "Moka API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
-      companyId: "moka",
+      description: "Akbank Mobil API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
+      companyId: "akbank",
       author: "Can Koç",
       date: "2026-06-08",
       status: "İnceleniyor"
     },
     {
       id: "sug-2",
-      title: "İş-Net Portalında Mobil Giriş Hatası",
+      title: "SabancıDx Portalında Mobil Giriş Hatası",
       category: "Uygulama Hataları",
-      description: "iOS 16+ sürümlerinde İş-Net iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
-      companyId: "is-net",
+      description: "iOS 16+ sürümlerinde SabancıDx iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
+      companyId: "sabancidx",
       author: "Defne Arman",
       date: "2026-06-06",
       status: "İletildi"
@@ -12075,8 +12112,8 @@ function renderSuggestionsSection() {
       id: "sug-3",
       title: "Karbon Ayak İzi Hesaplama Formülü Standartlaşması",
       category: "Genel Öneri",
-      description: "Şişecam ve TİBAŞ karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
-      companyId: "sisecam",
+      description: "Çimsa ve Enerjisa karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
+      companyId: "cimsa",
       author: "Selin Eryılmaz",
       date: "2026-06-05",
       status: "Çözüldü"
@@ -12086,7 +12123,7 @@ function renderSuggestionsSection() {
       title: "Leasing Ödeme Planı Simülasyon Veri Seti Talebi",
       category: "Veri Seti İsteği",
       description: "Tarım ve inşaat sektöründeki müşteriler için geliştirilecek esnek ödeme planı (balon ödemeli, sezonluk ödemeli vb.) algoritmalarını test etmek için anonimleştirilmiş geçmiş ödeme performansı veri setine ihtiyacımız var.",
-      companyId: "is-leasing",
+      companyId: "aklease",
       author: "Nazlı Durukan",
       date: "2026-06-09",
       status: "İnceleniyor"
@@ -12095,9 +12132,9 @@ function renderSuggestionsSection() {
       id: "sug-leasing-2",
       title: "İkinci El İş Makinesi Değerleme Entegrasyonu",
       category: "Genel Öneri",
-      description: "İş Leasing portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
-      companyId: "is-leasing",
-      author: "Aras Kılınç",
+      description: "Aklease portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
+      companyId: "aklease",
+      author: "Mert Alkan",
       date: "2026-06-08",
       status: "İletildi"
     },
@@ -12106,7 +12143,7 @@ function renderSuggestionsSection() {
       title: "Leasing Sözleşmesi E-İmza Sürecindeki Gecikmeler",
       category: "Uygulama Hataları",
       description: "Mobil imza doğrulama adımlarında bazen SMS şifrelerinin gelmemesi veya gecikmesi nedeniyle sözleşme onay süreleri uzuyor. Servis sağlayıcı entegrasyonunun kontrol edilmeli.",
-      companyId: "is-leasing",
+      companyId: "aklease",
       author: "Nazlı Durukan",
       date: "2026-06-07",
       status: "Çözüldü"
@@ -13128,7 +13165,7 @@ function createRichMessage(kind) {
       ...message,
       body: "Kaynak linki burada, yorumlarınızı bekliyorum.",
       link: {
-        title: "İşBank dijital kanallar notu",
+        title: "Sabancı dijital kanallar notu",
         description: "Süreç iyileştirme için referans bağlantı.",
         url: "https://www.sabanci.com/"
       }
@@ -13668,8 +13705,11 @@ function renderSystemDetails() {
           ${docCard("database", "Sistem Raporları", "Borsa mantığı, sanal para/ödül kuralları, veri modeli, stüdyo/ekip/ürün modeli ve operasyonel akışları kapsayan kapsamlı kurumsal ürün raporu.", [
             { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF İndir" }
           ])}
-          ${docCard("file-stack", "Proje Dokümanları", "Her projenin kendi AI raporu, proje raporu ve dosya bundle'ı ilgili fikrin detay sayfasından indirilebilir. Kapsamlı ürün dokümantasyonu için Sistem Raporları kartına bakın.", [
+          ${docCard("file-stack", "Proje Dokümanları", "Her projenin kendi AI raporu, proje raporu, sunumu ve dosya bundle'ı ilgili fikrin detay sayfasından indirilebilir. Kapsamlı ürün dokümantasyonu için Sistem Raporları kartına bakın.", [
             { page: "ideas", label: "Fikir Havuzuna Git" }
+          ])}
+          ${docCard("newspaper", "Makaleler", "Platform vizyonuna katkı sağlayan düşünce yazıları ve araştırma notları.", [
+            { href: "/Aras-Kilinc-Fikirlerin-Verimliligi-Makalesi.pdf", label: "Fikirlerin Verimliliği — Aras Kılınç (PDF)" }
           ])}
         </div>
       </section>
@@ -13963,13 +14003,13 @@ function handleAIChatResponse(msgText) {
     ${resources.map(item => `- **${item.title}** (${item.category}): ${item.description}`).join("\n")}
     
     Bu kayıtlar adminlerin demo içindeki Yönetici Depolama alanına eklediği kaynaklardan gelir.`;
-  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("iş leasing") || query.includes("isleasing")) {
-    replyText = `**Yapay Zekâ Fikir Önerisi (İş Leasing):**
-    
+  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("aklease")) {
+    replyText = `**Yapay Zekâ Fikir Önerisi (Aklease):**
+
     *Öneri:* **Güneş Enerjisi Santralleri (GES) için Dijital Leasing Paketi**
     *Açıklama:* KOBİ'lerin çatı tipi GES ve yeşil enerji yatırımlarını hızlandırmak için, fizibilite verilerinden otomatik teminat oranı ve vade yapısı çıkaran, tamamen kağıtsız bir başvuru/onay modülü.
-    
-    Bunu İş Finansal Kiralama (İş Leasing) bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
+
+    Bunu Ak Finansal Kiralama (Aklease) bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
   } else if (query.includes("fintech") || query.includes("ödeme") || query.includes("bankacılık") || query.includes("fikir")) {
     replyText = `**Yapay Zekâ Fikir Önerisi (FinTech):**
     
@@ -14260,7 +14300,7 @@ function ensureSocialEnhancements() {
         ]
       }
     }),
-    createSeedSocialPost("sp-rich-3", "p15", "Moka API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
+    createSeedSocialPost("sp-rich-3", "p15", "Akbank Mobil API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
       link: {
         title: "API akış kontrol listesi",
         description: "Onay, test, hata izleme ve canlıya geçiş adımları.",
@@ -14320,7 +14360,7 @@ function ensureSocialEnhancements() {
       body: "Yeni onboarding kontrol ekranından görüntü paylaşıyorum.",
       time: "13:18",
       imageUrl: remoteImages.ideaVisuals[1],
-      imageCaption: "Moka onboarding kontrol akışı"
+      imageCaption: "Akbank Mobil onboarding kontrol akışı"
     });
   }
 }
@@ -15166,7 +15206,7 @@ function scaleMockDataset() {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Moka, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-industry", name: "Sanayi & Malzeme İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Kordsa ve Çimsa bünyesindeki kompozit malzeme ve çimento Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-energy", name: "Enerji Teknolojileri Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "Enerjisa Üretim yenilenebilir enerji, rüzgar ve hidrojen depolama teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-mobility", name: "Mobilite & Otomotiv Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Temsa elektrikli ve otonom otobüs yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
