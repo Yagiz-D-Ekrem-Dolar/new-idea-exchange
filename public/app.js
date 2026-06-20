@@ -830,7 +830,7 @@ function announcementsInScope() {
 
 function spacesInScope() {
   const ids = companyIdsInScope();
-  return state.messageSpaces.filter(space => state.affiliationFilter === "all" || ids.includes(space.companyId) || space.companyId === "sabanci-holding");
+  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "sabanci-holding");
 }
 
 function syncAnnouncementDraftCompany(companyId) {
@@ -15400,24 +15400,24 @@ function scaleMockDataset() {
   // channels like msg-holding/msg-akbank are referenced elsewhere by id).
   const spaceTemplates = {
     TR: [
-      { id: "msg-tr-1", name: "Akbank FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası." },
-      { id: "msg-tr-2", name: "SabancıDx Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu." }
+      { id: "msg-tr-1", name: "Akbank FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "akbank" },
+      { id: "msg-tr-2", name: "SabancıDx Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "sabancidx" }
     ],
     US: [
-      { id: "msg-us-1", name: "Sabancı Climate Solar", desc: "Texas utility battery dispatch optimization discussion." },
-      { id: "msg-us-2", name: "Kordsa Chattanooga R&D", desc: "Graphene-infused composite material trials." }
+      { id: "msg-us-1", name: "Sabancı Climate Solar", desc: "Texas utility battery dispatch optimization discussion.", companyId: "sabanci-climate-us" },
+      { id: "msg-us-2", name: "Kordsa Chattanooga R&D", desc: "Graphene-infused composite material trials.", companyId: "kordsa-usa" }
     ],
     GB: [
-      { id: "msg-gb-1", name: "Sabancı Ventures UK", desc: "Renewable energy and green tech investment pipelines." },
-      { id: "msg-gb-2", name: "Çimsa UK Sales", desc: "White cement B2B distribution and client accounts." }
+      { id: "msg-gb-1", name: "Sabancı Ventures UK", desc: "Renewable energy and green tech investment pipelines.", companyId: "sabanci-renewables-uk" },
+      { id: "msg-gb-2", name: "Çimsa UK Sales", desc: "White cement B2B distribution and client accounts.", companyId: "cimsa-uk" }
     ],
     DE: [
-      { id: "msg-de-1", name: "Temsa Mobility DE", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse." },
-      { id: "msg-de-2", name: "Çimsa Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse." }
+      { id: "msg-de-1", name: "Temsa Mobility DE", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse.", companyId: "temsa-germany" },
+      { id: "msg-de-2", name: "Çimsa Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "cimsa-germany" }
     ],
     ES: [
-      { id: "msg-es-1", name: "Çimsa Buñol", desc: "Discusión sobre combustibles alternativos y reducción de CO2." },
-      { id: "msg-es-2", name: "Çimsa Buñol Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono." }
+      { id: "msg-es-1", name: "Çimsa Buñol", desc: "Discusión sobre combustibles alternativos y reducción de CO2.", companyId: "cimsa-spain" },
+      { id: "msg-es-2", name: "Çimsa Buñol Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "cimsa-spain" }
     ]
   };
 
@@ -15470,7 +15470,7 @@ function scaleMockDataset() {
         id: s.id,
         name: s.name,
         description: s.desc,
-        companyId: country === "TR" ? "akbank" : (country === "DE" ? "temsa" : (country === "ES" ? "cimsa" : "sabanci-holding")),
+        companyId: s.companyId || "sabanci-holding",
         scope: "İştirak",
         members: countryUsers.slice(0, 5).map(u => u.id),
         messages: chatMessages,
