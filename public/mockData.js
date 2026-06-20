@@ -2745,6 +2745,142 @@ const initialClubs = [
     messages: [
       { userId: "p16", body: "Este mes leemos un libro sobre sostenibilidad industrial, ¿les parece bien el jueves?", time: "12:15" }
     ]
+  },
+  {
+    id: "club-008",
+    name: "3D Ürün Geliştirme ve Prototipleme Kulübü",
+    description: "Katmanlı imalat, 3D CAD tasarımı ve endüstriyel prototipleme teknolojileri üzerine çalışan teknik topluluk.",
+    category: "Teknoloji",
+    country: "TR",
+    createdBy: "u3",
+    createdAt: "2026-06-18",
+    members: ["u3", "p01", "p05"],
+    memberCount: 3,
+    tags: ["3D Baskı", "Tasarım", "Prototipleme"],
+    messages: [
+      { userId: "p01", body: "3D yazıcı kalibrasyon rehberi hazırladım, genel klasörde bulabilirsiniz.", time: "10:15" },
+      { userId: "u3", body: "Harika eline sağlık, yeni ürün kalıbını bu hafta basıp test edelim.", time: "10:20" }
+    ]
+  },
+  {
+    id: "club-009",
+    name: "Finansal Okuryazarlık ve Yatırım Kulübü",
+    description: "Bireysel finans yönetimi, borsa yatırım stratejileri ve finansal okuryazarlık üzerine seminerler ve paylaşımlar.",
+    category: "Finans",
+    country: "TR",
+    createdBy: "u1",
+    createdAt: "2026-06-19",
+    members: ["u1", "p03", "p02"],
+    memberCount: 3,
+    tags: ["Finans", "Borsa", "Yatırım"],
+    messages: [
+      { userId: "u1", body: "Bu haftaki hisse senedi analizi toplantımız yarın saat 15:00'te.", time: "11:30" }
+    ]
+  },
+  {
+    id: "club-010",
+    name: "Yapay Zeka ve Büyük Veri Topluluğu",
+    description: "Derin öğrenme modelleri, veri analitiği ve iş zekası üzerine teknik araştırmalar ve projeler.",
+    category: "Teknoloji",
+    country: "TR",
+    createdBy: "u2",
+    createdAt: "2026-06-19",
+    members: ["u2", "p04"],
+    memberCount: 2,
+    tags: ["AI", "Büyük Veri", "Python"],
+    messages: [
+      { userId: "u2", body: "Yeni dil modelini sunucuya kurduk, test etmek isteyenler API anahtarı talep edebilir.", time: "16:45" }
+    ]
+  },
+  {
+    id: "club-011",
+    name: "3D Product Development & CAD Modeling Club",
+    description: "A technical club for sharing 3D design practices, rapid prototyping, and CAD modeling optimization.",
+    category: "Teknoloji",
+    country: "GB",
+    createdBy: "u7",
+    createdAt: "2026-06-18",
+    members: ["u7", "p02"],
+    memberCount: 2,
+    tags: ["3D Design", "CAD", "Engineering"],
+    messages: [
+      { userId: "u7", body: "Let's review the new nozzle designs on Tuesday. Bring your CAD files.", time: "14:00" }
+    ]
+  },
+  {
+    id: "club-012",
+    name: "Financial Literacy & FinTech Forum",
+    description: "Exploring financial planning, market analysis, personal investment, and fintech developments.",
+    category: "Finans",
+    country: "US",
+    createdBy: "u10",
+    createdAt: "2026-06-18",
+    members: ["u10", "p04"],
+    memberCount: 2,
+    tags: ["Finance", "FinTech", "Markets"],
+    messages: [
+      { userId: "u10", body: "Great discussion on global inflation trends yesterday, slides are uploaded.", time: "09:12" }
+    ]
+  },
+  {
+    id: "club-013",
+    name: "3D-Produktentwicklung & CAD-Design",
+    description: "Gemeinschaft für 3D-Druck, additive Fertigung und computergestütztes Design im industriellen Umfeld.",
+    category: "Teknoloji",
+    country: "DE",
+    createdBy: "p14",
+    createdAt: "2026-06-19",
+    members: ["p14", "p21"],
+    memberCount: 2,
+    tags: ["3D-Druck", "CAD", "Technik"],
+    messages: [
+      { userId: "p14", body: "Hat jemand Erfahrung mit dem Druck von Kohlefasermaterialien?", time: "11:20" }
+    ]
+  },
+  {
+    id: "club-014",
+    name: "Finanzielle Allgemeinbildung und Investitionen",
+    description: "Erfahrungsaustausch über Aktien, persönliche Finanzen und Anlagestrategien für Mitarbeiter.",
+    category: "Finans",
+    country: "DE",
+    createdBy: "p14",
+    createdAt: "2026-06-19",
+    members: ["p14", "p21"],
+    memberCount: 2,
+    tags: ["Finanzen", "Investition", "Aktien"],
+    messages: [
+      { userId: "p21", body: "Nächste Woche sprechen wir über ETFs und langfristige Altersvorsorge.", time: "15:40" }
+    ]
+  },
+  {
+    id: "club-015",
+    name: "Club de Modelado CAD y Desarrollo de Producto 3D",
+    description: "Espacio técnico dedicado a la impresión 3D, el diseño asistido por ordenador y el prototipado rápido.",
+    category: "Teknoloji",
+    country: "ES",
+    createdBy: "p16",
+    createdAt: "2026-06-18",
+    members: ["p16", "p23"],
+    memberCount: 2,
+    tags: ["Diseño 3D", "Impresión 3D", "Ingeniería"],
+    messages: [
+      { userId: "p16", body: "Hemos configurado la nueva impresora de filamento continuo en el lab de Buñol.", time: "10:00" }
+    ]
+  },
+  {
+    id: "club-016",
+    name: "Educación Financiera y Gestión del Patrimonio",
+    description: "Grupo enfocado en la mejora de la cultura financiera personal, análisis de mercados y ahorro inteligente.",
+    category: "Finans",
+    country: "ES",
+    createdBy: "p16",
+    createdAt: "2026-06-19",
+    members: ["p16", "p23"],
+    memberCount: 2,
+    tags: ["Finanzas", "Ahorro", "Bolsa"],
+    messages: [
+      { userId: "p23", body: "Recomiendo el artículo sobre interés compuesto que he compartido en la red.", time: "17:15" }
+    ]
   }
 ];
 
