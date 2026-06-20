@@ -13672,6 +13672,9 @@ function renderSystemDetails() {
     `;
   } else if (state.systemDetailsTab === "Belgeler") {
     const currentReportHref = "/NIE-Kurumsal-Teknik-Rapor-2026.pdf";
+    const sabanciNewHref = "/Sabanci-New.pdf";
+    const academicIntegrationHref = "/Sabanci-New-Akademik-ve-Entegrasyon-Raporu.pdf";
+    const academicEvidenceHref = "/Sabanci-New-Akademik-Literatur-ve-Kanitlar-Raporu.pdf";
     const docCard = (iconName, title, desc, links) => `
       <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 18px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
         <div style="display: flex; align-items: center; gap: 10px;">
@@ -13693,7 +13696,7 @@ function renderSystemDetails() {
           ${icon("folder-open")} Platform Belgeleri
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          Sabancı Holding New Idea Exchange platformuna ait teknik rapor, sunum, sistem raporu ve proje dokümanları bu sayfada toplanmıştır.
+          Sabancı Holding New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
           ${docCard("file-text", "Güncel Teknik Rapor", "20 Haziran 2026 tarihli mimari inceleme, ürün mantığı, borsa fiyatlama modeli, AI kapsamı, teknik borçlar ve önerilen yol haritasını içeren güncel PDF raporu.", [
@@ -13701,8 +13704,17 @@ function renderSystemDetails() {
             { href: currentReportHref, label: "PDF İndir", download: true },
             { href: "/technical-report.html", label: "HTML Rapor" }
           ])}
-          ${docCard("presentation", "Sunumlar", "Platformun yönetici özetini, coğrafi kapsamını ve v2.5.0 ile gelen yeni özellikleri (Ekipler, Kulüpler, Karar Kurulu coin kuralları) anlatan kısa sunum.", [
-            { href: "/sabanci-nie-sunum.html", label: "Sunumu Aç" }
+          ${docCard("presentation", "Sabancı New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Sabancı New PDF dokümanı.", [
+            { href: sabanciNewHref, label: "PDF Görüntüle" },
+            { href: sabanciNewHref, label: "PDF İndir", download: true }
+          ])}
+          ${docCard("book-open", "Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
+            { href: academicIntegrationHref, label: "PDF Görüntüle" },
+            { href: academicIntegrationHref, label: "PDF İndir", download: true }
+          ])}
+          ${docCard("library", "Literatür ve Kanıtlar Raporu", "İnovasyon borsası yaklaşımını destekleyen akademik literatür, referanslar ve kanıt çerçevesini içeren rapor.", [
+            { href: academicEvidenceHref, label: "PDF Görüntüle" },
+            { href: academicEvidenceHref, label: "PDF İndir", download: true }
           ])}
           ${docCard("database", "Sistem Raporları", "Borsa mantığı, sanal para/ödül kuralları, veri modeli, stüdyo/ekip/ürün modeli ve operasyonel akışları kapsayan kapsamlı kurumsal ürün raporu.", [
             { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF Görüntüle" },
