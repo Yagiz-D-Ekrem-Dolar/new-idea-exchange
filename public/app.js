@@ -226,6 +226,8 @@ const state = {
   teamsTab: "teams",
   selectedTeamId: "team-001",
   teamChatDraft: "",
+  selectedClubId: null,
+  clubChatDraft: "",
   teamCreateStep: 0,
   teamFillRoleId: null,
   teamDraft: {
@@ -1055,13 +1057,9 @@ function pageSubtitle() {
 
 function render() {
   document.body.dataset.theme = state.theme;
-  // Legacy "teams"/"products" pages were merged into the Studio hub. Normalize state.page
-  // here (before header/title/body all read it) so the header doesn't show a stale/wrong
-  // label while the body shows Studio content.
-  if (state.page === "teams") {
-    state.page = "studio";
-    state.studioTab = "teams";
-  }
+  // "products" stays merged into the Studio hub. Normalize state.page here (before
+  // header/title/body all read it) so the header doesn't show a stale/wrong label
+  // while the body shows Studio content. "teams" is its own standalone page.
   if (state.page === "products") {
     state.page = "studio";
     state.studioTab = "products";
@@ -4212,6 +4210,17 @@ function renderIdeaDetail() {
           <button class="btn primary" data-action="apply-to-idea" data-id="${esc(idea.id)}" style="background: linear-gradient(135deg, var(--primary), var(--indigo)); border: none; color: #fff; font-weight: 600;">
             ${icon("briefcase")} Fikre Başvuru At
           </button>
+          ${idea.authorId === currentUser().id ? (
+            idea.escalatedToBoard ? `
+              <span class="btn soft" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); cursor: default;">
+                ${icon("gavel")} Karar Kurulu'nda İnceleniyor
+              </span>
+            ` : `
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 SA karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (5000 SA)
+              </button>
+            `
+          ) : ""}
         </div>
       </section>
 
@@ -4338,6 +4347,18 @@ function renderIdeaDetail() {
           </article>
         </aside>
       </section>
+    </div>
+  `;
+}
+
+function analysisCard(title, content) {
+  const body = Array.isArray(content)
+    ? `<ul>${content.map(item => `<li>${esc(item)}</li>`).join("")}</ul>`
+    : `<p>${esc(content)}</p>`;
+  return `
+    <div class="analysis-card">
+      <h4>${esc(title)}</h4>
+      ${body}
     </div>
   `;
 }
@@ -5160,7 +5181,7 @@ function filteredAgendaItems() {
 }
 
 function renderStudioPage() {
-  state.studioTab = state.studioTab || "products";
+  state.studioTab = (state.studioTab === "teams" ? "products" : state.studioTab) || "products";
   const tab = state.studioTab;
   const studiosCount = state.studios.length;
   const productsCount = state.ideas.length;
@@ -5183,27 +5204,29 @@ function renderStudioPage() {
             <strong style="display: block; font-size: 20px; color: var(--ink);">${studiosCount}</strong>
             <span style="font-size: 11px; color: var(--muted);">Stüdyo</span>
           </div>
-          <div class="studio-stat" style="text-align: center; background: var(--bg-soft); padding: 12px 18px; border-radius: 12px; min-width: 90px;">
+          <button class="studio-stat" data-page="teams" style="text-align: center; background: var(--bg-soft); padding: 12px 18px; border-radius: 12px; min-width: 90px; border: 1px solid var(--line-soft); cursor: pointer;" title="Ekipler sayfasına git">
             <strong style="display: block; font-size: 20px; color: var(--ink);">${teamsCount}</strong>
-            <span style="font-size: 11px; color: var(--muted);">Ekip</span>
-          </div>
+            <span style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; justify-content: center;">Ekip ${icon("arrow-right")}</span>
+          </button>
         </div>
       </section>
 
-      <div class="segmented studio-main-switcher" style="width: 100%; margin: 16px 0; display: flex; background: var(--bg-soft); border-radius: 12px; padding: 4px; border: 1px solid var(--line-soft);">
-        <button class="btn ${tab === 'products' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="products" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'products' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'products' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'products' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("package-check")} Ürünler
-        </button>
-        <button class="btn ${tab === 'studios' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="studios" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'studios' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'studios' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'studios' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("layers")} Stüdyolar
-        </button>
-        <button class="btn ${tab === 'teams' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="teams" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'teams' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'teams' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'teams' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-          ${icon("users-round")} Ekipler
+      <div style="display: flex; gap: 12px; margin: 16px 0; align-items: stretch; flex-wrap: wrap;">
+        <div class="segmented studio-main-switcher" style="flex: 1; min-width: 240px; display: flex; background: var(--bg-soft); border-radius: 12px; padding: 4px; border: 1px solid var(--line-soft);">
+          <button class="btn ${tab === 'products' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="products" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'products' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'products' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'products' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
+            ${icon("package-check")} Ürünler
+          </button>
+          <button class="btn ${tab === 'studios' ? 'active' : ''}" data-action="set-studio-main-tab" data-tab="studios" style="font-size: 13.5px; font-weight: 600; flex: 1; border: none; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: ${tab === 'studios' ? 'var(--surface)' : 'transparent'}; color: ${tab === 'studios' ? 'var(--ink)' : 'var(--muted)'}; box-shadow: ${tab === 'studios' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
+            ${icon("layers")} Stüdyolar
+          </button>
+        </div>
+        <button class="btn secondary" data-page="teams" style="font-size: 13.5px; font-weight: 600; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 8px;">
+          ${icon("users-round")} Ekipler & Kulüpler
         </button>
       </div>
 
       <div class="studio-tab-content">
-        ${tab === "products" ? renderUnifiedProductsTab() : tab === "studios" ? renderUnifiedStudiosTab() : renderUnifiedTeamsTab()}
+        ${tab === "studios" ? renderUnifiedStudiosTab() : renderUnifiedProductsTab()}
       </div>
     </div>
   `;
@@ -5277,7 +5300,7 @@ function renderStudioCard(studio) {
       
       <div class="challenge-footer" style="margin-top: auto; border-top: 1px solid var(--line-soft); padding-top: 12px; display:flex; justify-content:space-between; align-items:center;">
         <small>${esc(studio.createdAt)}</small>
-        <button class="btn ghost slim-btn" data-action="set-studio-main-tab" data-tab="teams" style="font-weight:600;">${icon("arrow-right")} Ekipler</button>
+        <button class="btn ghost slim-btn" data-page="teams" style="font-weight:600;">${icon("arrow-right")} Ekipler</button>
       </div>
     </article>
   `;
@@ -5327,27 +5350,6 @@ function renderUnifiedStudiosTab() {
   `;
 }
 
-function renderUnifiedTeamsTab() {
-  const teamList = filteredTeams();
-  return `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <section class="challenge-filterbar" style="margin-bottom: 0;">
-        <label class="search-box">${icon("search")}<input class="input" data-team-filter="search" value="${esc(state.filters.teamSearch || "")}" placeholder="Ekip ara..." /></label>
-        <select class="select" data-team-filter="area">${["Tümü", ...Array.from(new Set(state.teams.map(t => t.area)))].map(v => `<option value="${esc(v)}" ${state.filters.teamArea === v ? "selected" : ""}>Alan: ${esc(v)}</option>`).join("")}</select>
-        <select class="select" data-team-filter="status">${["Tümü", "active", "forming", "disbanded"].map(v => `<option value="${esc(v)}" ${state.filters.teamStatus === v ? "selected" : ""}>Durum: ${esc(teamStatusLabel(v))}</option>`).join("")}</select>
-      </section>
-      <section class="teams-grid">
-        ${teamList.map(team => renderTeamCard(team, isMyTeam(team))).join("") || `
-          <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft); grid-column: span 3;">
-            ${icon("users-round", "36")}
-            <p style="margin-top: 10px; font-size: 14px;">Eşleşen ekip bulunamadı.</p>
-          </div>
-        `}
-      </section>
-    </div>
-  `;
-}
-
 function filteredClubs() {
   const q = (state.filters.clubSearch || "").trim().toLocaleLowerCase("tr-TR");
   const category = state.filters.clubCategory || "Tümü";
@@ -5373,7 +5375,7 @@ function renderClubCard(club) {
 
   return `
     <article class="studio-card-v2" style="display:flex; flex-direction:column; justify-content:space-between; height: 100%; min-height: 200px;">
-      <div>
+      <button data-action="open-club" data-id="${esc(club.id)}" style="all:unset; cursor:pointer; display:block;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start;">
           <span style="font-size:10px; font-weight:700; color:${color}; text-transform:uppercase; letter-spacing:0.05em; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:4px;">
             ${esc(club.category)}
@@ -5382,19 +5384,130 @@ function renderClubCard(club) {
         </div>
         <h3 style="font-size:16px; font-weight:700; color:var(--ink); margin:12px 0 6px 0;">${esc(club.name)}</h3>
         <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.5; margin:6px 0 12px 0;">${esc(club.description)}</p>
-      </div>
+      </button>
       <div>
         <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid var(--line-soft); padding-top: 12px; margin-top: 12px;">
           <div style="display:flex; align-items:center; gap:6px;">
             ${renderAvatarStack(club.members, 3)}
             <span style="font-size:12px; color:var(--muted); font-weight:500;">${club.members.length} Üye</span>
           </div>
-          <button class="btn ${isMember ? "secondary" : "primary"} slim-btn" data-action="toggle-club-join" data-id="${club.id}">
-            ${isMember ? icon("check") + " Üyesiniz" : icon("plus") + " Katıl"}
-          </button>
+          <div style="display:flex; gap:6px;">
+            <button class="btn ghost slim-btn" data-action="open-club" data-id="${esc(club.id)}" title="Kulübe git">
+              ${icon("message-circle")}
+            </button>
+            <button class="btn ${isMember ? "secondary" : "primary"} slim-btn" data-action="toggle-club-join" data-id="${club.id}">
+              ${isMember ? icon("check") + " Üyesiniz" : icon("plus") + " Katıl"}
+            </button>
+          </div>
         </div>
       </div>
     </article>
+  `;
+}
+
+function renderClubMessage(msg) {
+  const user = currentUser();
+  const isOwn = msg.own || msg.userId === user.id;
+  const sender = isOwn ? user : personById(msg.userId);
+  const name = sender?.name || "Kulüp Üyesi";
+  const photo = sender?.photo || sender?.avatarUrl || "";
+  return `
+    <div class="hub-message ${isOwn ? "own" : ""}">
+      ${isOwn ? "" : avatar(name, "small", photo)}
+      <div class="hub-message-bubble">
+        <span><strong>${esc(name)}</strong><small>${esc(msg.time)}</small></span>
+        <p>${esc(msg.body)}</p>
+      </div>
+      ${isOwn ? avatar(name, "small", photo) : ""}
+    </div>
+  `;
+}
+
+function renderClubDetail() {
+  const club = state.clubs.find(c => c.id === state.selectedClubId);
+  if (!club) return renderTeamsList ? renderTeamsList() : "";
+  const user = currentUser();
+  const isMember = club.members && club.members.includes(user.id);
+  const members = (club.members || []).map(id => id === user.id ? user : personById(id)).filter(Boolean);
+  const creator = personById(club.createdBy);
+
+  return `
+    <div class="view-stack team-detail-page">
+      <div class="team-detail-back">
+        <button class="btn ghost" data-action="back-to-teams" style="display:flex;align-items:center;gap:6px;">
+          ${icon("arrow-left")} Kulüplere Dön
+        </button>
+        <span class="team-status-badge" style="margin-left:12px;">${esc(club.category)}</span>
+        ${isMember ? `<span class="team-mine-badge" style="margin-left:6px;">${icon("user-check")} Üyesiniz</span>` : ""}
+      </div>
+
+      <section class="team-detail-header">
+        <div class="team-detail-title">
+          <h2>${esc(club.name)}</h2>
+          <p>${esc(club.description)}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+            ${(club.tags || []).map(tag => `<span class="tag-pill">#${esc(tag)}</span>`).join("")}
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:start;">
+          <button class="btn ${isMember ? "secondary" : "primary"}" data-action="toggle-club-join" data-id="${esc(club.id)}">
+            ${isMember ? icon("check") + " Üyesiniz" : icon("plus") + " Kulübe Katıl"}
+          </button>
+        </div>
+      </section>
+
+      <div class="team-detail-layout">
+        <aside class="team-roster-panel">
+          <div class="team-panel-head">
+            ${icon("users-round")} <strong>Üyeler</strong>
+            <span style="margin-left:auto;font-size:12px;color:var(--muted);">${members.length}</span>
+          </div>
+          <div class="team-roles-list">
+            ${members.map(person => `
+              <div class="team-role-row filled">
+                <div class="role-row-body">
+                  <span class="role-member-line">
+                    ${avatar(person.name, "tiny", person.photo || person.avatarUrl)}
+                    <span>${esc(person.name)}</span>
+                    ${person.id === club.createdBy ? `<small style="color:var(--muted);">· ${icon("crown")} Kurucu</small>` : ""}
+                  </span>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="team-meta-card">
+            <div class="team-panel-head" style="margin-bottom:8px;">${icon("info")} <strong>Kulüp Bilgisi</strong></div>
+            <div style="font-size:12.5px;color:var(--ink-soft);display:flex;flex-direction:column;gap:6px;">
+              <span>${icon("calendar")} Kuruldu: ${esc(club.createdAt)}</span>
+              ${creator ? `<span>${icon("crown")} Kurucu: <strong>${esc(creator.name)}</strong></span>` : ""}
+            </div>
+          </div>
+        </aside>
+
+        <main class="team-chat-main">
+          <div class="team-panel-head">
+            ${icon("message-circle")} <strong>Kulüp Sohbeti</strong>
+            <span style="margin-left:auto;font-size:12px;color:var(--muted);">${(club.messages || []).length} mesaj</span>
+          </div>
+          <div class="team-chat-thread" id="club-chat-thread">
+            ${(club.messages || []).length ? club.messages.map(m => renderClubMessage(m)).join("") : `
+              <div class="team-chat-empty">
+                ${icon("message-circle")}
+                <strong>Henüz sohbet yok.</strong>
+                <span>İlk mesajı sen at, kulübü harekete geçir!</span>
+              </div>
+            `}
+          </div>
+          <div class="team-chat-composer">
+            <input class="input" placeholder="Kulübe mesaj yaz..." data-club-chat-draft value="${esc(state.clubChatDraft || "")}" />
+            <button class="btn primary" data-action="send-club-message" data-id="${esc(club.id)}">
+              ${icon("send")} Gönder
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
   `;
 }
 
@@ -5448,6 +5561,7 @@ function renderTeamsDirectory() {
   if (state.teamsView === "detail") return renderTeamDetail();
   if (state.teamsView === "create") return renderCreateTeam();
   if (state.teamsView === "createClub") return renderCreateClub();
+  if (state.teamsView === "clubDetail") return renderClubDetail();
 
   state.teamsTab = state.teamsTab || "projectTeams";
   state.filters.clubSearch = state.filters.clubSearch || "";
@@ -7145,6 +7259,7 @@ function renderProfile() {
 function renderManager() {
   if (!currentUser().isManager && !currentUser().isAdmin) return renderNoAccess();
   const queue = state.ideas.filter(idea => ["review", "new", "pilot"].includes(idea.status));
+  const escalated = state.ideas.filter(idea => idea.escalatedToBoard);
   return `
     <div class="view-stack">
       <section class="hero-band">
@@ -7154,6 +7269,40 @@ function renderManager() {
         </div>
         <span class="status-badge review">${queue.length} fikir karar kuyruğunda</span>
       </section>
+      ${escalated.length ? `
+      <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
+        <div class="section-title">
+          <div>
+            <h2>${icon("gavel")} 5000 SA ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 5000 SA ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+          </div>
+          <span class="status-badge review">${escalated.length} talep</span>
+        </div>
+        <div class="table-wrap" style="margin-top: 14px;">
+          <table class="data-table">
+            <thead><tr><th>Fikir</th><th>Taşıyan</th><th>Tarih</th><th>Durum</th><th>Aksiyon</th></tr></thead>
+            <tbody>
+              ${escalated.map(idea => `
+                <tr>
+                  <td><strong>${esc(idea.title)}</strong><br /><span class="muted">${esc(idea.department)} · ${esc(idea.location)}</span></td>
+                  <td>${esc(idea.boardEscalatedBy || idea.authorLabel)}</td>
+                  <td>${esc(idea.boardEscalatedAt || "—")}</td>
+                  <td>${statusBadge(idea.status)}</td>
+                  <td>
+                    <div class="field-row">
+                      <button class="table-action" data-action="manager-status" data-id="${esc(idea.id)}" data-status="review" title="İncelemeye al">${icon("clipboard-check")}</button>
+                      <button class="table-action" data-action="manager-status" data-id="${esc(idea.id)}" data-status="pilot" title="Pilot seç">${icon("rocket")}</button>
+                      <button class="table-action" data-action="manager-status" data-id="${esc(idea.id)}" data-status="done" title="Uygulandı">${icon("badge-check")}</button>
+                      <button class="table-action" data-action="open-idea" data-id="${esc(idea.id)}" title="Detay">${icon("external-link")}</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      ` : ""}
       <section class="analytics-grid">
         <article class="analytics-card">
           <h3>Karar Kuyruğu</h3>
@@ -7540,6 +7689,7 @@ function renderManagerV2() {
   const queue = state.ideas
     .filter(idea => ["review", "new", "pilot"].includes(idea.status))
     .sort((a, b) => ((b.aiScore + b.strategicScore + b.communityScore) - (a.aiScore + a.strategicScore + a.communityScore)));
+  const escalated = state.ideas.filter(idea => idea.escalatedToBoard);
   const focusIdea = queue[0] || state.ideas[0];
   const quickWins = state.ideas
     .filter(idea => idea.estimatedCost === "Düşük" || idea.implementationTime.includes("1 ay"))
@@ -7612,6 +7762,26 @@ function renderManagerV2() {
           </article>
         </aside>
       </section>
+
+      ${escalated.length ? `
+      <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
+        <div class="panel-head">
+          <div>
+            <span class="panel-kicker">5000 SA ile taşınan talepler</span>
+            <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
+          </div>
+          <span class="status-badge review">${escalated.length} talep</span>
+        </div>
+        <div class="lane-stack" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 12px;">
+          ${escalated.map(idea => `
+            <div style="position: relative;">
+              ${managerDecisionCardV2(idea)}
+              <small style="display:block; margin-top: 6px; color: var(--muted); font-size: 11px;">${icon("user")} ${esc(idea.boardEscalatedBy || idea.authorLabel)} · ${esc(idea.boardEscalatedAt || "")}</small>
+            </div>
+          `).join("")}
+        </div>
+      </section>
+      ` : ""}
 
       <section class="decision-board" aria-label="Karar akışı">
         ${lanes.map(lane => {
@@ -7958,7 +8128,7 @@ function createIdeaFromWizard() {
     companyId: state.marketDraft.companyId || "is-new",
     marketCategory: "Fikir",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-    marketPrice: aiScore ? Math.round(aiScore * 2.2) : 180,
+    marketPrice: 100,
     marketChange: status === "rejected" ? 0 : 6.4,
     marketVolume: status === "rejected" ? 0 : 980,
     marketShares: 1400,
@@ -8006,7 +8176,7 @@ function createComplaintFromEntry() {
     companyId: "is-new",
     marketCategory: "Şikayet",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-    marketPrice: Math.round(impactScore * 2.1),
+    marketPrice: 100,
     marketChange: 3.8,
     marketVolume: 740,
     marketShares: 1100,
@@ -8054,7 +8224,7 @@ function createMarketListing(context) {
     createdAt: new Date().toISOString().slice(0, 10),
     marketCategory: draft.category,
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-    marketPrice: draft.category === "Proje" ? 210 : draft.category === "Araştırma" ? 168 : draft.category === "Şikayet" ? 148 : 132,
+    marketPrice: 100,
     marketChange: draft.category === "Proje" ? 9.2 : draft.category === "Şikayet" ? 4.1 : 5.4,
     marketVolume: 640,
     marketShares: 1000,
@@ -8182,13 +8352,42 @@ document.addEventListener("click", event => {
         country: state.activeCountry,
         createdAt: new Date().toLocaleDateString("tr-TR"),
         createdBy: currentUser().id,
-        members: [currentUser().id]
+        members: [currentUser().id],
+        tags: [],
+        messages: []
       };
       state.clubs = state.clubs || [];
       state.clubs.push(newClub);
       state.teamsView = null;
       state.clubDraft = null;
       render();
+    }
+    return;
+  }
+
+  if (action === "open-club") {
+    state.selectedClubId = actionButton.dataset.id;
+    state.teamsView = "clubDetail";
+    render();
+    resetScroll();
+    return;
+  }
+
+  if (action === "send-club-message") {
+    const clubId = actionButton.dataset.id;
+    const input = document.querySelector("[data-club-chat-draft]");
+    const body = (input ? input.value : state.clubChatDraft || "").trim();
+    if (!body) return;
+    const club = state.clubs.find(c => c.id === clubId);
+    if (club) {
+      club.messages = club.messages || [];
+      club.messages.push({ own: true, body, time: "Az önce" });
+      state.clubChatDraft = "";
+      render();
+      requestAnimationFrame(() => {
+        const thread = document.getElementById("club-chat-thread");
+        if (thread) thread.scrollTop = thread.scrollHeight;
+      });
     }
     return;
   }
@@ -8296,8 +8495,7 @@ document.addEventListener("click", event => {
       state.page = "data";
       state.dataActiveSection = "datasets";
     } else if (type === "team") {
-      state.page = "studio";
-      state.studioTab = "teams";
+      state.page = "teams";
       state.selectedTeamId = id;
       state.teamsView = "detail";
     } else if (type === "agenda") {
@@ -8864,7 +9062,7 @@ document.addEventListener("click", event => {
       companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "sabanci-holding"),
       marketCategory: marketCategoryVal,
       marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-      marketPrice: Math.round(mockAiScore * 2.2),
+      marketPrice: 100,
       marketChange: 0.0,
       marketVolume: 0,
       marketShares: 1000,
@@ -10162,6 +10360,25 @@ if (action === "login") {
     render();
   }
 
+  if (action === "escalate-to-board") {
+    const ESCALATION_COST = 5000;
+    const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
+    if (idea && !idea.escalatedToBoard) {
+      if (state.marketBudget < ESCALATION_COST) {
+        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} SA (Mevcut: ${Math.round(state.marketBudget)} SA)`);
+        return;
+      }
+      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} SA karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
+      if (!confirmed) return;
+      state.marketBudget -= ESCALATION_COST;
+      idea.escalatedToBoard = true;
+      idea.boardEscalatedAt = new Date().toLocaleDateString("tr-TR");
+      idea.boardEscalatedBy = currentUser().name;
+      render();
+    }
+    return;
+  }
+
   if (action === "quick-like") {
     supportIdea(actionButton.dataset.id);
     moveQuickFlow(1, "Destek kredisi verildi. Sıradaki fikir açıldı.");
@@ -11127,6 +11344,11 @@ document.addEventListener("change", event => {
 
   if (event.target.matches("[data-team-chat-draft]")) {
     state.teamChatDraft = event.target.value;
+    return;
+  }
+
+  if (event.target.matches("[data-club-chat-draft]")) {
+    state.clubChatDraft = event.target.value;
     return;
   }
 
@@ -13273,8 +13495,8 @@ function renderProfileTabContent(user, tab) {
 }
 
 function renderSystemDetails() {
-  const tabs = ["Çalışma Prensibi", "Teknik Altyapı", "Kullanım Kılavuzu"];
-  
+  const tabs = ["Çalışma Prensibi", "Teknik Altyapı", "Kullanım Kılavuzu", "Belgeler"];
+
   let contentHtml = "";
   
   if (state.systemDetailsTab === "Çalışma Prensibi") {
@@ -13411,6 +13633,47 @@ function renderSystemDetails() {
         </div>
       </section>
     `;
+  } else if (state.systemDetailsTab === "Belgeler") {
+    const docCard = (iconName, title, desc, links) => `
+      <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 18px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 36px; height: 36px; border-radius: 10px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">${icon(iconName)}</span>
+          <strong style="color: var(--ink); font-size: 15px;">${esc(title)}</strong>
+        </div>
+        <span style="font-size: 13px; color: var(--ink-soft); line-height: 1.5;">${esc(desc)}</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+          ${links.map(l => l.page
+            ? `<button data-page="${esc(l.page)}" class="btn ghost slim-btn" style="display: inline-flex; align-items: center; gap: 6px;">${icon("arrow-right", "style='width:13px;height:13px;'")} ${esc(l.label)}</button>`
+            : `<a href="${esc(l.href)}" target="_blank" rel="noopener" class="btn ghost slim-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">${icon("external-link", "style='width:13px;height:13px;'")} ${esc(l.label)}</a>`
+          ).join("")}
+        </div>
+      </div>
+    `;
+    contentHtml = `
+      <section class="content-panel" style="padding: 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 20px;">
+        <h3 style="color: var(--ink); font-weight: 600; font-size: 18px; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+          ${icon("folder-open")} Platform Belgeleri
+        </h3>
+        <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
+          Sabancı Holding New Idea Exchange platformuna ait teknik rapor, sunum, sistem raporu ve proje dokümanları bu sayfada toplanmıştır.
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+          ${docCard("file-text", "Teknik Rapor", "Platform mimarisi, teknoloji yığını, güvenlik ve aylık altyapı maliyet analizini içeren teknik mimari raporu (v2.5.0).", [
+            { href: "/NIE-Technical-Report.pdf", label: "PDF İndir" },
+            { href: "/technical-report.html", label: "Tarayıcıda Görüntüle" }
+          ])}
+          ${docCard("presentation", "Sunumlar", "Platformun yönetici özetini, coğrafi kapsamını ve v2.5.0 ile gelen yeni özellikleri (Ekipler, Kulüpler, Karar Kurulu coin kuralları) anlatan kısa sunum.", [
+            { href: "/sabanci-nie-sunum.html", label: "Sunumu Aç" }
+          ])}
+          ${docCard("database", "Sistem Raporları", "Borsa mantığı, sanal para/ödül kuralları, veri modeli, stüdyo/ekip/ürün modeli ve operasyonel akışları kapsayan kapsamlı kurumsal ürün raporu.", [
+            { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF İndir" }
+          ])}
+          ${docCard("file-stack", "Proje Dokümanları", "Her projenin kendi AI raporu, proje raporu ve dosya bundle'ı ilgili fikrin detay sayfasından indirilebilir. Kapsamlı ürün dokümantasyonu için Sistem Raporları kartına bakın.", [
+            { page: "ideas", label: "Fikir Havuzuna Git" }
+          ])}
+        </div>
+      </section>
+    `;
   }
 
   return `
@@ -13427,6 +13690,7 @@ function renderSystemDetails() {
             let iconName = "help-circle";
             if (tab === "Teknik Altyapı") iconName = "cpu";
             if (tab === "Kullanım Kılavuzu") iconName = "book-open";
+            if (tab === "Belgeler") iconName = "folder-open";
             return `
               <button class="admin-tab ${state.systemDetailsTab === tab ? "active" : ""}" data-action="system-details-tab" data-tab="${esc(tab)}" style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; border: none; background: transparent; cursor: pointer; text-align: left; font-size: 14px; font-weight: 600; color: ${state.systemDetailsTab === tab ? "var(--primary-strong)" : "var(--ink-soft)"};">
                 ${icon(iconName)}

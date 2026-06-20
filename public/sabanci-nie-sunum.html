@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sabancı Holding · New Idea Exchange — Platform Sunumu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0a1628;
+    --blue: #0057cc;
+    --blue-soft: #e8f0ff;
+    --green: #16a34a;
+    --amber: #b45309;
+    --purple: #7c3aed;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--ink); }
+  .deck { max-width: 1000px; margin: 0 auto; padding: 24px 24px 80px; display: flex; flex-direction: column; gap: 28px; }
+  .slide {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 48px 56px;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+  }
+  .slide.cover {
+    background: linear-gradient(135deg, var(--navy), #142544);
+    color: white;
+    align-items: flex-start;
+  }
+  .slide-num { position: absolute; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 12px; }
+  .cover .eyebrow { color: #93c5fd; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 40px; line-height: 1.15; margin-bottom: 14px; }
+  .cover h1 { font-size: 48px; color: white; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; margin-bottom: 18px; color: var(--ink); }
+  .cover p.sub { font-size: 16px; color: #cbd5e1; max-width: 600px; line-height: 1.6; }
+  .meta-row { display: flex; gap: 28px; margin-top: 32px; }
+  .meta-row span { font-size: 12px; color: #94a3b8; display: block; }
+  .meta-row strong { font-size: 15px; color: white; display: block; margin-bottom: 2px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--blue-soft); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .card strong { display: block; font-size: 14.5px; color: var(--ink); margin-bottom: 6px; }
+  .card span { font-size: 13px; color: var(--muted); line-height: 1.5; display: block; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 12.5px; font-weight: 600; color: var(--ink); }
+  ul.bullets { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+  ul.bullets li { font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+  ul.bullets li b { color: var(--blue); }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .badge { font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 6px; background: #f1f5f9; color: var(--muted); }
+  .badge.new { background: #fef3c7; color: var(--amber); }
+  .footer-line { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  table.rules { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.rules th, table.rules td { text-align: left; padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--line); }
+  table.rules th { color: var(--muted); font-weight: 700; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  @media print {
+    body { background: white; }
+    .slide { box-shadow: none; page-break-after: always; }
+  }
+  @media (max-width: 720px) {
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .slide { padding: 32px 24px; }
+    h1 { font-size: 28px; }
+    .cover h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- Slide 1: Cover -->
+  <section class="slide cover">
+    <p class="eyebrow">Sabancı Holding · New Idea Exchange</p>
+    <h1>Fikirden Borsaya,<br>Borsadan Hayata.</h1>
+    <p class="sub">Sabancı Holding ve iştiraklerinin (Akbank, Çimsa, Temsa, Kordsa, Enerjisa, Teknosa, CarrefourSA, SabancıDx ve diğerleri) 5 ülke portalında çalıştığı kurumsal inovasyon ve karar destek platformu.</p>
+    <div class="meta-row">
+      <div><strong>v2.5.0</strong><span>Platform Sürümü</span></div>
+      <div><strong>Haziran 2026</strong><span>Sunum Tarihi</span></div>
+      <div><strong>5 Ülke</strong><span>TR · UK · US · DE · ES</span></div>
+      <div><strong>Gizli</strong><span>Dahili Kullanım</span></div>
+    </div>
+  </section>
+
+  <!-- Slide 2: Platformun Özü -->
+  <section class="slide">
+    <p class="eyebrow">Platform Özeti</p>
+    <h2>Tek Platformda Dört Temel Döngü</h2>
+    <div class="grid2">
+      <div class="card"><strong>💡 Fikir Üretimi</strong><span>AI sihirbazı ile fikir/proje/şikayet girişi; anlık 0-100 AI skoru ve tüzük denetimi.</span></div>
+      <div class="card"><strong>📈 Fikir Borsası</strong><span>Onaylı her proje kendi ticker'ı ile borsada listelenir, SA Coin ile alınıp satılır.</span></div>
+      <div class="card"><strong>🤝 Ekip & Kulüp</strong><span>Proje ekipleri rol bazlı kurulur; sosyal kulüplerin kendi üyelik ve sohbet alanı vardır.</span></div>
+      <div class="card"><strong>⚖️ Karar Kurulu</strong><span>Yönetici paneli karar kuyruğunu yönetir; önemli kararlar coin karşılığında doğrudan taşınabilir.</span></div>
+    </div>
+  </section>
+
+  <!-- Slide 3: Coğrafi Kapsam -->
+  <section class="slide">
+    <p class="eyebrow">Coğrafi Kapsam</p>
+    <h2>5 Ülke, Tek Çok Dilli Platform</h2>
+    <div class="grid3">
+      <div class="card"><strong>🇹🇷 Türkiye</strong><span>Akbank, Çimsa, Temsa, Kordsa, Teknosa, CarrefourSA, SabancıDx ve daha fazlası — Türkçe içerik.</span></div>
+      <div class="card"><strong>🇬🇧 Birleşik Krallık</strong><span>Sabancı Renewables UK, Çimsa UK, Kordsa UK — İngilizce içerik.</span></div>
+      <div class="card"><strong>🇺🇸 Amerika</strong><span>Sabancı Climate US, Cimsa Americas, Kordsa USA — İngilizce içerik.</span></div>
+      <div class="card"><strong>🇩🇪 Almanya</strong><span>Cimsa Germany, Temsa Deutschland — Almanca içerik.</span></div>
+      <div class="card"><strong>🇪🇸 İspanya</strong><span>Çimsa Buñol — İspanyolca içerik.</span></div>
+      <div class="card"><strong>🌐 Çeviri Sistemi</strong><span>Her portal kendi dilinde açılır; tek tıkla Türkçe çeviriye geçiş yapılabilir.</span></div>
+    </div>
+  </section>
+
+  <!-- Slide 4: Yeni Özellikler v2.5 -->
+  <section class="slide">
+    <p class="eyebrow">v2.5.0 — Yeni Özellikler</p>
+    <h2>Bu Sürümde Neler Eklendi?</h2>
+    <ul class="bullets">
+      <li><b>Ekipler bağımsız sayfa oldu:</b> Stüdyo hub'ından ayrılarak kendi üst seviye navigasyon sekmesine taşındı.</li>
+      <li><b>Kulüpler:</b> Çalışanlar ilgi alanına göre sosyal kulüp kurabilir veya mevcut kulübe katılabilir.</li>
+      <li><b>Kulüp Sohbeti:</b> Her kulübün kendine ait, üyelerine özel gerçek zamanlı sohbet alanı vardır — ücretsizdir.</li>
+      <li><b>Standart Başlangıç Değerlemesi:</b> Borsaya listelenen her yeni proje 100 SA sabit açılış fiyatıyla başlar.</li>
+      <li><b>Karar Kurulu Coin Sistemi:</b> Proje sahibi, 5.000 SA karşılığında kendi fikrini doğrudan Karar Kurulu'na taşıyabilir.</li>
+    </ul>
+    <div class="badge-row">
+      <span class="badge new">YENİ · Ekipler</span>
+      <span class="badge new">YENİ · Kulüp Chat</span>
+      <span class="badge new">YENİ · 100 SA Değerleme</span>
+      <span class="badge new">YENİ · Karar Kurulu Coin</span>
+    </div>
+  </section>
+
+  <!-- Slide 5: Borsa & Politika Kuralları -->
+  <section class="slide">
+    <p class="eyebrow">Borsa Tüzüğü</p>
+    <h2>Politika ve Coin Kuralları</h2>
+    <table class="rules">
+      <thead><tr><th>Kural</th><th>Açıklama</th></tr></thead>
+      <tbody>
+        <tr><td><b>%10 Sahiplik Sınırı</b></td><td>Bir kullanıcı tek bir projenin toplam arzının en fazla %10'una sahip olabilir; üzeri otomatik reddedilir.</td></tr>
+        <tr><td><b>100 SA Başlangıç Değeri</b></td><td>Her yeni proje, kaynağına bakılmaksızın 100 SA sabit açılış fiyatıyla borsaya listelenir.</td></tr>
+        <tr><td><b>5.000 SA Karar Kurulu Taşıma</b></td><td>Kendi projenizi/fikrinizi doğrudan Karar Kurulu'na taşımak 5.000 SA'ya mal olur; bakiye yetersizse işlem engellenir.</td></tr>
+        <tr><td><b>AI Değerlendirme Barajı</b></td><td>AI analiz puanı 70'in altında olan fikirler otomatik olarak elenir.</td></tr>
+        <tr><td><b>Ekip & Kulüp Üyeliği</b></td><td>Ekip arama, kulübe katılma ve kulüp sohbeti tamamen ücretsizdir — coin gerektirmez.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Slide 6: Kapanış -->
+  <section class="slide cover">
+    <p class="eyebrow">Sabancı Holding · New Idea Exchange</p>
+    <h1>Teşekkürler.</h1>
+    <p class="sub">Detaylı teknik mimari için "Sistem Detayları → Belgeler" bölümündeki Teknik Mimari Raporu'na bakabilirsiniz.</p>
+    <div class="footer-line" style="border-color: rgba(255,255,255,0.15); color: #94a3b8;">
+      <span>Sabancı Holding NIE Platform Ekibi</span>
+      <span>Haziran 2026 · Gizli / Dahili Kullanım</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

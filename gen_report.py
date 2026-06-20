@@ -40,9 +40,9 @@ doc = SimpleDocTemplate(
     pagesize=A4,
     leftMargin=20*mm, rightMargin=20*mm,
     topMargin=22*mm, bottomMargin=22*mm,
-    title="NIE Teknik Mimari Raporu",
-    author="NIE Platform Mühendislik Ekibi",
-    subject="NEW IDEA EXCHANGE — Technical Architecture Report v2.4.0"
+    title="Sabancı Holding NIE Teknik Mimari Raporu",
+    author="Sabancı Holding NIE Platform Mühendislik Ekibi",
+    subject="Sabancı Innovation Exchange (NIE) — Technical Architecture Report v2.5.0"
 )
 
 # ── Styles ────────────────────────────────────────────────────────────────────
@@ -91,17 +91,18 @@ story = []
 # COVER PAGE  (drawn as big coloured table = no canvas hack needed)
 # ─────────────────────────────────────────────────────────────────────────────
 cover_inner = [
-    [Paragraph("NEW IDEA EXCHANGE", S("CE", fontSize=10, fontName="Helvetica-Bold",
+    [Paragraph("SABANCI HOLDİNG · NEW IDEA EXCHANGE", S("CE", fontSize=10, fontName="Helvetica-Bold",
                textColor=HexColor("#94a3b8"), letterSpacing=2))],
     [Spacer(1, 8*mm)],
     [Paragraph("Teknik Mimari<br/>Raporu", COVER_TITLE)],
     [Spacer(1, 3*mm)],
-    [Paragraph("Platform altyapisi, teknoloji yigini, olceklenebilirlik plani ve<br/>"
+    [Paragraph("Sabancı Holding ve istiraklerinin (Akbank, Cimsa, Temsa, Kordsa, Enerjisa ve digerleri) "
+               "5 ulke portalinda kullandigi platform altyapisi, teknoloji yigini, olceklenebilirlik plani ve<br/>"
                "aylik altyapi maliyet analizi.", COVER_SUB)],
     [Spacer(1, 12*mm)],
     [Table(
-        [[Paragraph("v2.4.0",     COVER_META), Paragraph("Haziran 2026", COVER_META),
-          Paragraph("NIE Platform",COVER_META), Paragraph("Gizli",       COVER_META)]],
+        [[Paragraph("v2.5.0",     COVER_META), Paragraph("Haziran 2026", COVER_META),
+          Paragraph("Sabancı Holding",COVER_META), Paragraph("Gizli",       COVER_META)]],
         colWidths=[38*mm,38*mm,38*mm,38*mm],
         style=TableStyle([("VALIGN", (0,0), (-1,-1), "TOP")])
     )],
@@ -254,10 +255,13 @@ story.append(section(1, "Yönetici Özeti",
     "Platformun teknik vizyonu ve temel metrikler"))
 
 story.append(callout(
-    "<b>NEW IDEA EXCHANGE (NIE)</b>, holding genelinde calisanlarin fikir uretmesini, "
-    "ekip kurmasini ve inovasyon projelerini hayata gecirmesini saglayan kurumsal "
-    "inovasyon platformudur. Sistem; fikir borsasi, ekip yonetimi, gercek zamanli "
-    "mesajlasma, AI destekli degerlendirme ve analitik modullerinden olusur.<br/><br/>"
+    "<b>Sabancı Innovation Exchange (NIE)</b>, Sabancı Holding ve istiraklerinin "
+    "(Akbank, Cimsa, Temsa, Kordsa, Enerjisa, Teknosa, CarrefourSA, SabancıDx ve digerleri) "
+    "Turkiye, Birlesik Krallik, ABD, Almanya ve Ispanya portallarinda calisanlarin fikir "
+    "uretmesini, ekip ve kulup kurmasini, kararlarini Karar Kurulu'na tasimasini ve "
+    "inovasyon projelerini hayata gecirmesini saglayan cok dilli kurumsal inovasyon "
+    "platformudur. Sistem; fikir borsasi, ekip ve kulup yonetimi (kendi sohbet alanlariyla), "
+    "gercek zamanli mesajlasma, AI destekli degerlendirme ve analitik modullerinden olusur.<br/><br/>"
     "Bu rapor, platformun uretim ortamina alinmasi icin ongorulen <b>enterprise-grade "
     "teknoloji yiginini</b>, mimari kararlari, guvenlik gereksinimlerini ve aylik "
     "operasyon maliyetlerini kapsar."
@@ -488,7 +492,13 @@ eco_data = [
     ("Sosyal Tahmin", "Basari Tahmin & AI Siralama", "Borsa projelerinin basari olasiliklarini tahmin eden topluluk analiz araci. AI ve topluluk tahminlerinin harmanlanmasiyla dinamik basari siralamasi."),
     ("Mentorluk", "Matchmaking & Mentor Dizini", "Holding ici uzmanlarin yetkinlik ve tecrubelerine gore listelendigi mentor dizini ve akilli eslestirme modulu."),
     ("Ekip & Hisse", "Paylasimli Ortaklik & %10 Odul Paylasimi", "Projelerin acik hisse orani (openEquity) takibi. Proje hayata gectiginde yatirimci ve girisimci %10 paylasim kurallari."),
-    ("Otomasyon", "AI Gundem Analiz Motoru", "NLP tabanli AI analisti ile trendlerin, borsa hacminin ve tamamlanan projelerin otomatik gundem postu olarak paylasilmasi.")
+    ("Otomasyon", "AI Gundem Analiz Motoru", "NLP tabanli AI analisti ile trendlerin, borsa hacminin ve tamamlanan projelerin otomatik gundem postu olarak paylasilmasi."),
+    ("Ekipler (v2.5)", "Bagimsiz Ust Seviye Sayfa", "Ekipler, Studyo hub'indan ayrilarak kendi navigasyon sekmesine tasindi. Proje ekipleri ve sosyal kulupler tek sayfada, ayri sekmelerde yonetilir."),
+    ("Kulupler (v2.5)", "Uyelik & Kulup Profili", "Calisanlar ilgi alanlarina gore kulup kurabilir veya mevcut kulube katilabilir. Her kulubun kategori, uye listesi ve kurucu bilgisi vardir."),
+    ("Kulup Sohbeti (v2.5)", "Gercek Zamanli Kulup Chat", "Her kulubun kendine ait sohbet akisi vardir; sadece o kulubun uyeleri mesajlasir. Mesaj gonderimi ucretsizdir, herhangi bir coin maliyeti yoktur."),
+    ("Hisse Politikasi (v2.5)", "%10 Maksimum Sahiplik Kurali", "Bir kullanici tek bir projenin/hissenin toplam arzinin en fazla %10'una sahip olabilir. Limit asan alim emirleri sistem tarafindan otomatik reddedilir."),
+    ("Baslangic Degerlemesi (v2.5)", "Standart 100 SA Acilis Fiyati", "Borsaya listelenen her yeni proje/fikir, kaynagina (sihirbaz, sikayet kutusu, hizli giris) bakilmaksizin 100 SA sabit acilis degerlemesiyle baslar."),
+    ("Karar Kurulu Coin Sistemi (v2.5)", "5.000 SA Karsiliginda Dogrudan Tasima", "Proje sahibi, kendi fikrini/projesini veya onemli bir karar onerisini 5.000 SA odeyerek dogrudan Karar Kurulu inceleme listesine tasiyabilir. Bakiye yetersizse islem engellenir; kesinti yalnizca kullanici onayindan sonra gerceklesir.")
 ]
 
 eco_rows = [["Modul", "Teknoloji / Yapi", "Detay / Islev"]]
@@ -628,8 +638,8 @@ story.append(Spacer(1, 12*mm))
 # ── FOOTER LINE ───────────────────────────────────────────────────────────────
 story.append(HRFlowable(width="100%", thickness=1, color=LINE, spaceAfter=6))
 footer_row = Table(
-    [[Paragraph("<b>NEW IDEA EXCHANGE</b> · Teknik Mimari Raporu v2.4.0", FOOTER_TXT),
-      Paragraph("NIE Platform Muhendislik Ekibi · Haziran 2026 · Gizli",
+    [[Paragraph("<b>SABANCI HOLDİNG · NEW IDEA EXCHANGE</b> · Teknik Mimari Raporu v2.5.0", FOOTER_TXT),
+      Paragraph("Sabancı Holding NIE Platform Muhendislik Ekibi · Haziran 2026 · Gizli",
                 S("FR", fontSize=8, textColor=MUTED, fontName="Helvetica",
                   alignment=TA_RIGHT))]],
     colWidths=[(W-40*mm)/2]*2,

@@ -2391,6 +2391,7 @@ const navItems = [
   { id: "education", label: "Eğitim & Mentörlük", icon: "graduation-cap" },
   { id: "events", label: "Etkinlikler", icon: "calendar" },
   { id: "studio", label: "Stüdyo", icon: "layers" },
+  { id: "teams", label: "Ekipler", icon: "users-round" },
   { id: "profile", label: "Profil", icon: "user-round" },
   { id: "messages", label: "Mesajlar", icon: "message-square-text" },
   { id: "managerDashboard", label: "Yönetici Dashboardu", icon: "chart-no-axes-combined", managerOnly: true },
@@ -2637,7 +2638,12 @@ const initialClubs = [
     createdAt: "2026-05-10",
     members: ["u3", "p01", "p05"],
     memberCount: 3,
-    tags: ["Tenis", "Spor", "Sosyal"]
+    tags: ["Tenis", "Spor", "Sosyal"],
+    messages: [
+      { userId: "p01", body: "Bu cumartesi Sabancı Center kortlarında turnuva var, kayıtlar açıldı!", time: "09:10" },
+      { userId: "p05", body: "Harika, ben de eşleşme listesine yazıldım. Saat kaçta başlıyoruz?", time: "09:14" },
+      { userId: "u3", body: "10:00'da ısınma, 10:30'da ilk maçlar. Raketlerinizi unutmayın.", time: "09:20" }
+    ]
   },
   {
     id: "club-002",
@@ -2649,7 +2655,11 @@ const initialClubs = [
     createdAt: "2026-05-15",
     members: ["u1", "p03", "p05"],
     memberCount: 3,
-    tags: ["Kitap", "Edebiyat", "Kültür"]
+    tags: ["Kitap", "Edebiyat", "Kültür"],
+    messages: [
+      { userId: "u1", body: "Bu ayki kitabımız belli oldu, cuma günü ilk 100 sayfayı konuşalım mı?", time: "13:02" },
+      { userId: "p03", body: "Bana uyar, Mersin'den bağlanırım toplantıya.", time: "13:08" }
+    ]
   },
   {
     id: "club-003",
@@ -2661,7 +2671,10 @@ const initialClubs = [
     createdAt: "2026-06-01",
     members: ["u2", "p02"],
     memberCount: 2,
-    tags: ["Koşu", "Sağlık", "Spor"]
+    tags: ["Koşu", "Sağlık", "Spor"],
+    messages: [
+      { userId: "u2", body: "Pazar sabahı 07:00'de Caddebostan sahilinde buluşuyoruz, 10K koşacağız.", time: "18:40" }
+    ]
   },
   {
     id: "club-004",
@@ -2673,7 +2686,11 @@ const initialClubs = [
     createdAt: "2026-05-20",
     members: ["u7", "p02"],
     memberCount: 2,
-    tags: ["Tech", "AI", "UK"]
+    tags: ["Tech", "AI", "UK"],
+    messages: [
+      { userId: "u7", body: "We're hosting a small AI demo night next week at the London Tech Center, who's in?", time: "11:05" },
+      { userId: "p02", body: "Count me in, I'll bring the latest model benchmarks.", time: "11:12" }
+    ]
   },
   {
     id: "club-005",
@@ -2685,7 +2702,40 @@ const initialClubs = [
     createdAt: "2026-06-02",
     members: ["u10", "p04"],
     memberCount: 2,
-    tags: ["Environment", "Volunteering", "Texas"]
+    tags: ["Environment", "Volunteering", "Texas"],
+    messages: [
+      { userId: "u10", body: "Cleanup day at the Austin solar farm site is confirmed for Saturday morning.", time: "08:30" }
+    ]
+  },
+  {
+    id: "club-006",
+    name: "Temsa München Wanderclub",
+    description: "Wochenendwanderungen und Outdoor-Aktivitäten für Kolleginnen und Kollegen in München.",
+    category: "Spor",
+    country: "DE",
+    createdBy: "p14",
+    createdAt: "2026-06-08",
+    members: ["p14", "p21"],
+    memberCount: 2,
+    tags: ["Wandern", "Outdoor", "München"],
+    messages: [
+      { userId: "p14", body: "Diesen Samstag wandern wir zum Starnberger See, Treffpunkt ist um 8 Uhr.", time: "09:00" }
+    ]
+  },
+  {
+    id: "club-007",
+    name: "Çimsa Buñol Club de Lectura",
+    description: "Club de lectura mensual para empleados de la planta de Buñol y la oficina de Valencia.",
+    category: "Kültür & Sanat",
+    country: "ES",
+    createdBy: "p16",
+    createdAt: "2026-06-10",
+    members: ["p16", "p23"],
+    memberCount: 2,
+    tags: ["Lectura", "Cultura", "Buñol"],
+    messages: [
+      { userId: "p16", body: "Este mes leemos un libro sobre sostenibilidad industrial, ¿les parece bien el jueves?", time: "12:15" }
+    ]
   }
 ];
 
