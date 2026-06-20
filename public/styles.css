@@ -6651,15 +6651,23 @@ body[data-theme="dark"] .person-card {
 
 .affiliate-chip {
   flex: 0 0 auto;
-  min-width: 132px;
-  max-width: 190px;
+  min-width: 152px;
+  max-width: 220px;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 10px;
+  gap: 12px;
+  padding: 6px 8px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 850;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.affiliate-chip .company-logo.mini {
+  width: 60px;
+  height: 60px;
 }
 
 .affiliate-chip span {
@@ -6673,14 +6681,22 @@ body[data-theme="dark"] .person-card {
 .message-space-button.active,
 .person-card.active {
   border-color: color-mix(in srgb, var(--ink) 42%, transparent);
-  background: color-mix(in srgb, var(--ink) 8%, var(--surface));
+  background: transparent;
+}
+
+.affiliate-chip.active {
+  border-color: color-mix(in srgb, var(--ink) 42%, transparent) !important;
 }
 
 body[data-theme="dark"] .affiliate-chip.active,
 body[data-theme="dark"] .message-space-button.active,
 body[data-theme="dark"] .person-card.active {
-  background: #1a1a1a;
+  background: transparent;
   border-color: #f5f5f7;
+}
+
+body[data-theme="dark"] .affiliate-chip.active {
+  border-color: #f5f5f7 !important;
 }
 
 .company-logo {
@@ -7088,7 +7104,7 @@ body[data-theme="light"] .company-logo img {
   }
 
   .affiliate-chip {
-    min-width: 116px;
+    min-width: 146px;
   }
 
   .message-main-panel {

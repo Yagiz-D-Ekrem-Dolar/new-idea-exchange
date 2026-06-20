@@ -5,8 +5,8 @@
 \usepackage[turkish]{babel}
 \usepackage{geometry}
 \usepackage{array}
-\usepackage{longtable}
 \usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{amsmath}
@@ -15,16 +15,18 @@
 \usepackage{hyperref}
 \usepackage{titlesec}
 \usepackage{listings}
+\usepackage{xcolor}
 
 \geometry{top=22mm,bottom=24mm,left=20mm,right=20mm}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt}
 \setlist{nosep,leftmargin=16pt}
 \renewcommand{\arraystretch}{1.22}
+
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\small NEW IDEA EXCHANGE}
-\rhead{\small Kurumsal Ürün Raporu}
+\rhead{\small Teknik Rapor}
 \cfoot{\small \thepage}
 \hypersetup{colorlinks=false,pdfborder={0 0 0}}
 
@@ -38,21 +40,25 @@
   frame=single,
   breaklines=true,
   tabsize=2,
-  showstringspaces=false
+  showstringspaces=false,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape
 }
 
 \newcommand{\docline}{\noindent\rule{\textwidth}{0.4pt}}
-\newcommand{\metric}[2]{\textbf{#1} & #2\\}
-\newcommand{\bwbar}[2]{#1 & \rule{#2mm}{2mm}\\}
 \newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\statusok}{\textbf{Uygun}}
+\newcommand{\statusrisk}{\textbf{Risk}}
+\newcommand{\statusdebt}{\textbf{Teknik borç}}
 
 \begin{document}
 
 \begin{center}
-{\Large\bfseries Kurumsal İnovasyon Borsası ve Karar Destek Platformu}\\[4pt]
-{\large\bfseries Ürün, Teknik Mimari, Ekonomi Modeli, Entegrasyon ve Operasyon Raporu}\\[8pt]
+{\Large\bfseries NEW IDEA EXCHANGE}\\[3pt]
+{\large\bfseries Sabancı Kurumsal İnovasyon Borsası}\\[6pt]
+{\large Teknik Mimari, Mevcut Durum İncelemesi ve Sürdürülebilirlik Raporu}\\[8pt]
 \docline\\[6pt]
-{\small Sürüm: 1.0 \quad Tarih: 16 Haziran 2026 \quad Sınıflandırma: Kurum içi stratejik değerlendirme}
+{\small Tarih: 20 Haziran 2026 \quad Branch: \code{sabanci} \quad Kapsam: Kod incelemesi + teknik rapor}
 \end{center}
 
 \tableofcontents
@@ -60,1961 +66,662 @@
 
 \section{Yönetici Özeti}
 
-Bu doküman, kurum içi fikir, proje, araştırma, şikayet, veri, duyuru, ekip, ürünleşme ve ödül süreçlerini tek sistemde birleştiren platformun ürün ve teknik tanımını verir. Sistem, çalışan katkısını ölçülebilir varlıklara dönüştürür; fikirleri sanal piyasa mantığıyla fiyatlar; yöneticilere oy, hacim, risk, sahiplik ve ürünleşme göstergeleri sunar; ödül ve teşvikleri denetlenebilir muhasebe kayıtlarına bağlar.
+Bu rapor, \code{C:\textbackslash Users\textbackslash yozid\textbackslash Desktop\textbackslash A\textbackslash App} altında bulunan NEW IDEA EXCHANGE uygulamasının mevcut kod tabanına göre baştan hazırlanmıştır. İnceleme; proje yapısı, frontend mimarisi, state yönetimi, mock veri modeli, AI analiz endpoint'i, Vercel deployment yapısı, kullanıcı akışları, borsa mantığı, yönetici modülleri, dosya görüntüleme katmanı ve teknik borç alanlarını kapsar.
 
-Temel amaç, kurum içindeki dağınık yenilik enerjisini sayısal, denetlenebilir ve karar üretmeye uygun portföye çevirmektir. Çalışan fikri yalnızca metin olarak saklanmaz; fikir bir piyasa enstrümanı, ekip ihtiyacı, dosya paketi, veri ilişkisi, yorum geçmişi, karar kaydı, gündem bağlamı ve ürünleşme seviyesiyle birlikte yaşar.
+Uygulama, backend'i sınırlı olan fakat ürün demosu açısından geniş kapsamlı bir \textbf{vanilla JavaScript single page application} olarak çalışır. Ana kullanıcı deneyimi \code{public/app.js} içinde tutulur; Sabancı iştirakleri, kullanıcılar, fikirler, ekipler, duyurular, gündem, yarışmalar ve kulüp verileri \code{public/mockData.js} içinde modellenir. Sunucu tarafında iki görev vardır: statik dosya servis etmek ve fikir analizi için \code{/api/ai/analyze-idea} endpoint'ini çalıştırmak.
 
-\begin{longtable}{p{0.28\textwidth}p{0.64\textwidth}}
-\toprule
-\textbf{Başlık} & \textbf{Tanım}\\
-\midrule
-Ana varlık & Fikir, proje, araştırma ve şikayet kayıtları.\\
-Piyasa mantığı & Her kayıt, kurum içi sanal borsa varlığı olarak fiyat, hacim, değişim, elde tutulan lot ve trend skoruyla izlenir.\\
-Karar destek & AI skorları, topluluk desteği, yönetici onayı, risk notu, kategori performansı ve stüdyo etkisi birlikte değerlendirilir.\\
-Ödül mantığı & Katkı üreten, yatırım yapan, yorumlayan, dosya ekleyen veya çözüm yarışmasına katılan çalışanlara sanal bütçe ve ödül hakkı oluşur.\\
-Yönetişim & RBAC, yönetici panelleri, denetim kayıtları, KVKK uyum kontrolü, veri sınıflandırması ve manuel gündem onayı.\\
-Entegrasyon & SSO, HRIS, Active Directory, kurumsal veri ambarı, dosya depolama, bildirim, muhasebe ve satın alma sistemleriyle protokollü bağlantı.\\
-\bottomrule
-\end{longtable}
+Ürünün en güçlü tarafı, klasik öneri kutusu yerine fikirleri bir portföy varlığı gibi ele almasıdır. Fikirler fiyat, hacim, değişim, lot, destekçi, AI skoru, ekip bağlantısı, dosya bundle'ı ve ürünleşme seviyesiyle temsil edilir. Yönetici tarafı, yatırım/oy defteri, kategori performansı, karar kuyruğu ve depolama alanıyla desteklenir.
 
-Yönetici açısından sistemin değeri üç seviyede ortaya çıkar:
+Ana teknik riskler şunlardır:
 
 \begin{enumerate}
-  \item \textbf{Görünürlük:} Hangi fikrin kimden geldiği, kimlerin destek verdiği, hangi iştirak veya stüdyoda hızlandığı izlenir.
-  \item \textbf{Önceliklendirme:} Hacim, fiyat, oy, AI potansiyeli, risk, maliyet ve uygulanabilirlik birlikte sıralama üretir.
-  \item \textbf{Uygulamaya alma:} Ürünleşen fikirler ekip, dosya, ödül, bütçe ve karar kuruluna bağlanır.
+  \item \code{public/app.js} çok büyük ve monolitiktir; render, state, event handling, veri dönüşümü ve iş kuralları aynı dosyada birleşmiştir.
+  \item State içinde tekrar eden alanlar vardır; örneğin \code{investmentLedger}, \code{ledgerUserFilter}, \code{affiliationFilter} birden fazla kez tanımlanır.
+  \item Sabancı branch'inde halen bazı eski \code{İş NEW}, \code{is-new}, \code{Moka} veya eski organizasyon terminolojileri kalmıştır.
+  \item Hızlı değerlendirme ekranı görsel olarak \textit{Al/Alma} dilini kullanır; ancak tam borsa Al/Sat defteriyle birebir aynı transaction modeline bağlı değildir.
+  \item Gerçek persistence yoktur; çoğu akış tarayıcı belleğinde çalışan demo state ile sınırlıdır.
+  \item Otomatik test altyapısı yoktur; mevcut güvence \code{node --check} ve manuel browser smoke test ile sınırlıdır.
 \end{enumerate}
 
-\section{Kapsam}
+Bu risklere rağmen uygulama demo/MVP gösterimi için güçlü bir hikaye sunar. Canlı ürünleşme için önerilen ilk hamle, kodun modülerleştirilmesi, shared data/service katmanı kurulması, state modelinin sadeleştirilmesi ve API mantığının tek kaynaklı hale getirilmesidir.
 
-\subsection{Kapsam İçindeki Fonksiyonlar}
+\section{İnceleme Kapsamı}
 
-\begin{longtable}{p{0.22\textwidth}p{0.34\textwidth}p{0.34\textwidth}}
+İnceleme yerel çalışma ağacı üzerinden yapılmıştır. İncelenen ana dosyalar:
+
+\begin{longtable}{p{0.28\textwidth}p{0.62\textwidth}}
 \toprule
-\textbf{Modül} & \textbf{Kullanıcı Fonksiyonu} & \textbf{Yönetici Fonksiyonu}\\
+\textbf{Dosya} & \textbf{Rol}\\
 \midrule
-Dashboard & Portföy özeti, kişisel bakiye, odak fikirler. & Kurum geneli görünüm, performans karşılaştırması.\\
-Borsa & Fikir/proje varlığı alma, satma, izleme, yorumlama. & Hacim, fiyat, yatırım davranışı, kategori sinyali.\\
-Veri ve Bilgi & Veri seti, araştırma, doküman ve kaynak inceleme. & Kritik veri paylaşımı, kalite ve önem seviyesi takibi.\\
-Gündem & Kurumsal gündem akışını filtreleme. & Manuel gündem ekleme, düzenleme, etiketleme.\\
-Duyuru & Kurum, iştirak, lokasyon ve departman bazlı duyuru görme. & Kapsamlı duyuru yayınlama, yorum izleme.\\
-Sosyal & Gönderi, anket, görsel, link, liderlik tablosu. & Davranış sinyali ve katılım yoğunluğu izleme.\\
-Yarışma & Çözüm yarışmalarına katılım. & Ödül, terfi görüşmesi, bütçe ve shortlist yönetimi.\\
-Stüdyo & Ürünleşme alanlarını görme. & Stüdyo popülerlik, tarih, durum ve kategori yönetimi.\\
-Ekipler & Ekipleri, üyeleri, açık rolleri ve bağlı projeyi görme. & Ekip kurma, rol atama, başvuru ve sinerji analizi.\\
-Geliştirilmiş Ürünler & İlerletilmiş fikirleri ürün seviyesinde izleme. & Durum, oy, kategori, gelişim seviyesi yönetimi.\\
-Yönetici Dashboardu & Görünmez. & Oy geçmişi, kullanıcı hareketleri, en yüksek oy alan varlıklar, kategori özeti.\\
-Yönetici Depolama & Görünmez. & Dosya, not, kaynak, karar kurulu dokümanı saklama.\\
-AI Host & Platform içi özet, fikir taslağı, trend yorumu. & Karar desteği, portföy özeti, risk ve ürünleşme önerisi.\\
+\code{package.json} & Proje metadata'sı ve \code{node server.js} başlangıç script'i.\\
+\code{server.js} & Local Node HTTP server, statik dosya servisi, Groq destekli AI analiz endpoint'i.\\
+\code{api/ai/analyze-idea.js} & Vercel serverless function karşılığı.\\
+\code{vercel.json} & API rewrite ve SPA fallback routing.\\
+\code{public/index.html} & SPA shell, fontlar, Lucide, mock data ve app script yükleme sırası.\\
+\code{public/mockData.js} & Şirketler, kullanıcılar, fikirler, ekipler, yarışmalar, nav ve başlangıç veri modeli.\\
+\code{public/app.js} & Uygulamanın ana state, render, event, işlem ve UI mantığı.\\
+\code{public/styles.css} & Tema, responsive grid, borsa, sosyal, stüdyo, ekip ve dosya görüntüleme stilleri.\\
+\code{public/assets/*} & Sabancı/iştirak logoları, ülke bayrakları ve görsel varlıklar.\\
+\code{reports/*} & Önceki rapor çıktıları ve bu yeni LaTeX rapor kaynağı.\\
 \bottomrule
 \end{longtable}
 
-\subsection{Kapsam Dışı Varsayımlar}
+Bu rapor kodu değiştirmeyi değil, kodun gerçek halini açıklamayı amaçlar. Rapor içinde belirtilen eksikler, uygulamayı kıran zorunlu hatalar değil; ürünleşme ve bakım kalitesi açısından dikkate alınması gereken teknik borçlardır.
 
-Sistem müşteri bankacılığı verisini doğrudan işlemez. Müşteri verisi ancak kurum tarafından anonimleştirilmiş, maskelenmiş, yetkili ve amaç sınırlı veri seti olarak sisteme alınır. Platformun ana kişisel veri nesnesi çalışan profilidir; çalışan profili de HRIS/SSO sisteminden asgari alanlarla senkronize edilir.
+\section{Uygulamanın Ürün Tanımı}
 
-\section{Ürün Mimarisinin Temel İlkeleri}
+NEW IDEA EXCHANGE, kurum içi fikir, proje, araştırma, şikayet, veri, duyuru, ekip ve ürünleşme süreçlerini tek bir etkileşim alanında toplar. Uygulama Sabancı ekosistemine göre markalanmıştır; iştirakler, ülkeler, şehirler ve kampüsler mock veriyle temsil edilir.
 
-\subsection{Tek Kayıt, Çok Bağlam}
-
-Bir fikir kaydı yalnızca başlık ve açıklama değildir. Aşağıdaki bağlamlarla birlikte saklanır:
-
-\begin{itemize}
-  \item kategori: proje, fikir, araştırma, şikayet,
-  \item şirket/iştirak, ülke, şehir, kampüs, departman,
-  \item görünürlük: holding geneli, iştirak, lokasyon, ekip,
-  \item anonimlik tercihi,
-  \item AI skorları,
-  \item topluluk skoru,
-  \item borsa fiyatı,
-  \item hacim,
-  \item lot miktarı,
-  \item yorumlar,
-  \item dosya paketi,
-  \item ekip bağlantısı,
-  \item stüdyo bağlantısı,
-  \item ürünleşme seviyesi,
-  \item karar kurulu sonucu.
-\end{itemize}
-
-\subsection{Sinyal Birleştirme}
-
-Karar, tek metrikle alınmaz. Sistem beş sinyali birlikte kullanır:
+Ürünün ana fikri şudur:
 
 \[
-K = w_a A + w_c C + w_m M + w_r (100-R) + w_s S
+\text{Fikir} \rightarrow \text{Borsa Varlığı} \rightarrow \text{Ekip/Stüdyo} \rightarrow \text{Ürünleşme} \rightarrow \text{Yönetici Kararı}
 \]
 
-\begin{tabularx}{\textwidth}{p{0.12\textwidth}X}
-\toprule
-\textbf{Sembol} & \textbf{Açıklama}\\
-\midrule
-$K$ & karar öncelik skoru.\\
-$A$ & AI potansiyel skoru.\\
-$C$ & topluluk destek skoru.\\
-$M$ & piyasa sinyali: fiyat, hacim ve değişim birleşimi.\\
-$R$ & risk skoru. Risk arttıkça karar skoru düşer.\\
-$S$ & stratejik uyum skoru.\\
-$w_i$ & kurum tarafından ayarlanan ağırlıklar.\\
-\bottomrule
-\end{tabularx}
+Bu zincirde fikir yalnızca metin değildir. Her fikir:
 
-Önerilen başlangıç ağırlığı:
+\begin{enumerate}
+  \item başlık, özet, problem, çözüm ve KPI bilgisi,
+  \item şirket/ülke/kampüs bağlantısı,
+  \item AI skoru ve stratejik skor,
+  \item piyasa fiyatı, değişim, hacim ve lot bilgisi,
+  \item yorumlar ve destekçi sayısı,
+  \item dosya bundle'ı,
+  \item ekip/stüdyo bağlantısı,
+  \item ürünleşme aşaması
+\end{enumerate}
 
-\[
-w_a = 0.30,\quad w_c = 0.20,\quad w_m = 0.20,\quad w_r = 0.15,\quad w_s = 0.15
-\]
+ile birlikte yaşar.
 
-\section{Borsa Mantığı}
+\section{Genel Mimari}
 
-\subsection{Amaç}
+\subsection{Çalışma Modeli}
 
-Borsa, çalışanların fikirleri yalnızca beğenmesini değil, sanal bütçeleriyle bilinçli öncelik beyanı yapmasını sağlar. Beğeni düşük maliyetli bir sinyaldir; lot almak daha güçlü sinyaldir. Bu ayrım yöneticilere hangi fikirlerin yalnızca popüler göründüğünü, hangilerinin gerçekten güven topladığını gösterir.
+Proje iki runtime modeliyle çalışabilir:
 
-\subsection{Varlık Tanımı}
+\begin{enumerate}
+  \item \textbf{Local runtime:} \code{node server.js} ile port \code{4173} üzerinde statik sunum ve AI endpoint.
+  \item \textbf{Vercel runtime:} Statik dosyalar + \code{api/ai/analyze-idea.js} serverless function + \code{vercel.json} rewrite.
+\end{enumerate}
 
-Her fikir borsada bir enstrümandır:
-
-\begin{longtable}{p{0.24\textwidth}p{0.62\textwidth}}
-\toprule
-\textbf{Alan} & \textbf{Tanım}\\
-\midrule
-Ticker & Kısa piyasa kodu. Örnek: NIE-01.\\
-Fiyat & Sanal para cinsinden bir lotun güncel değeri.\\
-Lot & Kullanıcının aldığı/sattığı destek birimi.\\
-Hacim & Dönem içinde gerçekleşen işlem yoğunluğu.\\
-Değişim & Fiyat eğilimi ve piyasa ilgisini gösteren yüzdesel hareket.\\
-Destekçi & Varlığa oy, yorum, yatırım veya dosya katkısı yapan kullanıcı.\\
-Kategori & Proje, fikir, araştırma veya şikayet.\\
-Durum & Yeni, incelemede, pilot, uygulanmış, reddedilmiş.\\
-Bundle & PDF, PPTX, XLSX, CSV, görsel, metin veya bağlantı paketi.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Başlangıç Fiyatı}
-
-Bir varlık ilk listelendiğinde başlangıç fiyatı kalite ve ilgi sinyallerinden türetilir:
-
-\[
-P_0 = \max\left(P_{\min},\ \operatorname{round}(1.8A + 0.9C + 1.6U)\right)
-\]
-
-\begin{tabularx}{\textwidth}{p{0.16\textwidth}X}
-\toprule
-\textbf{Sembol} & \textbf{Açıklama}\\
-\midrule
-$P_0$ & başlangıç fiyatı.\\
-$P_{\min}$ & minimum liste fiyatı. Kurumsal sistemde önerilen değer 48; işlem ekranında güvenlik alt sınırı 20.\\
-$A$ & AI skoru.\\
-$C$ & topluluk skoru.\\
-$U$ & destekçi sayısı.\\
-\bottomrule
-\end{tabularx}
-
-Bu formül, zayıf fikirlerin yalnızca yüksek destekçi sayısıyla aşırı pahalı açılmasını engeller; güçlü ama yeni fikirlerin ise tamamen görünmez kalmasını önler.
-
-\subsection{Alım Satım İşlemi}
-
-Alım işlemi:
-
-\[
-B_{u,t+1} = B_{u,t} - qP_t
-\]
-
-\[
-H_{u,i,t+1} = H_{u,i,t} + q
-\]
-
-Satım işlemi:
-
-\[
-B_{u,t+1} = B_{u,t} + q_sP_t
-\]
-
-\[
-H_{u,i,t+1} = H_{u,i,t} - q_s
-\]
-
-\begin{tabularx}{\textwidth}{p{0.12\textwidth}X}
-\toprule
-\textbf{Sembol} & \textbf{Açıklama}\\
-\midrule
-$B_u$ & kullanıcının sanal bütçesi.\\
-$H_{u,i}$ & kullanıcının ilgili fikirde tuttuğu lot.\\
-$q$ & alınan lot.\\
-$q_s$ & satılan lot.\\
-$P_t$ & işlem anındaki fiyat.\\
-\bottomrule
-\end{tabularx}
-
-Kısa kod karşılığı:
+Basitleştirilmiş akış:
 
 \begin{lstlisting}
-buy:
-  budget -= price * quantity
-  holding[idea] += quantity
-  volume += 120 * quantity
-  change += 0.7 * quantity
-
-sell:
-  holding[idea] -= quantity
-  budget += price * quantity
-  volume += 80 * quantity
-  change -= 0.3 * quantity
+Browser
+  -> /index.html
+  -> /mockData.js
+  -> /app.js
+  -> render(state)
+  -> user action
+  -> mutate state
+  -> render(state)
 \end{lstlisting}
 
-\subsection{Üretim Fiyat Motoru}
+AI analiz akışı:
 
-Güncel fiyat, başlangıç fiyatından sonra olay bazlı çalışır. Her alım, satım, yorum, dosya ekleme, yönetici işareti, AI skor güncellemesi ve ürünleşme aşaması fiyat motoruna olay olarak girer.
+\begin{lstlisting}
+Browser
+  -> POST /api/ai/analyze-idea
+  -> Groq API varsa model yaniti
+  -> Groq yoksa deterministic demo fallback
+  -> JSON analysis response
+\end{lstlisting}
 
-\[
-P_{t+1}= \max(P_{\min}, P_t \cdot e^{I_t})
-\]
+\subsection{Dosya Bazlı Sorumluluklar}
 
-\[
-I_t = \lambda\frac{Q_b-Q_s}{L_i}
-      + \beta T_i
-      + \gamma\frac{\Delta A_i}{100}
-      + \delta G_i
-      - \rho R_i
-\]
-
-\begin{longtable}{p{0.16\textwidth}p{0.68\textwidth}}
+\begin{longtable}{p{0.24\textwidth}p{0.34\textwidth}p{0.32\textwidth}}
 \toprule
-\textbf{Sembol} & \textbf{Tanım}\\
+\textbf{Katman} & \textbf{Mevcut Sorumluluk} & \textbf{Değerlendirme}\\
 \midrule
-$Q_b$ & dönemsel alım lotu.\\
-$Q_s$ & dönemsel satım lotu.\\
-$L_i$ & ilgili varlığın likidite katsayısı. Yeni ve küçük hacimli fikirlerde hareketi sınırlar.\\
-$T_i$ & trend skoru: yorum, destek, görüntülenme, paylaşım, dosya açma.\\
-$\Delta A_i$ & AI skorundaki değişim.\\
-$G_i$ & ürünleşme aşaması katsayısı. Pilot ve uygulama aşaması fiyatı güçlendirir.\\
-$R_i$ & risk katsayısı. KVKK, uyum, maliyet ve itibar riski yükseldikçe fiyatı baskılar.\\
-$\lambda,\beta,\gamma,\delta,\rho$ & risk komitesi tarafından belirlenen parametreler.\\
+HTML shell & Root container, fontlar, Lucide, script yükleme. & Basit ve yeterli.\\
+CSS & Tema, layout, responsive davranış, kartlar, terminal/borsa UI, dosya modalları. & Geniş fakat parçalı; ileride CSS modülleri önerilir.\\
+Mock data & Şirket master data, kullanıcılar, fikirler, ekipler, yarışmalar, nav. & Demo için güçlü; production için API/DB gerekir.\\
+App JS & State, render, event delegation, iş kuralları, filtreler, işlem mantığı. & MVP için hızlı; sürdürülebilirlik için bölünmeli.\\
+Node server & Static serving + AI endpoint. & Lokal demo için yeterli.\\
+Vercel API & AI endpoint'in serverless kopyası. & Mantık server.js ile tekrarlı.\\
 \bottomrule
 \end{longtable}
 
-Önerilen parametre seti:
+\section{Frontend Mimari Analizi}
 
-\begin{longtable}{p{0.16\textwidth}p{0.18\textwidth}p{0.54\textwidth}}
-\toprule
-\textbf{Parametre} & \textbf{Değer} & \textbf{Gerekçe}\\
-\midrule
-$\lambda$ & 0.080 & Alım/satım dengesini fiyatın ana sürücüsü yapar.\\
-$\beta$ & 0.018 & Sosyal etkiyi fiyatı manipüle etmeyecek seviyede tutar.\\
-$\gamma$ & 0.025 & AI skor revizyonlarını fiyat hareketine dahil eder.\\
-$\delta$ & 0.035 & Ürünleşme aşamasını güçlü ama tek belirleyici olmayan sinyal yapar.\\
-$\rho$ & 0.045 & Riskin fiyatı baskılamasını sağlar.\\
-\bottomrule
-\end{longtable}
+\subsection{SPA Yaklaşımı}
 
-\subsection{Bitcoin ile Benzerlik ve Fark}
+Uygulama framework kullanmadan tek sayfa uygulama olarak yazılmıştır. Tüm sayfalar string template üreten \code{render*} fonksiyonlarıyla oluşturulur. Kullanıcı etkileşimleri document seviyesinde event delegation ile yakalanır.
 
-Benzerlik:
+Ana render fonksiyonu:
 
-\begin{itemize}
-  \item fiyat, katılımcı davranışından etkilenir;
-  \item sınırlı kaynak algısı vardır;
-  \item güven ve beklenti değer üretir;
-  \item geçmiş işlemler denetlenebilir kayıtta tutulur.
-\end{itemize}
+\begin{lstlisting}
+function render() {
+  document.body.dataset.theme = state.theme;
+  if (state.page === "products") {
+    state.page = "studio";
+    state.studioTab = "products";
+  }
+  translateAllInState();
+  app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
+  if (window.lucide) window.lucide.createIcons();
+  initAIBubbleDraggability();
+}
+\end{lstlisting}
 
-Fark:
+Bu yaklaşım hızlı demo üretir; ancak tüm DOM her render'da yeniden yazıldığı için büyük veri setlerinde performans ve focus kaybı riski oluşturur.
 
-\begin{itemize}
-  \item burada gerçek para yoktur; değer kurum içi öncelik sinyalidir;
-  \item arz, şirket politikası ve fikir yaşam döngüsüne göre ayarlanır;
-  \item fiyat manipülasyonunu önlemek için yönetişim katsayıları uygulanır;
-  \item varlığın değeri dış piyasadan değil kurum içi etki potansiyelinden gelir;
-  \item kazanç, nakit piyasaya değil ödül, tanınma, bütçe ve kariyer fırsatına bağlanır.
-\end{itemize}
+\subsection{State Yönetimi}
 
-\subsection{Likidite ve Manipülasyon Kontrolü}
+State global \code{state} nesnesiyle tutulur. Bu nesne login, piyasa, portföy, filtreler, ekipler, kulüpler, gündem, depolama, AI asistan, dosya görüntüleme ve kullanıcı tercihlerini kapsar.
 
-Piyasa kötüye kullanımını azaltmak için:
+Avantajlar:
 
 \begin{enumerate}
-  \item günlük alım üst limiti,
-  \item tek varlıkta maksimum portföy oranı,
-  \item departman içi koordineli alım tespiti,
-  \item yeni listelenen varlıkta fiyat hareket tavanı,
-  \item yönetici kararı bekleyen varlıkta geçici işlem kilidi,
-  \item reddedilen varlıkta işlem yasağı,
-  \item olağan dışı hacimde otomatik inceleme,
-  \item yorum ve dosya kalitesi düşükse sosyal sinyal ağırlığını azaltma
+  \item Debug etmek kolaydır.
+  \item Demo davranışları hızlıca eklenir.
+  \item Backend olmadan çok sayıda ekran tutarlı gösterilebilir.
 \end{enumerate}
 
-uygulanır.
-
-\section{Sanal Para, Ödül ve Geri Alım}
-
-\subsection{Bütçe Üretimi}
-
-Her kullanıcıya başlangıç bütçesi tanımlanır. Bütçe kurum içi teşvik aracıdır, finansal varlık değildir.
-
-\[
-B_{u,0}=10{,}000
-\]
-
-Ek bütçe üreten olaylar:
-
-\begin{longtable}{p{0.35\textwidth}p{0.18\textwidth}p{0.35\textwidth}}
-\toprule
-\textbf{Olay} & \textbf{Ödül} & \textbf{Koşul}\\
-\midrule
-Yeni fikir ekleme & 250--500 & Başlık, açıklama, kategori, etki ve dosya paketi tam ise.\\
-Araştırma/veri ekleme & 300--700 & Kaynak, tarih, kapsam ve kullanılabilirlik doğrulanırsa.\\
-Şikayet ekleme & 150--350 & Genel süreç iyileştirmesine dönüştürülebilir ise.\\
-Yarışma başvurusu & 500--1.500 & Yarışma kurallarına uygun çözüm önerisi ise.\\
-Pilot başarı & 2.000--10.000 & KPI hedefi gerçekleşirse.\\
-Ürünleşme & 5.000--25.000 & Karar kurulu onayı ve uygulanmış etki varsa.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Ödül Hakedişi}
-
-Kullanıcının dönem sonu kazancı üç parçadan oluşur:
-
-\[
-E_u = E_{idea,u} + E_{trade,u} + E_{governance,u}
-\]
-
-\begin{tabularx}{\textwidth}{p{0.20\textwidth}X}
-\toprule
-\textbf{Bileşen} & \textbf{Açıklama}\\
-\midrule
-$E_{idea,u}$ & fikir üretimi, dosya ekleme, araştırma paylaşımı ve ürünleşme başarısı.\\
-$E_{trade,u}$ & doğru fikirleri erken destekleme ve portföy getirisi.\\
-$E_{governance,u}$ & kalite yorumları, risk uyarıları, değerlendirme katkısı.\\
-\bottomrule
-\end{tabularx}
-
-\subsection{Hediyelerin Kullanımı}
-
-Ödül, dört kanala bağlanır:
+Riskler:
 
 \begin{enumerate}
-  \item \textbf{Katalog ödülü:} tablet, eğitim bütçesi, konferans hakkı, ekip ekipmanı.
-  \item \textbf{Kariyer ödülü:} terfi kurulu görüşmesi, mentorluk, görünürlük puanı.
-  \item \textbf{Proje ödülü:} pilot bütçesi, ek kaynak, dış danışmanlık hakkı.
-  \item \textbf{Takdir ödülü:} yönetim sunumu, sertifika, kurum içi rozet.
+  \item State şeması büyüdükçe tutarlılık kontrolü zorlaşır.
+  \item Aynı alanların birden fazla tanımlanması son değerin önceki değeri ezmesine neden olur.
+  \item Browser refresh sonrası kullanıcı işlemleri kalıcı değildir.
+  \item Çok sayıda modül aynı state alanına yazdığı için yan etki takibi zorlaşır.
 \end{enumerate}
-
-\subsection{Geri Alım ve İade}
-
-Hediye veya ödül hakkı doğrudan nakde çevrilmez. Geri alım şu kayıtlarla yürütülür:
-
-\begin{longtable}{p{0.24\textwidth}p{0.64\textwidth}}
-\toprule
-\textbf{Aşama} & \textbf{İşleyiş}\\
-\midrule
-Talep & Kullanıcı katalogdan ödül seçer veya proje bütçesi talep eder.\\
-Uygunluk kontrolü & Sistem hakediş puanı, dönem kotası, etik ihlal ve açık inceleme durumunu kontrol eder.\\
-Yönetici onayı & Departman veya inovasyon yöneticisi talebi onaylar.\\
-İK/Satın alma işlemi & Fiziksel hediye, eğitim veya etkinlik hakkı ilgili operasyon sistemiyle yürütülür.\\
-Muhasebe sınıflandırması & Vergisel veya bordro etkisi varsa kayıt oluşturulur.\\
-Teslim ve kapanış & Teslim belgesi veya dijital onay kaydı saklanır.\\
-İade/iptal & Teslim gerçekleşmediyse puan iade edilir. Teslim gerçekleştiyse kurum politikası uygulanır.\\
-\bottomrule
-\end{longtable}
-
-İade muhasebesi:
-
-\[
-R_{u,t+1}=R_{u,t}-V_g
-\]
-
-\[
-B_{u,t+1}=B_{u,t}+V_{refund}
-\]
-
-Burada $V_g$ kullanılan ödül değerini, $V_{refund}$ iade edilen sanal bütçeyi gösterir. Fiziksel ödül teslim edildiyse iade ancak kurum satın alma ve İK prosedürüyle yapılır.
-
-\section{Karar ve Ürünleşme Süreci}
-
-\subsection{Yaşam Döngüsü}
-
-\begin{longtable}{p{0.22\textwidth}p{0.58\textwidth}p{0.12\textwidth}}
-\toprule
-\textbf{Aşama} & \textbf{Kriter} & \textbf{Çıktı}\\
-\midrule
-Taslak & Kullanıcı başlık, problem, çözüm ve kapsam girer. & Ön kayıt.\\
-Listelenmiş & Minimum veri tamamlanır, risk barajı geçilir. & Borsa varlığı.\\
-Topluluk incelemesi & Oy, yorum, al/sat ve dosya etkileşimi oluşur. & Sinyal verisi.\\
-Yönetici incelemesi & Karar kurulu skor, risk ve bütçe etkisini görür. & Onay/ret/pilot.\\
-Stüdyo eşleştirme & Fikir uygun stüdyo ve ekiple bağlanır. & Çalışma alanı.\\
-Pilot & KPI, süre, lokasyon, sahip ve bütçe tanımlanır. & Pilot planı.\\
-Ürünleşme & Pilot sonucu hedefi karşılar. & Ürün kaydı.\\
-Yaygınlaştırma & İş birimine devredilir. & Operasyonel uygulama.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Ürünleşme Seviyesi}
-
-Ürünleşme skoru:
-
-\[
-G = 0.25D + 0.20E + 0.20K + 0.15B + 0.10R + 0.10Y
-\]
-
-\begin{tabularx}{\textwidth}{p{0.12\textwidth}X}
-\toprule
-\textbf{Sembol} & \textbf{Açıklama}\\
-\midrule
-$D$ & dosya paketi olgunluğu.\\
-$E$ & ekip tamamlanma oranı.\\
-$K$ & karar kurulu uygunluğu.\\
-$B$ & borsa güven sinyali.\\
-$R$ & risk azaltım seviyesi.\\
-$Y$ & yaygınlaştırma potansiyeli.\\
-\bottomrule
-\end{tabularx}
 
 \section{Veri Modeli}
 
-\subsection{Çekirdek Tablolar}
+\subsection{Şirket ve Coğrafya Modeli}
 
-\begin{longtable}{p{0.26\textwidth}p{0.18\textwidth}p{0.44\textwidth}}
-\toprule
-\textbf{Tablo} & \textbf{Anahtar} & \textbf{Amaç}\\
-\midrule
-users & user\_id & Çalışan kimliği, rol, birim, profil, yetki.\\
-companies & company\_id & Holding, iştirak, ülke, şehir, kampüs ve departman hiyerarşisi.\\
-ideas & idea\_id & Fikir, proje, araştırma ve şikayet ana kaydı.\\
-idea\_files & file\_id & PDF, PPTX, XLSX, CSV, görsel, doküman paketleri.\\
-market\_assets & asset\_id & Ticker, fiyat, hacim, arz, değişim, durum.\\
-market\_orders & order\_id & Alım/satım emri, miktar, fiyat, zaman.\\
-wallets & wallet\_id & Kullanıcı bütçesi, kilitli bakiye, harcanabilir bakiye.\\
-holdings & holding\_id & Kullanıcının varlık bazlı lot bilgisi.\\
-comments & comment\_id & Fikir, veri, duyuru ve sosyal yorumları.\\
-votes & vote\_id & Destek, oy, değerlendirme geçmişi.\\
-studios & studio\_id & Ürünleşme alanları.\\
-teams & team\_id & Ekip, rol, üye, bağlı proje.\\
-agenda & agenda\_id & Manuel kurumsal gündem kayıtları.\\
-announcements & announcement\_id & Duyuru, kapsam, hedef kitle, yorum.\\
-admin\_storage & storage\_id & Yönetici notları, karar dosyaları, kaynak arşivi.\\
-ai\_reports & report\_id & AI skor, risk, öneri, özet ve açıklama.\\
-reward\_ledger & reward\_id & Ödül hakedişi, kullanım, iptal, iade.\\
-audit\_logs & audit\_id & Kim, neyi, ne zaman değiştirdi.\\
-\bottomrule
-\end{longtable}
+\code{public/mockData.js} içinde \code{affiliationCompanies} listesi Sabancı Holding ve iştiraklerini temsil eder. Her şirket; logo, kısa ad, ülke, şehir, kampüs ve departman alanlarıyla modellenir.
 
-\subsection{Alan Seviyesi Örnek}
-
-\begin{lstlisting}
-Idea {
-  id: string
-  title: string
-  summary: string
-  category: Project | Idea | Research | Complaint
-  companyId: string
-  authorId: string
-  visibility: Holding | Company | Campus | Department
-  anonymity: Named | SemiAnonymous | Anonymous
-  aiScore: number
-  communityScore: number
-  riskScore: number
-  status: New | Review | Pilot | Done | Rejected
-  marketTicker: string
-  marketPrice: number
-  marketVolume: number
-  files: FileRef[]
-}
-\end{lstlisting}
-
-\section{Kurumsal Entegrasyon Protokolleri}
-
-\subsection{Kimlik ve Profil}
-
-Kimlik doğrulama kurumun mevcut kimlik sağlayıcısından alınır. Platform şifre saklamaz.
-
-\begin{longtable}{p{0.22\textwidth}p{0.24\textwidth}p{0.42\textwidth}}
-\toprule
-\textbf{İhtiyaç} & \textbf{Protokol} & \textbf{Açıklama}\\
-\midrule
-SSO & SAML 2.0 veya OIDC & Çalışan tek oturumla giriş yapar. MFA kimlik sağlayıcı tarafında zorunlu tutulur.\\
-Profil senkronizasyonu & SCIM 2.0 & Ad, soyad, e-posta, unvan, departman, yönetici, lokasyon alanları güncellenir.\\
-Grup/rol & AD/LDAP grup eşleştirme & Yönetici, admin, çalışan, karar kurulu, İK, satın alma rolleri atanır.\\
-Oturum & OAuth2 token + refresh & Kısa ömürlü erişim tokenı, güvenli yenileme.\\
-Yetki & RBAC + ABAC & Rol ve bağlama göre görünürlük. Örnek: iştirak yöneticisi yalnız kendi iştirakini görür.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Veritabanı Bağlantısı}
-
-Kurum veritabanı doğrudan uygulama istemcisine açılmaz. Entegrasyon, servis katmanı ve olay kuyruğu üzerinden yürütülür.
-
-\begin{longtable}{p{0.24\textwidth}p{0.25\textwidth}p{0.39\textwidth}}
-\toprule
-\textbf{Senaryo} & \textbf{Yöntem} & \textbf{Kontrol}\\
-\midrule
-Çalışan profili okuma & HRIS API / SCIM & Minimum alan, amaç sınırlama, günlük senkron.\\
-Departman hiyerarşisi & Master Data API & Tek kaynak, versiyonlu şema.\\
-Ödül muhasebesi & ERP/SAP REST veya dosya aktarımı & Onay sonrası kayıt; manuel düzeltme audit log.\\
-Satın alma talebi & Procurement API & Katalog ödülleri sipariş sürecine bağlanır.\\
-Veri ambarı raporu & ETL/ELT job & Anonim, toplulaştırılmış, PII dışı veri.\\
-Eski sistem entegrasyonu & SFTP + imzalı CSV & Şema hash, dosya imzası, teslim alındı kaydı.\\
-Olay yayını & Kafka / RabbitMQ / Webhook & Fikir oluşturuldu, ödül onaylandı, pilot başladı gibi olaylar.\\
-\bottomrule
-\end{longtable}
-
-\subsection{API Tasarımı}
-
-\begin{lstlisting}
-POST /api/ideas
-GET  /api/ideas?company=&category=&status=
-POST /api/market/orders
-GET  /api/market/assets/{ticker}
-POST /api/rewards/redeem
-POST /api/agenda
-GET  /api/admin/analytics
-POST /api/ai/analyze-idea
-\end{lstlisting}
-
-API ilkeleri:
-
-\begin{itemize}
-  \item tüm mutasyonlar idempotency key destekler;
-  \item tüm istekler correlation id taşır;
-  \item yazma işlemleri audit log üretir;
-  \item PII alanları maskeleme politikasından geçer;
-  \item servisler arası çağrılarda mTLS kullanılır;
-  \item kritik kararlar çift onay gerektirir.
-\end{itemize}
-
-\section{Güvenlik ve Uyumluluk}
-
-\subsection{Veri Sınıflandırması}
-
-\begin{longtable}{p{0.20\textwidth}p{0.32\textwidth}p{0.36\textwidth}}
-\toprule
-\textbf{Sınıf} & \textbf{Örnek} & \textbf{Kontrol}\\
-\midrule
-Genel kurum içi & Gündem başlığı, yarışma duyurusu. & Kurum çalışanı erişimi.\\
-Departman sınırlı & Lokasyon, ekip planı, iç süreç notu. & Departman/iştirak RBAC.\\
-Gizli & Yönetici karar notu, bütçe, risk değerlendirmesi. & Manager/admin erişimi, audit log.\\
-Kişisel veri & Çalışan adı, e-posta, profil fotoğrafı. & KVKK amacı, silme hakkı, minimum veri.\\
-Hassas veri & Sağlık, müşteri, finansal kişisel veri. & Varsayılan yasak; anonimleştirilmiş veri seti dışında kabul edilmez.\\
-\bottomrule
-\end{longtable}
-
-\subsection{KVKK Kontrolleri}
-
-KVKK uyum modeli:
+Bu yapı, aşağıdaki filtreleri mümkün kılar:
 
 \begin{enumerate}
-  \item veri işleme amacı kayıt sırasında gösterilir;
-  \item çalışan profili için gerekli minimum alan alınır;
-  \item anonim fikir seçeneği yazar kimliğini son kullanıcıdan gizler;
-  \item yasal inceleme gerektiren içerik otomatik risk kuyruğuna girer;
-  \item kişisel veri içeren dosya yüklemelerinde DLP taraması yapılır;
-  \item silme, düzeltme ve erişim talepleri kayıt altına alınır;
-  \item tüm admin erişimi denetlenir.
+  \item ülke portalı,
+  \item iştirak filtresi,
+  \item şehir/kampüs bazlı duyuru,
+  \item ekip ve kişi eşleştirme,
+  \item şirket logosu gösterimi.
 \end{enumerate}
 
-\subsection{Yetki Matrisi}
+\subsection{Kullanıcı Modeli}
 
-\begin{longtable}{p{0.28\textwidth}p{0.12\textwidth}p{0.14\textwidth}p{0.14\textwidth}p{0.14\textwidth}}
+\code{demoUsers} ve \code{peopleDirectory} iki farklı kullanıcı bağlamı üretir. \code{demoUsers} login ve rol denemesi için kullanılır; \code{peopleDirectory} sosyal, mesajlaşma, ekip üyeliği ve profil kartları için kullanılır.
+
+Kullanıcıda görülen ana alanlar:
+
+\begin{longtable}{p{0.26\textwidth}p{0.58\textwidth}}
 \toprule
-\textbf{İşlem} & \textbf{Çalışan} & \textbf{Yönetici} & \textbf{Admin} & \textbf{Karar Kurulu}\\
+\textbf{Alan} & \textbf{Amaç}\\
 \midrule
-Fikir ekleme & Evet & Evet & Evet & Evet\\
-Borsa al/sat & Evet & Evet & Evet & Evet\\
-Gündem görüntüleme & Evet & Evet & Evet & Evet\\
-Gündem ekleme & Hayır & Evet & Evet & Hayır\\
-Yönetici depolama & Hayır & Evet & Evet & Evet\\
-Kullanıcı yetkisi & Hayır & Hayır & Evet & Hayır\\
-Karar kuruluna alma & Hayır & Evet & Evet & Evet\\
-Ödül onayı & Hayır & Evet & Evet & Evet\\
-Audit log okuma & Hayır & Kısıtlı & Evet & Kısıtlı\\
+\code{id} & Kullanıcı ve ilişki anahtarı.\\
+\code{name} & Profil, mesaj ve yatırım defteri gösterimi.\\
+\code{companyId} & İştirak ve ülke kapsamı.\\
+\code{role} & Profil ve sosyal/ekip görünümü.\\
+\code{isManager}, \code{isAdmin} & Yönetici modüllerine erişim.\\
+\code{voteCreditBalance} & Destek/oy ve cüzdan davranışı.\\
+\code{supportedIdeas} & Kullanıcının desteklediği fikirler.\\
 \bottomrule
 \end{longtable}
 
-\section{AI Host}
+\subsection{Fikir Modeli}
 
-\subsection{Kapsam}
+Fikirler \code{initialIdeas} içinde başlar, \code{state.ideas} olarak kopyalanır ve borsa modüllerinde işlenir. Fikir nesnesi hem öneri hem finansal varlık hem ürün adayıdır.
 
-AI Host dış internetten otomatik haber çekmez. Sistem yalnız platform içi kayıtlar, yönetici notları, duyurular, veri setleri, fikirler, ürünler, yorumlar ve işlem sinyalleri üzerinden özet üretir. Bu tercih üç nedenle gereklidir:
+Ana alanlar:
 
-\begin{enumerate}
-  \item veri güvenliği;
-  \item kararların denetlenebilir kurum içi kaynağa dayanması;
-  \item harici haber gürültüsünün kurum içi önceliklendirmeyi bozmasını engellemek.
-\end{enumerate}
-
-\subsection{AI Skoru}
-
-AI analizi aşağıdaki alt skorları üretir:
-
-\begin{longtable}{p{0.22\textwidth}p{0.62\textwidth}}
-\toprule
-\textbf{Skor} & \textbf{Anlam}\\
-\midrule
-Potansiyel & Fikrin stratejik değer ve etki ihtimali.\\
-Etki & Ölçülebilir verimlilik, gelir, maliyet, müşteri deneyimi veya risk azaltımı.\\
-Risk & KVKK, uyum, itibar, operasyon ve maliyet riski.\\
-Uygulanabilirlik & Süre, ekip, maliyet ve bağımlılık açısından gerçekçilik.\\
-Eksik veri & Pilot için gereken ancak girilmemiş alanlar.\\
-\bottomrule
-\end{longtable}
-
-AI çıktısı kararın yerine geçmez; karar vericinin okuma maliyetini düşürür.
-
-\subsection{RAG ve Kaynak Sınırı}
-
-Üretim mimarisinde AI bağlamı şu sırayla toplanır:
-
-\begin{enumerate}
-  \item ilgili fikir kaydı,
-  \item dosya paketinden çıkarılmış metin,
-  \item aynı kategori içindeki benzer fikirler,
-  \item yönetici notları,
-  \item karar kurulu geçmişi,
-  \item platform içi veri setleri,
-  \item ilgili duyuru ve gündem kayıtları.
-\end{enumerate}
-
-Harici web araması varsayılan olarak kapalıdır. Açılması gerekirse ayrı yetki, kaynak beyaz listesi, kayıt ve veri sınıflandırma gerekir.
-
-\section{Dosya ve Bundle Yönetimi}
-
-\subsection{Desteklenen Formatlar}
-
-\begin{longtable}{p{0.18\textwidth}p{0.30\textwidth}p{0.40\textwidth}}
-\toprule
-\textbf{Format} & \textbf{Kullanım} & \textbf{İşleme}\\
-\midrule
-PDF & Rapor, mevzuat, karar notu. & Metin çıkarma, sayfa önizleme, DLP.\\
-PPT/PPTX & Sunum, ürün anlatımı. & Slayt önizleme, başlık çıkarma.\\
-XLS/XLSX & Finans, tahmin, veri tablosu. & Tablo önizleme, formül riski kontrolü.\\
-CSV & Ham veri, metrik, dışa aktarım. & Şema tanıma, satır örneği, PII tarama.\\
-DOC/DOCX & Detay doküman. & Metin ve başlık çıkarma.\\
-PNG/JPG/SVG & Görsel, akış, logo, ekran görüntüsü. & Önizleme, boyut kontrolü.\\
-TXT/MD & Teknik not, kapsam. & Metin indeksleme.\\
-URL & Kaynak bağlantı. & Alan adı kontrolü, erişim etiketi.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Dosya Güvenliği}
-
-Dosya yükleme boru hattı:
-
-\[
-Upload \rightarrow VirusScan \rightarrow DLP \rightarrow Metadata \rightarrow Storage \rightarrow Index
-\]
-
-Kurallar:
-
-\begin{itemize}
-  \item yürütülebilir dosya kabul edilmez;
-  \item makrolu ofis dosyaları karantinaya alınır;
-  \item müşteri verisi içeren dosya otomatik incelemeye düşer;
-  \item yönetici depolama dosyaları yalnız yetkili role görünür;
-  \item dosya silme fiziksel değil, önce yumuşak silme olarak yapılır;
-  \item saklama süresi veri sınıfına göre belirlenir.
-\end{itemize}
-
-\section{Yönetici Dashboardu}
-
-\subsection{Ana Metrikler}
-
-\begin{longtable}{p{0.28\textwidth}p{0.55\textwidth}p{0.09\textwidth}}
-\toprule
-\textbf{Metrik} & \textbf{Amaç} & \textbf{Tip}\\
-\midrule
-Toplam oy/lot & Piyasa katılımının genel hacmi. & Sayı\\
-Toplam değer & Sanal işlem büyüklüğü. & Para\\
-En güçlü fikir & En yüksek oy ve hacim taşıyan varlık. & Sıra\\
-Aktif kullanıcı & İşlem geçmişinde görünen benzersiz kişi. & Sayı\\
-Kategori performansı & Alan bazlı potansiyel ve talep. & Bar\\
-Kullanıcı geçmişi & Kim neye ne kadar destek verdi. & Tablo\\
-\bottomrule
-\end{longtable}
-
-\subsection{Yönetici İçgörüleri}
-
-Yönetici panelinde önerilen yorumlama:
-
-\begin{itemize}
-  \item yüksek AI skoru + düşük piyasa hacmi: iletişim veya görünürlük problemi;
-  \item düşük AI skoru + yüksek hacim: popüler ama riskli fikir;
-  \item yüksek hacim + çok departmanlı destek: hızlı pilot adayı;
-  \item yüksek yorum + düşük alım: tartışmalı veya belirsiz fikir;
-  \item yüksek satış: güven kaybı veya daha iyi alternatif sinyali;
-  \item yüksek dosya açılma + düşük yorum: araştırma gerektiriyor.
-\end{itemize}
-
-\section{Gündem, Duyuru ve Mesajlaşma}
-
-\subsection{Gündem}
-
-Gündem, otomatik haber akışı değildir. Gündem kayıtları yönetici tarafından manuel oluşturulur. Her kayıt:
-
-\begin{itemize}
-  \item başlık,
-  \item açıklama,
-  \item kategori,
-  \item tarih,
-  \item etiket,
-  \item yazar,
-  \item düzenleme geçmişi
-\end{itemize}
-
-taşır. Kullanıcı yalnız görüntüler ve filtreler. Yönetici ekler, düzenler ve kapatır.
-
-\subsection{Duyuru Ölçekleri}
-
-\begin{longtable}{p{0.24\textwidth}p{0.62\textwidth}}
-\toprule
-\textbf{Ölçek} & \textbf{Açıklama}\\
-\midrule
-Holding geneli & Tüm çalışanlara görünür.\\
-İştirak geneli & Tek şirket veya iştirak kapsamındadır.\\
-Ülke & Çok ülkeli iştiraklerde ülke bazlıdır.\\
-Şehir & Lokasyon yoğunluğu için şehir bazlıdır.\\
-Yerleşke/kampüs & Bina, genel müdürlük, şube veya tesis bazlıdır.\\
-Departman & Fonksiyon veya ekip bazlıdır.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Mesajlaşma}
-
-Mesajlaşma iki biçimdedir:
-
-\begin{enumerate}
-  \item grup alanı: holding, iştirak, stüdyo veya ekip odası;
-  \item direkt mesaj: kullanıcılar arası konuşma.
-\end{enumerate}
-
-Mesaj türleri:
-
-\begin{itemize}
-  \item düz metin,
-  \item görsel,
-  \item dosya,
-  \item anket,
-  \item link,
-  \item sistem bildirimi.
-\end{itemize}
-
-\section{Stüdyo, Ekip ve Ürün Modeli}
-
-\subsection{Stüdyo}
-
-Stüdyo, bir ürünleşme alanıdır. Stüdyo içinde fikirler, ekipler, ürünler ve açık roller izlenir. Filtreler:
-
-\begin{itemize}
-  \item kategori,
-  \item popülerlik,
-  \item tarih,
-  \item durum.
-\end{itemize}
-
-\subsection{Ekip}
-
-Ekip, belirli fikir veya ürün için çalışan rollü gruptur. Her ekip:
-
-\begin{itemize}
-  \item ad,
-  \item açıklama,
-  \item alan,
-  \item bağlı fikir/proje,
-  \item üyeler,
-  \item açık roller,
-  \item sinerji skoru,
-  \item mesaj geçmişi
-\end{itemize}
-
-taşır.
-
-\subsection{Sinerji Skoru}
-
-\[
-Y = 0.35R + 0.25C + 0.20D + 0.20A
-\]
-
-\begin{tabularx}{\textwidth}{p{0.12\textwidth}X}
-\toprule
-\textbf{Sembol} & \textbf{Açıklama}\\
-\midrule
-$R$ & rol tamamlama oranı.\\
-$C$ & yetkinlik kapsama skoru.\\
-$D$ & departman çeşitliliği.\\
-$A$ & aktif katılım skoru.\\
-\bottomrule
-\end{tabularx}
-
-\section{Liderlik Tablosu}
-
-Liderlik tablosu üç görünüm sunar:
-
-\begin{longtable}{p{0.22\textwidth}p{0.62\textwidth}}
-\toprule
-\textbf{Kategori} & \textbf{Açıklama}\\
-\midrule
-Girişimci & Fikir, proje, araştırma veya şikayet üreterek değer yaratan kullanıcılar.\\
-Borsacı & Doğru fikirleri alıp satarak portföy değeri yükselten kullanıcılar.\\
-Tümü & Girişimci ve borsacı katkısının birleşik toplamı.\\
-\bottomrule
-\end{longtable}
-
-Toplam skor:
-
-\[
-L_u = \alpha E_{idea,u} + \beta E_{trade,u}
-\]
-
-Önerilen ağırlık:
-
-\[
-\alpha = 0.55,\quad \beta = 0.45
-\]
-
-Bu dağılım, yalnız işlem yapan kullanıcıyı değil, gerçek fikir üreticisini de öne çıkarır.
-
-\section{Yarışma Modülü}
-
-Yarışmalar, belirli problem alanlarında çözüm üretimini hızlandırır. Her yarışma:
-
-\begin{itemize}
-  \item sektör,
-  \item problem tanımı,
-  \item ödül tipi,
-  \item son tarih,
-  \item sponsor birim,
-  \item katılımcı sayısı,
-  \item shortlist,
-  \item başvuru kuralları
-\end{itemize}
-
-taşır.
-
-Ödül tipleri:
-
-\begin{itemize}
-  \item para ödülü,
-  \item tablet veya ekipman,
-  \item terfi kurul görüşmesi,
-  \item mentorluk,
-  \item pilot bütçesi,
-  \item yönetim sunumu.
-\end{itemize}
-
-\section{Operasyonel Akışlar}
-
-\subsection{Fikir Ekleme}
-
-\begin{enumerate}
-  \item Kullanıcı kategori seçer.
-  \item Başlık ve tek cümle özet girer.
-  \item Problem, çözüm, etki, maliyet, süre ve başarı metriği girer.
-  \item Şirket, departman ve görünürlük seçilir.
-  \item Anonimlik tercihi yapılır.
-  \item Dosya eklenir.
-  \item AI analiz üretir.
-  \item Varlık borsaya açılır.
-  \item İlk bütçe ödülü kullanıcıya yazılır.
-\end{enumerate}
-
-\subsection{Yönetici İncelemesi}
-
-\begin{enumerate}
-  \item Yönetici dashboardundan yüksek sinyalli fikir seçer.
-  \item Oy geçmişi ve kullanıcı destek dağılımını inceler.
-  \item Dosya paketini açar.
-  \item AI özetini ve risk notunu okur.
-  \item Stüdyo ve ekip uygunluğunu kontrol eder.
-  \item Pilot, beklet, reddet veya ürünleştir kararı verir.
-  \item Karar audit log'a yazılır.
-\end{enumerate}
-
-\section{Analitik ve Raporlama}
-
-\subsection{Standart Raporlar}
-
-\begin{longtable}{p{0.30\textwidth}p{0.50\textwidth}p{0.10\textwidth}}
-\toprule
-\textbf{Rapor} & \textbf{İçerik} & \textbf{Sıklık}\\
-\midrule
-Portföy Sağlığı & açık fikirler, pilotlar, uygulananlar, reddedilenler. & Haftalık\\
-Borsa Hareketi & fiyat, hacim, en çok yükselen/düşen. & Günlük\\
-Katılım & aktif kullanıcı, yorum, dosya açma, sosyal etkileşim. & Haftalık\\
-Ürünleşme & stüdyo, ekip, açık rol, pilot KPI. & Haftalık\\
-Ödül Hakedişi & kullanıcı bazlı ödül, katalog talebi, iade. & Aylık\\
-Risk ve Uyum & KVKK uyarısı, reddedilen fikir, denetim kaydı. & Aylık\\
-\bottomrule
-\end{longtable}
-
-\subsection{Örnek Siyah-Beyaz Performans Grafiği}
-
-\begin{center}
-\begin{tabular}{p{0.26\textwidth}p{0.54\textwidth}r}
-\toprule
-Kategori & Gösterim & Skor\\
-\midrule
-Operasyon & \rule{95mm}{2mm} & 95\\
-Yapay Zeka & \rule{88mm}{2mm} & 88\\
-Sürdürülebilirlik & \rule{76mm}{2mm} & 76\\
-FinTech & \rule{81mm}{2mm} & 81\\
-Müşteri Deneyimi & \rule{69mm}{2mm} & 69\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\section{Performans, Ölçek ve SLA}
-
-\begin{longtable}{p{0.28\textwidth}p{0.20\textwidth}p{0.40\textwidth}}
-\toprule
-\textbf{Metrik} & \textbf{Hedef} & \textbf{Açıklama}\\
-\midrule
-Uygulama erişilebilirliği & 99.9\% & Planlı bakım hariç.\\
-API P95 gecikme & $<250$ ms & Kimlik ve network gecikmesi hariç.\\
-Borsa işlem yazımı & $<500$ ms & Emir defterine kayıt süresi.\\
-AI analiz dönüşü & $<15$ sn & Model sağlayıcı yüküne bağlı.\\
-Dosya önizleme & $<5$ sn & 20 MB altı dosya için.\\
-Audit log yazımı & eşzamanlı & Kritik mutasyonla aynı işlem sınırında.\\
-Eşzamanlı kullanıcı & 10.000+ & Yatay ölçeklenebilir mimari.\\
-\bottomrule
-\end{longtable}
-
-\section{Gözlemlenebilirlik}
-
-Üretim ortamında her kritik işlem şu kayıtları üretir:
-
-\begin{itemize}
-  \item request id,
-  \item user id,
-  \item role,
-  \item company id,
-  \item action,
-  \item resource id,
-  \item before/after hash,
-  \item latency,
-  \item result,
-  \item error code.
-\end{itemize}
-
-Kritik alarm kuralları:
-
-\begin{longtable}{p{0.34\textwidth}p{0.22\textwidth}p{0.32\textwidth}}
-\toprule
-\textbf{Alarm} & \textbf{Eşik} & \textbf{Aksiyon}\\
-\midrule
-AI hata oranı & 5 dakika içinde $>10\%$ & Fallback cevap, teknik ekibe alarm.\\
-Al/sat hata oranı & 5 dakika içinde $>2\%$ & Emir yazımı geçici kilit.\\
-Yetkisiz erişim & 10 dakika içinde $>20$ & Güvenlik kuyruğu.\\
-Dosya DLP ihlali & tek olay & Dosya karantina.\\
-Hacim anomalisi & ortalamanın 5 katı & Varlık inceleme.\\
-\bottomrule
-\end{longtable}
-
-\section{Felaket Kurtarma}
-
-\begin{longtable}{p{0.20\textwidth}p{0.20\textwidth}p{0.48\textwidth}}
-\toprule
-\textbf{Konu} & \textbf{Hedef} & \textbf{Yöntem}\\
-\midrule
-RPO & 15 dakika & Veritabanı sürekli yedek ve WAL arşivi.\\
-RTO & 4 saat & İkinci bölgeye otomatik kurulum planı.\\
-Dosya yedeği & 24 saat & Object storage versioning.\\
-Audit log & kayıpsız & Append-only log ve ayrı saklama.\\
-AI servis kesintisi & kesintisiz temel akış & Fallback analiz ve manuel inceleme.\\
-\bottomrule
-\end{longtable}
-
-\section{Kurumsal Veri Tabanı ile Çalışma Modeli}
-
-\subsection{Doğrudan Bağlanmama İlkesi}
-
-Platform, ana bankacılık veya kritik kurum sistemlerine istemci tarafından doğrudan bağlanmaz. Tüm entegrasyonlar servis katmanında ve güvenlik duvarı arkasında gerçekleşir. Uygulama tarafı yalnız platform API'sine konuşur.
-
-\subsection{Veri Akışı}
-
-\[
-Corporate\ System \rightarrow Integration\ Gateway \rightarrow Validation \rightarrow Platform\ DB
-\]
-
-\[
-Platform\ Event \rightarrow Approval \rightarrow Corporate\ API \rightarrow Corporate\ Record
-\]
-
-\subsection{Örnek Senaryo: Ödül Onayı}
-
-\begin{enumerate}
-  \item Kullanıcı tablet ödülü talep eder.
-  \item Platform reward\_ledger kaydı açar.
-  \item Yönetici onay verir.
-  \item İK uygunluk kontrolü yapar.
-  \item Satın alma sistemine API çağrısı yapılır.
-  \item Teslim durumu platforma webhook ile döner.
-  \item Kullanıcı ödül geçmişi kapanır.
-\end{enumerate}
-
-\subsection{Örnek Senaryo: Profil Güncelleme}
-
-\begin{enumerate}
-  \item HRIS'te departman değişir.
-  \item SCIM olayı platforma gelir.
-  \item Kullanıcının company, department, manager alanları güncellenir.
-  \item Görünürlük izinleri yeniden hesaplanır.
-  \item Eski departman verisine erişim sınırlanır.
-\end{enumerate}
-
-\section{Riskler ve Kontroller}
-
-\begin{longtable}{p{0.28\textwidth}p{0.34\textwidth}p{0.26\textwidth}}
-\toprule
-\textbf{Risk} & \textbf{Etkisi} & \textbf{Kontrol}\\
-\midrule
-Popülerlik manipülasyonu & Yanlış fikirlerin öne çıkması. & Lot limiti, anomali tespiti, departman ağırlığı.\\
-KVKK ihlali & Hukuki ve itibar riski. & DLP, otomatik risk, manuel uyum kuyruğu.\\
-Yönetici verisi sızıntısı & Karar notu görünür olabilir. & RBAC, admin storage izolasyonu, audit.\\
-Ödül kötüye kullanımı & Bütçe ve motivasyon kaybı. & Hakediş kontrolü, onay, iade ledger.\\
-AI yanıltıcı özet & Yanlış karar. & Kaynak gösterimi, insan onayı, skor açıklaması.\\
-Dosya zararlısı & Uç nokta riski. & Virüs tarama, makro karantina.\\
-Eski sistem entegrasyon hatası & Eksik profil veya ödül kaydı. & Retry, idempotency key, mutabakat raporu.\\
-\bottomrule
-\end{longtable}
-
-\section{Sayısal Fiyatlandırma Örnekleri}
-
-\subsection{Başlangıç Fiyatı Örneği}
-
-Bir fikir aşağıdaki skorlarla listelenmiş olsun:
-
-\begin{center}
-\begin{tabular}{lr}
-\toprule
-AI skoru ($A$) & 92\\
-Topluluk skoru ($C$) & 74\\
-Destekçi sayısı ($U$) & 38\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-Başlangıç fiyatı:
-
-\[
-P_0 = \max(48,\operatorname{round}(1.8 \cdot 92 + 0.9 \cdot 74 + 1.6 \cdot 38))
-\]
-
-\[
-P_0 = \max(48,\operatorname{round}(165.6 + 66.6 + 60.8)) = 293
-\]
-
-Bu fikir ilk listelendiğinde bir lot fiyatı 293 sanal para olur. Fiyatın yüksek açılmasının nedeni yalnız AI skoru değildir; destekçi sayısı ve topluluk skoru da fiyatı yükseltir. Bu, erken dönemde hem kalite hem talep sinyalini birlikte dikkate alır.
-
-\subsection{Alım Etkisi Örneği}
-
-Kullanıcının bakiyesi 10.000, fikir fiyatı 293, alınan lot 8 olsun:
-
-\[
-Maliyet = 293 \cdot 8 = 2{,}344
-\]
-
-\[
-B_{son}=10{,}000-2{,}344=7{,}656
-\]
-
-\[
-H_{son}=0+8=8
-\]
-
-İşlem sonrası hacim ve değişim etkisi:
-
-\[
-\Delta V = 120 \cdot 8 = 960
-\]
-
-\[
-\Delta C = 0.7 \cdot 8 = 5.6
-\]
-
-Bu işlem fikir üzerinde iki sinyal üretir: finansal ilgi ve güven artışı. Yönetici dashboardu bu hareketi kullanıcı bazlı oy geçmişinde gösterir.
-
-\subsection{Satım Etkisi Örneği}
-
-Aynı kullanıcı 3 lot satarsa:
-
-\[
-Gelir = 293 \cdot 3 = 879
-\]
-
-\[
-B_{son}=7{,}656+879=8{,}535
-\]
-
-\[
-H_{son}=8-3=5
-\]
-
-Satış sonrası değişim etkisi:
-
-\[
-\Delta V = 80 \cdot 3 = 240
-\]
-
-\[
-\Delta C = -0.3 \cdot 3 = -0.9
-\]
-
-Satışın değişim üzerindeki negatif etkisi alıştan daha düşüktür. Bunun nedeni, satışın her zaman güven kaybı anlamına gelmemesidir; kullanıcı portföy dengelemesi, ödül kilidi, nakit ihtiyacı veya daha güçlü fikre geçiş nedeniyle satış yapabilir.
-
-\subsection{Fiyat Hareket Tavanı}
-
-Kurum içi piyasada aşırı oynaklık istenmez. Günlük fiyat hareketi aşağıdaki bantla sınırlandırılır:
-
-\[
-P_{t+1} \in [0.85P_t,\ 1.25P_t]
-\]
-
-Yönetici kurulunun kritik duyuru, pilot onayı veya ret kararında bant geçici olarak daraltılabilir:
-
-\[
-P_{t+1} \in [0.95P_t,\ 1.05P_t]
-\]
-
-Amaç, karar öncesi bilgi asimetrisiyle oluşabilecek manipülasyonu sınırlamaktır.
-
-\section{Emir Defteri ve Mutabakat}
-
-\subsection{Emir Durumları}
-
-\begin{longtable}{p{0.22\textwidth}p{0.58\textwidth}p{0.12\textwidth}}
-\toprule
-\textbf{Durum} & \textbf{Açıklama} & \textbf{Bakiye}\\
-\midrule
-created & Kullanıcı emri oluşturdu. & Değişmez\\
-validated & Yetki, bakiye, lot ve varlık durumu kontrol edildi. & Kilitlenir\\
-executed & Emir fiyat üzerinden gerçekleşti. & Güncellenir\\
-settled & Ledger, holding ve hacim mutabakatı tamamlandı. & Kesinleşir\\
-rejected & Bakiye, yetki veya varlık durumu uygun değil. & Değişmez\\
-reversed & Hatalı işlem denetimle geri alındı. & Ters kayıt\\
-\bottomrule
-\end{longtable}
-
-\subsection{Çift Kayıt Mantığı}
-
-Her işlem iki kayıt üretir:
-
-\begin{enumerate}
-  \item cüzdan kaydı: kullanıcının harcanabilir bakiyesi ve kilitli bakiyesi;
-  \item piyasa kaydı: varlık hacmi, fiyat etkisi, lot dağılımı.
-\end{enumerate}
-
-İşlem tutarlılığı:
-
-\[
-\sum Debit = \sum Credit
-\]
-
-Örnek alım muhasebesi:
-
-\begin{longtable}{p{0.28\textwidth}p{0.20\textwidth}p{0.20\textwidth}p{0.20\textwidth}}
-\toprule
-\textbf{Kayıt} & \textbf{Borç} & \textbf{Alacak} & \textbf{Açıklama}\\
-\midrule
-Kullanıcı bütçesi & 2.344 & 0 & Harcanabilir bakiye azalır.\\
-Fikir destek havuzu & 0 & 2.344 & Varlığa destek yazılır.\\
-Holding lotu & 8 lot & 0 & Kullanıcı portföyüne lot eklenir.\\
-\bottomrule
-\end{longtable}
-
-Örnek satım muhasebesi:
-
-\begin{longtable}{p{0.28\textwidth}p{0.20\textwidth}p{0.20\textwidth}p{0.20\textwidth}}
-\toprule
-\textbf{Kayıt} & \textbf{Borç} & \textbf{Alacak} & \textbf{Açıklama}\\
-\midrule
-Fikir destek havuzu & 879 & 0 & Destek değeri azalır.\\
-Kullanıcı bütçesi & 0 & 879 & Harcanabilir bakiye artar.\\
-Holding lotu & 0 & 3 lot & Kullanıcı portföyünden lot düşer.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Mutabakat Raporu}
-
-Her gün sonunda aşağıdaki kontroller çalışır:
-
-\begin{enumerate}
-  \item market\_orders toplamı ile investment\_ledger toplamı eşit mi;
-  \item kullanıcı holding toplamı, varlık bazlı dolaşımdaki lotu aşıyor mu;
-  \item ödül ledger'ı ile cüzdan hareketleri uyumlu mu;
-  \item iptal ve iade kayıtları ters hareket üretmiş mi;
-  \item reddedilen varlıkta açık emir kalmış mı;
-  \item kilitli bakiyeler süresi dolduğu halde çözülmemiş mi.
-\end{enumerate}
-
-\section{Event Kataloğu}
-
-\subsection{Ürün Olayları}
-
-Sistem olay güdümlü çalışır. Her olay, hem canlı arayüz güncellemesi hem de analitik veri seti için kullanılır.
-
-\begin{longtable}{p{0.30\textwidth}p{0.34\textwidth}p{0.24\textwidth}}
-\toprule
-\textbf{Event} & \textbf{Ne Zaman Oluşur} & \textbf{Tüketici}\\
-\midrule
-idea.created & Yeni fikir kaydedildiğinde. & Borsa, AI, bildirim.\\
-idea.scored & AI analiz tamamlandığında. & Dashboard, karar kurulu.\\
-idea.rejected & Uyum veya yönetici ret verdiğinde. & Borsa, audit, bildirim.\\
-market.order.created & Al/sat emri verildiğinde. & Emir motoru.\\
-market.order.executed & Emir gerçekleştiğinde. & Cüzdan, hacim, grafik.\\
-market.asset.repriced & Fiyat yeniden hesaplandığında. & Borsa arayüzü, raporlar.\\
-agenda.published & Yönetici gündem yayınladığında. & Bildirim, gündem akışı.\\
-storage.item.added & Yönetici kaynak eklediğinde. & Admin arşiv, AI bağlamı.\\
-team.created & Yeni ekip kurulduğunda. & Stüdyo, ürünleşme.\\
-reward.earned & Kullanıcı ödül hakkı kazandığında. & Liderlik, cüzdan.\\
-reward.redeemed & Ödül kullanıldığında. & İK, satın alma, muhasebe.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Event Şeması}
-
-\begin{lstlisting}
-{
-  "eventId": "evt_...",
-  "type": "market.order.executed",
-  "version": 1,
-  "actorId": "user_...",
-  "companyId": "company_...",
-  "resourceId": "idea_...",
-  "occurredAt": "2026-06-16T12:00:00Z",
-  "correlationId": "req_...",
-  "payload": {},
-  "hash": "sha256:..."
-}
-\end{lstlisting}
-
-Event kaydı değiştirilemez. Hatalı işlem düzeltilecekse yeni ters kayıt oluşturulur. Bu yaklaşım denetim ve geriye dönük raporlama için gereklidir.
-
-\section{API Sözleşme Detayları}
-
-\subsection{Fikir Oluşturma}
-
-\begin{lstlisting}
-POST /api/ideas
-Authorization: Bearer <access-token>
-Idempotency-Key: <uuid>
-
-{
-  "title": "...",
-  "summary": "...",
-  "category": "Project",
-  "companyId": "is-new",
-  "visibility": "Holding",
-  "anonymity": "Named",
-  "problem": "...",
-  "solution": "...",
-  "impact": "High",
-  "cost": "Medium",
-  "files": ["file_1", "file_2"]
-}
-\end{lstlisting}
-
-Başarılı yanıt:
-
-\begin{lstlisting}
-201 Created
-{
-  "ideaId": "idea_...",
-  "ticker": "NIE-42",
-  "initialPrice": 214,
-  "aiStatus": "queued",
-  "marketStatus": "listed"
-}
-\end{lstlisting}
-
-\subsection{Alım Satım}
-
-\begin{lstlisting}
-POST /api/market/orders
-Authorization: Bearer <access-token>
-Idempotency-Key: <uuid>
-
-{
-  "assetId": "idea_...",
-  "side": "BUY",
-  "quantity": 8,
-  "orderType": "MARKET"
-}
-\end{lstlisting}
-
-Başarılı yanıt:
-
-\begin{lstlisting}
-200 OK
-{
-  "orderId": "ord_...",
-  "status": "settled",
-  "executedPrice": 293,
-  "executedQuantity": 8,
-  "walletBalance": 7656,
-  "holding": 8
-}
-\end{lstlisting}
-
-\subsection{Ödül Kullanma}
-
-\begin{lstlisting}
-POST /api/rewards/redeem
-Authorization: Bearer <access-token>
-Idempotency-Key: <uuid>
-
-{
-  "rewardId": "tablet-pro",
-  "quantity": 1,
-  "deliveryPreference": "office"
-}
-\end{lstlisting}
-
-Yanıt:
-
-\begin{lstlisting}
-202 Accepted
-{
-  "redemptionId": "red_...",
-  "status": "manager_approval_required",
-  "requiredApprovers": ["manager", "hr"]
-}
-\end{lstlisting}
-
-\section{Ödül Muhasebesi ve Vergisel Kontrol}
-
-\subsection{Ödül Sınıfları}
-
-\begin{longtable}{p{0.24\textwidth}p{0.32\textwidth}p{0.32\textwidth}}
-\toprule
-\textbf{Sınıf} & \textbf{Muhasebe Yaklaşımı} & \textbf{Kontrol}\\
-\midrule
-Manevi takdir & Bordro etkisi yok. & Rozet, sertifika, görünürlük.\\
-Eğitim hakkı & Eğitim bütçesi. & İK onayı, fatura.\\
-Fiziksel hediye & Ayni menfaat. & Vergi ve bordro kontrolü.\\
-Para ödülü & Ücret benzeri işlem olabilir. & Bordro ve mali müşavir kontrolü.\\
-Proje bütçesi & Departman/proje maliyeti. & Bütçe merkezi, satın alma onayı.\\
-Terfi görüşmesi & İK süreci. & Performans sistemiyle ilişki.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Hakediş Kilidi}
-
-Ödüller anında kullanılabilir hale gelmez. Kritik durumlarda hakediş kilidi uygulanır:
-
-\begin{itemize}
-  \item fikir uyum incelemesindeyse,
-  \item piyasa manipülasyon şüphesi varsa,
-  \item kullanıcı hakkında açık etik inceleme varsa,
-  \item ödül kotası dolduysa,
-  \item pilot sonucu henüz doğrulanmadıysa.
-\end{itemize}
-
-Kilit açma:
-
-\[
-AvailableReward = EarnedReward - LockedReward - RedeemedReward
-\]
-
-\section{Kurumsal Raporlama Veri Martı}
-
-\subsection{Analitik Tablolar}
-
-\begin{longtable}{p{0.26\textwidth}p{0.56\textwidth}p{0.10\textwidth}}
-\toprule
-\textbf{Tablo} & \textbf{İçerik} & \textbf{Yenileme}\\
-\midrule
-fact\_idea\_activity & fikir görüntüleme, yorum, dosya açma, oy, al/sat. & Saatlik\\
-fact\_market\_orders & emir, fiyat, miktar, işlem sonucu. & Anlık\\
-fact\_reward & hakediş, kullanım, iptal, iade. & Günlük\\
-fact\_decision & yönetici kararı, süre, sonuç. & Günlük\\
-dim\_employee & kullanıcı, departman, lokasyon, rol. & Günlük\\
-dim\_company & holding/iştirak/lokasyon hiyerarşisi. & Günlük\\
-dim\_idea & kategori, durum, risk, stüdyo. & Saatlik\\
-\bottomrule
-\end{longtable}
-
-\subsection{Üst Yönetim Göstergeleri}
-
-\begin{longtable}{p{0.34\textwidth}p{0.54\textwidth}}
-\toprule
-\textbf{Gösterge} & \textbf{Yorum}\\
-\midrule
-Fikirden pilota dönüşüm oranı & Portföy kalitesi ve yönetici karar hızını gösterir.\\
-Pilot başarı oranı & Uygulamaya alınan fikirlerin gerçek etkisini gösterir.\\
-Ortalama karar süresi & Darboğazın yöneticide mi ekipte mi olduğunu gösterir.\\
-İştirak bazlı katılım & Kültürel yayılım ve iletişim başarısını gösterir.\\
-Kategori bazlı ROI & Hangi alanların değer ürettiğini gösterir.\\
-Ödül kullanım oranı & Teşvik sisteminin çalışan tarafından karşılık bulup bulmadığını gösterir.\\
-Anonim katkı oranı & Psikolojik güvenlik seviyesine işaret eder.\\
-\bottomrule
-\end{longtable}
-
-\section{Yönetici Karar Senaryoları}
-
-\subsection{Senaryo 1: Yüksek AI, Düşük Borsa Hacmi}
-
-Durum:
-
-\begin{itemize}
-  \item AI skoru 94;
-  \item topluluk skoru 42;
-  \item borsa hacmi düşük;
-  \item dosya paketi tam;
-  \item yorum az.
-\end{itemize}
-
-Yorum:
-
-Fikir teknik veya stratejik olarak güçlüdür fakat çalışan kitlesi tarafından anlaşılmamış olabilir. Yönetici, fikri gündeme veya duyuruya bağlayarak görünürlük artırmalıdır. Alternatif olarak fikir çok uzmanlık gerektiriyorsa ilgili stüdyoya aktarılmalıdır.
-
-Karar:
-
-\begin{enumerate}
-  \item stüdyo eşleştirme,
-  \item uzman yorum talebi,
-  \item kısa açıklayıcı duyuru,
-  \item 7 günlük yeniden ölçüm.
-\end{enumerate}
-
-\subsection{Senaryo 2: Düşük AI, Yüksek Hacim}
-
-Durum:
-
-\begin{itemize}
-  \item AI skoru 58;
-  \item borsa hacmi yüksek;
-  \item yorumlar olumlu;
-  \item risk skoru yüksek;
-  \item satış düşük.
-\end{itemize}
-
-Yorum:
-
-Fikir popülerdir fakat uygulanabilirlik veya uyum açısından zayıftır. Yönetici fikri doğrudan reddetmek yerine kapsam daraltma veya mevzuat uygunluğu incelemesine almalıdır.
-
-Karar:
-
-\begin{enumerate}
-  \item uyum incelemesi,
-  \item kapsam revizyonu,
-  \item risk notu yayını,
-  \item işlem tavanı uygulaması.
-\end{enumerate}
-
-\subsection{Senaryo 3: Yüksek Hacim, Yüksek Satış}
-
-Durum:
-
-\begin{itemize}
-  \item alım yüksek;
-  \item satış da yüksek;
-  \item fiyat oynak;
-  \item yorum sayısı yüksek.
-\end{itemize}
-
-Yorum:
-
-Fikir tartışmalıdır. Katılımcılar potansiyel görür ancak güven tam oluşmamıştır. Bu tip fikirlerde karar kurulu erken aşamada açık soru listesi yayınlamalıdır.
-
-Karar:
-
-\begin{enumerate}
-  \item soru-cevap oturumu,
-  \item ek dosya talebi,
-  \item pilot öncesi risk analizi,
-  \item geçici fiyat bant daraltma.
-\end{enumerate}
-
-\subsection{Senaryo 4: Düşük Hacim, Yüksek Şikayet Sinyali}
-
-Durum:
-
-\begin{itemize}
-  \item şikayet kategorisi;
-  \item çok yorum var;
-  \item alım düşük;
-  \item benzer şikayetler farklı lokasyonlarda tekrar ediyor.
-\end{itemize}
-
-Yorum:
-
-Bu kayıt ürün fırsatından çok süreç problemi olabilir. Borsa fiyatı düşük olsa bile operasyonel risk yüksektir. Yönetici, fiyat yerine tekrar frekansına ve lokasyon yayılımına bakmalıdır.
-
-Karar:
-
-\begin{enumerate}
-  \item süreç sahibi atama,
-  \item kök neden analizi,
-  \item ilgili departmana görev,
-  \item kapanış KPI'ı.
-\end{enumerate}
-
-\section{Veri Kalitesi Kuralları}
-
-\subsection{Zorunlu Alanlar}
-
-\begin{longtable}{p{0.28\textwidth}p{0.18\textwidth}p{0.42\textwidth}}
-\toprule
-\textbf{Alan} & \textbf{Zorunluluk} & \textbf{Kural}\\
-\midrule
-Başlık & Zorunlu & 8--120 karakter.\\
-Özet & Zorunlu & Tek cümle, 20--300 karakter.\\
-Problem & Zorunlu & Mevcut durum netliği.\\
-Çözüm & Zorunlu & Uygulanabilir aksiyon.\\
-Kategori & Zorunlu & Proje, fikir, araştırma, şikayet.\\
-Şirket/iştirak & Zorunlu & Master data içinden seçilir.\\
-Görünürlük & Zorunlu & Yetki modeliyle uyumlu.\\
-Başarı metriği & Pilot öncesi zorunlu & Sayısal KPI olmalıdır.\\
-Dosya paketi & Ürünleşme öncesi zorunlu & En az bir destekleyici doküman.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Kalite Skoru}
-
-\[
-Q = 0.25 completeness + 0.20 clarity + 0.20 evidence + 0.15 feasibility + 0.20 governance
-\]
-
-Kalite skoru 60 altında olan fikir borsada listelenebilir; ancak karar kuruluna alınmadan önce eksik tamamlama istenir.
-
-\section{Yetki ve Görünürlük Senaryoları}
-
-\subsection{Anonimlik}
-
-Anonimlik üç seviyededir:
-
-\begin{longtable}{p{0.22\textwidth}p{0.34\textwidth}p{0.32\textwidth}}
-\toprule
-\textbf{Seviye} & \textbf{Kullanıcıya Görünen} & \textbf{Yöneticiye Görünen}\\
-\midrule
-Açık profil & ad, fotoğraf, departman. & tam profil.\\
-Yarı anonim & rol veya departman etiketi. & yetkili yönetici tam profil.\\
-Tam anonim & anonim çalışan. & yalnız uyum/admin audit erişimi.\\
-\bottomrule
-\end{longtable}
-
-Anonimlik, kötüye kullanım korumasını ortadan kaldırmaz. Audit log yasal ve etik inceleme için kimliği saklar; son kullanıcıya göstermez.
-
-\subsection{İştirak Filtresi}
-
-Kurum hiyerarşisi:
-
-\[
-Holding \rightarrow Şirket \rightarrow Ülke \rightarrow Şehir \rightarrow Kampüs \rightarrow Departman
-\]
-
-Görünürlük hesaplama:
-
-\[
-Access(u,r)=Role(u)\cap Scope(r)\cap Policy(r)
-\]
-
-Kullanıcı bir kaydı görebilmek için rol, kapsam ve politika kesişimini sağlamalıdır.
-
-\section{Saklama ve Arşiv Politikası}
-
-\begin{longtable}{p{0.26\textwidth}p{0.18\textwidth}p{0.44\textwidth}}
-\toprule
-\textbf{Veri} & \textbf{Süre} & \textbf{Not}\\
-\midrule
-Fikir kayıtları & 5 yıl & Uygulanan fikirler kalıcı arşive alınır.\\
-Yorumlar & 3 yıl & Hukuki talep varsa uzatılır.\\
-Borsa işlemleri & 10 yıl & Denetim ve ödül mutabakatı için.\\
-Ödül ledger & 10 yıl & Muhasebe ve bordro etkisi nedeniyle.\\
-Gündem & 3 yıl & Kurumsal karar geçmişi için.\\
-Yönetici depolama & sınıfa göre & Gizli dokümanlarda ayrı saklama.\\
-Audit log & 10 yıl & Değiştirilemez kayıt.\\
-Geçici dosya & 30 gün & İşlenmemiş yüklemeler.\\
-\bottomrule
-\end{longtable}
-
-\section{Operasyon Ekibi ve Sorumluluklar}
-
-\begin{longtable}{p{0.26\textwidth}p{0.58\textwidth}p{0.08\textwidth}}
-\toprule
-\textbf{Rol} & \textbf{Sorumluluk} & \textbf{SLA}\\
-\midrule
-Ürün sahibi & Yol haritası, iş önceliği, kabul kriterleri. & Haftalık\\
-Platform yöneticisi & Kullanıcı, rol, duyuru ve gündem yönetimi. & Günlük\\
-İnovasyon ofisi & Yarışma, stüdyo, karar kurulu hazırlığı. & Haftalık\\
-Uyum ekibi & KVKK, etik, riskli içerik incelemesi. & 2 iş günü\\
-İK & ödül, terfi görüşmesi, profil entegrasyonu. & 5 iş günü\\
-Satın alma & fiziksel ödül ve hizmet alımı. & 10 iş günü\\
-Teknik ekip & hata, performans, entegrasyon, güvenlik. & Kritik 4 saat\\
-\bottomrule
-\end{longtable}
-
-\section{Kabul Kriterleri}
-
-Sistem üretime kabul edilmeden önce aşağıdaki kontroller geçmelidir:
-
-\begin{enumerate}
-  \item SSO ile giriş ve rol eşleşmesi çalışır.
-  \item Kullanıcı fikir ekler, dosya yükler, AI analiz alır.
-  \item Fikir borsada listelenir.
-  \item Kullanıcı alım/satım yapar; cüzdan ve holding doğru güncellenir.
-  \item Yönetici oy geçmişini ve en yüksek oy alan fikirleri görür.
-  \item Yönetici gündem ekler ve kullanıcı filtreleyerek görür.
-  \item Yönetici depolama alanına dosya/not ekler.
-  \item Stüdyo ve ekip filtreleri çalışır.
-  \item Ürünleşen fikir ayrı listelenir.
-  \item Ödül talebi onay akışına girer.
-  \item Yetkisiz kullanıcı admin sayfasına erişemez.
-  \item Tüm kritik mutasyonlar audit log üretir.
-  \item KVKK riski içeren içerik otomatik incelemeye düşer.
-  \item API hatalarında kullanıcı verisi kaybolmaz.
-\end{enumerate}
-
-\section{Ek: Teknik Kod Özetleri}
-
-\subsection{Fiyat Okuma}
-
-\begin{lstlisting}
-function marketPrice(idea) {
-  return Math.max(20, Math.round(Number(idea.marketPrice || 100)));
-}
-\end{lstlisting}
-
-\subsection{Trend Skoru}
-
-\begin{lstlisting}
-trend =
-  aiScore * 0.42 +
-  communityScore * 0.34 +
-  supporters * 1.4 +
-  max(0, marketChange) * 2
-\end{lstlisting}
-
-\subsection{Listeleme Sıraları}
-
-\begin{lstlisting}
-Revaç          -> trend score desc
-En çok yükselen -> marketChange desc
-En çok düşen    -> marketChange asc
-Hacim           -> marketVolume desc
-Fiyat           -> marketPrice desc
-\end{lstlisting}
-
-\subsection{AI Analiz Sözleşmesi}
-
-\begin{lstlisting}
-{
-  suggestedTitle: string,
-  score: number,
-  impactScore: number,
-  riskScore: number,
-  feasibilityScore: number,
-  summary: string,
-  strengths: string[],
-  missingPoints: string[],
-  weaknesses: string[],
-  risks: string[],
-  pilotSuggestion: string
-}
-\end{lstlisting}
-
-\section{Demo ve MVP Entegrasyon Kapsamı}
-
-Bu bölüm, mevcut uygulamaya eklenen demo/MVP kapsamını ürün mimarisindeki kalıcı hedeflerden ayırır. Amaç, ana ürünü tamamen bitmiş varsaymak değil; üst yönetim sunumunda uçtan uca akışın anlaşılmasını sağlayacak seviyede çalışan, temiz ve mevcut tasarım dilini bozmayan bir entegrasyon göstermektir.
-
-Bu kapsamda temel ilke şudur: Kullanıcıya görünen ürün davranışı kurumsal ve tamamlanmış hissi verir; ancak backend, gerçek yetki sunucusu, üretim veritabanı, dosya tarama motoru ve kurumsal entegrasyonlar mock/local state ile temsil edilir. Bu ayrım, demo sırasında karar mantığının, ekran akışının ve veri ilişkilerinin tartışılmasına izin verir.
-
-\subsection{Uygulanan Minimum Paket}
-
-\begin{longtable}{p{0.25\textwidth}p{0.33\textwidth}p{0.32\textwidth}}
-\toprule
-\textbf{İhtiyaç} & \textbf{Demo Entegrasyonu} & \textbf{Üretim Karşılığı}\\
-\midrule
-Yönetici analitiği & Oy, destek, ürün, ekip, stüdyo ve aktivite görünümü eklendi. & Analitik mart, event stream, BI dashboard.\\
-Yönetici depolama & Başlık, açıklama, kategori, tarih ve dosya listesiyle mock kaynak arşivi. & Object storage, DLP, versiyonlama, sınıflandırma.\\
-Gündem & İç/dış gündem ve kurumsal/topluluk filtreleriyle manuel kayıt akışı. & Admin CMS, onay akışı, audit log, bildirim kanalları.\\
-Stüdyo & Ayrı ana bölüm, kategori/durum/tarih/popülerlik filtreleri. & Studio service, owner, bütçe ve kapasite yönetimi.\\
-Ekipler & Ayrı ana bölüm, ekip detayı, üyeler, bağlı proje/stüdyo ilişkisi. & Team directory, HRIS ve görev yönetim entegrasyonu.\\
-Geliştirilmiş ürünler & Ürün seviyesi, durum, oy, kategori, bağlı ekip ve bağlı stüdyo alanları. & Product lifecycle service, roadmap, OKR, maliyet merkezi.\\
-AI Host & Platform içi veriyle özet ve öneri. İnternet araması yok. & Kurum içi RAG, izinli veri katalogları, kayıtlı prompt politikası.\\
-Global arama & Fikir, ürün, gündem, duyuru, stüdyo, ekip ve kullanıcı araması. & Arama indeksi, yetki filtreli sonuç, semantik arama.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Demo Sınırı}
-
-Demo sürümünde veri kalıcılığı tarayıcı/local state düzeyinde temsil edilir. Bu nedenle kayıt ekleme, filtreleme, ürün bağlantısı, Al/Sat ve AI özetleri gerçek kullanıcı deneyimini gösterir; fakat üretim mutabakatı, kurumsal audit, dosya virüs taraması, SSO token doğrulaması ve gerçek bildirim dağıtımı bu sürümün dışında bırakılır.
-
-Bu sınır sunum açısından dezavantaj değildir. Tam tersine, karar vericilerin ürün kavramını değerlendirmesini kolaylaştırır. Demo, aşağıdaki soruları cevaplamaya odaklanır:
-
-\begin{enumerate}
-  \item Çalışan fikri sisteme girdiğinde hangi varlıklara dönüşür?
-  \item Bu fikir borsada nasıl görünür ve çalışanlar nasıl Al/Sat sinyali üretir?
-  \item Yönetici hangi fikirlerin yükseldiğini, kimin hangi alana ilgi gösterdiğini ve hangi ekip/stüdyonun hareketlendiğini nasıl izler?
-  \item Gündem ve duyurular kurum tarafından nasıl manuel yönetilir?
-  \item AI Host hangi kaynaklara dayanarak özet üretir ve hangi kaynaklara dayanmaz?
-\end{enumerate}
-
-\section{Gündem Modülü: İç/Dış ve Kurumsal/Topluluk Ayrımı}
-
-Gündem modülü otomatik haber akışı değildir. Sistem, özellikle dış gündem tarafında AI tarafından internette arama yaparak içerik üretmez. Gündem, yöneticinin veya yetkili kurumsal editörün manuel olarak eklediği, filtrelenebilir ve denetlenebilir kurumsal akış olarak çalışır.
-
-\subsection{Gündem Boyutları}
-
-Her gündem kaydı iki ana eksenle etiketlenir:
-
-\begin{enumerate}
-  \item \textbf{Kapsam:} İç Gündem veya Dış Gündem.
-  \item \textbf{İçerik tipi:} Kurumsal veya Topluluk.
-\end{enumerate}
-
-Bu ayrım, üst yönetim için önemlidir. İç gündem, kurumun kendi kararları, pilotları, süreçleri, toplantıları ve çalışan topluluğu tarafından üretilen hareketleri temsil eder. Dış gündem ise rekabet, regülasyon, sektör, teknoloji veya pazar başlığının kurum içi yoruma dönüştürülmüş halidir. Dış gündem de otomatik çekilmez; yetkili kişi kaydı sisteme ekler.
-
-\begin{longtable}{p{0.18\textwidth}p{0.20\textwidth}p{0.52\textwidth}}
-\toprule
-\textbf{Kapsam} & \textbf{Tip} & \textbf{Örnek Kullanım}\\
-\midrule
-İç Gündem & Kurumsal & Yönetim kararı, pilot duyurusu, ürünleşme kararı, operasyon sprinti.\\
-İç Gündem & Topluluk & Ekipler arası veri paylaşımı, çalışan topluluğu etkinliği, stüdyo çağrısı.\\
-Dış Gündem & Kurumsal & Regülasyon, FinTech trendi, ödeme deneyimi radar başlığı, sektör riski.\\
-Dış Gündem & Topluluk & Dış etkinlik özeti, çalışanların takip ettiği teknoloji başlığı, topluluk kaynaklı pazar sinyali.\\
-\bottomrule
-\end{longtable}
-
-\subsection{Admin Ekleme ve Kullanıcı Görüntüleme}
-
-Admin ekleme alanında başlık, açıklama, kapsam, içerik tipi, kategori, etiket ve tarih alanları bulunur. Kullanıcı tarafında ise aynı kayıtlar filtrelenerek görüntülenir. Kullanıcı yalnız görüntüler; kayıt oluşturma veya kritik gündem düzenleme yetkisi admin/yönetici rolündedir.
-
-Bu tasarımın nedeni veri güvenliğidir. Gündem, kurum içi karar ve pazar yorumu içerdiği için rastgele kullanıcı üretimine açık bırakılmaz. Topluluk kaynaklı gündemler dahi moderasyon veya yönetici onayıyla yayına alınır.
-
-\section{Global Arama Motoru}
-
-Yeni arama katmanı, platformu tek tek modüllerden oluşan bir menü değil, bütünleşik bilgi alanı gibi çalıştırır. Kullanıcı üst çubuktaki arama alanından bir kelime girdiğinde sonuçlar kategori bazında ayrılır.
-
-\subsection{Aranan Varlıklar}
-
-Arama aşağıdaki varlıkları kapsar:
-
-\begin{enumerate}
-  \item fikir ve borsa varlıkları,
-  \item geliştirilmiş ürünler,
-  \item gündem kayıtları,
-  \item duyurular,
-  \item stüdyolar,
-  \item ekipler,
-  \item kullanıcı/profil kayıtları.
-\end{enumerate}
-
-Arama sonuçları yalnız başlık üzerinden değil; özet, kategori, etiket, şirket, kapsam, şehir, kampüs, ekip ve rol alanlarından da üretilir. Bu sayede "ödeme" araması hem Moka ödeme fikrini, hem dış gündem ödeme radarını, hem de ilgili ürün/stüdyo kayıtlarını aynı panelde gösterebilir.
-
-\subsection{Yetki Filtreli Üretim Modeli}
-
-Üretim ortamında arama indeksi yetki filtreli olmalıdır. Kullanıcı bir kayda erişemiyorsa o kayıt arama sonucunda da görünmemelidir.
-
-\[
-SearchResult(u,q)=Index(q)\cap Access(u)
-\]
-
-Demo sürümünde erişim kısıtları rol tabanlı menü görünürlüğüyle temsil edilir. Üretimde sonuç kümesi JWT/SSO rol bilgisi, iştirak kapsamı, veri sınıfı ve kayıt görünürlüğü üzerinden daraltılır.
-
-\section{Hızlı Değerlendirme: Beğeni Yerine Al/Sat}
-
-Önceki hızlı değerlendirme davranışı beğeni/pas geçme mantığına yakındı. Yeni modelde kullanıcı fikri finansal sinyal gibi değerlendirir: sağa kaydırma Al, sola kaydırma Sat anlamına gelir. Böylece hızlı değerlendirme ekranı borsa konseptiyle aynı ekonomik dile bağlanır.
-
-\subsection{Al Sinyali}
-
-Al sinyali, kullanıcının fikrin değer kazanacağına inandığını gösterir. Demo sürümünde Al işlemi şu etkileri üretir:
-
-\begin{enumerate}
-  \item kullanıcının sanal nakit bakiyesi fikir fiyatı kadar azalır,
-  \item kullanıcının o fikirdeki holding/lot adedi artar,
-  \item fikrin hacmi yükselir,
-  \item piyasa değişimi küçük pozitif sinyal alır,
-  \item destekçi, kredi ve topluluk skoru artar,
-  \item işlem geçmişine kayıt düşer.
-\end{enumerate}
-
-Temel etki:
-
-\[
-cash_{u,t+1}=cash_{u,t}-price_i
-\]
-
-\[
-holding_{u,i,t+1}=holding_{u,i,t}+1
-\]
-
-\subsection{Sat Sinyali}
-
-Sat sinyali iki durumda çalışır. Kullanıcının elinde lot varsa sistem satışı portföy azaltma olarak işler ve nakit bakiyeyi artırır. Kullanıcının elinde lot yoksa sinyal, fikir üzerinde negatif piyasa görüşü olarak kaydedilir; bu durumda nakit üretmez ancak fiyat değişimi ve hacim üzerinde sınırlı negatif etki oluşturur.
-
-\[
-cash_{u,t+1}=cash_{u,t}+price_i \quad \text{if } holding_{u,i,t}>0
-\]
-
-\[
-marketChange_{i,t+1}=marketChange_{i,t}-\delta_s
-\]
-
-Bu yaklaşım, demo içinde short selling karmaşıklığına girmeden "bu fikri zayıf görüyorum" sinyalini toplar. Üretimde short işlem, limit emir, kaldıraç veya açığa satış özellikleri istenirse ayrı risk politikası gerektirir.
-
-\subsection{Neden Al/Sat?}
-
-Beğeni, duygusal sinyal üretir. Al/Sat ise öncelik, beklenti ve güven sinyali üretir. Kurum içi inovasyon piyasasında hedef, çalışanların yalnız "güzel fikir" demesi değil; sınırlı sanal bütçelerini hangi fikirlere ayıracaklarını göstermesidir. Bu davranış, yöneticiye daha kuvvetli karar verisi sağlar.
-
-\section{Yönetici Dashboardu Genişletmesi}
-
-Yönetici paneli yalnız toplam metrik gösteren bir özet ekranı olmamalıdır. Üst yönetim için asıl değer, hareketin kimin tarafından, hangi varlık üzerinde ve hangi bağlamda oluştuğunu görmektir. Bu nedenle dashboarda aktivite, alan performansı ve bağlı varlık ilişkileri eklenmiştir.
-
-\subsection{Kim Ne Yaptı?}
-
-Aktivite görünümü aşağıdaki olayları okunabilir satırlara dönüştürür:
-
-\begin{enumerate}
-  \item kullanıcı fikir ekledi,
-  \item kullanıcı Al/Sat yaptı,
-  \item kullanıcı yorum veya dosya ekledi,
-  \item yönetici gündem yayınladı,
-  \item yönetici depolama kaynağı ekledi,
-  \item ürün bir ekibe veya stüdyoya bağlandı.
-\end{enumerate}
-
-Bu olayların üretim karşılığı audit log ve event stream'dir. Demo sürümünde mock kayıtlar üzerinden gösterilir.
-
-\begin{lstlisting}
-activity = {
-  actor,
-  action,
-  target,
-  module,
-  date,
-  role
-}
-\end{lstlisting}
-
-\subsection{Aktif Alanlar}
-
-Dashboard içinde stüdyo, ekip, ürün ve gündem hareketi aynı bölümde okunabilir hale getirilmiştir. Örneğin Operasyon Çözüm Stüdyosu yüksek popülerliğe sahipse, bu stüdyoya bağlı fikirlerin hacmi ve ekip hareketleri yönetici için ayrı öncelik sinyali üretir.
-
-\[
-AreaScore = 0.35StudioPopularity + 0.30IdeaVolume + 0.20TeamActivity + 0.15AgendaLink
-\]
-
-Bu skor, yöneticiye hangi alanın yalnız popüler olduğunu değil, gerçekten ürünleşme kapasitesine yaklaştığını gösterir.
-
-\section{Geliştirilmiş Ürünler ve Bağlı Ekip/Stüdyo Modeli}
-
-Geliştirilmiş Ürünler bölümü, fikir borsasındaki her varlığı değil; ürünleşme seviyesi artmış, karar kurulu veya pilot akışına yaklaşmış kayıtları gösterir. Bu kayıtlarda artık yalnız fiyat, oy ve kategori değil; bağlı ekip ve stüdyo ilişkisi de görünür.
-
-\begin{longtable}{p{0.22\textwidth}p{0.62\textwidth}}
+\begin{longtable}{p{0.26\textwidth}p{0.58\textwidth}}
 \toprule
 \textbf{Alan} & \textbf{Anlam}\\
 \midrule
-Ürün adı & Fikrin ürün/pilot adı.\\
-Durum & Araştırma, pilot, done, beklemede veya aktif geliştirme.\\
-Oy sayısı & Topluluk desteği ve işlem ilgisi.\\
-Kategori & Proje, fikir, araştırma veya şikayet kökeni.\\
-Gelişim seviyesi & Ürünleşme olgunluğu yüzdesi.\\
-Bağlı ekip & Ürünü taşıyan veya aday ekip.\\
-Bağlı stüdyo & Ürünün bağlandığı inovasyon stüdyosu.\\
+\code{title}, \code{summary} & Kullanıcıya görünen fikir içeriği.\\
+\code{problem}, \code{solution} & Karar ve AI analiz bağlamı.\\
+\code{companyId}, \code{country} & Portal ve iştirak filtresi.\\
+\code{aiScore}, \code{strategicScore} & Önceliklendirme sinyali.\\
+\code{marketPrice} & Baz fiyat.\\
+\code{marketChange} & Yüzdesel fiyat değişimi.\\
+\code{marketVolume} & İşlem/hacim göstergesi.\\
+\code{marketTicker} & Borsa sembolü.\\
+\code{files} & PDF, PPTX, XLSX, CSV gibi bundle dosyaları.\\
+\code{translations} & Çok dilli başlık/özet/problem/çözüm.\\
 \bottomrule
 \end{longtable}
 
-Bu bağ, fikirden ürüne geçişin en kritik parçasıdır. Çünkü gerçek kurumlarda fikir tek başına değer üretmez; sahip, ekip, veri, bütçe, karar ve zaman çizelgesiyle değer üretir.
+\section{Borsa ve Fiyatlama Mantığı}
 
-\section{AI Host İçin Veri Sınırı}
+\subsection{Fiyat Formülü}
 
-AI Host'un sınırı bilinçli olarak dar tutulmuştur. Asistan internette arama yapmaz, dış haber çekmez, gerçek zamanlı pazar verisi üretmez. Asistanın çalıştığı kaynaklar yalnız platform içindeki kayıtlardır:
+Kodda \code{marketPrice} fonksiyonu fikir fiyatını baz fiyat ve yüzdesel değişim üzerinden hesaplar:
 
-\begin{enumerate}
-  \item fikir borsası varlıkları,
-  \item gündem kayıtları,
-  \item duyurular,
-  \item geliştirilmiş ürünler,
-  \item veri setleri,
-  \item yönetici depolama kaynakları.
-\end{enumerate}
+\begin{lstlisting}
+function marketPrice(idea) {
+  const base = Number(idea.marketPrice || 100);
+  const change = Number(idea.marketChange || 0);
+  return Math.max(20, Math.round(base * (1 + change / 100)));
+}
+\end{lstlisting}
 
-Bu kararın nedeni güvenlik ve açıklanabilirliktir. Üst yönetim gündem, risk ve ürünleşme kararını dış web'den otomatik çekilen belirsiz içeriklere dayandırmamalıdır. AI Host, kurum tarafından girilen veya kurum içinde oluşan veriye dayanır.
-
-\subsection{Trend Yorumu}
-
-AI Host hype/trend yorumunu aşağıdaki platform içi sinyaller üzerinden üretir:
+Matematiksel karşılığı:
 
 \[
-Trend_i = f(volume_i, change_i, supporters_i, comments_i, agendaLinks_i, productStage_i)
+P_i = \max(20, \operatorname{round}(B_i \cdot (1 + \frac{\Delta_i}{100})))
 \]
 
-Bu ifade otomatik karar değildir. Yöneticiye ön okuma sağlar. Nihai karar; risk, bütçe, uyum, veri güvenliği, operasyonel uygulanabilirlik ve sahiplik kontrolünden sonra verilir.
+Burada:
 
-\section{Uygulama İçi Demo Senaryosu}
+\begin{itemize}
+  \item \(P_i\): fikir \(i\) için gösterilen fiyat,
+  \item \(B_i\): baz fiyat,
+  \item \(\Delta_i\): marketChange yüzdesi.
+\end{itemize}
 
-Sunum sırasında önerilen akış aşağıdaki sırayla ilerler:
+\subsection{Al/Sat İşlemleri}
 
-\begin{enumerate}
-  \item Exchange key ile giriş yapılır ve sistem kullanıcıyı kurumsal profiliyle karşılar.
-  \item Borsa ekranında fikirlerin fiyat, değişim, kategori ve hacimle listelendiği gösterilir.
-  \item Hızlı Değerlendir ekranında bir fikir sağa kaydırılarak Al, sola kaydırılarak Sat davranışı gösterilir.
-  \item Global aramaya "ödeme" yazılır; fikir, gündem ve ürün sonuçlarının aynı panelde ayrıştığı gösterilir.
-  \item Gündem ekranında İç Gündem, Dış Gündem, Kurumsal ve Topluluk filtreleri uygulanır.
-  \item Geliştirilmiş Ürünler ekranında ürünün bağlı ekip ve stüdyo ilişkisi incelenir.
-  \item Yönetici Dashboardu açılır; aktivite akışı, aktif alanlar, oy ve ürün sinyalleri anlatılır.
-  \item Yönetici Depolama ekranında karar notu ve kaynak saklama mantığı gösterilir.
-  \item AI Host'a "şu an platform içinde hype hangi alana kayıyor?" sorusu sorulur; asistanın yalnız platform içi veriden özet verdiği vurgulanır.
-\end{enumerate}
+Borsa ekranında alım ve satım işlemleri \code{marketBudget}, \code{marketHoldings} ve \code{investmentLedger} üzerinde çalışır. Alımda bütçe düşer, holding artar, işlem defterine kayıt düşer. Satımda holding azalır ve bütçe artar.
 
-\subsection{Kısa Sunum Metni}
+Alım:
 
-\begin{quote}
-Bu sistem, çalışan fikirlerini klasik öneri kutusundan çıkarıp ölçülebilir kurum içi varlıklara dönüştürür. Her fikir fiyat, hacim, yorum, dosya paketi, ekip, stüdyo ve ürünleşme seviyesiyle izlenir. Çalışanlar sınırlı sanal bütçeleriyle fikirleri Al/Sat yaparak öncelik sinyali üretir. Yönetici paneli bu sinyali kimin, hangi alanda, hangi ürün veya stüdyo bağlamında ürettiğini gösterir. Gündem ve dış gündem otomatik haber çekmez; yetkili yöneticiler tarafından manuel girilir. AI Host ise yalnız platform içi veriye bakarak özet ve trend yorumu yapar.
-\end{quote}
+\[
+Cash_{t+1} = Cash_t - P_i \cdot q
+\]
 
-\section{Teknik Değişiklik Özeti}
+\[
+Holding_{i,t+1} = Holding_{i,t} + q
+\]
 
-Son uygulama entegrasyonunda yapılan başlıca teknik düzenlemeler:
+Satım:
 
-\begin{enumerate}
-  \item Global arama state'i ve sonuç paneli eklendi.
-  \item Arama; fikir, ürün, gündem, duyuru, stüdyo, ekip ve kullanıcı verilerini kapsayacak şekilde genişletildi.
-  \item Gündem kayıtlarına kapsam ve içerik tipi alanları eklendi.
-  \item Gündem filtreleri İç Gündem, Dış Gündem, Kurumsal ve Topluluk boyutlarını destekleyecek hale getirildi.
-  \item Gündem ekleme/düzenleme formuna yeni alanlar eklendi.
-  \item Hızlı değerlendirme ekranında beğeni/pas mantığı Al/Sat işlem sinyaline dönüştürüldü.
-  \item Al işlemi bakiye, holding, hacim, destek ve işlem geçmişini güncelleyecek hale getirildi.
-  \item Sat işlemi elde lot varsa nakit dönüşü, yoksa negatif piyasa sinyali üretecek şekilde düzenlendi.
-  \item Yönetici Dashboardu'na aktivite akışı ve aktif alanlar görünümü eklendi.
-  \item Geliştirilmiş ürün satırlarına bağlı ekip ve bağlı stüdyo bilgisi eklendi.
-  \item AI Host metinleri platform içi veri sınırını daha net ve kurumsal şekilde anlatacak biçimde güncellendi.
-  \item Topbar global arama alanının görünürlük problemi giderildi.
-\end{enumerate}
+\[
+Cash_{t+1} = Cash_t + P_i \cdot q
+\]
 
-\section{Karşılaşılan Problemler ve Çözümler}
+\[
+Holding_{i,t+1} = Holding_{i,t} - q
+\]
 
-\begin{longtable}{p{0.28\textwidth}p{0.30\textwidth}p{0.32\textwidth}}
+Mevcut model gerçek emir defteri değildir. Limit emir, piyasa emri, eşleşme motoru, karşı taraf, komisyon ve settlement mantığı demo seviyesinde temsil edilmez.
+
+\subsection{Hızlı Değerlendirme ile Borsa Arasındaki Fark}
+
+Hızlı değerlendirme ekranı kullanıcıya \textit{Sağa Kaydır: Al} ve \textit{Sola Kaydır: Alma} davranışı sunar. Kod seviyesinde bu ekran \code{quickEvalLikes} state'ini ve \code{supportIdea} fonksiyonunu kullanır. Bu, tam borsa alım/satımı değil; oy/destek sinyalidir.
+
+Bu fark ürün dili açısından önemlidir:
+
+\begin{longtable}{p{0.32\textwidth}p{0.28\textwidth}p{0.30\textwidth}}
 \toprule
-\textbf{Problem} & \textbf{Etkisi} & \textbf{Çözüm}\\
+\textbf{Akış} & \textbf{Mevcut Etki} & \textbf{Üretim Önerisi}\\
 \midrule
-Önceki sadeleştirme arama alanını gizliyordu. & Global arama state olarak çalışsa da kullanıcı göremiyordu. & Topbar grid ve search-box görünürlüğü düzenlendi.\\
-Beğeni/pas dili borsa konseptiyle uyumsuzdu. & Hızlı değerlendirme ile borsa davranışı ayrı hissediliyordu. & Sağa Al, sola Sat davranışı eklendi.\\
-Gündem tek boyutlu görünüyordu. & İç/dış ve kurumsal/topluluk ayrımı okunmuyordu. & Kapsam ve içerik tipi alanları eklendi.\\
-Yönetici paneli yalnız metrik ağırlıklıydı. & "Kim ne yaptı?" sorusu yeterince cevaplanmıyordu. & Aktivite listesi ve aktif alan özeti eklendi.\\
-Ürünler ekip/stüdyo bağlamından kopuktu. & Ürünleşme sahipliği belirsizdi. & Bağlı ekip ve bağlı stüdyo bilgisi gösterildi.\\
+Borsa Al/Sat & Bütçe, holding ve ledger güncellenir. & Transaction-safe ledger.\\
+Hızlı Değerlendir Al & Destek/oy sinyali üretir. & İstenirse doğrudan küçük lot alımıyla bağlanmalı.\\
+Hızlı Değerlendir Alma & Kartı geçer; negatif işlem defteri üretmez. & Negatif sinyal veya watchlist dışlama olarak modellenmeli.\\
 \bottomrule
 \end{longtable}
 
-\section{Gelecek Faz ve Açık Noktalar}
+\section{Modül İncelemesi}
 
-Demo, karar ve yön tartışması için yeterli seviyededir. Üretim yolculuğunda aşağıdaki başlıkların ayrıca ele alınması gerekir:
+\subsection{Giriş ve Yetki}
+
+Giriş ekranı demo exchange key ile başlar. Kullanıcı seçimi rol bazlı menüyü etkiler. Yetki kontrolü \code{canAccess} üzerinden yapılır:
+
+\begin{lstlisting}
+function canAccess(item, user = currentUser()) {
+  if (item.adminOnly && !user.isAdmin) return false;
+  if (item.managerOnly && !user.isManager && !user.isAdmin) return false;
+  return true;
+}
+\end{lstlisting}
+
+Bu model demo için yeterlidir. Üretimde SSO, JWT/session, backend enforcement ve route-level authorization gerekir.
+
+\subsection{Dashboard}
+
+Dashboard; portföy, borsa, hızlı aksiyonlar, veriler ve genel platform sinyallerini birleştirir. Ana amacı kullanıcıyı doğrudan borsa veya yeni başvuru akışına yönlendirmektir.
+
+\subsection{Borsa}
+
+Borsa modülü uygulamanın ana vitrini konumundadır. Fikir listesi, fiyat, değişim, hacim, portföy, liderler, grafik, şirket filtresi ve yeni varlık ekleme akışlarını içerir.
+
+Teknik olarak bu modül şu alanlara bağlıdır:
 
 \begin{enumerate}
-  \item SSO, HRIS ve rol eşleştirme entegrasyonları.
-  \item Gerçek veritabanı şeması, migration ve seed stratejisi.
-  \item Dosya yükleme için object storage, virüs taraması, DLP ve versiyonlama.
-  \item Borsa işlemleri için transaction-safe ledger ve mutabakat tablosu.
-  \item Yönetici gündemleri için onay akışı ve yayın takvimi.
-  \item Arama için yetki filtreli indeksleme ve semantik arama.
-  \item AI Host için kurum içi RAG, kaynak gösterimi ve prompt audit.
-  \item Mobil performans, offline davranış ve push bildirimleri.
-  \item Ödül hakedişi için İK, bordro, satın alma ve muhasebe süreçleri.
-  \item Güvenlik testi, KVKK etki analizi ve penetrasyon testi.
+  \item \code{state.ideas}
+  \item \code{state.marketBudget}
+  \item \code{state.marketHoldings}
+  \item \code{state.marketDraft}
+  \item \code{state.investmentLedger}
+  \item \code{filteredMarketIdeas()}
+  \item \code{marketPrice()}
 \end{enumerate}
+
+\subsection{Veri ve Bilgi}
+
+Veri ve Bilgi modülü veri setleri, kaynaklar ve öneri/şikayet benzeri bildirimleri kapsar. Dosya ekleme ve veri kartları fikir üretim sürecini destekler.
+
+\subsection{Gündem}
+
+Gündem modülü manuel kurumsal gündem akışı olarak tasarlanmıştır. Kod içinde kullanıcıya \textit{AI internete çıkmaz; gündem içerikleri yöneticiler tarafından manuel eklenir} bilgisi verilir. Mevcut ekranda kategori, etiket ve arama filtresi vardır.
+
+Teknik not: Önceki kapsamda beklenen \textit{iç/dış gündem} ve \textit{kurumsal/topluluk} ayrımı bu branch'te görünür bir filtre olarak aktif değildir. Bu raporda bu durum teknik borç olarak işaretlenmiştir.
+
+\subsection{Duyurular}
+
+Duyuru modülü iştirak, ülke, şehir, kampüs ve departman ölçeğinde duyuru yayınlama yaklaşımını destekler. \code{announcementDraft} company/country/campus alanlarıyla çalışır.
+
+\subsection{Sosyal}
+
+Sosyal modül; post, görsel, link, anket, tahminler, leaderboard ve profil etkileşimini içerir. Liderlik tablosu üretim/girişimci, borsacı ve toplam değer mantığına yakın bir demo deneyimi sunar.
+
+\subsection{Stüdyo ve Ekipler}
+
+Stüdyo modülü ürünler ve stüdyolar arasında tab yapısıyla çalışır. \code{products} nav hedefi render aşamasında \code{studio} sayfasına normalize edilir. Ekipler ayrı sayfa olarak korunur ve takım, kulüp, açık pozisyon, ürün bağlantısı ve chat davranışlarını içerir.
+
+\subsection{Yönetici Dashboardu}
+
+Yönetici Dashboardu; toplam oy/lot, toplam değer, en güçlü fikir, aktif kullanıcı, en çok oy alanlar, kategori/stüdyo performansı ve detaylı yatırım defterini gösterir. Veriler \code{state.investmentLedger} ve seed edilmiş demo kayıtlarla birleştirilir.
+
+\subsection{Yönetici Depolama Alanı}
+
+Yönetici Depolama; dosya, not, kaynak, kategori ve tarih alanlarıyla çalışan local-state tabanlı arşivdir. Dosya girişleri gerçek storage'a yüklenmez; dosya adları ve metadata state içinde tutulur.
+
+\subsection{AI Asistan}
+
+AI Asistan widget'ı platform içi veriyle cevap üretir. İnternet araması yapmaz. Trend, gündem, ürün, veri seti ve öneri cevapları \code{handleAIChatResponse} içinde rule-based olarak üretilir. Bu asistan gerçek LLM değil, demo içi yönlendirilmiş yanıt motorudur.
+
+\section{Dosya ve Bundle Yönetimi}
+
+Uygulamada fikir kartlarına ve yönetici depolamaya dosya iliştirme mantığı vardır. Dosya türleri PDF, CSV, XLSX, PPTX, DOC ve görsel önizleme bileşenleriyle temsil edilir.
+
+Kodda görülen önizleme fonksiyonları:
+
+\begin{itemize}
+  \item \code{renderPdfPreview}
+  \item \code{renderCsvPreview}
+  \item \code{renderSheetPreview}
+  \item \code{renderDeckPreview}
+  \item \code{renderDocPreview}
+  \item \code{renderImagePreview}
+  \item \code{renderGenericFilePreview}
+\end{itemize}
+
+Bu fonksiyonlar gerçek dosya parse etmez; demo seviyesinde dosya adından veya sabit örnek veriden anlamlı önizleme üretir. Üretimde dosya yükleme, storage, virüs tarama, DLP, dosya tipi doğrulama ve erişim kontrolü gerekir.
+
+\section{Backend ve AI Endpoint}
+
+\subsection{Local Server}
+
+\code{server.js} Node built-in \code{http}, \code{fs} ve \code{path} modülleriyle yazılmıştır. Express kullanılmaz. Server iki temel iş yapar:
+
+\begin{enumerate}
+  \item public klasöründen statik dosya servis eder,
+  \item \code{POST /api/ai/analyze-idea} isteğini işler.
+\end{enumerate}
+
+Request body limiti 1 MB olarak kontrol edilir. Path traversal'a karşı \code{sanitizePath} ile public root dışına çıkış engellenir.
+
+\subsection{Vercel Serverless Function}
+
+\code{api/ai/analyze-idea.js}, local server'daki AI analiz mantığının serverless karşılığıdır. Groq API key varsa canlı model çağrısı yapar; yoksa demo-simulation döner.
+
+Desteklenen environment değişkenleri:
+
+\begin{itemize}
+  \item \code{GROQ_API_KEY}
+  \item \code{GROK_API_KEY}
+  \item \code{GROQ_MODEL}
+\end{itemize}
+
+Varsayılan model:
+
+\begin{lstlisting}
+llama-3.3-70b-versatile
+\end{lstlisting}
+
+\subsection{AI Yanıt Sözleşmesi}
+
+Endpoint aşağıdaki şemaya yakın JSON döner:
+
+\begin{lstlisting}
+{
+  provider,
+  generatedAt,
+  suggestedTitle,
+  score,
+  impactScore,
+  riskScore,
+  feasibilityScore,
+  summary,
+  strengths,
+  missingPoints,
+  weaknesses,
+  risks,
+  costComment,
+  pilotSuggestion,
+  executiveSummary,
+  similarIdeas,
+  improvements
+}
+\end{lstlisting}
+
+Güçlü taraf: API key frontend'e yazılmamıştır. Zayıf taraf: local server ve serverless function aynı mantığı ayrı ayrı taşır. Üretimde \code{analysisService.js} gibi paylaşılan bir modül önerilir.
+
+\section{Vercel Yapılandırması}
+
+\code{vercel.json} iki rewrite içerir:
+
+\begin{lstlisting}
+{
+  "source": "/api/ai/analyze-idea",
+  "destination": "/api/ai/analyze-idea.js"
+},
+{
+  "source": "/(.*)",
+  "destination": "/index.html"
+}
+\end{lstlisting}
+
+Bu yapı SPA fallback için uygundur. Dosya tabanlı statik asset servisinde Vercel'in filesystem önceliği devreye girer; local server'da ise MIME haritası önemlidir.
+
+Teknik not: \code{server.js} içindeki \code{mimeTypes} haritasında \code{.pdf} tanımı yoktur. Local çalışmada PDF asset'leri \code{application/octet-stream} olarak servis edilebilir. Bu kullanıcı deneyimini her zaman bozmaz; ancak doğru header için \code{application/pdf} eklenmelidir.
+
+\section{Güvenlik ve Yetkilendirme Değerlendirmesi}
+
+\subsection{Mevcut Koruma Alanları}
+
+\begin{enumerate}
+  \item AI API key frontend'e yazılmaz.
+  \item Local server request body büyüklüğünü sınırlar.
+  \item Static path normalize edilir ve public root dışına çıkış engellenir.
+  \item Manager/admin menüleri frontend rol kontrolüyle gizlenir.
+  \item AI fallback, API olmadığı durumda uygulamayı kırmaz.
+\end{enumerate}
+
+\subsection{Üretim İçin Eksik Kontroller}
+
+\begin{enumerate}
+  \item Backend tarafında gerçek auth enforcement yoktur.
+  \item Admin/yönetici state'i client tarafında değiştirilebilir.
+  \item Dosya yükleme gerçek storage ve malware scan üzerinden geçmez.
+  \item Audit log kalıcı değildir.
+  \item Rate limit, abuse prevention ve CSRF/session stratejisi yoktur.
+  \item KVKK/veri sınıflandırma kontrolleri UI metni seviyesindedir.
+\end{enumerate}
+
+\section{Performans Değerlendirmesi}
+
+\code{public/app.js} yaklaşık 14.7k satırdır. Her render'da \code{app.innerHTML} komple yenilenir. Bu yaklaşım demo ölçekte kabul edilebilir; fakat geniş veri seti, uzun listeler, aktif chat ve dosya önizleme modalında performans sorunları doğurabilir.
+
+Başlıca performans riskleri:
+
+\begin{enumerate}
+  \item Global render tüm DOM'u yeniden üretir.
+  \item \code{translateAllInState()} her render'da çağrılır.
+  \item Büyük mock veri listeleri filtreleme sırasında tekrar tekrar dolaşılır.
+  \item Inline style ağırlığı ve dev CSS büyüklüğü bakım maliyetini artırır.
+  \item Görseller randomuser ve çeşitli asset kaynaklarından geldiği için network davranışı değişkendir.
+\end{enumerate}
+
+\section{Teknik Borç ve Eksik Listesi}
+
+\begin{longtable}{p{0.23\textwidth}p{0.38\textwidth}p{0.29\textwidth}}
+\toprule
+\textbf{Alan} & \textbf{Bulgu} & \textbf{Öneri}\\
+\midrule
+State şeması & \code{investmentLedger}, \code{ledgerUserFilter}, \code{affiliationFilter} gibi alanlar birden fazla kez tanımlanıyor. & Tek \code{initialState} şeması ve migration helper.\\
+Terminoloji & Sabancı branch'inde bazı \code{İş NEW}, \code{is-new}, eski e-posta domainleri ve eski ürün adları kalmış. & Brand vocabulary taraması ve master text dictionary.\\
+Hızlı değerlendirme & UI \textit{Al/Alma}; kod \code{supportIdea} ve \code{quickEvalLikes} ile oy/destek mantığı çalıştırıyor. & Borsa transaction ile ya birleştirilmeli ya da adı \textit{destekle/geç} yapılmalı.\\
+Gündem & İç/dış gündem ve kurumsal/topluluk ayrımı bu branch'te görünür filtre değil. & \code{agendaScope}, \code{agendaType} state alanları ve UI filtreleri geri eklenmeli.\\
+Products nav & \code{products} clean nav içinde var; render aşamasında \code{studio/products} tabına normalize ediliyor. & Menü dili netleştirilmeli: ayrı sayfa mı, stüdyo tabı mı?\\
+API tekrarları & \code{server.js} ve \code{api/ai/analyze-idea.js} benzer analiz mantığını ayrı taşıyor. & Shared service modülü.\\
+MIME & Local server \code{.pdf} MIME type tanımıyor. & \code{application/pdf} eklenmeli.\\
+Test & Otomatik test suite yok. & Smoke, unit ve basit Playwright akışı.\\
+Persistence & Veri tarayıcı belleğinde kalıyor. & DB + API + optimistic UI.\\
+Dosya yükleme & Dosyalar gerçek saklama alanına gitmiyor. & Object storage + signed URL + DLP.\\
+\bottomrule
+\end{longtable}
+
+\section{Önerilen Refactor Planı}
+
+\subsection{Faz 1: Kod Ayrıştırma}
+
+İlk fazda davranış değiştirmeden dosya yapısı sadeleştirilmelidir:
+
+\begin{lstlisting}
+public/
+  app.js
+  state/
+    initialState.js
+    selectors.js
+  modules/
+    market.js
+    agenda.js
+    teams.js
+    social.js
+    admin.js
+    aiAssistant.js
+  services/
+    analysisClient.js
+    fileBundle.js
+  ui/
+    icons.js
+    renderUtils.js
+\end{lstlisting}
+
+\subsection{Faz 2: State ve İşlem Defteri}
+
+Borsa işlemleri için tek transaction fonksiyonu önerilir:
+
+\begin{lstlisting}
+executeTrade({ ideaId, side, quantity, source }) {
+  validateBalance();
+  validateHolding();
+  mutateCash();
+  mutateHolding();
+  appendLedger();
+  updateMarketSignals();
+}
+\end{lstlisting}
+
+Hızlı değerlendirme, normal borsa ve detay sayfası aynı fonksiyonu çağırırsa ürün dili ile veri davranışı uyumlu olur.
+
+\subsection{Faz 3: Backend Sınırı}
+
+Üretim ortamında aşağıdaki API sınırları önerilir:
+
+\begin{longtable}{p{0.24\textwidth}p{0.24\textwidth}p{0.42\textwidth}}
+\toprule
+\textbf{Endpoint} & \textbf{Method} & \textbf{Amaç}\\
+\midrule
+\code{/api/session} & GET & Kullanıcı, rol ve şirket kapsamı.\\
+\code{/api/ideas} & GET/POST & Fikir listeleme ve başvuru.\\
+\code{/api/trades} & POST & Al/Sat transaction.\\
+\code{/api/agenda} & GET/POST/PATCH & Manuel gündem yönetimi.\\
+\code{/api/files} & POST & Signed upload veya metadata kaydı.\\
+\code{/api/ai/analyze-idea} & POST & AI analiz.\\
+\code{/api/admin/analytics} & GET & Yönetici dashboard metrikleri.\\
+\bottomrule
+\end{longtable}
+
+\section{Veritabanı Taslak Modeli}
+
+Demo state'i üretim için aşağıdaki tablolara ayrılabilir:
+
+\begin{longtable}{p{0.26\textwidth}p{0.58\textwidth}}
+\toprule
+\textbf{Tablo} & \textbf{Açıklama}\\
+\midrule
+\code{companies} & Holding, iştirak, ülke, şehir, kampüs master data.\\
+\code{users} & Kullanıcı profili, rol, şirket ve departman.\\
+\code{ideas} & Fikir/proje/araştırma/şikayet ana kaydı.\\
+\code{idea_scores} & AI, stratejik, topluluk ve risk skorları.\\
+\code{market_assets} & Ticker, baz fiyat, değişim, hacim, arz.\\
+\code{trade_ledger} & Kullanıcı, fikir, side, quantity, price, timestamp.\\
+\code{holdings} & Kullanıcı bazlı portföy.\\
+\code{comments} & Fikir, sosyal ve ekip yorumları.\\
+\code{teams} & Ürün ekipleri ve rolleri.\\
+\code{studios} & İnovasyon stüdyoları.\\
+\code{agenda_items} & Manuel kurumsal gündem kayıtları.\\
+\code{announcements} & Ölçekli duyurular.\\
+\code{admin_storage} & Yönetici kaynakları ve dosya metadata.\\
+\code{file_assets} & Dosya adı, tür, storage key, sahiplik ve sınıf.\\
+\bottomrule
+\end{longtable}
+
+\section{Test Stratejisi}
+
+Mevcut projede otomatik test script'i yoktur. Minimum güvence seti:
+
+\begin{enumerate}
+  \item \code{node --check public/app.js}
+  \item \code{node --check public/mockData.js}
+  \item \code{node --check server.js}
+  \item Local smoke: login, borsa, al/sat, gündem, ekip, sosyal, admin storage.
+  \item API smoke: \code{POST /api/ai/analyze-idea}.
+  \item Vercel smoke: production URL 200, API endpoint 200/400 kontrollü davranış.
+\end{enumerate}
+
+Önerilen Playwright senaryoları:
+
+\begin{enumerate}
+  \item Demo key ile giriş yap.
+  \item Borsa ekranında bir fikir al ve portföy tutarını doğrula.
+  \item Aynı fikri sat ve holding azalmasını doğrula.
+  \item Global aramada \code{Akbank} ara ve fikir/ekip sonuçlarını gör.
+  \item Yönetici kullanıcısıyla dashboard ve depolama alanına eriş.
+  \item Normal kullanıcıyla yönetici sayfasına erişemediğini doğrula.
+\end{enumerate}
+
+\section{Deployment Notları}
+
+Uygulama son durumda GitHub \code{sabanci} branch'inde tutulmaktadır. Vercel production deploy için mevcut komut akışı:
+
+\begin{lstlisting}
+$env:VERCEL_ORG_ID='...'
+$env:VERCEL_PROJECT_ID='...'
+npx.cmd vercel deploy --prod --yes
+\end{lstlisting}
+
+Güvenlik notu: Tokenlar komut satırına veya repo dosyalarına yazılmamalıdır. Vercel token, Groq key ve benzeri bilgiler environment variable veya secret store üzerinden yönetilmelidir.
+
+\section{Önceliklendirilmiş Aksiyon Planı}
+
+\begin{longtable}{p{0.10\textwidth}p{0.30\textwidth}p{0.48\textwidth}}
+\toprule
+\textbf{Öncelik} & \textbf{Aksiyon} & \textbf{Gerekçe}\\
+\midrule
+P0 & Brand cleanup & Eski İş NEW/is-new metinleri Sabancı demosunun profesyonel algısını zedeler.\\
+P0 & State tekrarlarını temizle & Aynı anahtarların ezilmesi beklenmeyen davranış üretebilir.\\
+P1 & Hızlı değerlendirme ile trade engine'i birleştir & Al/Sat dili veri davranışıyla uyumlu olmalı.\\
+P1 & Shared AI service & Local ve Vercel endpoint'leri aynı mantığı tek kaynaktan kullanmalı.\\
+P1 & MIME ve statik asset kontrolü & PDF ve diğer dosyalar doğru content-type ile servis edilmeli.\\
+P2 & Module split & 14.7k satırlık app.js bakım maliyetini düşürmek için ayrıştırılmalı.\\
+P2 & Test altyapısı & Deploy öncesi temel akışları otomatik doğrulamak gerekir.\\
+P3 & Backend persistence & Demo state üretim verisine dönüştürülmeli.\\
+\bottomrule
+\end{longtable}
 
 \section{Sonuç}
 
-Sistem, çalışan fikirlerini ölçülebilir portföy varlığına dönüştürür. Yönetici için karar maliyetini düşürür; çalışan için katkının görünürlüğünü artırır; kurum için fikirden ürüne geçiş disiplinini standartlaştırır. Fiyat motoru, ödül ledger'ı, dosya paketleri, AI özetleri, stüdyo/ekip modeli ve kurumsal entegrasyon protokolleri birlikte çalıştığında platform yalnız öneri kutusu değil, kurum içi inovasyon piyasası olur.
+NEW IDEA EXCHANGE mevcut haliyle güçlü bir demo ürünüdür. Sabancı markasına uyarlanmış iştirak verisi, çok ülkeli kullanıcı seti, fikir borsası, portföy, stüdyo, ekip, sosyal, yarışma, eğitim, etkinlik, yönetici dashboardu ve AI destekli fikir analizi gibi geniş bir ürün hikayesi sunar.
+
+Teknik açıdan en önemli gerçek şudur: uygulama ürün fikrini çok iyi gösterir; fakat kod organizasyonu ve veri kalıcılığı henüz üretim standardında değildir. Raporun önerdiği refactor planı uygulandığında, mevcut demo doğrudan ölçeklenebilir bir kurumsal ürün iskeletine dönüşebilir.
 
 \end{document}
