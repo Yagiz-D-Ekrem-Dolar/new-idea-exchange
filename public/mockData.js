@@ -45,6 +45,17 @@ const countriesList = [
   { code: "ES", name: "Spain", flag: "🇪🇸", lang: "es", label: "Spain Portal" }
 ];
 
+// affiliationCompanies[].countries uses Turkish display names (e.g. "İspanya"), while
+// countriesList[].name uses English (e.g. "Spain") for UI display. This maps a country
+// code to the Turkish name so company/country matching works for every portal, not just TR.
+const countryNameTR = {
+  TR: "Türkiye",
+  GB: "Birleşik Krallık",
+  US: "Amerika Birleşik Devletleri",
+  DE: "Almanya",
+  ES: "İspanya"
+};
+
 const brandLogoSrc = "/assets/company-logos/sabanci-holding.svg";
 
 const profilePhotos = {
@@ -373,19 +384,27 @@ const peopleDirectory = [
   { id: "p07", name: "Sarah Jenkins", companyId: "cimsa-uk", role: "UK Sales Lead", team: "Sales", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/women/64.jpg", status: "Aktif", country: "GB" },
   { id: "p08", name: "David Miller", companyId: "kordsa-uk", role: "Composite Lead Scientist", team: "R&D", city: "Londra", campus: "London Tech Center", photo: "https://randomuser.me/api/portraits/men/53.jpg", status: "Aktif", country: "GB" },
   { id: "p09", name: "Oliver Watson", companyId: "sabanci-holding", role: "International Strategist", team: "Strategy", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/men/86.jpg", status: "Aktif", country: "GB" },
+  { id: "p17", name: "George Taylor", companyId: "kordsa-uk", role: "Aerospace Composites Engineer", team: "R&D", city: "Londra", campus: "London Tech Center", photo: "https://randomuser.me/api/portraits/men/41.jpg", status: "Toplantıda", country: "GB" },
+  { id: "p18", name: "Amelia Williams", companyId: "cimsa-uk", role: "B2B Portal Product Owner", team: "Sales", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/women/52.jpg", status: "Aktif", country: "GB" },
 
   // United States (US)
   { id: "p10", name: "Michael Vance", companyId: "sabanci-climate-us", role: "VP of Energy Storage", team: "Energy Storage", city: "Austin", campus: "Austin HQ", photo: "https://randomuser.me/api/portraits/men/22.jpg", status: "Aktif", country: "US" },
   { id: "p11", name: "Emily Rose", companyId: "cimsa-americas", role: "Houston Terminal Manager", team: "Operations", city: "Houston", campus: "Houston Terminal", photo: "https://randomuser.me/api/portraits/women/36.jpg", status: "Sahada", country: "US" },
   { id: "p12", name: "Robert Chen", companyId: "kordsa-usa", role: "Material Lead Scientist", team: "Technical Services", city: "Chattanooga", campus: "Chattanooga Facility", photo: "https://randomuser.me/api/portraits/men/61.jpg", status: "Aktif", country: "US" },
+  { id: "p19", name: "Jennifer Miller", companyId: "sabanci-climate-us", role: "Grid Services Manager", team: "Energy Storage", city: "Austin", campus: "Texas Solar Farm Office", photo: "https://randomuser.me/api/portraits/women/58.jpg", status: "Aktif", country: "US" },
+  { id: "p20", name: "Thomas Martin", companyId: "kordsa-usa", role: "Graphene Composites Researcher", team: "Technical Services", city: "Chattanooga", campus: "Laurel R&D center", photo: "https://randomuser.me/api/portraits/men/19.jpg", status: "Sahada", country: "US" },
 
   // Germany (DE)
   { id: "p13", name: "Hans Müller", companyId: "cimsa-germany", role: "Logistics Coordinator", team: "Logistics", city: "Hamburg", campus: "Hamburg Terminal", photo: "https://randomuser.me/api/portraits/men/72.jpg", status: "Aktif", country: "DE" },
   { id: "p14", name: "Dieter Schmidt", companyId: "temsa-germany", role: "Mobility Operations Mgr", team: "Mobility Lab", city: "Münih", campus: "München Mobility Lab", photo: "https://randomuser.me/api/portraits/men/95.jpg", status: "Aktif", country: "DE" },
+  { id: "p21", name: "Sabine Schmidt", companyId: "cimsa-germany", role: "Münih Satış Sorumlusu", team: "Sales", city: "Münih", campus: "München Sales Hub", photo: "https://randomuser.me/api/portraits/women/63.jpg", status: "Aktif", country: "DE" },
+  { id: "p22", name: "Andreas Weber", companyId: "temsa-germany", role: "Telemetri Mühendisi", team: "Mobility Lab", city: "Münih", campus: "München Mobility Lab", photo: "https://randomuser.me/api/portraits/men/77.jpg", status: "Toplantıda", country: "DE" },
 
   // Spain (ES)
   { id: "p15", name: "Carlos Ruiz", companyId: "cimsa-spain", role: "Buñol Plant Manager", team: "Production", city: "Buñol", campus: "Buñol Plant", photo: "https://randomuser.me/api/portraits/men/38.jpg", status: "Aktif", country: "ES" },
-  { id: "p16", name: "Maria Ortega", companyId: "cimsa-spain", role: "Sustainability Lead Analyst", team: "R&D", city: "Buñol", campus: "Buñol Plant", photo: "https://randomuser.me/api/portraits/women/29.jpg", status: "Aktif", country: "ES" }
+  { id: "p16", name: "Maria Ortega", companyId: "cimsa-spain", role: "Sustainability Lead Analyst", team: "R&D", city: "Buñol", campus: "Buñol Plant", photo: "https://randomuser.me/api/portraits/women/29.jpg", status: "Aktif", country: "ES" },
+  { id: "p23", name: "Antonio García", companyId: "cimsa-spain", role: "Valencia Satış Sorumlusu", team: "Sales", city: "Valencia", campus: "Valencia Sales Hub", photo: "https://randomuser.me/api/portraits/men/49.jpg", status: "Aktif", country: "ES" },
+  { id: "p24", name: "Isabel Martínez", companyId: "cimsa-spain", role: "Kalite Kontrol Mühendisi", team: "Production", city: "Buñol", campus: "Buñol White Cement Plant", photo: "https://randomuser.me/api/portraits/women/71.jpg", status: "Sahada", country: "ES" }
 ];
 
 const initialAnnouncements = [
@@ -2075,10 +2094,10 @@ const initialIdeas = [
   // DE Ideas (English/German)
   {
     id: "idea-8",
-    title: "Munich clinker automated vertical storage facility",
-    summary: "Optimize Munich clinker depot space by installing a vertical automated storage and retrieval system (ASRS).",
-    problem: "Limited warehouse footprint in Munich logistics center limits the white cement stock volume we can hold.",
-    solution: "Utilize vertical height with a smart robotic lift system that stacks and retrieves pallets automatically.",
+    title: "Automatisiertes vertikales Klinkerlager in München",
+    summary: "Optimierung des Münchener Klinkerlagerplatzes durch Installation eines vertikalen automatisierten Lager- und Bereitstellungssystems (ASRS).",
+    problem: "Die begrenzte Lagerfläche im Logistikzentrum München schränkt die Weißzementmenge ein, die wir lagern können.",
+    solution: "Nutzung der vertikalen Höhe mit einem intelligenten robotischen Liftsystem, das Paletten automatisch stapelt und auslagert.",
     type: "Maliyet azaltma",
     company: "Cimsa Germany GmbH",
     companyId: "cimsa-germany",
@@ -2137,10 +2156,10 @@ const initialIdeas = [
   // ES Ideas (Spanish/English)
   {
     id: "idea-9",
-    title: "Buñol white cement plant carbon capture and storage (CCS) pilot",
-    summary: "Integrate a compact carbon amine scrubbing pilot loop to capture CO2 directly from clinker rotary kiln stacks in Buñol.",
-    problem: "Clinker manufacturing generates significant carbon footprint, risking future EU ESG penalties.",
-    solution: "A small amine scrubbing pilot loop capturing up to 10 tons of CO2 daily, compressed for local industrial use.",
+    title: "Piloto de captura y almacenamiento de carbono (CCS) en planta de cemento blanco de Buñol",
+    summary: "Integrar un circuito piloto compacto de lavado de aminas de carbono para capturar CO2 directo de las chimeneas de Buñol.",
+    problem: "La fabricación de clínker genera una huella de carbono significativa, arriesgando futuras multas ESG de la UE.",
+    solution: "Un circuito piloto que captura hasta 10 toneladas de CO2 al día, comprimido para su uso industrial local.",
     type: "Sürdürülebilirlik",
     company: "Cimsa Buñol Cementos S.L.U.",
     companyId: "cimsa-spain",
@@ -2216,7 +2235,13 @@ const challenges = [
     prizeIcon: "badge-dollar-sign",
     accent: "blue",
     shortlist: ["Pilot bütçesi", "Yönetim sunumu", "Akbank Lab desteği"],
-    country: "TR"
+    country: "TR",
+    translations: {
+      tr: { title: "Akbank Açık Bankacılık Hackathonu", brief: "Kullanıcıların günlük harcamalarını analiz ederek tasarruf önerileri sunan fintech çözümleri." },
+      en: { title: "Akbank Open Banking Hackathon", brief: "Fintech solutions that analyze users' daily spending and offer savings suggestions." },
+      de: { title: "Akbank Open-Banking-Hackathon", brief: "Fintech-Lösungen, die die täglichen Ausgaben der Nutzer analysieren und Sparvorschläge liefern." },
+      es: { title: "Hackathon de Banca Abierta de Akbank", brief: "Soluciones fintech que analizan el gasto diario de los usuarios y ofrecen sugerencias de ahorro." }
+    }
   },
   {
     id: "challenge-ai-docs",
@@ -2235,7 +2260,13 @@ const challenges = [
     prizeIcon: "laptop",
     accent: "orange",
     shortlist: ["MacBook", "Teknosa Pilot", "Tedarik rozeti"],
-    country: "TR"
+    country: "TR",
+    translations: {
+      tr: { title: "Teknosa Çok Kanallı Lojistik Yarışması", brief: "Online siparişlerin mağaza stoklarıyla anlık eşlenip teslimat süresini yarıya indiren lojistik akışları." },
+      en: { title: "Teknosa Omnichannel Logistics Contest", brief: "Logistics flows that match online orders with store stock in real time, cutting delivery time in half." },
+      de: { title: "Teknosa Omnichannel-Logistikwettbewerb", brief: "Logistikabläufe, die Online-Bestellungen in Echtzeit mit dem Filiallager abgleichen und die Lieferzeit halbieren." },
+      es: { title: "Concurso de Logística Omnicanal de Teknosa", brief: "Flujos logísticos que emparejan pedidos en línea con el stock de tienda en tiempo real, reduciendo el tiempo de entrega a la mitad." }
+    }
   },
   // US Challenges
   {
@@ -2255,7 +2286,13 @@ const challenges = [
     prizeIcon: "leaf",
     accent: "emerald",
     shortlist: ["BMS Pilot Fund", "Committee presentation", "ESG Badge"],
-    country: "US"
+    country: "US",
+    translations: {
+      tr: { title: "Texas elektrik bataryası dağıtım optimizasyonu", brief: "Texas güneş bataryalarının şarj/deşarj planlamasını en yüksek şebeke fiyatlarına göre optimize eden algoritmalar." },
+      en: { title: "Texas utility battery dispatch optimization", brief: "Algorithms to optimize charge/discharge schedules of Texas solar batteries based on peak grid prices." },
+      de: { title: "Optimierung der Batterieverteilung in Texas", brief: "Algorithmen zur Optimierung der Lade-/Entladepläne von Solarbatterien in Texas basierend auf Spitzenpreisen im Netz." },
+      es: { title: "Optimización del despacho de baterías en Texas", brief: "Algoritmos para optimizar los horarios de carga/descarga de las baterías solares de Texas según los precios pico de la red." }
+    }
   },
   // GB Challenges
   {
@@ -2275,7 +2312,39 @@ const challenges = [
     prizeIcon: "shield-check",
     accent: "blue",
     shortlist: ["API Access", "Predictive Certificate", "UK Pilot"],
-    country: "GB"
+    country: "GB",
+    translations: {
+      tr: { title: "UK Rüzgar Üretim Tahmin Yarışması", brief: "Londra şebeke bağlantılarında ertesi gün rüzgar hızını ve türbin üretimini tahmin eden yapay zeka algoritmaları." },
+      en: { title: "UK Wind Output Prediction Contest", brief: "AI algorithms to predict next-day wind speed and turbine generation outputs in London grid connections." },
+      de: { title: "UK-Windertrag-Vorhersagewettbewerb", brief: "KI-Algorithmen zur Vorhersage der Windgeschwindigkeit und Turbinenleistung des Folgetages in Londoner Netzanschlüssen." },
+      es: { title: "Concurso de Predicción de Producción Eólica del Reino Unido", brief: "Algoritmos de IA para predecir la velocidad del viento del día siguiente y la producción de turbinas en las conexiones de red de Londres." }
+    }
+  },
+  // DE Challenges
+  {
+    id: "challenge-de-hydrogen-bus",
+    title: "Temsa München Wasserstoffbus-Reichweiten-Challenge",
+    theme: "Sürdürülebilirlik",
+    sector: "Otomotiv",
+    brief: "Algorithmen zur Vorhersage und Verlängerung der Reichweite von Wasserstoffbussen unter realen Münchner Streckenbedingungen.",
+    date: "12 Jun - 20 Jul",
+    deadline: "30 days left",
+    reward: "80.000 SA + München Pilot-Flotte",
+    rewardType: "Para + Sertifika",
+    sponsor: "Temsa Mobility DE",
+    status: "Aktif",
+    ideas: 9,
+    participants: 28,
+    prizeIcon: "battery-charging",
+    accent: "emerald",
+    shortlist: ["Pilot-Flotte", "München Lab-Demo", "Mobility Badge"],
+    country: "DE",
+    translations: {
+      tr: { title: "Temsa Münih Hidrojen Otobüs Menzil Yarışması", brief: "Münih'teki gerçek güzergah koşullarında hidrojenli otobüslerin menzilini tahmin eden ve uzatan algoritmalar." },
+      en: { title: "Temsa Munich Hydrogen Bus Range Challenge", brief: "Algorithms to predict and extend the range of hydrogen buses under real Munich route conditions." },
+      de: { title: "Temsa München Wasserstoffbus-Reichweiten-Challenge", brief: "Algorithmen zur Vorhersage und Verlängerung der Reichweite von Wasserstoffbussen unter realen Münchner Streckenbedingungen." },
+      es: { title: "Desafío de Autonomía de Autobuses de Hidrógeno de Temsa Múnich", brief: "Algoritmos para predecir y extender la autonomía de los autobuses de hidrógeno en condiciones reales de ruta en Múnich." }
+    }
   },
   // ES Challenges
   {
@@ -2295,7 +2364,13 @@ const challenges = [
     prizeIcon: "flame",
     accent: "purple",
     shortlist: ["Pilot funding", "Valencia HQ demo", "ESG board award"],
-    country: "ES"
+    country: "ES",
+    translations: {
+      tr: { title: "Buñol Tesisi Karbon Nötr Çimento Yarışması", brief: "Buñol tesisindeki döner çimento fırınlarında karbon yakalamak veya hidrojen kullanmak için yenilikçi yöntemler." },
+      en: { title: "Buñol plant Carbon Neutral Cement Challenge", brief: "Innovative methods to capture carbon or use hydrogen inside cement rotary kilns in Buñol plant." },
+      de: { title: "Kohlenstoffneutrale Zement-Challenge im Werk Buñol", brief: "Innovative Methoden zur Kohlenstoffabscheidung oder Wasserstoffnutzung in Zement-Drehrohröfen im Werk Buñol." },
+      es: { title: "Desafío de Cemento Neutro en Carbono de la Planta de Buñol", brief: "Métodos innovadores para capturar carbono o usar hidrógeno dentro de los hornos rotatorios de cemento en la planta de Buñol." }
+    }
   }
 ];
 

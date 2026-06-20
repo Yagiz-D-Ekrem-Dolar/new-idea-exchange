@@ -14901,7 +14901,7 @@ body[data-theme="dark"] .ticker-wrap {
   flex-wrap: nowrap;
   white-space: nowrap;
   padding-right: 100%;
-  animation: ticker 600s linear infinite;
+  animation: ticker 2400s linear infinite;
 }
 .ticker__item {
   display: inline-flex;

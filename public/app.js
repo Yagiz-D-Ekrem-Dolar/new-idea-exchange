@@ -32,6 +32,7 @@ const state = {
   ideas: structuredClone(initialIdeas).map((idea, idx) => {
     const equities = [15, 20, 25, 30, 35, 40];
     idea.openEquity = idea.openEquity || equities[idx % equities.length];
+    idea.marketTicker = idea.marketTicker || `NIE-${String(idx + 1).padStart(2, "0")}`;
     return idea;
   }),
   ideaView: "cards",
@@ -562,9 +563,10 @@ const state = {
       missingRoles: ["MLOps Engineer"],
       imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80",
       country: "US"
-    }
+    },
+    ...structuredClone(initialAnnouncements)
   ],
-  
+
   socialPosts: [
     {
       id: "sp-1",
@@ -602,11 +604,11 @@ const state = {
 function currentUser() {
   const c = state.activeCountry || state.currentCountry || "TR";
   const userConfigs = {
-    TR: { id: "u3", name: "Can Koç", email: "can.koc@sabanci.example", photo: "https://randomuser.me/api/portraits/men/32.jpg" },
-    GB: { id: "u7", name: "John Sterling", email: "john.sterling@sabanci.example", photo: "https://randomuser.me/api/portraits/men/44.jpg" },
-    US: { id: "u10", name: "Michael Vance", email: "michael.vance@sabanci.example", photo: "https://randomuser.me/api/portraits/men/22.jpg" },
-    DE: { id: "u12", name: "Hans Müller", email: "hans.mueller@sabanci.example", photo: "https://randomuser.me/api/portraits/men/72.jpg" },
-    ES: { id: "u14", name: "Carlos Ruiz", email: "carlos.ruiz@sabanci.example", photo: "https://randomuser.me/api/portraits/men/38.jpg" }
+    TR: { id: "u3", name: "Can Koç", email: "can.koc@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    GB: { id: "u3", name: "Can Koç", email: "can.koc.uk@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    US: { id: "u3", name: "Can Koç", email: "can.koc.us@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    DE: { id: "u3", name: "Can Koç", email: "can.koc.de@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    ES: { id: "u3", name: "Can Koç", email: "can.koc.es@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
   };
   const config = userConfigs[c] || userConfigs.TR;
 
@@ -807,7 +809,7 @@ function companyLogo(company, size = "") {
 
 function companyIdsInScope() {
   const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
-  const countryCompanies = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(activeC.name));
+  const countryCompanies = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(countryNameTR[activeC.code] || activeC.name));
   if (state.affiliationFilter === "all") return countryCompanies.map(company => company.id);
   return [state.affiliationFilter];
 }
@@ -1053,7 +1055,18 @@ function pageSubtitle() {
 
 function render() {
   document.body.dataset.theme = state.theme;
-  translateIdeasInState();
+  // Legacy "teams"/"products" pages were merged into the Studio hub. Normalize state.page
+  // here (before header/title/body all read it) so the header doesn't show a stale/wrong
+  // label while the body shows Studio content.
+  if (state.page === "teams") {
+    state.page = "studio";
+    state.studioTab = "teams";
+  }
+  if (state.page === "products") {
+    state.page = "studio";
+    state.studioTab = "products";
+  }
+  translateAllInState();
   app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
   if (window.lucide) window.lucide.createIcons();
 
@@ -1449,14 +1462,7 @@ function renderShell() {
                   ${countriesList.map(c => {
                     const isActive = c.code === state.activeCountry;
                     
-                    const countryNameMap = {
-                      "TR": "Türkiye",
-                      "GB": "Birleşik Krallık",
-                      "US": "Amerika Birleşik Devletleri",
-                      "DE": "Almanya",
-                      "ES": "İspanya"
-                    };
-                    const searchCountry = countryNameMap[c.code] || c.name;
+                    const searchCountry = countryNameTR[c.code] || c.name;
                     const subCount = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(searchCountry)).length;
                     
                     return `
@@ -1475,7 +1481,6 @@ function renderShell() {
             <span class="credit-pill" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); padding: 6px 12px; border-radius: 99px;">
               ${saCoinIcon("normal")}
               <span>${Math.round(state.marketBudget).toLocaleString("tr-TR")}</span>
-              <span style="font-size: 10px; font-weight: 900; opacity: 0.8; color: var(--primary);">SA</span>
             </span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
             <button class="icon-button position-relative" data-page="notifications" aria-label="Bildirimler">
@@ -1524,15 +1529,6 @@ function renderMobileNav(nav) {
 }
 
 function renderPage() {
-  if (state.page === "teams") {
-    state.page = "studio";
-    state.studioTab = "teams";
-  }
-  if (state.page === "products") {
-    state.page = "studio";
-    state.studioTab = "products";
-  }
-
   const pageItem = navItems.find(item => item.id === state.page) || { id: state.page, managerOnly: state.page === "manager", adminOnly: state.page === "admin" };
   if (!canAccess(pageItem)) {
     state.page = "quickFlow";
@@ -2072,9 +2068,9 @@ function quickFlowIdeas() {
 }
 
 function renderStockTicker() {
-  const list = state.ideas.filter(idea => idea.marketTicker);
+  const list = state.ideas.filter(idea => idea.marketTicker && idea.country === state.activeCountry).slice(0, 20);
   if (!list.length) return "";
-  
+
   // Duplicate list to make scrolling infinite and smooth
   const items = [...list, ...list, ...list];
   
@@ -4378,7 +4374,7 @@ function timelineItem(iconName, title, meta) {
 
 function renderAffiliationFilter() {
   const activeC = countriesList.find(c => c.code === state.activeCountry) || countriesList[0];
-  const countryCompanies = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(activeC.name));
+  const countryCompanies = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(countryNameTR[activeC.code] || activeC.name));
 
   return `
     <section class="corp-filter-panel">
@@ -4411,8 +4407,11 @@ function renderAffiliationFilter() {
 }
 
 function renderAnnouncements() {
-  const visible = filteredAnnouncements();
-  
+  const allVisible = filteredAnnouncements();
+  const annLimit = state.visibleAnnouncementsCount || 18;
+  const visible = allVisible.slice(0, annLimit);
+  const annHasMore = allVisible.length > annLimit;
+
   return `
     <div class="view-stack announcements-page">
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
@@ -4477,6 +4476,13 @@ function renderAnnouncements() {
       <section class="announcement-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; margin-top: 10px;">
         ${visible.map(item => renderAnnouncementCard(item)).join("") || `<div class="trading-empty">Bu filtrelere uygun duyuru bulunamadı.</div>`}
       </section>
+      ${annHasMore ? `
+        <div style="display: flex; justify-content: center; margin-top: 30px; margin-bottom: 20px; width: 100%;">
+          <button class="btn secondary" data-action="load-more-announcements" style="padding: 10px 24px; font-weight: 600; border-radius: 10px; cursor: pointer; border: 1px solid var(--line-soft); background: var(--surface); color: var(--accent);">
+            Daha Fazla Duyuru Yükle (${allVisible.length - annLimit} Kaldı)
+          </button>
+        </div>
+      ` : ""}
     </div>
   `;
 }
@@ -5139,7 +5145,7 @@ function renderAgendaComposer() {
 
 function filteredAgendaItems() {
   const q = (state.filters.agendaSearch || "").trim().toLocaleLowerCase("tr-TR");
-  const countryName = countriesList.find(c => c.code === state.activeCountry)?.name || "Türkiye";
+  const countryName = countryNameTR[state.activeCountry] || "Türkiye";
   return [...state.agendaItems].filter(item => {
     if (item.companyId) {
       const comp = affiliationCompanies.find(c => c.id === item.companyId);
@@ -5314,6 +5320,27 @@ function renderUnifiedStudiosTab() {
           <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft);">
             ${icon("layers", "36")}
             <p style="margin-top: 10px; font-size: 14px;">Eşleşen stüdyo bulunamadı.</p>
+          </div>
+        `}
+      </section>
+    </div>
+  `;
+}
+
+function renderUnifiedTeamsTab() {
+  const teamList = filteredTeams();
+  return `
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <section class="challenge-filterbar" style="margin-bottom: 0;">
+        <label class="search-box">${icon("search")}<input class="input" data-team-filter="search" value="${esc(state.filters.teamSearch || "")}" placeholder="Ekip ara..." /></label>
+        <select class="select" data-team-filter="area">${["Tümü", ...Array.from(new Set(state.teams.map(t => t.area)))].map(v => `<option value="${esc(v)}" ${state.filters.teamArea === v ? "selected" : ""}>Alan: ${esc(v)}</option>`).join("")}</select>
+        <select class="select" data-team-filter="status">${["Tümü", "active", "forming", "disbanded"].map(v => `<option value="${esc(v)}" ${state.filters.teamStatus === v ? "selected" : ""}>Durum: ${esc(teamStatusLabel(v))}</option>`).join("")}</select>
+      </section>
+      <section class="teams-grid">
+        ${teamList.map(team => renderTeamCard(team, isMyTeam(team))).join("") || `
+          <div style="background: var(--surface); padding: 40px; text-align: center; color: var(--muted); border-radius: 12px; border: 1px solid var(--line-soft); grid-column: span 3;">
+            ${icon("users-round", "36")}
+            <p style="margin-top: 10px; font-size: 14px;">Eşleşen ekip bulunamadı.</p>
           </div>
         `}
       </section>
@@ -8189,6 +8216,7 @@ document.addEventListener("click", event => {
 
     state.visibleIdeasCount = 12;
     state.visibleBorsaIdeasCount = 12;
+    state.visibleAnnouncementsCount = 18;
 
     // Reset messaging
     state.selectedDirectPersonId = null;
@@ -8203,16 +8231,19 @@ document.addEventListener("click", event => {
 
   if (action === "toggle-global-translation") {
     state.globalTranslateAll = !state.globalTranslateAll;
-    state.translatedIdeaIds = state.translatedIdeaIds || {};
-    state.ideas.forEach(idea => {
-      state.translatedIdeaIds[idea.id] = !!state.globalTranslateAll;
-    });
+    state.translatedIdeaIds = {};
     render();
     return;
   }
 
   if (action === "load-more-ideas") {
     state.visibleIdeasCount = (state.visibleIdeasCount || 12) + 12;
+    render();
+    return;
+  }
+
+  if (action === "load-more-announcements") {
+    state.visibleAnnouncementsCount = (state.visibleAnnouncementsCount || 18) + 18;
     render();
     return;
   }
@@ -8914,7 +8945,7 @@ document.addEventListener("click", event => {
           if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
           state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
 
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
           
           const royalty = Math.round(totalPrice * 0.05);
           if (royalty > 0) {
@@ -8946,7 +8977,7 @@ document.addEventListener("click", event => {
           const fraction = quantity / (ownedBefore || 1);
           state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
 
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
         } else {
           alert("Yetersiz destek birimi!");
         }
@@ -9781,7 +9812,7 @@ if (action === "login") {
           if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
           state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
 
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
           
           const royalty = Math.round(totalPrice * 0.05);
           if (royalty > 0) {
@@ -9813,7 +9844,7 @@ if (action === "login") {
         const fraction = sellQuantity / (ownedBefore || 1);
         state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
 
-        state.quickFlowFeedback = `${sellQuantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrencyHTML(state.marketBudget, "large")}.`;
+        state.quickFlowFeedback = `${sellQuantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
       }
       render();
     }
@@ -9861,6 +9892,7 @@ if (action === "login") {
     state.filters.announcementCompany = "Tümü";
     state.filters.announcementArea = "Tümü";
     state.filters.announcementSort = "En yeni";
+    state.visibleAnnouncementsCount = 18;
     render();
     return;
   }
@@ -10398,6 +10430,7 @@ document.addEventListener("input", event => {
     });
     state.visibleIdeasCount = 12;
     state.visibleBorsaIdeasCount = 12;
+    state.visibleAnnouncementsCount = 18;
     render();
     return;
   }
@@ -10405,6 +10438,7 @@ document.addEventListener("input", event => {
   if (event.target.matches("[data-market-filter='search']")) {
     state.marketSearch = event.target.value;
     state.visibleBorsaIdeasCount = 12;
+    state.visibleAnnouncementsCount = 18;
     render();
     return;
   }
@@ -10415,6 +10449,7 @@ document.addEventListener("input", event => {
   }
   if (event.target.matches("[data-announcement-filter='search']")) {
     state.filters.announcementSearch = event.target.value;
+    state.visibleAnnouncementsCount = 18;
     render();
     return;
   }
@@ -10805,6 +10840,7 @@ document.addEventListener("change", event => {
 
       state.visibleIdeasCount = 12;
       state.visibleBorsaIdeasCount = 12;
+    state.visibleAnnouncementsCount = 18;
 
       // Reset messaging
       state.selectedDirectPersonId = null;
@@ -10850,6 +10886,7 @@ document.addEventListener("change", event => {
       state.marketSort = event.target.value;
     }
     state.visibleBorsaIdeasCount = 12;
+    state.visibleAnnouncementsCount = 18;
     render();
     return;
   }
@@ -10882,6 +10919,7 @@ document.addEventListener("change", event => {
     } else if (filterName === "sort") {
       state.filters.announcementSort = event.target.value;
     }
+    state.visibleAnnouncementsCount = 18;
     render();
     return;
   }
@@ -14036,6 +14074,7 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
     date,
     likes,
     likedByMe: false,
+    country: person.country || "TR",
     comments: [
       { id: `${id}-c1`, userName: "Can Koç", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
     ],
@@ -14049,26 +14088,29 @@ function getActiveLanguage() {
   return activeC.lang || "tr";
 }
 
-function getTranslatedField(idea, field) {
-  if (!idea) return "";
-  const activeLang = getActiveLanguage();
-  const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+function getTranslatedText(item, field) {
+  if (!item) return "";
+  const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
+  const originalLang = item.country === "TR" ? "tr" : (item.country === "DE" ? "de" : (item.country === "ES" ? "es" : "en"));
   
-  const showOriginal = state.showOriginalIdeas && state.showOriginalIdeas[idea.id];
-  if (showOriginal || activeLang === originalLang) {
-    return idea[field] || "";
+  if (activeLang === originalLang) {
+    return item[field] || "";
   }
   
-  if (idea.translations && idea.translations[activeLang] && idea.translations[activeLang][field]) {
-    return idea.translations[activeLang][field];
+  if (item.translations && item.translations[activeLang]) {
+    const val = item.translations[activeLang];
+    if (typeof val === "object") {
+      return val[field] || item[field] || "";
+    } else if (typeof val === "string" && (field === "body" || field === "text")) {
+      return val;
+    }
   }
-  
-  return idea[field] || "";
+  return item[field] || "";
 }
 
 function renderTranslationButton(idea) {
   if (!idea) return "";
-  const activeLang = getActiveLanguage();
+  const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
   const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
   
   if (activeLang === originalLang) return "";
@@ -14093,10 +14135,10 @@ function renderTranslationButton(idea) {
   `;
 }
 
-function translateIdeasInState() {
-  const activeLang = getActiveLanguage();
-  state.translatedIdeaIds = state.translatedIdeaIds || {};
-  
+function translateAllInState() {
+  const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
+
+  // 1. Translate Ideas
   state.ideas.forEach(idea => {
     if (idea.originalTitle === undefined) {
       idea.originalTitle = idea.title || "";
@@ -14104,38 +14146,197 @@ function translateIdeasInState() {
       idea.originalProblem = idea.problem || "";
       idea.originalSolution = idea.solution || "";
     }
-    
     const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
-    const showOriginal = !!state.translatedIdeaIds[idea.id];
+    const showOriginal = !!(state.translatedIdeaIds && state.translatedIdeaIds[idea.id]);
     
-    if (showOriginal) {
+    if (showOriginal || activeLang === originalLang) {
       idea.title = idea.originalTitle;
       idea.summary = idea.originalSummary;
       idea.problem = idea.originalProblem;
       idea.solution = idea.originalSolution;
     } else {
-      if (activeLang === originalLang) {
-        idea.title = idea.originalTitle;
-        idea.summary = idea.originalSummary;
-        idea.problem = idea.originalProblem;
-        idea.solution = idea.originalSolution;
-      } else {
-        const trans = idea.translations && idea.translations[activeLang];
-        if (trans) {
-          idea.title = trans.title || idea.originalTitle;
-          idea.summary = trans.summary || idea.originalSummary;
-          idea.problem = trans.problem || idea.originalProblem;
-          idea.solution = trans.solution || idea.originalSolution;
-        } else {
-          idea.title = idea.originalTitle;
-          idea.summary = idea.originalSummary;
-          idea.problem = idea.originalProblem;
-          idea.solution = idea.originalSolution;
+      const trans = idea.translations && idea.translations[activeLang];
+      if (trans) {
+        idea.title = trans.title || idea.originalTitle;
+        idea.summary = trans.summary || idea.originalSummary;
+        idea.problem = trans.problem || idea.originalProblem;
+        idea.solution = trans.solution || idea.originalSolution;
+      }
+    }
+  });
+
+  // 2. Translate Announcements
+  state.announcements.forEach(ann => {
+    if (ann.originalTitle === undefined) {
+      ann.originalTitle = ann.title || "";
+      ann.originalBody = ann.body || "";
+    }
+    const originalLang = ann.country === "TR" ? "tr" : (ann.country === "DE" ? "de" : (ann.country === "ES" ? "es" : "en"));
+    if (activeLang === originalLang) {
+      ann.title = ann.originalTitle;
+      ann.body = ann.originalBody;
+    } else {
+      const trans = ann.translations && ann.translations[activeLang];
+      if (trans) {
+        ann.title = trans.title || ann.originalTitle;
+        ann.body = trans.body || ann.originalBody;
+      }
+    }
+  });
+
+  // 3. Translate Social Posts & Comments
+  state.socialPosts.forEach(post => {
+    if (post.originalBody === undefined) {
+      post.originalBody = post.body || "";
+    }
+    const originalLang = post.country === "TR" ? "tr" : (post.country === "DE" ? "de" : (post.country === "ES" ? "es" : "en"));
+    if (activeLang === originalLang) {
+      post.body = post.originalBody;
+    } else {
+      const trans = post.translations && post.translations[activeLang];
+      if (trans) {
+        post.body = typeof trans === "string" ? trans : (trans.body || post.originalBody);
+      }
+    }
+
+    if (post.comments) {
+      post.comments.forEach(c => {
+        if (c.originalBody === undefined) {
+          c.originalBody = c.body || "";
         }
+        if (activeLang === originalLang) {
+          c.body = c.originalBody;
+        } else {
+          const trans = c.translations && c.translations[activeLang];
+          if (trans) {
+            c.body = typeof trans === "string" ? trans : (trans.body || c.originalBody);
+          }
+        }
+      });
+    }
+  });
+
+  // 4. Translate Chat Messages
+  state.messageSpaces.forEach(space => {
+    const originalLang = space.country === "TR" ? "tr" : (space.country === "DE" ? "de" : (space.country === "ES" ? "es" : "en"));
+    if (space.messages) {
+      space.messages.forEach(msg => {
+        if (msg.originalBody === undefined) {
+          msg.originalBody = msg.body || "";
+        }
+        if (activeLang === originalLang) {
+          msg.body = msg.originalBody;
+        } else {
+          const trans = msg.translations && msg.translations[activeLang];
+          if (trans) {
+            msg.body = typeof trans === "string" ? trans : (trans.body || msg.originalBody);
+          }
+        }
+      });
+    }
+  });
+
+  // 5. Translate Data Sets
+  (state.dataSets || []).forEach(ds => {
+    if (ds.originalTitle === undefined) {
+      ds.originalTitle = ds.title || "";
+      ds.originalSummary = ds.summary || "";
+    }
+    const originalLang = ds.country === "TR" ? "tr" : (ds.country === "DE" ? "de" : (ds.country === "ES" ? "es" : "en"));
+    if (activeLang === originalLang) {
+      ds.title = ds.originalTitle;
+      ds.summary = ds.originalSummary;
+    } else {
+      const trans = ds.translations && ds.translations[activeLang];
+      if (trans) {
+        ds.title = trans.title || ds.originalTitle;
+        ds.summary = trans.summary || ds.originalSummary;
+      }
+    }
+  });
+
+  // 6. Translate Challenges (Yarışmalar)
+  (typeof challenges !== "undefined" ? challenges : []).forEach(ch => {
+    if (ch.originalTitle === undefined) {
+      ch.originalTitle = ch.title || "";
+      ch.originalBrief = ch.brief || "";
+    }
+    const originalLang = ch.country === "TR" ? "tr" : (ch.country === "DE" ? "de" : (ch.country === "ES" ? "es" : "en"));
+    if (activeLang === originalLang) {
+      ch.title = ch.originalTitle;
+      ch.brief = ch.originalBrief;
+    } else {
+      const trans = ch.translations && ch.translations[activeLang];
+      if (trans) {
+        ch.title = trans.title || ch.originalTitle;
+        ch.brief = trans.brief || ch.originalBrief;
       }
     }
   });
 }
+
+const countryNames = {
+  TR: [
+    "Ahmet Yılmaz", "Ayşe Kaya", "Mehmet Demir", "Fatma Şahin", "Mustafa Çelik",
+    "Emine Yıldız", "Ali Öztürk", "Hatice Arslan", "Hüseyin Polat", "Zeynep Koç",
+    "Hasan Aydın", "Selin Karaca", "Burak Bulut", "Merve Tekin", "Murat Şen",
+    "Büşra Kılıç", "İbrahim Özkan", "Elif Yalçın", "Fatih Doğan", "Gamze Yavuz",
+    "Kemal Aslan", "Derya Avcı", "Serkan Aksoy", "Seda Çetin", "Gökhan Sarı",
+    "Esra Özdemir", "Volkan Kaplan", "Yasemin Köse", "Caner Ateş", "Hale Güler",
+    "Ömer Yiğit", "Demet Yaman", "Metin Yıldırım", "Arzu Can", "Bülent Şimşek",
+    "Kübra Şahin", "Ender Ünal", "Tuğba Kartal", "Hakan Koç", "Nihan Güneş",
+    "Süleyman Ural", "Melis Erol", "Yusuf Aktaş", "Ece Akın", "Turgut Soylu",
+    "Pınar Çakır", "Sinan Aksoy", "Belgin Yılmaz", "Kerem Bulut", "Ebru Aslan"
+  ],
+  US: [
+    "James Smith", "Mary Johnson", "John Williams", "Patricia Brown", "Robert Jones",
+    "Jennifer Miller", "Michael Davis", "Elizabeth Garcia", "William Rodriguez", "Linda Wilson",
+    "David Martinez", "Barbara Anderson", "Richard Taylor", "Susan Thomas", "Joseph Hernandez",
+    "Jessica Moore", "Thomas Martin", "Sarah Jackson", "Charles Martin", "Karen Lee",
+    "Christopher Perez", "Nancy Thompson", "Daniel White", "Lisa Harris", "Matthew Sanchez",
+    "Betty Clark", "Anthony Ramirez", "Margaret Lewis", "Mark Robinson", "Sandra Walker",
+    "Donald Young", "Ashley Allen", "Steven King", "Kimberly Wright", "Paul Scott",
+    "Emily Torres", "Andrew Nguyen", "Donna Hill", "Joshua Adams", "Michelle Flores",
+    "Kenneth Green", "Dorothy Nelson", "Kevin Baker", "Carol Hall", "Brian Rivera",
+    "Amanda Campbell", "George Mitchell", "Melissa Carter", "Edward Roberts", "Deborah Gomez"
+  ],
+  GB: [
+    "Oliver Smith", "Olivia Jones", "George Taylor", "Amelia Williams", "Noah Brown",
+    "Isla Davies", "Harry Evans", "Ava Thomas", "Leo John", "Mia Roberts",
+    "Arthur Wilson", "Isabella Carter", "Muhammad Mason", "Sophia Wright", "Oscar Knight",
+    "Grace Hughes", "Charley Green", "Freya Lewis", "Thomas Hill", "Ella Hall",
+    "Henry Shaw", "Emily Wood", "William Turner", "Hazel Ward", "Alfie Watson",
+    "Florence Adams", "Archie White", "Ivy Clarke", "Joshua Cooper", "Sienna Harrison",
+    "Jacob Ward", "Tilly Martin", "James Webb", "Phoebe Davis", "Edward Bailey",
+    "Daisy Palmer", "Lucas Holmes", "Evie Mason", "Alexander Dixon", "Ruby Hunt",
+    "Daniel Rogers", "Lily Miller", "Logan Morris", "Sophie Bell", "Max Palmer",
+    "Lola Shaw", "Rory Marshall", "Alice Hill", "Toby Barnes", "Chloe Knight"
+  ],
+  DE: [
+    "Thomas Müller", "Sabine Schmidt", "Michael Schneider", "Petra Fischer", "Andreas Weber",
+    "Monika Meyer", "Stefan Wagner", "Birgit Becker", "Christian Schulz", "Renate Hoffmann",
+    "Martin Schäfer", "Ursula Koch", "Frank Bauer", "Ingrid Richter", "Jürgen Klein",
+    "Karin Wolf", "Ralf Schröder", "Angelika Neumann", "Dieter Schwarz", "Gabriele Zimmermann",
+    "Manfred Braun", "Helga Krüger", "Uwe Hofmann", "Gisela Hartmann", "Hans Lange",
+    "Christa Schmitt", "Walter Werner", "Jutta Schmitz", "Wolfgang Krause", "Elke Meier",
+    "Klaus Lehmann", "Brigitte Schmid", "Günter Hergert", "Erika Maier", "Herbert Mayer",
+    "Marianne Herrmann", "Werner Walter", "Karin Köhler", "Horst Kaiser", "Christel Huber",
+    "Peter Peters", "Anneliese Fuchs", "Bernd Scholz", "Gertrud Möller", "Karl Weiss",
+    "Margarete Jung", "Heinz Hahn", "Hannelore Schubert", "Gerhard Vogel", "Hildegard Friedrich"
+  ],
+  ES: [
+    "Antonio García", "María Rodríguez", "Manuel González", "Ana Fernández", "José López",
+    "Isabel Martínez", "Francisco Sánchez", "Laura Pérez", "David Gómez", "Juana Martín",
+    "Juan Jiménez", "Cristina Ruiz", "José Antonio Hernández", "Marta Diaz", "Javier Moreno",
+    "Carmen Muñoz", "Daniel Álvarez", "Josefa Romero", "Jose Manuel Alonso", "Sofía Gutiérrez",
+    "Pedro Navarro", "Francisca Torres", "Alejandro Domínguez", "Lucia Vázquez", "Miguel Ramos",
+    "María Pilar Gil", "Ángel Ramírez", "María Dolores Serrano", "Carlos Blanco", "María Teresa Molina",
+    "Jesús Morales", "Raquel Suárez", "Pablo Ortega", "Sara Delgado", "José Luis Castro",
+    "Elena Ortiz", "Ramón Rubio", "Nerea Marin", "Luis Sanz", "Silvia Núñez",
+    "Alberto Iglesias", "María José Medina", "Juan Carlos Garrido", "Patricia Cortés", "Rafael Castillo",
+    "Andrea Santos", "Francisco Javier Lozano", "Beatriz Guerrero", "Jorge Cano", "Inmaculada Prieto"
+  ]
+};
 
 function scaleMockDataset() {
   // 1. Add new iştirakler (subsidiaries) dynamically
@@ -14375,6 +14576,37 @@ function scaleMockDataset() {
     namedAvatarPhotos[fullName] = avatarPhoto;
   }
 
+  // Re-map authentic names to demoUsers based on their country (must run before
+  // ideas/teams/announcements pick authors, since authorLabel snapshots u.name by value)
+  demoUsers.forEach((u, index) => {
+    if (u.id === "u3") {
+      u.name = "Can Koç";
+      u.email = "can.koc@sabanci.example";
+      u.photo = "https://randomuser.me/api/portraits/men/75.jpg";
+      u.avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg";
+      return;
+    }
+    const names = countryNames[u.country] || countryNames.US;
+    const nameIndex = index % names.length;
+    u.name = names[nameIndex];
+    const randCompany = companyList[index % companyList.length] || companyList[0];
+    u.email = u.name.toLowerCase().replace(/\s+/g, ".") + `@${randCompany.domain}`;
+    const isMale = (index % 2 === 0);
+    const photoId = (index % 70) + 1;
+    u.photo = `https://randomuser.me/api/portraits/${isMale ? 'men' : 'women'}/${photoId}.jpg`;
+    u.avatarUrl = u.photo;
+  });
+
+  Object.keys(profilePhotos).forEach(k => {
+    const found = demoUsers.find(u => u.id === k);
+    if (found) {
+      profilePhotos[k] = found.photo;
+    }
+  });
+  demoUsers.forEach(u => {
+    namedAvatarPhotos[u.name] = u.photo;
+  });
+
   // 3. Generate 150+ ideas (10x original scale)
   const industryTrends = [
     {
@@ -14489,14 +14721,20 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  
+  const countryCycle = ["TR", "US", "GB", "DE", "ES"];
+  const companiesByCountryCode = {};
+  countryCycle.forEach(code => {
+    companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
+  });
+
   for (let i = currentIdeaCount; i < targetIdeaCount; i++) {
     const trend = industryTrends[i % industryTrends.length];
-    const randCompany = companyList[i % companyList.length];
-    const randCountry = randCompany.countries[0] || "Türkiye";
-    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
-    
-    const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
+    const countryCode = countryCycle[i % countryCycle.length];
+    const countryCompanyPool = companiesByCountryCode[countryCode];
+    const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
+
+    const countryUserPool = demoUsers.filter(u => u.country === countryCode);
+    const randomUser = countryUserPool.length ? countryUserPool[Math.floor(Math.random() * countryUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
     const id = `idea-gen-${i}`;
     const ticker = `NIE-${100 + i}`;
     
@@ -14560,8 +14798,11 @@ function scaleMockDataset() {
   for (let i = currentTeamCount; i < targetTeamCount; i++) {
     const randCompany = companyList[i % companyList.length];
     const randIdea = initialIdeas[i % initialIdeas.length];
-    const creatorUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    
+    const teamCountry = randCompany.countries[0] || "Türkiye";
+    const teamCountryCode = teamCountry === "Türkiye" ? "TR" : (teamCountry === "Birleşik Krallık" || teamCountry === "United Kingdom" ? "GB" : (teamCountry === "Amerika Birleşik Devletleri" || teamCountry === "United States" ? "US" : (teamCountry === "Almanya" || teamCountry === "Germany" ? "DE" : "ES")));
+    const teamUserPool = demoUsers.filter(u => u.country === teamCountryCode);
+    const creatorUser = teamUserPool.length ? teamUserPool[Math.floor(Math.random() * teamUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
+
     initialTeams.push({
       id: `team-gen-${i}`,
       name: `${randCompany.shortName} İnovasyon Takımı ${i}`,
@@ -14591,27 +14832,43 @@ function scaleMockDataset() {
     "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80"
   ];
 
+  const annPhrases = {
+    tr: { title: (c, n) => `🚀 Yeni Proje Lansmanı: ${c} AI İnisiyatifi #${n}`, body: (c, n) => `Merhaba ${c} ekibi, verimliliği artıracak yeni nesil araçlarımızı kullanıma sunuyoruz. Proje #${n} kapsamında yeni denemeler yapılıyor! Desteklerinizi bekliyoruz.` },
+    en: { title: (c, n) => `🚀 New Project Launch: ${c} AI Initiative #${n}`, body: (c, n) => `Hello ${c} team, we are rolling out next-generation tools to boost efficiency. New trials are underway as part of Project #${n}! We look forward to your support.` },
+    de: { title: (c, n) => `🚀 Neuer Projektstart: ${c} KI-Initiative #${n}`, body: (c, n) => `Hallo ${c}-Team, wir führen Tools der nächsten Generation ein, um die Effizienz zu steigern. Im Rahmen von Projekt #${n} laufen neue Tests! Wir freuen uns auf Ihre Unterstützung.` },
+    es: { title: (c, n) => `🚀 Lanzamiento de Nuevo Proyecto: Iniciativa de IA de ${c} #${n}`, body: (c, n) => `Hola equipo de ${c}, estamos lanzando herramientas de próxima generación para mejorar la eficiencia. ¡Se están realizando nuevas pruebas como parte del Proyecto #${n}! Esperamos su apoyo.` }
+  };
+
   for (let i = 0; i < 400; i++) {
-    const randCompany = companyList[i % companyList.length];
-    const randCountry = randCompany.countries[0] || "Türkiye";
-    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
-    const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    
+    const countryCode = countryCycle[i % countryCycle.length];
+    const countryCompanyPool = companiesByCountryCode[countryCode];
+    const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
+    const annUserPool = demoUsers.filter(u => u.country === countryCode);
+    const randomUser = annUserPool.length ? annUserPool[Math.floor(Math.random() * annUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
+    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+    const projectNum = i + 10;
+
     state.announcements.push({
       id: `ann-gen-${i}`,
-      title: `Yeni Proje Lansmanı: ${randCompany.shortName} AI İnisiyatifi`,
+      title: annPhrases[originalLang].title(randCompany.shortName, projectNum),
       author: randomUser.name,
       authorId: randomUser.id,
       companyId: randCompany.id,
       type: "Topluluk",
       area: "Yenilikçi Fikirler",
       importanceScore: 4,
-      body: `Merhaba ${randCompany.shortName} ekibi, verimliliği artıracak yeni nesil araçlarımızı kullanıma sunuyoruz. Proje #${i+10} kapsamında yeni denemeler yapılıyor! Desteklerinizi bekliyoruz.`,
+      body: annPhrases[originalLang].body(randCompany.shortName, projectNum),
       date: `2026-06-${(10 + (i % 15)).toString().padStart(2, '0')}`,
       comments: [],
       likes: 15 + i * 2,
       imageUrl: i % 2 === 0 ? aiImages[i % aiImages.length] : "",
-      country: countryCode
+      country: countryCode,
+      translations: {
+        tr: { title: annPhrases.tr.title(randCompany.shortName, projectNum), body: annPhrases.tr.body(randCompany.shortName, projectNum) },
+        en: { title: annPhrases.en.title(randCompany.shortName, projectNum), body: annPhrases.en.body(randCompany.shortName, projectNum) },
+        de: { title: annPhrases.de.title(randCompany.shortName, projectNum), body: annPhrases.de.body(randCompany.shortName, projectNum) },
+        es: { title: annPhrases.es.title(randCompany.shortName, projectNum), body: annPhrases.es.body(randCompany.shortName, projectNum) }
+      }
     });
   }
 
@@ -14635,6 +14892,7 @@ function scaleMockDataset() {
   const equities = [15, 20, 25, 30, 35, 40];
   state.ideas = initialIdeas.map((idea, idx) => {
     idea.openEquity = idea.openEquity || equities[idx % equities.length];
+    idea.marketTicker = idea.marketTicker || `NIE-${String(idx + 1).padStart(2, "0")}`;
     return idea;
   });
   state.teams = initialTeams;
@@ -14751,11 +15009,13 @@ function scaleMockDataset() {
   let datasetIdCount = 0;
   countries.forEach(country => {
     const lang = country === "TR" ? "tr" : (country === "DE" ? "de" : (country === "ES" ? "es" : "en"));
+    const dsCompanyPool = companiesByCountryCode[country];
     for (let i = 0; i < 12; i++) {
       const trend = datasetTrends[i % datasetTrends.length];
-      const randCompany = companyList[i % companyList.length];
-      const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
-      
+      const randCompany = dsCompanyPool.length ? dsCompanyPool[i % dsCompanyPool.length] : companyList[i % companyList.length];
+      const dsUserPool = demoUsers.filter(u => u.country === country);
+      const randomUser = dsUserPool.length ? dsUserPool[Math.floor(Math.random() * dsUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
+
       state.dataSets.push({
         id: `ds-gen-${datasetIdCount++}`,
         title: trend[lang].title + ` (${randCompany.shortName})`,
@@ -14769,9 +15029,454 @@ function scaleMockDataset() {
         comments: [],
         likes: 10 + i * 3,
         downloads: 20 + i * 5,
-        country: country
+        country: country,
+        translations: {
+          tr: { title: trend.tr.title + ` (${randCompany.shortName})`, summary: trend.tr.summary },
+          en: { title: trend.en.title + ` (${randCompany.shortName})`, summary: trend.en.summary },
+          de: { title: trend.de.title + ` (${randCompany.shortName})`, summary: trend.de.summary },
+          es: { title: trend.es.title + ` (${randCompany.shortName})`, summary: trend.es.summary }
+        }
       });
     }
+  });
+
+  // Add curated, fully-translated social posts on top of the hand-authored sp-1/sp-2
+  // (do NOT reset state.socialPosts here - ensureSocialEnhancements() attaches polls/links
+  // to sp-1/sp-2 by id afterwards, and wiping the array would silently break that).
+  const socialTemplates = {
+    TR: [
+      {
+        body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+        translations: {
+          tr: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+          en: "Our Akbank Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
+          de: "Unser Akbank Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
+          es: "¡Nuestro proyecto de inversión de IA móvil de Akbank está listado en la bolsa de ideas! Esperamos su apoyo."
+        }
+      },
+      {
+        body: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+        translations: {
+          tr: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+          en: "The multi-language supported artificial intelligence infrastructure we developed as SabancıDx is live.",
+          de: "Die von uns als SabancıDx entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
+          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como SabancıDx está en vivo."
+        }
+      },
+      {
+        body: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+        translations: {
+          tr: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+          en: "The autonomous payment kiosk pilot in Teknosa stores increased customer satisfaction by 18%.",
+          de: "Das Pilotprojekt für autonome Zahlungskioske in Teknosa-Filialen steigerte die Kundenzufriedenheit um 18%.",
+          es: "El piloto de quioscos de pago autónomos en las tiendas Teknosa aumentó la satisfacción del cliente en un 18%."
+        }
+      }
+    ],
+    US: [
+      {
+        body: "Austin utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
+        translations: {
+          tr: "Austin elektrik bataryası dağıtım optimizasyonu veri kümesi Veri bölümüne yüklendi. Model araştırmalarına açık.",
+          en: "Austin utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
+          de: "Der Datensatz zur Optimierung der Austin-Batterieverteilung wurde im Datenbereich hochgeladen. Offen für Modellforschung.",
+          es: "El conjunto de datos de optimización del despacho de baterías de Austin está cargado en la sección Datos. Abierto para la investigación de modelos."
+        }
+      },
+      {
+        body: "Chattanooga composite lab successfully completed graphene-infused tire cord tests.",
+        translations: {
+          tr: "Chattanooga kompozit laboratuvarı grafen katkılı lastik kord testlerini başarıyla tamamladı.",
+          en: "Chattanooga composite lab successfully completed graphene-infused tire cord tests.",
+          de: "Das Chattanooga Komposit-Labor hat die Tests für mit Graphen versetzte Reifen-Cords erfolgreich abgeschlossen.",
+          es: "El laboratorio de compuestos de Chattanooga completó con éxito las pruebas de cables de neumáticos infundidos con grafeno."
+        }
+      },
+      {
+        body: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
+        translations: {
+          tr: "Sabancı Climate Texas bu hafta büyük bir elektrik dağıtım şirketiyle yeni bir şebeke hizmetleri anlaşması imzaladı.",
+          en: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
+          de: "Sabancı Climate Texas hat diese Woche eine neue Vereinbarung über Netzdienstleistungen mit einem großen Energieversorger abgeschlossen.",
+          es: "Sabancı Climate Texas firmó esta semana un nuevo acuerdo de servicios de red con una importante empresa de servicios públicos."
+        }
+      }
+    ],
+    GB: [
+      {
+        body: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
+        translations: {
+          tr: "Sabancı Ventures Londra ofisi bu Cuma yeşil enerji girişimleri için bir demo günü düzenliyor.",
+          en: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
+          de: "Das Londoner Büro von Sabancı Ventures veranstaltet diesen Freitag einen Demo-Tag für Start-ups im Bereich grüne Energie.",
+          es: "La oficina de Sabancı Ventures en Londres organizará una jornada de demostración para startups de energía verde este viernes."
+        }
+      },
+      {
+        body: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
+        translations: {
+          tr: "Çimsa UK'nin yeni B2B satış portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
+          en: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
+          de: "Das neue B2B-Verkaufsportal von Çimsa UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
+          es: "El nuevo portal de ventas B2B de Çimsa UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
+        }
+      },
+      {
+        body: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
+        translations: {
+          tr: "Kordsa Londra Teknoloji Merkezi, yeni bir havacılık ortağıyla havacılık sınıfı prepreg denemelerine başlıyor.",
+          en: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
+          de: "Das Kordsa London Tech Center beginnt mit Prepreg-Tests in Luftfahrtqualität mit einem neuen Luftfahrtpartner.",
+          es: "El Centro Tecnológico de Kordsa en Londres inicia ensayos de preimpregnados de grado aeroespacial con un nuevo socio de aviación."
+        }
+      }
+    ],
+    DE: [
+      {
+        body: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
+        translations: {
+          tr: "Münih'teki Temsa elektrikli otobüsleri için yeni lityum iyon hücrelerini test ediyoruz.",
+          en: "We are testing the new lithium-ion cells for Temsa electric buses in Munich.",
+          de: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
+          es: "Estamos probando nuevas celdas de iones de litio para los autobuses eléctricos Temsa en Múnich."
+        }
+      },
+      {
+        body: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
+        translations: {
+          tr: "Çimsa Hamburg terminalinde yeni otomatik lojistik yazılımı sayesinde verimlilik artırıldı.",
+          en: "Efficiency at the Çimsa Hamburg terminal has been increased with new automated logistics software.",
+          de: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
+          es: "La eficiencia en la terminal de Çimsa en Hamburgo se ha incrementado con el nuevo software de logística automatizado."
+        }
+      },
+      {
+        body: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
+        translations: {
+          tr: "Temsa Münih Laboratuvarı, hidrojenli otobüs prototipinin ilk test sürüşünü başarıyla tamamladı.",
+          en: "Temsa Munich Lab has successfully completed the first test drive of the hydrogen bus prototype.",
+          de: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
+          es: "El laboratorio de Temsa en Múnich completó con éxito la primera prueba de conducción del prototipo de autobús de hidrógeno."
+        }
+      }
+    ],
+    ES: [
+      {
+        body: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%.",
+        translations: {
+          tr: "Çimsa Buñol tesisinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
+          en: "Excellent progress at the Çimsa plant in Buñol. We have reduced energy consumption by 12%.",
+          de: "Hervorragende Fortschritte im Çimsa-Werk in Buñol. Wir haben den Energieverbrauch um 12% gesenkt.",
+          es: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%."
+        }
+      },
+      {
+        body: "Presentamos el nuevo hormigón ecológico de ultra alto rendimiento en el congreso de Barcelona.",
+        translations: {
+          tr: "Barselona'daki kongrede yeni çevre dostu ultra yüksek performanslı betonu tanıtıyoruz.",
+          en: "We are presenting the new eco-friendly ultra-high performance concrete at the Barcelona congress.",
+          de: "Wir präsentieren den neuen umweltfreundlichen ultrahochfesten Beton auf dem Kongress in Barcelona.",
+          es: "Presentamos el nuevo hormigón ecológico de ultra alto rendimiento en el congreso de Barcelona."
+        }
+      },
+      {
+        body: "El equipo de Buñol logró certificar el nuevo cemento blanco bajo en carbono para exportación a la UE.",
+        translations: {
+          tr: "Buñol ekibi, düşük karbonlu yeni beyaz çimentoyu AB'ye ihracat için sertifikalandırmayı başardı.",
+          en: "The Buñol team successfully certified the new low-carbon white cement for export to the EU.",
+          de: "Das Buñol-Team hat erfolgreich den neuen kohlenstoffarmen Weißzement für den Export in die EU zertifiziert.",
+          es: "El equipo de Buñol logró certificar el nuevo cemento blanco bajo en carbono para exportación a la UE."
+        }
+      }
+    ]
+  };
+
+  let postCount = 0;
+  countries.forEach(country => {
+    const templates = socialTemplates[country] || [];
+    const countryUsers = demoUsers.filter(u => u.country === country);
+    
+    templates.forEach((t, i) => {
+      const user = countryUsers[i % countryUsers.length] || demoUsers[0];
+      const commentUser = countryUsers[(i + 1) % countryUsers.length] || demoUsers[1];
+      
+      const commentTemplates = {
+        TR: { body: "Harika bir çalışma, tebrikler!", tr: "Harika bir çalışma, tebrikler!", en: "Great work, congratulations!", de: "Tolle Arbeit, Glückwunsch!", es: "¡Gran trabajo, felicitaciones!" },
+        US: { body: "This will be very useful for model training.", tr: "Bu model eğitimi için çok yararlı olacak.", en: "This will be very useful for model training.", de: "Dies wird für das Modelltraining sehr nützlich sein.", es: "Esto será muy útil para el entrenamiento del modelo." },
+        GB: { body: "Looking forward to attending the session.", tr: "Oturuma katılmayı sabırsızlıkla bekliyorum.", en: "Looking forward to attending the session.", de: "Ich freue mich darauf, an der Sitzung teilzunehmen.", es: "Espero con ansias asistir a la sesión." },
+        DE: { body: "Sehr interessantes Projekt für unsere Bus-Flotte.", tr: "Otobüs filomuz için çok ilginç bir proje.", en: "Very interesting project for our bus fleet.", de: "Sehr interessantes Projekt für unsere Bus-Flotte.", es: "Proyecto muy interesante para nuestra flota de autobuses." },
+        ES: { body: "¡Excelente noticia para la sostenibilidad del grupo!", tr: "Grup sürdürülebilirliği için mükemmel haber!", en: "Excellent news for group sustainability!", de: "Hervorragende Neuigkeiten für die Nachhaltigkeit der Gruppe!", es: "¡Excelente noticia para la sostenibilidad del grupo!" }
+      };
+      
+      const cTemplate = commentTemplates[country] || commentTemplates.TR;
+
+      state.socialPosts.push({
+        id: `sp-gen-${postCount++}`,
+        userId: user.id,
+        userName: user.name,
+        userAvatar: user.photo,
+        userBio: `${user.role} · ${user.company}`,
+        body: t.body,
+        date: "2 saat önce",
+        likes: 12 + i * 5,
+        likedByMe: false,
+        country: country,
+        comments: [
+          {
+            id: `sc-gen-${postCount}-c1`,
+            userName: commentUser.name,
+            userAvatar: commentUser.photo,
+            body: cTemplate.body,
+            date: "1 saat önce",
+            translations: {
+              tr: cTemplate.tr,
+              en: cTemplate.en,
+              de: cTemplate.de,
+              es: cTemplate.es
+            }
+          }
+        ],
+        translations: t.translations
+      });
+    });
+  });
+
+  // Add curated, fully-translated "looking for teammate" announcements on top of the
+  // 400 auto-generated ones above (do NOT reset state.announcements - that would wipe
+  // the bulk generated content and leave only 1 announcement per country).
+  const announcementTemplates = {
+    TR: [
+      {
+        title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+        body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+        translations: {
+          tr: {
+            title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+            body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
+          },
+          en: {
+            title: "🚀 Seeking UX Designer for Akbank Mobile AI Investment Project!",
+            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the Akbank Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
+          },
+          de: {
+            title: "🚀 UX Designer für Akbank Mobile AI Investment Projekt gesucht!",
+            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das Akbank Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
+          },
+          es: {
+            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de Akbank!",
+            body: "¡Hola! Buscamos un diseñador UX para diseñar pantallas de prototipos para nuestro proyecto de IA y compartir presupuesto con nosotros. ¡Postula usando el botón de abajo!"
+          }
+        }
+      }
+    ],
+    US: [
+      {
+        title: "🚀 Chattanooga Composite Lab - Seeking Senior Research Scientist!",
+        body: "Hello! We are looking for a Senior Research Scientist to lead graphene-infused carbon fiber composite trials in Chattanooga, TN. Apply below!",
+        translations: {
+          tr: {
+            title: "🚀 Chattanooga Kompozit Laboratuvarı - Kıdemli Araştırma Bilim İnsanı Aranıyor!",
+            body: "Merhaba! Chattanooga, TN'de grafen katkılı karbon fiber kompozit denemelerine liderlik edecek Kıdemli Araştırma Bilim İnsanı arıyoruz. Aşağıdan başvurun!"
+          },
+          en: {
+            title: "🚀 Chattanooga Composite Lab - Seeking Senior Research Scientist!",
+            body: "Hello! We are looking for a Senior Research Scientist to lead graphene-infused carbon fiber composite trials in Chattanooga, TN. Apply below!"
+          },
+          de: {
+            title: "🚀 Chattanooga Komposit-Labor - Leitender Forscher gesucht!",
+            body: "Hallo! Wir suchen einen leitenden Forscher, der die Versuche mit graphenversetzten Carbonfasern in Chattanooga, TN, leitet. Bewerben Sie sich unten!"
+          },
+          es: {
+            title: "🚀 Laboratorio Chattanooga - ¡Buscamos Científico de Investigación Senior!",
+            body: "¡Hola! Buscamos un Científico de Investigación Senior para liderar los ensayos de compuestos de fibra de carbono infundidos con grafeno en Chattanooga, TN."
+          }
+        }
+      }
+    ],
+    GB: [
+      {
+        title: "🚀 Strategic Investment Program for Green Startups",
+        body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK.",
+        translations: {
+          tr: {
+            title: "🚀 Yeşil Girişimler için Stratejik Yatırım Programı",
+            body: "Sabancı Ventures UK, Birleşik Krallık'taki yenilenebilir enerji ve iklim teknolojisi girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
+          },
+          en: {
+            title: "🚀 Strategic Investment Program for Green Startups",
+            body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK."
+          },
+          de: {
+            title: "🚀 Strategisches Investitionsprogramm für grüne Start-ups",
+            body: "Sabancı Ventures UK startet ein neues strategisches Investitionsprogramm mit Fokus auf erneuerbare Energien und Climate-Tech-Start-ups in Großbritannien."
+          },
+          es: {
+            title: "🚀 Programa de Inversión Estratégica para Startups Ecológicas",
+            body: "Sabancı Ventures UK lanza una nueva vía de inversión estratégica centrada en startups de energía renovable y tecnología climática en el Reino Unido."
+          }
+        }
+      }
+    ],
+    DE: [
+      {
+        title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
+        body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland.",
+        translations: {
+          tr: {
+            title: "🚀 Temsa Münih - MLOps Mühendisi Aranıyor!",
+            body: "Merhaba! Temsa Münih, Almanya'daki yeni elektrikli araç modeli için telemetri ve pil deşarj modellerini izleyecek bir MLOps mühendisi arıyor."
+          },
+          en: {
+            title: "🚀 Temsa Munich - MLOps Engineer Wanted!",
+            body: "Hello! Temsa Munich is looking for an MLOps Engineer to monitor telemetry and battery discharge models for the new EV model in Germany."
+          },
+          de: {
+            title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
+            body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland."
+          },
+          es: {
+            title: "🚀 Temsa Múnich - ¡Se busca Ingeniero MLOps!",
+            body: "¡Hola! Temsa Múnich busca un ingeniero MLOps para monitorear la telemetría y los modelos de descarga de baterías para el nuevo modelo eléctrico en Alemania."
+          }
+        }
+      }
+    ],
+    ES: [
+      {
+        title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
+        body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol.",
+        translations: {
+          tr: {
+            title: "🚀 Buñol Tesisi için Kimya Mühendisi Arıyoruz!",
+            body: "Merhaba! Çimsa İspanya, Buñol tesisimizdeki alternatif yakma ve geri dönüşüm denemelerini denetlemek üzere bir kimya mühendisi arıyor."
+          },
+          en: {
+            title: "🚀 Seeking Chemical Engineer for Buñol Plant!",
+            body: "Hello! Çimsa Spain is looking for a chemical engineer to supervise alternative combustion and recycling trials at our Buñol plant."
+          },
+          de: {
+            title: "🚀 Chemieingenieur für das Werk Buñol gesucht!",
+            body: "Hallo! Çimsa Spanien sucht einen Chemieingenieur zur Überwachung der alternativen Verbrennungs- und Recyclingversuche im Werk Buñol."
+          },
+          es: {
+            title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
+            body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol."
+          }
+        }
+      }
+    ]
+  };
+
+  let annCount = 0;
+  countries.forEach(country => {
+    const templates = announcementTemplates[country] || [];
+    const countryUsers = demoUsers.filter(u => u.country === country);
+    
+    templates.forEach((t, i) => {
+      const user = countryUsers[i % countryUsers.length] || demoUsers[0];
+      
+      state.announcements.push({
+        id: `ann-curated-${annCount++}`,
+        title: t.title,
+        author: user.name,
+        authorId: user.id,
+        companyId: user.companyId || "sabanci-holding",
+        type: "Topluluk",
+        area: "Takım Arkadaşı Aranıyor",
+        importanceScore: 5,
+        body: t.body,
+        date: "2026-06-15",
+        comments: [],
+        likes: 24 + i * 2,
+        imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
+        country: country,
+        translations: t.translations
+      });
+    });
+  });
+
+  // Add curated, localized per-country message spaces on top of the holding-wide
+  // channels already loaded from initialMessageSpaces (do NOT reset - several other
+  // channels like msg-holding/msg-akbank are referenced elsewhere by id).
+  const spaceTemplates = {
+    TR: [
+      { id: "msg-tr-1", name: "Akbank FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası." },
+      { id: "msg-tr-2", name: "SabancıDx Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu." }
+    ],
+    US: [
+      { id: "msg-us-1", name: "Sabancı Climate Solar", desc: "Texas utility battery dispatch optimization discussion." },
+      { id: "msg-us-2", name: "Kordsa Chattanooga R&D", desc: "Graphene-infused composite material trials." }
+    ],
+    GB: [
+      { id: "msg-gb-1", name: "Sabancı Ventures UK", desc: "Renewable energy and green tech investment pipelines." },
+      { id: "msg-gb-2", name: "Çimsa UK Sales", desc: "White cement B2B distribution and client accounts." }
+    ],
+    DE: [
+      { id: "msg-de-1", name: "Temsa Mobility DE", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse." },
+      { id: "msg-de-2", name: "Çimsa Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse." }
+    ],
+    ES: [
+      { id: "msg-es-1", name: "Çimsa Buñol", desc: "Discusión sobre combustibles alternativos y reducción de CO2." },
+      { id: "msg-es-2", name: "Çimsa Buñol Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono." }
+    ]
+  };
+
+  const messageTemplates = {
+    TR: [
+      { body: "KOBİ'ler için yeşil finansman API'leri test ortamında stabil çalışıyor.", tr: "KOBİ'ler için yeşil finansman API'leri test ortamında stabil çalışıyor.", en: "Green financing APIs for SMEs are working stably in the test environment.", de: "Grüne Finanzierungs-APIs für KMU laufen stabil in der Testumgebung.", es: "Las APIs de financiamiento verde para pymes funcionan de manera estable en el entorno de prueba." },
+      { body: "Mükemmel, entegrasyon dokümanını paylaşıyorum.", tr: "Mükemmel, entegrasyon dokümanını paylaşıyorum.", en: "Excellent, sharing the integration document.", de: "Ausgezeichnet, ich teile das Integrationsdokument.", es: "Excelente, comparto el documento de integración." }
+    ],
+    US: [
+      { body: "Please check the new solar dataset parameters in the shared workspace.", tr: "Lütfen paylaşılan çalışma alanındaki yeni güneş enerjisi veri kümesi parametrelerini kontrol edin.", en: "Please check the new solar dataset parameters in the shared workspace.", de: "Bitte überprüfen Sie die Parameter des neuen Solardatensatzes im gemeinsamen Arbeitsbereich.", es: "Verifique los parámetros del nuevo conjunto de datos solar en el espacio de trabajo compartido." },
+      { body: "Acknowledged, checking the volume history now.", tr: "Anlaşıldı, hacim geçmişini şimdi kontrol ediyorum.", en: "Acknowledged, checking the volume history now.", de: "Bestätigt, ich überprüfe jetzt den Volumenverlauf.", es: "Entendido, comprobando el historial de volumen ahora." }
+    ],
+    GB: [
+      { body: "We are reviewing three new startups from Manchester today.", tr: "Bugün Manchester'dan üç yeni girişimi inceliyoruz.", en: "We are reviewing three new startups from Manchester today.", de: "Wir prüfen heute drei neue Start-ups aus Manchester.", es: "Hoy estamos revisando tres nuevas startups de Manchester." },
+      { body: "Send over their slide decks, please.", tr: "Sunum dosyalarını gönderin lütfen.", en: "Send over their slide decks, please.", de: "Bitte senden Sie uns deren Präsentationen.", es: "Por favor, envíe sus presentaciones." }
+    ],
+    DE: [
+      { body: "Der Prototyp des Wasserstoffbusses ist jetzt bereit für die ersten Straßentests.", tr: "Hidrojenli otobüs prototipi ilk yol testlerine hazır.", en: "The prototype of the hydrogen bus is now ready for the first road tests.", de: "Der Prototyp des Wasserstoffbusses ist jetzt bereit für die ersten Straßentests.", es: "El prototipo del autobús de hidrógeno ya está listo para las primeras pruebas en carretera." },
+      { body: "Sehr gut, ich werde die Telemetriedaten überwachen.", tr: "Çok iyi, telemetri verilerini izleyeceğim.", en: "Very good, I will monitor the telemetry data.", de: "Sehr gut, ich werde die Telemetriedaten überwachen.", es: "Muy bien, vigilaré los datos de telemetría." }
+    ],
+    ES: [
+      { body: "Los ingenieros ya terminaron la calibración de los sensores térmicos en el horno.", tr: "Mühendisler fırındaki termal sensörlerin kalibrasyonunu tamamladı.", en: "Engineers have finished calibrating the thermal sensors in the kiln.", de: "Die Ingenieure haben die Kalibrierung der Thermosensoren im Ofen abgeschlossen.", es: "Los ingenieros ya terminaron la calibración de los sensores térmicos en el horno." },
+      { body: "Excelente, iniciemos el precalentamiento del sistema.", tr: "Mükemmel, sistemin ön ısıtmasını başlatalım.", en: "Excellent, let's start the system preheating.", de: "Ausgezeichnet, starten wir die Systemvorheizung.", es: "Excelente, iniciemos el precalentamiento del sistema." }
+    ]
+  };
+
+  countries.forEach(country => {
+    const spaces = spaceTemplates[country] || [];
+    const messagesList = messageTemplates[country] || messageTemplates.TR;
+    const countryUsers = demoUsers.filter(u => u.country === country);
+
+    spaces.forEach(s => {
+      const chatMessages = [];
+      messagesList.forEach((m, idx) => {
+        const user = countryUsers[idx % countryUsers.length] || demoUsers[0];
+        chatMessages.push({
+          userId: user.id,
+          body: m.body,
+          time: `10:${30 + idx * 5}`,
+          translations: {
+            tr: m.tr,
+            en: m.en,
+            de: m.de,
+            es: m.es
+          }
+        });
+      });
+
+      state.messageSpaces.push({
+        id: s.id,
+        name: s.name,
+        description: s.desc,
+        companyId: country === "TR" ? "akbank" : (country === "DE" ? "temsa" : (country === "ES" ? "cimsa" : "sabanci-holding")),
+        scope: "İştirak",
+        members: countryUsers.slice(0, 5).map(u => u.id),
+        messages: chatMessages,
+        country: country
+      });
+    });
   });
 
   // Scale demo user credits to SA Coins scale
