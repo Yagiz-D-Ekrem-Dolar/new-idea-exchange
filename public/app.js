@@ -3733,6 +3733,7 @@ function renderIdeaCard(idea, compact = false) {
           <span>${idea.supporters} destek</span>
           <span>AI ${idea.aiScore}</span>
         </div>
+        ${renderAiSuggestionPanel(idea, "list")}
         <div class="idea-footer">
           <button class="btn ghost" data-action="open-idea" data-id="${esc(idea.id)}">${icon("arrow-up-right")} Aç</button>
           ${(() => {
@@ -4225,6 +4226,7 @@ function renderIdeaDetail() {
               ${analysisCard("Geliştirme önerileri", analysis.improvements)}
               ${analysisCard("Pilot önerisi", analysis.pilot)}
             </div>
+            ${renderAiSuggestionPanel(idea, "detail")}
           </article>
 
           <article class="content-panel">
@@ -4346,6 +4348,169 @@ function buildStaticAnalysis(idea) {
     improvements: ["Başlangıç verisi eklenmeli", "Süreç sahibi netleşmeli", "Pilot lokasyon ve karar eşiği belirlenmeli"],
     pilot: `${idea.location} veya benzer 2 lokasyonda 4 haftalık pilot önerilir. Öncesi/sonrası KPI karşılaştırmasıyla karar verilebilir.`
   };
+}
+
+function compactText(value, maxLength = 110) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength - 1).trim()}…`;
+}
+
+function commentBody(comment) {
+  return String(comment?.body || comment?.text || comment?.message || "").trim();
+}
+
+function commentUser(comment) {
+  return comment?.user || comment?.userName || comment?.author || "Katılımcı";
+}
+
+function textTokens(value) {
+  return String(value || "")
+    .toLocaleLowerCase("tr-TR")
+    .split(/[^a-zçğıöşü0-9]+/i)
+    .filter(token => token.length > 3);
+}
+
+function relatedDatasetsForIdea(idea, limit = 2) {
+  const ideaTokens = new Set(textTokens([
+    idea.title,
+    idea.summary,
+    idea.problem,
+    idea.solution,
+    idea.area,
+    ...(idea.tags || [])
+  ].join(" ")));
+
+  return [...(state.dataSets || [])]
+    .map(dataset => {
+      const datasetText = [
+        dataset.title,
+        dataset.summary,
+        dataset.area,
+        dataset.type,
+        dataset.country
+      ].join(" ");
+      const datasetTokens = textTokens(datasetText);
+      const tokenScore = datasetTokens.reduce((score, token) => score + (ideaTokens.has(token) ? 1 : 0), 0);
+      let score = tokenScore;
+      if (dataset.companyId && idea.companyId && dataset.companyId === idea.companyId) score += 6;
+      if (dataset.area && idea.area && dataset.area === idea.area) score += 5;
+      if (dataset.country && idea.country && dataset.country === idea.country) score += 4;
+      score += Number(dataset.importanceScore || 0) / 2;
+      return { dataset, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.dataset);
+}
+
+function relatedIdeasForDataset(dataset, limit = 2) {
+  return [...(state.ideas || [])]
+    .map(idea => {
+      let score = 0;
+      if (dataset.companyId && idea.companyId && dataset.companyId === idea.companyId) score += 6;
+      if (dataset.area && idea.area && dataset.area === idea.area) score += 5;
+      if (dataset.country && idea.country && dataset.country === idea.country) score += 4;
+      score += Number(idea.aiScore || 0) / 25;
+      return { idea, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.idea);
+}
+
+function buildAiSuggestionForIdea(idea) {
+  const comments = (idea.comments || []).filter(comment => commentBody(comment));
+  const latestComment = comments[comments.length - 1];
+  const relatedDatasets = relatedDatasetsForIdea(idea, 2);
+  const primaryDataset = relatedDatasets[0];
+  const area = idea.area || idea.type || "proje alanı";
+  const metric = idea.successMetric || "pilot başarı metriği";
+  const datasetLine = primaryDataset
+    ? `${primaryDataset.title} veri setiyle ${primaryDataset.area || area} sinyallerini takip et.`
+    : "Veri&Bilgi havuzunda bu proje için küçük bir pilot ölçüm seti oluştur.";
+  const conversationLine = latestComment
+    ? `${commentUser(latestComment)} yazışmasındaki geri bildirimi aksiyon listesine çevir: ${compactText(commentBody(latestComment), 96)}`
+    : "Henüz yazışma yok; ilk tartışmayı hedef kullanıcı, veri sahibi ve karar eşiği üzerinden başlat.";
+
+  return {
+    recommendation: `${area} odağında önerim: çözümü tek bir pilot akışa indir, veri setiyle ölç ve yazışmadan çıkan geri bildirimi haftalık görev listesine bağla. Kararı ${metric} üzerinden takip et.`,
+    datasetLine,
+    conversationLine,
+    steps: [
+      "Pilot kapsamını tek kullanıcı grubu, tek kanal ve tek veri sahibiyle başlat.",
+      "Haftalık karar panosunda veri sinyali, yazışma geri bildirimi ve COIN desteğini birlikte izle.",
+      `4 haftalık pilot sonunda ${metric} için net bir devam/durdur eşiği belirle.`
+    ]
+  };
+}
+
+function buildAiSuggestionForDataset(dataset) {
+  const comments = (dataset.comments || []).filter(comment => commentBody(comment));
+  const latestComment = comments[comments.length - 1];
+  const relatedIdeas = relatedIdeasForDataset(dataset, 2);
+  const primaryIdea = relatedIdeas[0];
+  const area = dataset.area || "veri alanı";
+
+  return {
+    recommendation: `${area} verisini proje kararına çevirmek için önce en güçlü kullanım senaryosunu seç, sonra ölçüm metriğini ve veri sahibini netleştir. AI önerisi Türkçe kalır ve yalnızca platform içi kayıtları temel alır.`,
+    projectLine: primaryIdea
+      ? `${primaryIdea.title} projesiyle eşleştir; pilotta etki, maliyet ve kullanıcı geri bildirimini birlikte ölç.`
+      : "Bu veri setinden yeni bir proje fikri çıkar ve ilk pilot sorusunu görünür hale getir.",
+    conversationLine: latestComment
+      ? `${commentUser(latestComment)} yorumundaki ihtiyacı veri temizliği veya erişim görevi olarak yaz: ${compactText(commentBody(latestComment), 90)}`
+      : "Henüz yazışma yok; veri kalitesi, gizlilik ve kullanım amacı için ilk soruyu aç."
+  };
+}
+
+function renderAiSuggestionPanel(idea, variant = "card") {
+  const suggestion = buildAiSuggestionForIdea(idea);
+  const isCompact = variant === "compact" || variant === "list";
+  const steps = isCompact ? suggestion.steps.slice(0, 2) : suggestion.steps;
+
+  return `
+    <div class="ai-suggestion-panel ${isCompact ? "compact" : ""}" data-ai-suggestion-for="${esc(idea.id)}">
+      <div class="ai-suggestion-head">
+        <span class="ai-suggestion-icon">${icon("sparkles", "style='width:14px;height:14px;'")}</span>
+        <span>
+          <strong>AI Önerisi</strong>
+          <small>Türkçe karar desteği</small>
+        </span>
+        <em>TR</em>
+      </div>
+      <p>${esc(suggestion.recommendation)}</p>
+      ${isCompact ? "" : `
+        <div class="ai-suggestion-context">
+          <span>${icon("database", "style='width:13px;height:13px;'")} ${esc(suggestion.datasetLine)}</span>
+          <span>${icon("message-square", "style='width:13px;height:13px;'")} ${esc(suggestion.conversationLine)}</span>
+        </div>
+      `}
+      <ul>
+        ${steps.map(step => `<li>${esc(step)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function renderDatasetAiSuggestionPanel(dataset) {
+  const suggestion = buildAiSuggestionForDataset(dataset);
+  return `
+    <div class="ai-suggestion-panel dataset compact" data-ai-suggestion-for="${esc(dataset.id)}">
+      <div class="ai-suggestion-head">
+        <span class="ai-suggestion-icon">${icon("sparkles", "style='width:14px;height:14px;'")}</span>
+        <span>
+          <strong>AI Önerisi</strong>
+          <small>Veri setinden proje aksiyonu</small>
+        </span>
+        <em>TR</em>
+      </div>
+      <p>${esc(suggestion.recommendation)}</p>
+      <ul>
+        <li>${esc(suggestion.projectLine)}</li>
+        <li>${esc(suggestion.conversationLine)}</li>
+      </ul>
+    </div>
+  `;
 }
 
 function renderComment(comment) {
@@ -11817,6 +11982,7 @@ function renderBorsaCard(idea) {
             <span style="font-size: 11px; background: var(--bg); color: var(--muted); padding: 3px 8px; border-radius: 6px;">#${esc(tag)}</span>
           `).join("")}
         </div>
+        ${renderAiSuggestionPanel(idea, "card")}
       </div>
 
       <!-- Author -->
@@ -12384,6 +12550,7 @@ function renderDataCard(dataset) {
       
       <h3 style="margin: 12px 0 6px 0; font-size: 17px; font-weight: 600; color: var(--ink);">${esc(dataset.title)}</h3>
       <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 12px;">${esc(dataset.summary)}</p>
+      ${renderDatasetAiSuggestionPanel(dataset)}
       
       <footer style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line-soft); padding-top: 10px; font-size: 12px; color: var(--muted);">
         <span style="font-weight: 500;">Paylaşan: ${esc(dataset.sharedBy)}</span>
