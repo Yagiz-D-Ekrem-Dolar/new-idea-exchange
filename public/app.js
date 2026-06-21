@@ -6,9 +6,9 @@ const state = {
   appLanguage: "",
   userTokens: 24,
   leaderboardScope: "country",
-  currentCountry: "TR",
+  currentCountry: "DE",
   loginCountrySelected: false,
-  activeCountry: "TR",
+  activeCountry: "DE",
   affiliationFilter: "all",
   announcementScopeFilter: "Tümü",
   loggedIn: false,
@@ -54,10 +54,10 @@ const state = {
     title: "",
     summary: "",
     category: "Proje",
-    companyId: "is-new",
+    companyId: "heidelberg-materials",
     scope: "Holding geneli",
     files: [],
-    country: "TR"
+    country: "DE"
   },
   fileInspector: null,
   portalDropdownOpen: false,
@@ -143,10 +143,10 @@ const state = {
     title: "",
     body: "",
     scope: "Holding geneli",
-    companyId: "sabanci-holding",
-    country: "Türkiye",
-    city: "İstanbul",
-    campus: "Sabancı Center",
+    companyId: "heidelberg-materials",
+    country: "Almanya",
+    city: "Heidelberg",
+    campus: "Heidelberg Materials Hauptmerkez",
     department: "Tüm ekipler"
   },
   selectedMessageSpaceId: "msg-holding",
@@ -154,12 +154,12 @@ const state = {
   messageSpaces: structuredClone(initialMessageSpaces),
   directThreads: {
     "p02": [
-      { userId: "p02", body: "Merhaba Can Bey, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
+      { userId: "p02", body: "Merhaba Lena Hanım, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
       { own: true, body: "Tabii Mert, verimlilik raporlarını inceledim. Yarın saat 10:00'da kısa bir toplantı yapalım.", time: "Dün 14:32" },
-      { userId: "p02", body: "Harika olur Can Bey, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
+      { userId: "p02", body: "Harika olur Lena Hanım, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
     ],
     "p03": [
-      { userId: "p03", body: "Can Bey, Çimsa Mersin fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
+      { userId: "p03", body: "Lena Hanım, Heidelberg Materials Helvan fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
       { own: true, body: "Eline sağlık Selin, verileri inceledim. Oldukça temiz görünüyor. Hemen onay verdim.", time: "Dün 16:45" },
       { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir hammadde optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
     ],
@@ -168,13 +168,13 @@ const state = {
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Can, I've updated the UK wind farm grid connection proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Lena, I've updated the Dubai trading hub proposal. We need to reserve 1200 HM tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
       { userId: "p06", body: "Thank you. The engineering team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
     "p07": [
       { userId: "p07", body: "Hi Can, the UK cement logistics portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
-      { own: true, body: "Sure Sarah, I will request SabancıDx AI lead to run a query for UK portal statistics.", time: "Yesterday 11:45" }
+      { own: true, body: "Sure Sarah, I will request Heidelberg Materials Technology Center AI lead to run a query for UK portal statistics.", time: "Yesterday 11:45" }
     ],
     "p10": [
       { userId: "p10", body: "Hello Can, Austin solar battery testing is going well. We need to align our pricing algorithm with the UK team.", time: "Yesterday 14:10" },
@@ -186,37 +186,37 @@ const state = {
     ],
     "p12": [
       { userId: "p12", body: "Hello Can, Chattanooga composite tests are finalized. The graphene nylon yarn performance is excellent.", time: "2 days ago" },
-      { own: true, body: "Thanks Robert. I saw the stress reports. We will feature this in the Kordsa global showcase.", time: "2 days ago" }
+      { own: true, body: "Thanks Robert. I saw the stress reports. We will feature this in the Heidelberg Materials India global showcase.", time: "2 days ago" }
     ],
     "p13": [
-      { userId: "p13", body: "Hallo Can, der neue Bulk-Silo-Entwurf für Hamburg Terminal ist fertig. Können wir das Budget freigeben?", time: "Dün 10:12" },
+      { userId: "p13", body: "Hallo Can, der neue Bulk-Silo-Entwurf für Lyon Depo ist fertig. Können wir das Budget freigeben?", time: "Dün 10:12" },
       { own: true, body: "Hallo Hans, ich werde das Budget prüfen. Wir müssen sicherstellen, dass die EU-Normen eingehalten werden.", time: "Dün 10:45" },
       { userId: "p13", body: "Perfekt, danke. Die Dokumentation ist bereits im System hinterlegt.", time: "Dün 11:00" }
     ],
     "p14": [
-      { userId: "p14", body: "Hallo Can, die Teststrecke für den Wasserstoffbus in München ist betriebsbereit. Die Sensoren laufen.", time: "Dün 13:00" },
-      { own: true, body: "Klasse Dieter! Bitte teile die ersten Telemetriedaten mit der Adana Software-Gruppe.", time: "Dün 13:20" }
+      { userId: "p14", body: "Hallo Can, die Teststrecke für den Wasserstoffbus in Opole ist betriebsbereit. Die Sensoren laufen.", time: "Dün 13:00" },
+      { own: true, body: "Klasse Dieter! Bitte teile die ersten Telemetriedaten mit der Marsilya Software-Gruppe.", time: "Dün 13:20" }
     ],
     "p15": [
-      { userId: "p15", body: "Hola Can, hemos completado el diseño del microgrid solar para Buñol. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
+      { userId: "p15", body: "Hola Can, hemos completado el diseño del microgrid solar para Helvan. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
       { own: true, body: "Hola Carlos, excelente. Por favor, súbelo usando el Borsa Composer seleccionando España como país objetivo.", time: "Bugün 09:45" },
       { userId: "p15", body: "Entendido, ya está publicado. Gracias por el soporte.", time: "Bugün 10:00" }
     ],
     "p16": [
-      { userId: "p16", body: "Can, I uploaded the carbon metrics for Çimsa Spain alternative fuels. It's ready for strategic score review.", time: "Dün 15:00" },
+      { userId: "p16", body: "Can, I uploaded the carbon metrics for Heidelberg Materials Spain alternative fuels. It's ready for strategic score review.", time: "Dün 15:00" },
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Can Bey, Teknosa mağaza içi kiosk projemize 100 SA bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Lena Hanım, Hanson UK mağaza içi kiosk projemize 100 HM bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
-      { userId: "u2", body: "Can Bey, CarrefourSA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
+      { userId: "u2", body: "Lena Hanım, Heidelberg Materials NA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
       { own: true, body: "Eline sağlık Mehmet, lojistik ekibiyle koordine edip bütçe onayını veriyorum.", time: "Dün 17:00" }
     ],
     "u4": [
       { userId: "u4", body: "Can, Altın Yaka inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
-      { own: true, body: "Çok teşekkürler Kerem Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
+      { own: true, body: "Çok teşekkürler Markus Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
     ]
   },
   messageDraft: "",
@@ -269,7 +269,7 @@ const state = {
       category: "Operasyon",
       date: "2026-06-15",
       tags: ["şube", "müşteri deneyimi", "pilot"],
-      author: "Can Koç"
+      author: "Lena Fischer"
     },
     {
       id: "ag-2",
@@ -278,7 +278,7 @@ const state = {
       category: "AI Host",
       date: "2026-06-14",
       tags: ["ai", "demo kapsamı", "veri güvenliği"],
-      author: "İş NEW",
+      author: "NEW IDEA EXCHANGE",
       isAiGenerated: true
     },
     {
@@ -341,7 +341,7 @@ const state = {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: ["team-001"], linkedIdeas: ["idea-1", "idea-3"] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: ["team-003"], linkedIdeas: ["idea-2", "idea-5"] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: ["team-002"], linkedIdeas: ["idea-1"] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Heidelberg Materials Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
   ],
   predictions: [
     {
@@ -356,7 +356,7 @@ const state = {
       date: "2026-06-16",
       likes: 14,
       comments: [
-        { userName: "Can Koç", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
+        { userName: "Lena Fischer", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
       ]
     },
     {
@@ -381,7 +381,7 @@ const state = {
       description: "Girişim fikirlerinizi nasıl doğrularsınız, MVP (Minimum Uygulanabilir Ürün) nasıl kurgulanır ve müşteri görüşmeleri nasıl yürütülür sorularına pratik yanıtlar.",
       link: "https://www.youtube.com/watch?v=fEvKo90qBns",
       date: "Her Çarşamba, 14:00",
-      organizer: "Sabancı İnovasyon Ofisi"
+      organizer: "Heidelberg Materials İnovasyon Ofisi"
     },
     {
       id: "edu-2",
@@ -390,7 +390,7 @@ const state = {
       description: "KVKK, BDDK lisanslama süreçleri, açık bankacılık regülasyonları ve ödeme kuruluşları mevzuatları hakkında bilgilendirici oturum.",
       link: "https://zoom.us/j/demo-fintech",
       date: "24 Haziran 2026, 11:00",
-      organizer: "Akbank Mobil Hukuk & Uyum Departmanı"
+      organizer: "Heidelberg Materials Mobil Hukuk & Uyum Departmanı"
     },
     {
       id: "edu-3",
@@ -399,36 +399,36 @@ const state = {
       description: "Kullanıcı başına lisanslama, kullanım tabanlı fiyatlandırma modelleri ve kurumsal SaaS satış kanallarını optimize etme üzerine atölye çalışması.",
       link: "https://www.youtube.com/watch?v=0H73Z1tCeeM",
       date: "Kayıttan İzle (1.5 Saat)",
-      organizer: "SabancıDx Bulut Bilişim Grubu"
+      organizer: "Heidelberg Materials Technology Center Bulut Bilişim Grubu"
     }
   ],
   mentors: [
     {
       id: "mentor-1",
       name: "Elif Şahin",
-      title: "FinTech & Ürün Yönetimi Müdürü (Akbank)",
+      title: "FinTech & Ürün Yönetimi Müdürü (Heidelberg Materials)",
       specialties: ["Ürün Yönetimi", "FinTech", "İş Modeli Geliştirme"],
-      bio: "12+ yıllık ürün yönetim deneyimi. Akbank Mobil dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
+      bio: "12+ yıllık ürün yönetim deneyimi. Heidelberg Materials Mobil dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
       avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-      email: "elif.sahin@sabanci.example"
+      email: "elif.sahin@heidelbergmaterials.example"
     },
     {
       id: "mentor-2",
       name: "Emir Arslan",
-      title: "Yapay Zekâ Çözüm Mimarı (SabancıDx)",
+      title: "Yapay Zekâ Çözüm Mimarı (Heidelberg Materials Technology Center)",
       specialties: ["Yapay Zekâ", "Makine Öğrenmesi", "Teknik Altyapı"],
       bio: "Büyük dil modelleri (LLM), veri analitiği ve akıllı tahminleme altyapıları üzerine uzmanlaşmıştır. Fikirlerin teknik fizibilitesini değerlendirmede destek sağlar.",
       avatar: "https://randomuser.me/api/portraits/men/41.jpg",
-      email: "emir.arslan@sabanci.example"
+      email: "emir.arslan@heidelbergmaterials.example"
     },
     {
       id: "mentor-3",
       name: "Zeynep Kaya",
-      title: "Sürdürülebilirlik & ESG Koordinatörü (Enerjisa)",
+      title: "Sürdürülebilirlik & ESG Koordinatörü (Indocement)",
       specialties: ["Yeşil Finans", "ESG Uyum", "Karbon Takip"],
       bio: "Girişimlerin yeşil finansman imkanlarına erişimi, ESG raporlama standartları ve karbon nötrleme projelerinin kurgulanması konularında mentörlük sunuyor.",
       avatar: "https://randomuser.me/api/portraits/women/51.jpg",
-      email: "zeynep.kaya@sabanci.example"
+      email: "zeynep.kaya@heidelbergmaterials.example"
     }
   ],
   mentorApplications: [],
@@ -440,16 +440,16 @@ const state = {
       date: "28 Haziran 2026, 14:00 - 17:00",
       description: "İştirak stüdyolarında kuluçkaya alınan en iyi 5 projenin üst yönetim ve jüri karşısında sunum yapacağı, demo ve soru-cevap oturumlarının düzenleneceği büyük final.",
       link: "https://zoom.us/j/demo-day-2026",
-      organizer: "Sabancı İnovasyon Ofisi"
+      organizer: "Heidelberg Materials İnovasyon Ofisi"
     },
     {
       id: "event-2",
       title: "FinTech & Yapay Zekâ Fikir Maratonu (Hackathon)",
       topic: "Yarışmalar",
       date: "10-12 Temmuz 2026",
-      description: "Sabancı Holding iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
+      description: "Heidelberg Materials iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
       link: "https://fikirkovani.com/hackathon-kayit",
-      organizer: "SabancıDx"
+      organizer: "Heidelberg Materials Technology Center"
     },
     {
       id: "event-3",
@@ -483,26 +483,26 @@ const state = {
     {
       id: "ds-1",
       title: "2026 Yapay Zeka Sektör Raporu",
-      summary: "SabancıDx tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
+      summary: "Heidelberg Materials Technology Center tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
       sharedBy: "Mert Alkan",
-      companyId: "sabancidx",
+      companyId: "heidelberg-materials-htc",
       type: "Kurumsal",
       area: "Yapay Zekâ & Derin Teknoloji",
       importanceScore: 5,
       date: "2026-06-05",
       comments: [
-        { user: "Can Koç", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
+        { user: "Lena Fischer", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
       ],
       likes: 18,
       downloads: 42,
-      country: "TR"
+      country: "DE"
     },
     {
       id: "ds-2",
-      title: "Akbank QR ve Biyometrik Ödeme Kullanım Analizi",
+      title: "Heidelberg Materials QR ve Biyometrik Ödeme Kullanım Analizi",
       summary: "QR ve biyometrik ödeme entegrasyonları için pazar payı, işlem hızları ve müşteri kullanım oranları.",
-      sharedBy: "Can Koç",
-      companyId: "akbank",
+      sharedBy: "Lena Fischer",
+      companyId: "heidelberg-materials-de",
       type: "Kurumsal",
       area: "FinTech & Dijital Bankacılık",
       importanceScore: 4,
@@ -510,14 +510,14 @@ const state = {
       comments: [],
       likes: 12,
       downloads: 29,
-      country: "TR"
+      country: "DE"
     },
     {
       id: "ds-3",
       title: "Texas Grid Peak Hours Pricing Datetime Set",
       summary: "Historical grid pricing data for Texas solar farm battery storage management.",
       sharedBy: "Michael Vance",
-      companyId: "sabanci-climate-us",
+      companyId: "hanson-australia",
       type: "Kurumsal",
       area: "Sürdürülebilirlik & Yeşil Enerji",
       importanceScore: 5,
@@ -532,28 +532,28 @@ const state = {
   announcements: [
     {
       id: "ann-rec-1",
-      title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-      author: "Can Koç",
+      title: "🚀 Heidelberg Materials Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+      author: "Lena Fischer",
       authorId: "u3",
-      companyId: "akbank",
+      companyId: "heidelberg-materials-de",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+      body: "Merhabalar! Heidelberg Materials Mobil AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
       date: "2026-06-08",
       comments: [],
       likes: 42,
       ideaId: "idea-1",
       missingRoles: ["UX Designer"],
       imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
-      country: "TR"
+      country: "DE"
     },
     {
       id: "ann-rec-2",
       title: "🚀 Texas Solar Battery Storage System Project (US) - Seeking MLOps Engineer!",
       author: "Michael Vance",
       authorId: "u10",
-      companyId: "sabanci-climate-us",
+      companyId: "hanson-australia",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
@@ -575,22 +575,22 @@ const state = {
       userId: "p02",
       userName: "Mert Alkan",
       userAvatar: "https://randomuser.me/api/portraits/men/12.jpg",
-      userBio: "İnovasyon Lideri · SabancıDx",
-      body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
+      userBio: "İnovasyon Lideri · Heidelberg Materials Technology Center",
+      body: "Heidelberg Materials Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
       date: "2 saat önce",
       likes: 12,
       likedByMe: false,
       comments: [
         { id: "sc-1", userName: "Ece Uslu", userAvatar: "https://randomuser.me/api/portraits/women/45.jpg", body: "Harika bir proje olmuş, onboarding süremizi çok kısaltır!", date: "1 saat önce" }
       ],
-      country: "TR"
+      country: "DE"
     },
     {
       id: "sp-2",
       userId: "u10",
       userName: "Michael Vance",
       userAvatar: "https://randomuser.me/api/portraits/men/22.jpg",
-      userBio: "Energy Storage Director · Sabancı Climate US",
+      userBio: "Energy Storage Director · Hanson Australia",
       body: "Texas utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
       date: "3 hours ago",
       likes: 15,
@@ -604,21 +604,24 @@ const state = {
 
 
 function currentUser() {
-  const c = state.activeCountry || state.currentCountry || "TR";
+  const c = state.activeCountry || state.currentCountry || "DE";
   const userConfigs = {
-    TR: { id: "u3", name: "Can Koç", email: "can.koc@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    GB: { id: "u3", name: "Can Koç", email: "can.koc.uk@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    US: { id: "u3", name: "Can Koç", email: "can.koc.us@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    DE: { id: "u3", name: "Can Koç", email: "can.koc.de@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    ES: { id: "u3", name: "Can Koç", email: "can.koc.es@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
+    DE: { id: "u3", name: "Lena Fischer", email: "lena.fischer@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    GB: { id: "u3", name: "Lena Fischer", email: "lena.fischer.uk@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    US: { id: "u3", name: "Lena Fischer", email: "lena.fischer.us@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    ID: { id: "u3", name: "Lena Fischer", email: "lena.fischer.id@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    IT: { id: "u3", name: "Lena Fischer", email: "lena.fischer.it@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    BE: { id: "u3", name: "Lena Fischer", email: "lena.fischer.be@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    IN: { id: "u3", name: "Lena Fischer", email: "lena.fischer.in@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    EG: { id: "u3", name: "Lena Fischer", email: "lena.fischer.eg@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
   };
-  const config = userConfigs[c] || userConfigs.TR;
+  const config = userConfigs[c] || userConfigs.DE;
 
   const baseUser = {
     id: config.id,
     name: config.name,
     email: config.email,
-    employeeId: "SA-22018",
+    employeeId: "HM-22018",
     roleKey: "manager",
     seniority: "Yönetici",
     isManager: true,
@@ -638,59 +641,86 @@ function currentUser() {
   });
 
   switch (c) {
-    case "TR":
-      adapted.company = "Akbank T.A.Ş.";
-      adapted.companyId = "akbank";
-      adapted.department = "Dijital Bankacılık";
-      adapted.location = "Akbank Genel Müdürlük";
-      adapted.city = "İstanbul";
-      adapted.region = "Marmara";
+    case "DE":
+      adapted.company = "Heidelberg Materials AG";
+      adapted.companyId = "heidelberg-materials-de";
+      adapted.department = "Strateji";
+      adapted.location = "Heidelberg Materials Hauptmerkez – Kreuzfahrtschiff (Berliner Straße 6)";
+      adapted.city = "Heidelberg";
+      adapted.region = "Baden-Württemberg";
       adapted.role = "İnovasyon Yöneticisi";
       break;
     case "UK":
     case "GB":
-      adapted.company = "Çimsa UK";
-      adapted.companyId = "cimsa-uk";
+      adapted.company = "Hanson UK";
+      adapted.companyId = "hanson-uk";
       adapted.department = "Strategy";
-      adapted.location = "London Office";
+      adapted.location = "Hanson UK HQ";
       adapted.city = "London";
       adapted.region = "England";
       adapted.role = "Strategy Manager";
       break;
     case "US":
-      adapted.company = "Kordsa Inc.";
-      adapted.companyId = "kordsa-us";
+      adapted.company = "Heidelberg Materials North America LLC";
+      adapted.companyId = "heidelberg-materials-na";
       adapted.department = "Operations";
-      adapted.location = "Chattanooga Plant";
-      adapted.city = "Chattanooga";
-      adapted.region = "TN";
+      adapted.location = "Heidelberg Materials NA Plaza";
+      adapted.city = "Dallas";
+      adapted.region = "TX";
       adapted.role = "Operations Director";
       break;
-    case "DE":
-      adapted.company = "Akbank AG";
-      adapted.companyId = "akbank-de";
-      adapted.department = "Corporate Banking";
-      adapted.location = "Frankfurt HQ";
-      adapted.city = "Frankfurt";
-      adapted.region = "Hesse";
-      adapted.role = "Corporate Manager";
+    case "ID":
+      adapted.company = "Indocement";
+      adapted.companyId = "indocement";
+      adapted.department = "Şebeke Operasyonları";
+      adapted.location = "Indocement HQ";
+      adapted.city = "Jakarta";
+      adapted.region = "Java";
+      adapted.role = "Operations Manager";
       break;
-    case "ES":
-      adapted.company = "Çimsa Spain";
-      adapted.companyId = "cimsa-spain";
-      adapted.department = "Sales";
-      adapted.location = "Madrid Office";
-      adapted.city = "Madrid";
-      adapted.region = "Madrid";
+    case "IT":
+      adapted.company = "Italcementi";
+      adapted.companyId = "italcementi";
+      adapted.department = "Üretim";
+      adapted.location = "Bergamo Fabrika";
+      adapted.city = "Bergamo";
+      adapted.region = "Lombardia";
+      adapted.role = "Plant Manager";
+      break;
+    case "BE":
+      adapted.company = "CBR Belgium";
+      adapted.companyId = "cbr-belgium";
+      adapted.department = "Ar-Ge";
+      adapted.location = "Lixhe Fabrika";
+      adapted.city = "Brüksel";
+      adapted.region = "Wallonia";
+      adapted.role = "R&D Manager";
+      break;
+    case "IN":
+      adapted.company = "Heidelberg Materials India";
+      adapted.companyId = "heidelberg-materials-india";
+      adapted.department = "Üretim";
+      adapted.location = "Mumbai Fabrika";
+      adapted.city = "Mumbai";
+      adapted.region = "Maharashtra";
+      adapted.role = "Production Manager";
+      break;
+    case "EG":
+      adapted.company = "Heidelberg Materials Egypt";
+      adapted.companyId = "heidelberg-materials-egypt";
+      adapted.department = "Satış";
+      adapted.location = "Helvan Fabrika";
+      adapted.city = "Kahire";
+      adapted.region = "Cairo Governorate";
       adapted.role = "Sales Director";
       break;
     default:
-      adapted.company = "Hacı Ömer Sabancı Holding A.Ş.";
-      adapted.companyId = "sabanci-holding";
+      adapted.company = "Heidelberg Materials AG";
+      adapted.companyId = "heidelberg-materials";
       adapted.department = "Strateji";
-      adapted.location = "Sabancı Center";
-      adapted.city = "İstanbul";
-      adapted.region = "Marmara";
+      adapted.location = "Heidelberg Materials Hauptmerkez – Kreuzfahrtschiff (Berliner Straße 6)";
+      adapted.city = "Heidelberg";
+      adapted.region = "Baden-Württemberg";
       adapted.role = "Yönetici";
   }
   return adapted;
@@ -708,14 +738,10 @@ function esc(value) {
 
 function icon(name, extraAttrs = "") {
   if (name === "coins") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="sa-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="hm-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
       <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
       <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
-      <g transform="translate(22.22, 34.8) scale(0.6)">
-        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#8b6508"/>
-        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
-        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
-      </g>
+      <text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-weight="700" font-size="46" fill="#004E2B">H</text>
       <defs>
         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#ffe066" />
@@ -764,7 +790,7 @@ function personById(id) {
       photo: cUser.photo,
       status: "Aktif",
       bio: cUser.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-      cv: cUser.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+      cv: cUser.cv || "Eğitim: Karlsruher Institut für Technologie (KIT). Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
       email: cUser.email,
       badges: cUser.badges || [],
       country: cUser.country
@@ -776,18 +802,18 @@ function personById(id) {
       return {
         id: du.id,
         name: du.name,
-        companyId: du.companyId || "sabanci-holding",
+        companyId: du.companyId || "heidelberg-materials",
         role: du.role,
         team: du.department,
-        city: du.city || "İstanbul",
-        campus: du.location || "Sabancı Center",
+        city: du.city || "Heidelberg",
+        campus: du.location || "Heidelberg Materials Hauptmerkez",
         photo: du.photo || du.avatarUrl || profilePhotos[du.id] || "https://randomuser.me/api/portraits/men/75.jpg",
         status: "Aktif",
         bio: du.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-        cv: du.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+        cv: du.cv || "Eğitim: Karlsruher Institut für Technologie (KIT). Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
         email: du.email,
         badges: du.badges || [],
-        country: du.country || "TR"
+        country: du.country || "DE"
       };
     }
   }
@@ -832,7 +858,7 @@ function announcementsInScope() {
 
 function spacesInScope() {
   const ids = companyIdsInScope();
-  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "sabanci-holding");
+  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "heidelberg-materials");
 }
 
 function syncAnnouncementDraftCompany(companyId) {
@@ -857,11 +883,11 @@ function renderAvatarStack(ids, max = 4) {
 }
 
 function marketCompanyForIdea(idea) {
-  return companyById(idea.companyId || "is-new");
+  return companyById(idea.companyId || "heidelberg-materials");
 }
 
 function marketPrice(idea) {
-  // Every idea starts from the same 100 SA base valuation; marketChange (driven by
+  // Every idea starts from the same 100 HM base valuation; marketChange (driven by
   // buy/sell activity and per-idea performance drift) is applied on top so prices
   // actually move with trading instead of staying frozen at the base forever.
   const base = Number(idea.marketPrice || 100);
@@ -875,7 +901,7 @@ function marketTrendScore(idea) {
 
 function marketVisibleIdeas() {
   const companyIds = companyIdsInScope();
-  let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "is-new"));
+  let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "heidelberg-materials"));
   if (state.filters.country === "Aktif Portal") {
     ideas = ideas.filter(idea => idea.country === state.activeCountry);
   } else if (state.filters.country !== "Tüm Ülkeler") {
@@ -918,24 +944,20 @@ function marketDeltaClass(value) {
 }
 
 function formatCurrency(value) {
-  return `${Math.round(value).toLocaleString("tr-TR")} SA`;
+  return `${Math.round(value).toLocaleString("tr-TR")} HM`;
 }
 
 function formatCurrencyHTML(value, size = "normal") {
-  return `<span class="sa-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${saCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">SA</span></span>`;
+  return `<span class="hm-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${hmCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">HM</span></span>`;
 }
 
-function saCoinIcon(size = "normal") {
+function hmCoinIcon(size = "normal") {
   const sizePx = size === "large" ? "20" : size === "small" ? "13" : "16";
   return `
-    <svg class="sa-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
+    <svg class="hm-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
       <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
       <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
-      <g transform="translate(7.35, 12.17) scale(0.23)">
-        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#5C4033"/>
-        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
-        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
-      </g>
+      <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-weight="700" font-size="17" fill="#004E2B">H</text>
       <defs>
         <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#FFE07D"/>
@@ -972,10 +994,10 @@ function resetMarketDraft(context = state.marketComposerContext || "quickFlow") 
     title: "",
     summary: "",
     category: context === "announcements" ? "Araştırma" : "Proje",
-    companyId: state.affiliationFilter === "all" ? "is-new" : state.affiliationFilter,
+    companyId: state.affiliationFilter === "all" ? "heidelberg-materials" : state.affiliationFilter,
     scope: "Holding geneli",
     files: [],
-    country: state.activeCountry || "TR"
+    country: state.activeCountry || "DE"
   };
 }
 
@@ -1007,8 +1029,8 @@ function avatar(name, size = "", imageUrl = "") {
 
 function brandLockup(compact = false) {
   return `
-    <span class="sabanci-lockup ${compact ? "compact" : ""}" aria-label="Türkiye Sabancı Holding - NEW IDEA EXCHANGE">
-      <img class="sabanci-logo-image" src="${esc(brandLogoSrc)}" alt="Türkiye Sabancı Holding" />
+    <span class="heidelberg-lockup ${compact ? "compact" : ""}" aria-label="Heidelberg Materials - NEW IDEA EXCHANGE">
+      <img class="heidelberg-logo-image" src="${esc(brandLogoSrc)}" alt="Heidelberg Materials" />
       <small>${esc(state.brandName)}</small>
     </span>
   `;
@@ -1050,10 +1072,10 @@ function pageSubtitle() {
     adminStorage: "Yönetici depolama alanı, dosyaları ve kaynak arşivi",
     studio: "İştirak inovasyon stüdyoları, proje geliştirme ekipleri ve kuluçkadaki ürünler",
     products: "Ürünleşen fikirler ve gelişim seviyeleri",
-    systemDetails: "İş NEW platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
+    systemDetails: "NEW IDEA EXCHANGE platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
     settings: "Marka, görünüm ve bildirim tercihleri",
     detail: "Problem, çözüm, skorlar ve yorumlar",
-    rules: "İş NEW platformunun kullanım ve topluluk kuralları",
+    rules: "NEW IDEA EXCHANGE platformunun kullanım ve topluluk kuralları",
     complaintBox: "Uygulama, teknik sorun veya kullanıcılar hakkında geri bildirim/şikayet",
     teams: "Ekip listesi, üyeler ve proje bağlantıları"
   };
@@ -1103,8 +1125,8 @@ function renderLogin() {
             ${brandLockup()}
           </div>
           <div class="apple-login-copy">
-            <h1 style="font-family: 'Space Grotesk', sans-serif;">Sabancı Innovation Exchange</h1>
-            <p>Sabancı Holding iç inovasyon alanına giriş için exchange key'ini gir.</p>
+            <h1 style="font-family: 'Space Grotesk', sans-serif;">Heidelberg Materials Innovation Exchange</h1>
+            <p>Heidelberg Materials iç inovasyon alanına giriş için exchange key'ini gir.</p>
           </div>
           <label class="field apple-key-field">
             <span>Exchange key</span>
@@ -1163,7 +1185,7 @@ function renderLogin() {
         </div>
         <div class="apple-login-copy" style="margin-bottom: 20px;">
           <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px;">Kullanıcı Profili Seçin</h1>
-          <p>${state.currentCountry === "TR" ? "Türkiye" : state.currentCountry} portalı için aktif çalışma profilinizi seçin:</p>
+          <p>${state.currentCountry === "DE" ? "Almanya" : state.currentCountry} portalı için aktif çalışma profilinizi seçin:</p>
         </div>
 
         <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding: 4px; border: 1px solid var(--line-soft); border-radius: 12px;">
@@ -1482,7 +1504,7 @@ function renderShell() {
               ` : ""}
             </div>
             <span class="credit-pill" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); padding: 6px 12px; border-radius: 99px;">
-              ${saCoinIcon("normal")}
+              ${hmCoinIcon("normal")}
               <span>${Math.round(state.marketBudget).toLocaleString("tr-TR")}</span>
             </span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
@@ -1607,11 +1629,14 @@ function renderPage() {
 
 function getSubsidiariesByCountry(code) {
   const mapping = {
-    TR: ["Türkiye"],
+    DE: ["Almanya", "Germany"],
     GB: ["Birleşik Krallık", "United Kingdom"],
     US: ["Amerika Birleşik Devletleri", "United States"],
-    DE: ["Almanya", "Germany"],
-    ES: ["İspanya", "Spain"]
+    ID: ["Endonezya", "Indonesia"],
+    IT: ["İtalya", "Italy"],
+    BE: ["Belçika", "Belgium"],
+    IN: ["Hindistan", "India"],
+    EG: ["Mısır", "Egypt"]
   };
   const names = mapping[code] || [];
   return affiliationCompanies.filter(comp => {
@@ -1651,7 +1676,7 @@ function renderSubsidiaryBranchingPanel() {
         <div>
           <span class="panel-kicker" style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent);">
             <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 18px; height: 12px; object-fit: cover; border-radius: 2px;" alt="" />
-            SABANCI ${activeC.name.toUpperCase()} EKOSİSTEMİ
+            HEIDELBERG MATERIALS ${activeC.name.toUpperCase()} EKOSİSTEMİ
           </span>
           <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--ink);">Şubeleşme, İştirakler ve Yerleşke Yapısı</h3>
           <p style="color: var(--muted); font-size: 13px; margin-top: 2px;">Aktif portala bağlı iştiraklerin coğrafi yerleşke, departman ve inovasyon ağacı.</p>
@@ -1680,12 +1705,12 @@ function renderSubsidiaryBranchingPanel() {
         <!-- Left Side: Interactive Branch Tree & Org Map -->
         <div style="display: flex; flex-direction: column; gap: 16px; background: rgba(var(--primary-rgb), 0.015); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; min-height: 380px; justify-content: center; position: relative; overflow: hidden;">
           
-          <!-- Root Parent Node: Sabancı Holding -->
+          <!-- Root Parent Node: Heidelberg Materials -->
           <div style="display: flex; justify-content: center; margin-bottom: 28px; position: relative; z-index: 2;">
             <div style="display: flex; align-items: center; gap: 12px; background: var(--surface); border: 2px solid var(--accent); padding: 10px 24px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 93, 170, 0.12); text-align: left;">
-              <img src="/assets/company-logos/sabanci-holding.svg" style="height: 22px; width: auto;" alt="" />
+              <img src="/assets/company-logos/heidelberg-materials.svg" style="height: 22px; width: auto;" alt="" />
               <span>
-                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">H.Ö. Sabancı Holding</strong>
+                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">H.Ö. Heidelberg Materials</strong>
                 <small style="color: var(--muted); font-size: 11px; font-weight: 500;">Holding Merkez Çatısı</small>
               </span>
             </div>
@@ -1807,7 +1832,7 @@ function renderDashboard() {
   const highlights = [...countryIdeas].sort((a, b) => b.aiScore + b.communityScore - (a.aiScore + a.communityScore)).slice(0, 3);
   const focusIdea = highlights[0] || countryIdeas[0] || state.ideas[0];
   
-  const countMultiplier = state.activeCountry === "TR" ? 12 : state.activeCountry === "US" ? 6 : state.activeCountry === "GB" ? 4 : 2;
+  const countMultiplier = state.activeCountry === "DE" ? 12 : state.activeCountry === "US" ? 6 : state.activeCountry === "GB" ? 4 : 2;
   const queueCount = countryIdeas.filter(idea => ["new", "review", "pilot"].includes(idea.status)).length;
   const reviewCount = countryIdeas.filter(idea => idea.status === "review").length + countMultiplier * 2;
   const pilotCount = countryIdeas.filter(idea => idea.status === "pilot").length + countMultiplier;
@@ -2089,7 +2114,7 @@ function renderStockTicker() {
               <span class="ticker__item">
                 <span style="color: var(--muted); margin-right: 4px;">$</span>
                 <strong>${esc(idea.marketTicker)}</strong>
-                <span style="margin-left: 6px; font-weight: 500;">${price} SA</span>
+                <span style="margin-left: 6px; font-weight: 500;">${price} HM</span>
                 <span class="ticker-change ${isUp ? "up" : "down"}">
                   ${isUp ? "▲" : "▼"} ${Math.abs(change).toFixed(1)}%
                 </span>
@@ -3831,7 +3856,7 @@ function renderNewIdea() {
     <div class="view-stack apple-page">
       <section class="apple-page-head" style="margin-bottom: 24px;">
         <div>
-          <span class="panel-kicker">İş NEW</span>
+          <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Yeni Başvuru / Proje Girişi</h2>
           <p>Fikir borsasında listelenecek projenizi, fikrinizi veya araştırmanızı detaylandırarak yayınlayın.</p>
         </div>
@@ -4221,8 +4246,8 @@ function renderIdeaDetail() {
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
               </span>
             ` : `
-              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 SA karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
-                ${icon("gavel")} Karar Kurulu'na Taşı (5000 SA)
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 HM karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (5000 HM)
               </button>
             `
           ) : ""}
@@ -4406,7 +4431,7 @@ function renderAffiliationFilter() {
     <section class="corp-filter-panel">
       <div class="corp-filter-head">
         <div>
-          <span class="panel-kicker">SABANCI HOLDİNG VE İŞTİRAK FİLTRESİ</span>
+          <span class="panel-kicker">HEIDELBERG MATERIALS HOLDİNG VE İŞTİRAK FİLTRESİ</span>
           <h3>Kurumsal kapsam</h3>
         </div>
         <label class="field compact-field">
@@ -4418,7 +4443,7 @@ function renderAffiliationFilter() {
       </div>
       <div class="affiliate-strip" aria-label="İştirakler">
         <button class="affiliate-chip ${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">
-          ${companyLogo(companyById("sabanci-holding"), "mini")}
+          ${companyLogo(companyById("heidelberg-materials"), "mini")}
           <span>Tümü</span>
         </button>
         ${countryCompanies.map(company => `
@@ -4596,7 +4621,7 @@ function renderMessages() {
   const messages = selectedPerson
     ? (state.directThreads[selectedPerson.id] || [])
     : (selectedSpace?.messages || []);
-  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "sabanci-holding");
+  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "heidelberg-materials");
 
   return `
     <div class="view-stack corp-page">
@@ -4909,7 +4934,7 @@ function managerVoteEvents() {
     { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: 1620, quantity: 12, date: "14.06.2026" },
     { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: 1380, quantity: 9, date: "14.06.2026" },
     { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
-    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
+    { userId: "u3", userName: "Lena Fischer", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
   ];
   return [...base, ...seeded].filter(tx => {
     const idea = state.ideas.find(i => i.id === tx.ideaId);
@@ -5171,7 +5196,7 @@ function renderAgendaComposer() {
 
 function filteredAgendaItems() {
   const q = (state.filters.agendaSearch || "").trim().toLocaleLowerCase("tr-TR");
-  const countryName = countryNameTR[state.activeCountry] || "Türkiye";
+  const countryName = countryNameTR[state.activeCountry] || "Almanya";
   return [...state.agendaItems].filter(item => {
     if (item.companyId) {
       const comp = affiliationCompanies.find(c => c.id === item.companyId);
@@ -5537,7 +5562,7 @@ function renderCreateClub() {
         <div class="create-step-body" style="display: flex; flex-direction: column; gap: 16px;">
           <label class="field">
             <span>Kulüp Adı *</span>
-            <input class="input" placeholder="Örn: Akbank Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
+            <input class="input" placeholder="Örn: Heidelberg Materials Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
           </label>
           <label class="field">
             <span>Kulüp Açıklaması / Amacı *</span>
@@ -5776,7 +5801,7 @@ function renderEducationPage() {
             </label>
             <label class="field">
               <span>Düzenleyen Birim</span>
-              <input class="input" id="edu-composer-organizer" placeholder="Örn: Akbank Mobil İnovasyon Ekibi" />
+              <input class="input" id="edu-composer-organizer" placeholder="Örn: Heidelberg Materials Mobil İnovasyon Ekibi" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, YouTube vb.)</span>
@@ -5840,7 +5865,7 @@ function renderEducationPage() {
               </label>
               <label class="field">
                 <span>Unvan / Şirket</span>
-                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (Akbank)" />
+                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (Heidelberg Materials)" />
               </label>
               <label class="field" style="grid-column: 1 / -1;">
                 <span>Uzmanlık Alanları (Virgülle ayırın)</span>
@@ -5848,7 +5873,7 @@ function renderEducationPage() {
               </label>
               <label class="field">
                 <span>E-posta</span>
-                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@sabanci.example')}" placeholder="E-posta adresiniz" />
+                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@heidelbergmaterials.example')}" placeholder="E-posta adresiniz" />
               </label>
               <label class="field full" style="grid-column: 1 / -1;">
                 <span>Hakkımda / Mentörlük Kapsamı</span>
@@ -5991,7 +6016,7 @@ function renderEventsPage() {
             </label>
             <label class="field">
               <span>Düzenleyen / Organizatör</span>
-              <input class="input" id="evt-organizer" placeholder="Örn: SabancıDx" />
+              <input class="input" id="evt-organizer" placeholder="Örn: Heidelberg Materials Technology Center" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, Teams, Kayıt formu vb.)</span>
@@ -7272,7 +7297,7 @@ function renderProfile() {
         ${metricCard("badge-check", "Uygulamaya alınan", `${myIdeas.filter(idea => idea.status === "done").length + 1}`, "Katkının somut etkisi.", "+1", "green")}
         ${metricCard("thumbs-up", "Desteklediğin", "42", "Oy kredisiyle katkı verdiğin fikirler.", "+6", "purple")}
         ${metricCard("message-circle", "Yorum", "28", "Tartışmalara yaptığın katkılar.", "+4", "amber")}
-        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} SA`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
+        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} HM`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
       </section>
       <section class="analytics-grid">
         <article class="analytics-card">
@@ -7315,8 +7340,8 @@ function renderManager() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="section-title">
           <div>
-            <h2>${icon("gavel")} 5000 SA ile Taşınan Talepler</h2>
-            <p>Sahipleri tarafından 5000 SA ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+            <h2>${icon("gavel")} 5000 HM ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 5000 HM ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
         </div>
@@ -7431,7 +7456,7 @@ function renderProfileV2() {
     .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
     .filter(item => item.idea);
   const directoryMatch = peopleDirectory.find(person => person.name.split(" ")[0] === user.name.split(" ")[0]) || peopleDirectory[0];
-  const company = companyById(directoryMatch.companyId || "is-new");
+  const company = companyById(directoryMatch.companyId || "heidelberg-materials");
 
   return `
     <div class="view-stack profile-detail-page">
@@ -7809,7 +7834,7 @@ function renderManagerV2() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="panel-head">
           <div>
-            <span class="panel-kicker">5000 SA ile taşınan talepler</span>
+            <span class="panel-kicker">5000 HM ile taşınan talepler</span>
             <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
@@ -7943,7 +7968,7 @@ function renderAdminContent() {
                 <td>${esc(user.role)}</td>
                 <td>${esc(user.department)}</td>
                 <td>${esc(user.location)}</td>
-                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} SA</td>
+                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} HM</td>
                 <td><span class="status-badge done">Aktif</span></td>
               </tr>
             `).join("")}
@@ -8017,9 +8042,9 @@ function renderAdminContent() {
       <div class="section-title"><div><h2>Denetim Kayıtları</h2><p>Admin işlemleri ve kritik güvenlik olayları.</p></div></div>
       <div class="mini-list">
         ${[
-          ["Kerem Yıldız", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
+          ["Markus Bauer", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
           ["Sistem", "Anonim fikir denetim kaydı oluşturdu", "Dün 17:42"],
-          ["Can Koç", "Fikri pilot seçti", "Dün 15:11"],
+          ["Lena Fischer", "Fikri pilot seçti", "Dün 15:11"],
           ["Merve Aydın", "Yarışma duyurusu yayınladı", "31 Mayıs"]
         ].map(item => `<div class="mini-item"><span><strong>${esc(item[0])}</strong><span>${esc(item[1])}</span></span><span>${esc(item[2])}</span></div>`).join("")}
       </div>
@@ -8167,7 +8192,7 @@ function createIdeaFromWizard() {
     comments,
     tags: [w.department, w.ideaType, w.impact, w.cost],
     createdAt: new Date().toISOString().slice(0, 10),
-    companyId: state.marketDraft.companyId || "is-new",
+    companyId: state.marketDraft.companyId || "heidelberg-materials",
     marketCategory: "Fikir",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
     marketPrice: 100,
@@ -8215,7 +8240,7 @@ function createComplaintFromEntry() {
     ],
     tags: [c.category, c.department, c.impact, "Şikayet", "Verimsizlik"],
     createdAt: new Date().toISOString().slice(0, 10),
-    companyId: "is-new",
+    companyId: "heidelberg-materials",
     marketCategory: "Şikayet",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
     marketPrice: 100,
@@ -8229,7 +8254,7 @@ function createComplaintFromEntry() {
 
 function createMarketListing(context) {
   const draft = state.marketDraft;
-  const company = companyById(draft.companyId || "is-new");
+  const company = companyById(draft.companyId || "heidelberg-materials");
   const id = `market-${Date.now()}`;
   const baseScore = draft.category === "Proje" ? 86 : draft.category === "Araştırma" ? 79 : draft.category === "Şikayet" ? 76 : 74;
   return {
@@ -8243,7 +8268,7 @@ function createMarketListing(context) {
     companyId: company.id,
     department: context === "announcements" ? "Kurumsal İletişim" : context === "dashboard" ? "Veri&Bilgi" : "Borsa",
     location: company.campuses[0] || "Genel",
-    city: company.cities[0] || "İstanbul",
+    city: company.cities[0] || "Heidelberg",
     authorId: currentUser().id,
     authorLabel: currentUser().name,
     anonymity: "İsmimle paylaş",
@@ -8273,7 +8298,7 @@ function createMarketListing(context) {
     marketSpark: [26, 34, 39, 48, 55, 62, 68, 78],
     files: draft.files?.length ? draft.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, draft.category),
     sourceContext: context,
-    country: draft.country || state.activeCountry || "TR"
+    country: draft.country || state.activeCountry || "DE"
   };
 }
 
@@ -8837,7 +8862,7 @@ document.addEventListener("click", event => {
     const title = document.getElementById("mentor-composer-title")?.value.trim();
     const specialtiesStr = document.getElementById("mentor-composer-specialties")?.value.trim();
     const bio = document.getElementById("mentor-composer-bio")?.value.trim();
-    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@sabanci.example";
+    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@heidelbergmaterials.example";
     
     if (!name || !title || !specialtiesStr || !bio) {
       alert("Lütfen tüm alanları doldurun.");
@@ -8966,7 +8991,7 @@ document.addEventListener("click", event => {
       },
       {
         title: "Borsa Simülasyonu Hacim Rekoru Kırdı",
-        body: "İş NEW platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
+        body: "NEW IDEA EXCHANGE platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
         category: "Operasyon",
         tags: ["Borsa", "Hacim", "Hype"]
       }
@@ -9084,7 +9109,7 @@ document.addEventListener("click", event => {
     }
 
     if (state.marketBudget < fee) {
-      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} SA (Mevcut: ${state.marketBudget} SA)`);
+      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} HM (Mevcut: ${state.marketBudget} HM)`);
       return;
     }
 
@@ -9118,8 +9143,8 @@ document.addEventListener("click", event => {
       type: marketCategoryVal,
       company: companyVal,
       department: departmentVal,
-      location: user.location || "Sabancı Center",
-      city: user.city || "İstanbul",
+      location: user.location || "Heidelberg Materials Hauptmerkez",
+      city: user.city || "Heidelberg",
       authorId: user.id,
       authorLabel: anonymityVal === "İsmimle paylaş" ? user.name : anonymityVal === "Tam anonim" ? "Anonim Çalışan" : `Anonim ${user.role || 'Çalışan'}`,
       anonymity: anonymityVal,
@@ -9138,7 +9163,7 @@ document.addEventListener("click", event => {
       comments: [],
       tags: [departmentVal || "İnovasyon", marketCategoryVal, impactVal + " Etki", costVal + " Maliyet"],
       createdAt: new Date().toISOString().slice(0, 10),
-      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "sabanci-holding"),
+      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "heidelberg-materials"),
       marketCategory: marketCategoryVal,
       marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
       marketPrice: 100,
@@ -9228,12 +9253,12 @@ document.addEventListener("click", event => {
           if (royalty > 0) {
             if (idea.authorId === currentUser().id) {
               state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} HM) cüzdanınıza eklendi!`;
             } else {
               const authorUser = demoUsers.find(u => u.id === idea.authorId);
               if (authorUser) {
                 authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} HM) telif ödendi.`;
               }
             }
           }
@@ -9915,7 +9940,7 @@ document.addEventListener("click", event => {
     state.currentCountry = actionButton.dataset.code;
     state.activeCountry = actionButton.dataset.code;
     state.loginCountrySelected = true;
-    state.currentUserId = "u3"; // Always Can Koç
+    state.currentUserId = "u3"; // Always Lena Fischer
     state.loggedIn = true; // Auto login
     render();
     resetScroll();
@@ -9960,12 +9985,18 @@ if (action === "login") {
   }
 
   if (action === "toggle-theme") {
-    state.theme = "light";
+    state.theme = state.theme === "dark" ? "light" : "dark";
     render();
   }
 
   if (action === "set-view") {
     state.ideaView = actionButton.dataset.view;
+    render();
+  }
+
+  if (action === "reset-ledger-filters") {
+    state.ledgerUserFilter = "Tümü";
+    state.ledgerProjectFilter = "Tümü";
     render();
   }
 
@@ -10036,7 +10067,7 @@ if (action === "login") {
       const isProject = state.marketDraft.category === "Proje";
       const fee = isProject ? 100 : 0;
       if (state.marketBudget < fee) {
-        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} SA olmalıdır! (Mevcut: ${state.marketBudget} SA)`);
+        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} HM olmalıdır! (Mevcut: ${state.marketBudget} HM)`);
         return;
       }
       state.marketBudget -= fee;
@@ -10095,12 +10126,12 @@ if (action === "login") {
           if (royalty > 0) {
             if (idea.authorId === currentUser().id) {
               state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} HM) cüzdanınıza eklendi!`;
             } else {
               const authorUser = demoUsers.find(u => u.id === idea.authorId);
               if (authorUser) {
                 authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} HM) telif ödendi.`;
               }
             }
           }
@@ -10444,10 +10475,10 @@ if (action === "login") {
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea && !idea.escalatedToBoard) {
       if (state.marketBudget < ESCALATION_COST) {
-        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} SA (Mevcut: ${Math.round(state.marketBudget)} SA)`);
+        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} HM (Mevcut: ${Math.round(state.marketBudget)} HM)`);
         return;
       }
-      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} SA karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
+      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} HM karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
       if (!confirmed) return;
       state.marketBudget -= ESCALATION_COST;
       idea.escalatedToBoard = true;
@@ -10678,7 +10709,7 @@ if (action === "login") {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Başarıyla Hayata Geçirildi!`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
+          body: `NEW IDEA EXCHANGE Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-analizi", "ürünleşme", idea.marketTicker.toLowerCase()],
@@ -10690,7 +10721,7 @@ if (action === "login") {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Reddedildi`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
+          body: `NEW IDEA EXCHANGE Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-denetimi", "red", idea.marketTicker.toLowerCase()],
@@ -11514,7 +11545,7 @@ function supportIdea(id) {
   }
   
   if (user.voteCreditBalance < 100) {
-    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 SA gereklidir.");
+    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 HM gereklidir.");
     return;
   }
   
@@ -12164,20 +12195,20 @@ function renderSuggestionsSection() {
   state.suggestionsPool = state.suggestionsPool || [
     {
       id: "sug-1",
-      title: "Akbank Mobil Ödeme API Dokümantasyonu Güncellemesi",
+      title: "Heidelberg Materials Mobil Ödeme API Dokümantasyonu Güncellemesi",
       category: "Veri Seti İsteği",
-      description: "Akbank Mobil API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
-      companyId: "akbank",
-      author: "Can Koç",
+      description: "Heidelberg Materials Mobil API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
+      companyId: "heidelberg-materials-de",
+      author: "Lena Fischer",
       date: "2026-06-08",
       status: "İnceleniyor"
     },
     {
       id: "sug-2",
-      title: "SabancıDx Portalında Mobil Giriş Hatası",
+      title: "Heidelberg Materials Technology Center Portalıında Mobil Giriş Hatası",
       category: "Uygulama Hataları",
-      description: "iOS 16+ sürümlerinde SabancıDx iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
-      companyId: "sabancidx",
+      description: "iOS 16+ sürümlerinde Heidelberg Materials Technology Center iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
+      companyId: "heidelberg-materials-htc",
       author: "Defne Arman",
       date: "2026-06-06",
       status: "İletildi"
@@ -12186,8 +12217,8 @@ function renderSuggestionsSection() {
       id: "sug-3",
       title: "Karbon Ayak İzi Hesaplama Formülü Standartlaşması",
       category: "Genel Öneri",
-      description: "Çimsa ve Enerjisa karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
-      companyId: "cimsa",
+      description: "Heidelberg Materials ve Indocement karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
+      companyId: "heidelberg-materials-egypt",
       author: "Selin Eryılmaz",
       date: "2026-06-05",
       status: "Çözüldü"
@@ -12197,7 +12228,7 @@ function renderSuggestionsSection() {
       title: "Leasing Ödeme Planı Simülasyon Veri Seti Talebi",
       category: "Veri Seti İsteği",
       description: "Tarım ve inşaat sektöründeki müşteriler için geliştirilecek esnek ödeme planı (balon ödemeli, sezonluk ödemeli vb.) algoritmalarını test etmek için anonimleştirilmiş geçmiş ödeme performansı veri setine ihtiyacımız var.",
-      companyId: "aklease",
+      companyId: "heidelberg-materials-trading",
       author: "Nazlı Durukan",
       date: "2026-06-09",
       status: "İnceleniyor"
@@ -12206,8 +12237,8 @@ function renderSuggestionsSection() {
       id: "sug-leasing-2",
       title: "İkinci El İş Makinesi Değerleme Entegrasyonu",
       category: "Genel Öneri",
-      description: "Aklease portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
-      companyId: "aklease",
+      description: "Heidelberg Materials Trading portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
+      companyId: "heidelberg-materials-trading",
       author: "Mert Alkan",
       date: "2026-06-08",
       status: "İletildi"
@@ -12217,7 +12248,7 @@ function renderSuggestionsSection() {
       title: "Leasing Sözleşmesi E-İmza Sürecindeki Gecikmeler",
       category: "Uygulama Hataları",
       description: "Mobil imza doğrulama adımlarında bazen SMS şifrelerinin gelmemesi veya gecikmesi nedeniyle sözleşme onay süreleri uzuyor. Servis sağlayıcı entegrasyonunun kontrol edilmeli.",
-      companyId: "aklease",
+      companyId: "heidelberg-materials-trading",
       author: "Nazlı Durukan",
       date: "2026-06-07",
       status: "Çözüldü"
@@ -13105,14 +13136,14 @@ function socialLeaderboardRows() {
   ];
   return rows.map(row => {
     const person = personById(row.userId) || {};
-    const company = companyById(person.companyId || "sabanci-holding");
+    const company = companyById(person.companyId || "heidelberg-materials");
     return {
       ...row,
       name: person.name || "NEW IDEA EXCHANGE Üyesi",
       role: person.role || person.title || "Katılımcı",
       company: company.shortName || company.name,
       photo: person.photo || "",
-      country: person.country || "TR"
+      country: person.country || "DE"
     };
   }).filter(row => {
     if (state.leaderboardScope === "global") return true;
@@ -13199,7 +13230,7 @@ function createRichSocialPost(kind, bodyText, photoFile = null) {
     base.link = {
       title: "Fikir doğrulama notları",
       description: "Kısa problem tanımı, veri ihtiyacı ve beklenen etki özeti.",
-      url: "https://www.sabanci.com/"
+      url: "https://www.heidelbergmaterials.com/"
     };
   }
   return base;
@@ -13239,9 +13270,9 @@ function createRichMessage(kind) {
       ...message,
       body: "Kaynak linki burada, yorumlarınızı bekliyorum.",
       link: {
-        title: "Sabancı dijital kanallar notu",
+        title: "Heidelberg Materials dijital kanallar notu",
         description: "Süreç iyileştirme için referans bağlantı.",
-        url: "https://www.sabanci.com/"
+        url: "https://www.heidelbergmaterials.com/"
       }
     };
   }
@@ -13304,7 +13335,7 @@ function renderProfileV2() {
               ${icon("building", "14")} ${company ? esc(company.name) : "Bağımsız / Topluluk"}
             </span>
             <span style="font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px;">
-              ${icon("mail", "14")} ${esc(user.email || (user.name.toLowerCase().replace(/\s+/g, '') + "@is-new.com"))}
+              ${icon("mail", "14")} ${esc(user.email || (user.name.toLowerCase().replace(/\s+/g, '') + "@heidelbergmaterials.example"))}
             </span>
           </div>
           
@@ -13584,10 +13615,10 @@ function renderProfileTabContent(user, tab) {
                     </div>
                   </td>
                   <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${qty}</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} SA</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} HM</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} HM</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} HM</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} HM</td>
                   <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isProfit ? '#2ecc71' : '#e74c3c'};">
                     <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isProfit ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
                       ${isProfit ? '▲ +' : '▼ '}${formatCurrency(profitLoss)} (${isProfit ? '+' : ''}${profitLossPercent.toFixed(1)}%)
@@ -13617,7 +13648,7 @@ function renderSystemDetails() {
           ${icon("help-circle")} 1. İnovasyon Hunisi Nedir?
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          İş NEW platformu, iştirak ve departmanlarımızdan gelen tüm yenilikçi fikirleri ve süreç iyileştirmelerini objektif bir şekilde değerlendirmek, geliştirmek ve hayata geçirmek için tasarlanmış uçtan uca bir inovasyon hunisidir.
+          NEW IDEA EXCHANGE platformu, iştirak ve departmanlarımızdan gelen tüm yenilikçi fikirleri ve süreç iyileştirmelerini objektif bir şekilde değerlendirmek, geliştirmek ve hayata geçirmek için tasarlanmış uçtan uca bir inovasyon hunisidir.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 8px;">
           <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 16px; border-radius: 12px;">
@@ -13668,7 +13699,7 @@ function renderSystemDetails() {
           ${icon("cpu")} 1. Teknik Mimari
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          İş NEW, yüksek performanslı ve akıcı bir kullanıcı deneyimi sunabilmek için modern **Single Page Application (SPA)** mimarisiyle inşa edilmiştir. Tüm sayfalar, grafikler ve portföy durumları sayfa yenilenmeden anlık olarak güncellenir.
+          NEW IDEA EXCHANGE, yüksek performanslı ve akıcı bir kullanıcı deneyimi sunabilmek için modern **Single Page Application (SPA)** mimarisiyle inşa edilmiştir. Tüm sayfalar, grafikler ve portföy durumları sayfa yenilenmeden anlık olarak güncellenir.
         </p>
         <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 16px; border-radius: 12px;">
           <strong style="color: var(--ink); display: block; margin-bottom: 6px;">Client-Side State Engine</strong>
@@ -13746,9 +13777,9 @@ function renderSystemDetails() {
     `;
   } else if (state.systemDetailsTab === "Belgeler") {
     const currentReportHref = "/NIE-Kurumsal-Teknik-Rapor-2026.pdf";
-    const sabanciNewHref = "/Sabanci-New.pdf";
-    const academicIntegrationHref = "/Sabanci-New-Akademik-ve-Entegrasyon-Raporu.pdf";
-    const academicEvidenceHref = "/Sabanci-New-Akademik-Literatur-ve-Kanitlar-Raporu.pdf";
+    const heidelbergNewHref = "/Heidelberg-New.pdf";
+    const academicIntegrationHref = "/Heidelberg-New-Akademik-ve-Entegrasyon-Raporu.pdf";
+    const academicEvidenceHref = "/Heidelberg-New-Akademik-Literatur-ve-Kanitlar-Raporu.pdf";
     const docCard = (iconName, title, desc, links) => `
       <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 18px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
         <div style="display: flex; align-items: center; gap: 10px;">
@@ -13770,7 +13801,7 @@ function renderSystemDetails() {
           ${icon("folder-open")} Platform Belgeleri
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          Sabancı Holding New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
+          Heidelberg Materials New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
           ${docCard("file-text", "Güncel Teknik Rapor", "20 Haziran 2026 tarihli mimari inceleme, ürün mantığı, borsa fiyatlama modeli, AI kapsamı, teknik borçlar ve önerilen yol haritasını içeren güncel PDF raporu.", [
@@ -13778,9 +13809,9 @@ function renderSystemDetails() {
             { href: currentReportHref, label: "PDF İndir", download: true },
             { href: "/technical-report.html", label: "HTML Rapor" }
           ])}
-          ${docCard("presentation", "Sabancı New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Sabancı New PDF dokümanı.", [
-            { href: sabanciNewHref, label: "PDF Görüntüle" },
-            { href: sabanciNewHref, label: "PDF İndir", download: true }
+          ${docCard("presentation", "Heidelberg Materials New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Heidelberg Materials New PDF dokümanı.", [
+            { href: heidelbergNewHref, label: "PDF Görüntüle" },
+            { href: heidelbergNewHref, label: "PDF İndir", download: true }
           ])}
           ${docCard("book-open", "Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
             { href: academicIntegrationHref, label: "PDF Görüntüle" },
@@ -13829,7 +13860,7 @@ function renderSystemDetails() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft);">
         <span class="panel-kicker">PLATFORM KILAVUZU & TEKNİK REHBER</span>
         <h2>Sistem Detayları</h2>
-        <p>İş NEW platformunun çalışma mekanizması, arkasındaki teknoloji ve kullanım rehberi.</p>
+        <p>NEW IDEA EXCHANGE platformunun çalışma mekanizması, arkasındaki teknoloji ve kullanım rehberi.</p>
       </section>
 
       <div class="admin-layout" style="display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start;">
@@ -13984,7 +14015,7 @@ function formatAIMessage(text) {
 function renderAIAssistantWidget() {
   state.aiAssistantOpen = !!state.aiAssistantOpen;
   state.aiAssistantMessages = state.aiAssistantMessages || [
-    { role: 'assistant', text: 'Merhaba. Ben Sabancı AI Asistanı; yalnızca platform içindeki fikirler, gündem, duyurular, gelişmiş ürünler ve yönetici kaynaklarından özet çıkarırım. Demo kapsamında internette arama yapmam veya dış haber çekmem.' },
+    { role: 'assistant', text: 'Merhaba. Ben Heidelberg Materials AI Asistanı; yalnızca platform içindeki fikirler, gündem, duyurular, gelişmiş ürünler ve yönetici kaynaklarından özet çıkarırım. Demo kapsamında internette arama yapmam veya dış haber çekmem.' },
     { role: 'user', text: 'Şu an platform içinde hype hangi alana kayıyor?' },
     { role: 'assistant', text: '**Platform içi trend okuması:**\n\nBorsa hareketleri, gündem başlıkları ve ürünleşen fikirler birlikte bakıldığında operasyon verimliliği, AI destekli özetleme ve yeşil finans başlıkları öne çıkıyor. Bu yorum yalnızca demo içindeki kayıtlar üzerinden üretilmiştir.' }
   ];
@@ -14035,7 +14066,7 @@ function renderAIAssistantWidget() {
       <header style="background: linear-gradient(135deg, #005daa 0%, #3730a3 100%); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 8px;">
           ${icon("bot")}
-          <span style="font-weight: 600; font-size: 14.5px;">Sabancı AI Asistanı</span>
+          <span style="font-weight: 600; font-size: 14.5px;">Heidelberg Materials AI Asistanı</span>
         </div>
         <button data-action="toggle-ai-assistant" style="background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 0;">&times;</button>
       </header>
@@ -14058,7 +14089,7 @@ function renderAIAssistantWidget() {
       <!-- Quick Prompt Suggestions -->
       <div style="padding: 8px 12px; display: flex; gap: 6px; overflow-x: auto; background: var(--surface); border-top: 1px solid var(--line-soft); white-space: nowrap;">
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Yeni bir FinTech fikir öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">FinTech Fikri Öner</button>
-        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Çimsa karbon emisyonu azaltım fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Çimsa Önerisi Al</button>
+        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Heidelberg Materials karbon emisyonu azaltım fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Heidelberg Materials Önerisi Al</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Borsadaki en önemli projeleri listele" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Borsayı Özetle</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Kurumsal veri setlerini özetle" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Veri&Bilgi Listele</button>
       </div>
@@ -14096,7 +14127,7 @@ function handleAIChatResponse(msgText) {
     
     ${topAgenda ? `Gündem tarafında öne çıkan başlık: **${topAgenda.title}**.` : ""}
     
-    Bu sinyal sadece İş NEW içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
+    Bu sinyal sadece NEW IDEA EXCHANGE içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
   } else if (query.includes("ürün") || query.includes("urun") || query.includes("geliştirilmiş") || query.includes("gelistirilmis")) {
     const products = [...(state.ideas || [])].sort((a, b) => productProgress(b) - productProgress(a)).slice(0, 4);
     replyText = `**Ürünler görünümü:**
@@ -14111,13 +14142,13 @@ function handleAIChatResponse(msgText) {
     ${resources.map(item => `- **${item.title}** (${item.category}): ${item.description}`).join("\n")}
     
     Bu kayıtlar adminlerin demo içindeki Yönetici Depolama alanına eklediği kaynaklardan gelir.`;
-  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("aklease")) {
-    replyText = `**Yapay Zekâ Fikir Önerisi (Aklease):**
+  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("heidelberg-materials-trading")) {
+    replyText = `**Yapay Zekâ Fikir Önerisi (Heidelberg Materials Trading):**
 
     *Öneri:* **Güneş Enerjisi Santralleri (GES) için Dijital Leasing Paketi**
     *Açıklama:* KOBİ'lerin çatı tipi GES ve yeşil enerji yatırımlarını hızlandırmak için, fizibilite verilerinden otomatik teminat oranı ve vade yapısı çıkaran, tamamen kağıtsız bir başvuru/onay modülü.
 
-    Bunu Ak Finansal Kiralama (Aklease) bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
+    Bunu Ak Finansal Kiralama (Heidelberg Materials Trading) bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
   } else if (query.includes("fintech") || query.includes("ödeme") || query.includes("bankacılık") || query.includes("fikir")) {
     replyText = `**Yapay Zekâ Fikir Önerisi (FinTech):**
     
@@ -14166,7 +14197,7 @@ function renderRulesPage() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); margin-bottom: 20px;">
         <span class="panel-kicker">KURALLAR & REHBER</span>
         <h2>Topluluk Kuralları</h2>
-        <p>İş NEW İnovasyon Platformu'nda daha yapıcı ve verimli çalışabilmek için uymamız gereken kurallar.</p>
+        <p>NEW IDEA EXCHANGE İnovasyon Platformu'nda daha yapıcı ve verimli çalışabilmek için uymamız gereken kurallar.</p>
       </section>
 
       <section class="content-panel" style="padding: 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 20px; line-height: 1.6; color: var(--ink-soft);">
@@ -14188,7 +14219,7 @@ function renderRulesPage() {
           <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; margin-top: 0;">
             ${icon("eye-off")} 3. Bilgi Güvenliği ve Gizlilik
           </h3>
-          <p>Sabancı Holding iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
+          <p>Heidelberg Materials Grubu iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
         </div>
 
         <div style="border-top: 1px solid var(--line-soft); padding-top: 16px;">
@@ -14227,7 +14258,7 @@ function renderComplaintBoxPage() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); margin-bottom: 20px;">
         <span class="panel-kicker">GERİ BİLDİRİM & ŞİKAYET</span>
         <h2>Şikayet Kutusu</h2>
-        <p>İş NEW platformu, içerikler, teknik hatalar veya diğer kullanıcılar hakkında geri bildirim veya şikayet gönderin.</p>
+        <p>NEW IDEA EXCHANGE platformu, içerikler, teknik hatalar veya diğer kullanıcılar hakkında geri bildirim veya şikayet gönderin.</p>
       </section>
 
       ${state.complaintBoxFeedback ? `
@@ -14383,7 +14414,7 @@ function ensureSocialEnhancements() {
     dataPost.link = {
       title: "Yeşil finans veri notu",
       description: "ESG veri alanları, örnek KPI seti ve proje kullanım senaryoları.",
-      url: "https://www.sabanci.com/"
+      url: "https://www.heidelbergmaterials.com/"
     };
   }
 
@@ -14408,11 +14439,11 @@ function ensureSocialEnhancements() {
         ]
       }
     }),
-    createSeedSocialPost("sp-rich-3", "p15", "Akbank Mobil API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
+    createSeedSocialPost("sp-rich-3", "p15", "Heidelberg Materials Mobil API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
       link: {
         title: "API akış kontrol listesi",
         description: "Onay, test, hata izleme ve canlıya geçiş adımları.",
-        url: "https://www.sabanci.com/"
+        url: "https://www.heidelbergmaterials.com/"
       }
     })
   ];
@@ -14446,7 +14477,7 @@ function ensureSocialEnhancements() {
         link: {
           title: "Haftalık karar notu",
           description: "Fikir üretimi, al/sat hareketi ve bekleyen pilotlar.",
-          url: "https://www.sabanci.com/"
+          url: "https://www.heidelbergmaterials.com/"
         }
       },
       {
@@ -14468,14 +14499,14 @@ function ensureSocialEnhancements() {
       body: "Yeni onboarding kontrol ekranından görüntü paylaşıyorum.",
       time: "13:18",
       imageUrl: remoteImages.ideaVisuals[1],
-      imageCaption: "Akbank Mobil onboarding kontrol akışı"
+      imageCaption: "Heidelberg Materials Mobil onboarding kontrol akışı"
     });
   }
 }
 
 function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
   const person = personById(userId) || {};
-  const company = companyById(person.companyId || "sabanci-holding");
+  const company = companyById(person.companyId || "heidelberg-materials");
   return {
     id,
     userId,
@@ -14486,9 +14517,9 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
     date,
     likes,
     likedByMe: false,
-    country: person.country || "TR",
+    country: person.country || "DE",
     comments: [
-      { id: `${id}-c1`, userName: "Can Koç", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
+      { id: `${id}-c1`, userName: "Lena Fischer", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
     ],
     ...extras
   };
@@ -14503,7 +14534,7 @@ function getActiveLanguage() {
 function getTranslatedText(item, field) {
   if (!item) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = item.country === "TR" ? "tr" : (item.country === "DE" ? "de" : (item.country === "ES" ? "es" : "en"));
+  const originalLang = item.country === "DE" ? "de" : "en";
   
   if (activeLang === originalLang) {
     return item[field] || "";
@@ -14523,7 +14554,7 @@ function getTranslatedText(item, field) {
 function renderTranslationButton(idea) {
   if (!idea) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+  const originalLang = idea.country === "DE" ? "de" : "en";
   
   if (activeLang === originalLang) return "";
   
@@ -14558,7 +14589,7 @@ function translateAllInState() {
       idea.originalProblem = idea.problem || "";
       idea.originalSolution = idea.solution || "";
     }
-    const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+    const originalLang = idea.country === "DE" ? "de" : "en";
     const showOriginal = !!(state.translatedIdeaIds && state.translatedIdeaIds[idea.id]);
     
     if (showOriginal || activeLang === originalLang) {
@@ -14583,7 +14614,7 @@ function translateAllInState() {
       ann.originalTitle = ann.title || "";
       ann.originalBody = ann.body || "";
     }
-    const originalLang = ann.country === "TR" ? "tr" : (ann.country === "DE" ? "de" : (ann.country === "ES" ? "es" : "en"));
+    const originalLang = ann.country === "DE" ? "de" : "en";
     if (activeLang === originalLang) {
       ann.title = ann.originalTitle;
       ann.body = ann.originalBody;
@@ -14601,7 +14632,7 @@ function translateAllInState() {
     if (post.originalBody === undefined) {
       post.originalBody = post.body || "";
     }
-    const originalLang = post.country === "TR" ? "tr" : (post.country === "DE" ? "de" : (post.country === "ES" ? "es" : "en"));
+    const originalLang = post.country === "DE" ? "de" : "en";
     if (activeLang === originalLang) {
       post.body = post.originalBody;
     } else {
@@ -14630,7 +14661,7 @@ function translateAllInState() {
 
   // 4. Translate Chat Messages
   state.messageSpaces.forEach(space => {
-    const originalLang = space.country === "TR" ? "tr" : (space.country === "DE" ? "de" : (space.country === "ES" ? "es" : "en"));
+    const originalLang = space.country === "DE" ? "de" : "en";
     if (space.messages) {
       space.messages.forEach(msg => {
         if (msg.originalBody === undefined) {
@@ -14654,7 +14685,7 @@ function translateAllInState() {
       ds.originalTitle = ds.title || "";
       ds.originalSummary = ds.summary || "";
     }
-    const originalLang = ds.country === "TR" ? "tr" : (ds.country === "DE" ? "de" : (ds.country === "ES" ? "es" : "en"));
+    const originalLang = ds.country === "DE" ? "de" : "en";
     if (activeLang === originalLang) {
       ds.title = ds.originalTitle;
       ds.summary = ds.originalSummary;
@@ -14673,7 +14704,7 @@ function translateAllInState() {
       ch.originalTitle = ch.title || "";
       ch.originalBrief = ch.brief || "";
     }
-    const originalLang = ch.country === "TR" ? "tr" : (ch.country === "DE" ? "de" : (ch.country === "ES" ? "es" : "en"));
+    const originalLang = ch.country === "DE" ? "de" : "en";
     if (activeLang === originalLang) {
       ch.title = ch.originalTitle;
       ch.brief = ch.originalBrief;
@@ -14687,18 +14718,32 @@ function translateAllInState() {
   });
 }
 
+function countryCodeFromName(name) {
+  const map = {
+    "Almanya": "DE", "Germany": "DE",
+    "Birleşik Krallık": "GB", "United Kingdom": "GB",
+    "Amerika Birleşik Devletleri": "US", "United States": "US",
+    "Endonezya": "ID", "Indonesia": "ID",
+    "İtalya": "IT", "Italy": "IT",
+    "Belçika": "BE", "Belgium": "BE",
+    "Hindistan": "IN", "India": "IN",
+    "Mısır": "EG", "Egypt": "EG"
+  };
+  return map[name] || "DE";
+}
+
 const countryNames = {
-  TR: [
-    "Ahmet Yılmaz", "Ayşe Kaya", "Mehmet Demir", "Fatma Şahin", "Mustafa Çelik",
-    "Emine Yıldız", "Ali Öztürk", "Hatice Arslan", "Hüseyin Polat", "Zeynep Koç",
-    "Hasan Aydın", "Selin Karaca", "Burak Bulut", "Merve Tekin", "Murat Şen",
-    "Büşra Kılıç", "İbrahim Özkan", "Elif Yalçın", "Fatih Doğan", "Gamze Yavuz",
-    "Kemal Aslan", "Derya Avcı", "Serkan Aksoy", "Seda Çetin", "Gökhan Sarı",
-    "Esra Özdemir", "Volkan Kaplan", "Yasemin Köse", "Caner Ateş", "Hale Güler",
-    "Ömer Yiğit", "Demet Yaman", "Metin Yıldırım", "Arzu Can", "Bülent Şimşek",
-    "Kübra Şahin", "Ender Ünal", "Tuğba Kartal", "Hakan Koç", "Nihan Güneş",
-    "Süleyman Ural", "Melis Erol", "Yusuf Aktaş", "Ece Akın", "Turgut Soylu",
-    "Pınar Çakır", "Sinan Aksoy", "Belgin Yılmaz", "Kerem Bulut", "Ebru Aslan"
+  DE: [
+    "Thomas Müller", "Sabine Schmidt", "Michael Schneider", "Petra Fischer", "Andreas Weber",
+    "Monika Meyer", "Stefan Wagner", "Birgit Becker", "Christian Schulz", "Renate Hoffmann",
+    "Martin Schäfer", "Ursula Koch", "Frank Bauer", "Ingrid Richter", "Jürgen Klein",
+    "Karin Wolf", "Ralf Schröder", "Angelika Neumann", "Dieter Schwarz", "Gabriele Zimmermann",
+    "Manfred Braun", "Helga Krüger", "Uwe Hofmann", "Gisela Hartmann", "Hans Lange",
+    "Christa Schmitt", "Walter Werner", "Jutta Schmitz", "Wolfgang Krause", "Elke Meier",
+    "Klaus Lehmann", "Brigitte Schmid", "Günter Hergert", "Erika Maier", "Herbert Mayer",
+    "Marianne Herrmann", "Werner Walter", "Karin Köhler", "Horst Kaiser", "Christel Huber",
+    "Peter Peters", "Anneliese Fuchs", "Bernd Scholz", "Gertrud Möller", "Karl Weiss",
+    "Margarete Jung", "Heinz Hahn", "Hannelore Schubert", "Gerhard Vogel", "Hildegard Friedrich"
   ],
   US: [
     "James Smith", "Mary Johnson", "John Williams", "Patricia Brown", "Robert Jones",
@@ -14724,214 +14769,99 @@ const countryNames = {
     "Daniel Rogers", "Lily Miller", "Logan Morris", "Sophie Bell", "Max Palmer",
     "Lola Shaw", "Rory Marshall", "Alice Hill", "Toby Barnes", "Chloe Knight"
   ],
-  DE: [
-    "Thomas Müller", "Sabine Schmidt", "Michael Schneider", "Petra Fischer", "Andreas Weber",
-    "Monika Meyer", "Stefan Wagner", "Birgit Becker", "Christian Schulz", "Renate Hoffmann",
-    "Martin Schäfer", "Ursula Koch", "Frank Bauer", "Ingrid Richter", "Jürgen Klein",
-    "Karin Wolf", "Ralf Schröder", "Angelika Neumann", "Dieter Schwarz", "Gabriele Zimmermann",
-    "Manfred Braun", "Helga Krüger", "Uwe Hofmann", "Gisela Hartmann", "Hans Lange",
-    "Christa Schmitt", "Walter Werner", "Jutta Schmitz", "Wolfgang Krause", "Elke Meier",
-    "Klaus Lehmann", "Brigitte Schmid", "Günter Hergert", "Erika Maier", "Herbert Mayer",
-    "Marianne Herrmann", "Werner Walter", "Karin Köhler", "Horst Kaiser", "Christel Huber",
-    "Peter Peters", "Anneliese Fuchs", "Bernd Scholz", "Gertrud Möller", "Karl Weiss",
-    "Margarete Jung", "Heinz Hahn", "Hannelore Schubert", "Gerhard Vogel", "Hildegard Friedrich"
+  ID: [
+    "Budi Santoso", "Siti Rahayu", "Agus Wijaya", "Dewi Lestari", "Eko Prasetyo",
+    "Sri Wahyuni", "Hendra Gunawan", "Rina Marlina", "Joko Susilo", "Indah Permata",
+    "Bambang Hartono", "Wati Suryani", "Dedi Kurniawan", "Yuni Astuti", "Rudi Hidayat",
+    "Lina Anggraini", "Agung Nugroho", "Fitri Handayani", "Yusuf Ramadhan", "Maya Sari",
+    "Andi Setiawan", "Putri Wulandari", "Hadi Saputra", "Ratna Dewi", "Wawan Setiadi",
+    "Nur Azizah", "Iwan Setiawan", "Sari Indriani", "Anton Wijaya", "Dian Pratiwi",
+    "Slamet Riyadi", "Eni Susanti", "Heri Purnomo", "Rini Setyowati", "Adi Nugraha",
+    "Tuti Wahyuningsih", "Wahyu Hidayat", "Mega Puspita", "Arif Rahman", "Lestari Ningsih",
+    "Bayu Aji", "Endah Kusuma", "Fajar Nugroho", "Yulia Rahmawati", "Ade Kurniawan",
+    "Sinta Maharani", "Dian Permana", "Wulan Sari", "Rizky Pratama", "Ayu Lestari"
   ],
-  ES: [
-    "Antonio García", "María Rodríguez", "Manuel González", "Ana Fernández", "José López",
-    "Isabel Martínez", "Francisco Sánchez", "Laura Pérez", "David Gómez", "Juana Martín",
-    "Juan Jiménez", "Cristina Ruiz", "José Antonio Hernández", "Marta Diaz", "Javier Moreno",
-    "Carmen Muñoz", "Daniel Álvarez", "Josefa Romero", "Jose Manuel Alonso", "Sofía Gutiérrez",
-    "Pedro Navarro", "Francisca Torres", "Alejandro Domínguez", "Lucia Vázquez", "Miguel Ramos",
-    "María Pilar Gil", "Ángel Ramírez", "María Dolores Serrano", "Carlos Blanco", "María Teresa Molina",
-    "Jesús Morales", "Raquel Suárez", "Pablo Ortega", "Sara Delgado", "José Luis Castro",
-    "Elena Ortiz", "Ramón Rubio", "Nerea Marin", "Luis Sanz", "Silvia Núñez",
-    "Alberto Iglesias", "María José Medina", "Juan Carlos Garrido", "Patricia Cortés", "Rafael Castillo",
-    "Andrea Santos", "Francisco Javier Lozano", "Beatriz Guerrero", "Jorge Cano", "Inmaculada Prieto"
+  IT: [
+    "Marco Rossi", "Giulia Russo", "Luca Ferrari", "Sofia Esposito", "Andrea Bianchi",
+    "Francesca Romano", "Matteo Colombo", "Chiara Ricci", "Davide Marino", "Elena Greco",
+    "Alessandro Bruno", "Martina Gallo", "Stefano Conti", "Valentina De Luca", "Simone Mancini",
+    "Giorgia Costa", "Riccardo Giordano", "Alessia Rizzo", "Federico Lombardi", "Sara Moretti",
+    "Antonio Barbieri", "Laura Fontana", "Giuseppe Santoro", "Ilaria Mariani", "Roberto Rinaldi",
+    "Silvia Caruso", "Lorenzo Ferrara", "Paola Galli", "Fabio Leone", "Anna Longo",
+    "Daniele Marchetti", "Federica Martini", "Massimo Vitale", "Cristina Pellegrini", "Giovanni Negri",
+    "Roberta Sala", "Pietro Farina", "Elisa Serra", "Emanuele De Santis", "Veronica Cattaneo",
+    "Claudio Battaglia", "Monica Ferri", "Salvatore Testa", "Barbara Riva", "Vincenzo Grasso",
+    "Lucia Bernardi", "Angelo D'Amico", "Teresa Vitali", "Carlo Orlando", "Rosa Parisi"
+  ],
+  BE: [
+    "Lucas Peeters", "Emma Janssens", "Liam Maes", "Olivia Jacobs", "Noah Mertens",
+    "Marie Willems", "Arthur Claes", "Louise Goossens", "Victor Wouters", "Camille Dubois",
+    "Mathis Lemaire", "Léa Lambert", "Nathan Simon", "Manon Martin", "Hugo Dupont",
+    "Chloé Lefevre", "Adam Vermeulen", "Eva De Smet", "Louis Pieters", "Juliette Coppens",
+    "Gabriel Hermans", "Lina Vandamme", "Tom De Backer", "Anaïs Michiels", "Ethan Dumont",
+    "Sarah Wauters", "Jules Verhoeven", "Lisa De Clerck", "Nicolas Bogaert", "Charlotte Lenaerts",
+    "Maxime Cools", "Nina Van Damme", "Aaron Smets", "Eline De Vos", "Bart Hendrickx",
+    "Sophie Van den Berghe", "Kevin De Cock", "Ellen Verheyen", "Stijn Van Hoorebeke", "Femke Verstraete",
+    "Wouter De Backer", "Liesbeth Van Acker", "Jan Vandenberghe", "An Vermeiren", "Pieter De Wilde",
+    "Karen De Ridder", "Tim Van Loon", "Sandra De Bruyn", "Filip Van Damme", "Veerle De Meyer"
+  ],
+  IN: [
+    "Rahul Sharma", "Priya Patel", "Amit Kumar", "Sneha Reddy", "Vikram Singh",
+    "Anjali Gupta", "Rajesh Iyer", "Pooja Nair", "Suresh Menon", "Kavita Rao",
+    "Arjun Verma", "Divya Krishnan", "Manoj Pillai", "Neha Joshi", "Sanjay Mehta",
+    "Swati Desai", "Rohit Malhotra", "Aishwarya Pillai", "Karthik Subramaniam", "Meena Pandey",
+    "Deepak Chawla", "Lakshmi Venkatesh", "Ashok Bhatt", "Ritu Saxena", "Naveen Kapoor",
+    "Shalini Agarwal", "Vivek Choudhary", "Geeta Mishra", "Ravi Shankar", "Anita Bose",
+    "Sunil Kulkarni", "Preeti Chauhan", "Mohan Das", "Sunita Banerjee", "Prakash Iyer",
+    "Rekha Nambiar", "Gopal Krishnan", "Madhuri Rana", "Harish Trivedi", "Asha Sinha",
+    "Vinay Khanna", "Padma Raghavan", "Sandeep Bhatia", "Usha Rajan", "Yogesh Tiwari",
+    "Kiran Suri", "Mahesh Acharya", "Jyoti Sengupta", "Ramesh Pawar", "Vandana Kohli"
+  ],
+  EG: [
+    "Ahmed Mahmoud", "Mona Hassan", "Mohamed Ali", "Fatma Ibrahim", "Khaled Mostafa",
+    "Heba Said", "Tarek Fathy", "Nour Abdelrahman", "Mahmoud Youssef", "Sara Kamal",
+    "Omar Adel", "Yasmin Sayed", "Hassan Gamal", "Dina Salah", "Karim Nabil",
+    "Rania Hamed", "Amr Shawky", "Mariam Farouk", "Hossam Ezzat", "Salma Reda",
+    "Mostafa Aziz", "Eman Tawfik", "Sherif Lotfy", "Aya Soliman", "Ibrahim Naguib",
+    "Nesma Hosny", "Wael Ramzy", "Doaa Magdy", "Tamer Fawzy", "Hanan Helmy",
+    "Adel Zaki", "Rasha Anwar", "Walid Samir", "Asmaa Khalil", "Magdy Atef",
+    "Marwa Hegazy", "Yousef Galal", "Nadia Sobhy", "Hany Badr", "Shaimaa Mansour",
+    "Ayman Fouad", "Ghada Sabry", "Essam Roshdy", "Reem Nasser", "Fady Maher",
+    "Mai Abdo", "Ashraf Hilal", "Lobna Wahba", "Sameh Bakr", "Nahla Refaat"
   ]
 };
 
 function scaleMockDataset() {
   // 1. Add new iştirakler (subsidiaries) dynamically
+  // Note: most of the original legacy branch entries here duplicated companies
+  // already defined in affiliationCompanies (mockData.js) under different domains/
+  // campuses; those duplicates are dropped. Only genuinely new, non-overlapping
+  // entities remain: the KIT education partner (CV/education template text) and
+  // the Heidelberg Materials Helps community program (social responsibility / non-business org).
   const newSubs = [
     {
-      id: "ak-yatirim",
-      name: "Ak Yatırım Menkul Değerler A.Ş.",
-      shortName: "Ak Yatırım",
-      logo: "./assets/company-logos/ak-yatirim.svg",
-      domain: "akyatirim.com.tr",
-      type: "Yatırım & Finans",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Ankara", "İzmir"],
-      campuses: ["Ak Yatırım Genel Müdürlük", "Akatlar Ofis"],
-      departments: ["Araştırma", "Portföy Yönetimi", "Kurumsal Finansman", "Hisse Senedi Piyasaları"]
-    },
-    {
-      id: "ak-portfoy",
-      name: "Ak Portföy Yönetimi A.Ş.",
-      shortName: "Ak Portföy",
-      logo: "./assets/company-logos/ak-portfoy.svg",
-      domain: "akportfoy.com.tr",
-      type: "Varlık Yönetimi",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Ak Portföy HQ"],
-      departments: ["Yatırım Komitesi", "Risk Yönetimi", "Fon Yönetimi"]
-    },
-    {
-      id: "akcansa",
-      name: "Akçansa Çimento Sanayi ve Ticaret A.Ş.",
-      shortName: "Akçansa",
-      logo: "./assets/company-logos/akcansa.svg",
-      domain: "akcansa.com.tr",
-      type: "Yapı Malzemeleri",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Çanakkale", "Samsun"],
-      campuses: ["Çanakkale Fabrika", "Büyükçekmece Fabrika", "Ambarlı Liman Terminali"],
-      departments: ["Sürdürülebilirlik", "Üretim", "Lojistik", "Ar-Ge"]
-    },
-    {
-      id: "aklease",
-      name: "Ak Finansal Kiralama A.Ş.",
-      shortName: "Aklease",
-      logo: "./assets/company-logos/aklease.svg",
-      domain: "aklease.com",
-      type: "Finansal Kiralama",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Aklease HQ"],
-      departments: ["Kredi Tahsis", "Satış", "Finans"]
-    },
-    {
-      id: "enerjisa-uretim",
-      name: "Enerjisa Üretim Santralleri A.Ş.",
-      shortName: "Enerjisa Üretim",
-      logo: "./assets/company-logos/enerjisa-uretim.svg",
-      domain: "enerjisauretim.com.tr",
-      type: "Enerji Üretimi",
-      countries: ["Türkiye"],
-      cities: ["Adana", "Çanakkale", "Aydın", "Balıkesir"],
-      campuses: ["Tufanbeyli Termik Santrali", "Bandırma Doğalgaz Santrali", "Çanakkale Rüzgar Santrali"],
-      departments: ["Yeşil Enerji Operasyonları", "Santral Yönetimi", "Ar-Ge"]
-    },
-    {
-      id: "sabanci-univ",
-      name: "Sabancı Üniversitesi",
-      shortName: "Sabancı Üni.",
-      logo: "./assets/company-logos/sabanci-univ.svg",
-      domain: "sabanciuniv.edu",
+      id: "kit-karlsruhe",
+      name: "Karlsruher Institut für Technologie (KIT)",
+      shortName: "KIT",
+      logo: "./assets/company-logos/kit.svg",
+      domain: "kit.edu",
       type: "Eğitim & Akademi",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Tuzla Kampüsü", "Karaköy İletişim Merkezi"],
-      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme (TÜMER)"]
+      countries: ["Almanya"],
+      cities: ["Karlsruhe"],
+      campuses: ["KIT Campus Karlsruhe"],
+      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme"]
     },
     {
-      id: "sabanci-vakfi",
-      name: "Hacı Ömer Sabancı Vakfı",
-      shortName: "Sabancı Vakfı",
-      logo: "./assets/company-logos/sabanci-vakfi.svg",
-      domain: "sabancivakfi.org",
+      id: "heidelberg-materials-helps",
+      name: "Heidelberg Materials Helps",
+      shortName: "Heidelberg Materials Helps",
+      logo: "./assets/company-logos/heidelberg-materials-group.svg",
+      domain: "heidelbergmaterials.com",
       type: "Sosyal Sorumluluk",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Ankara"],
-      campuses: ["Sabancı Vakfı Merkez"],
+      countries: ["Almanya"],
+      cities: ["Heidelberg"],
+      campuses: ["Heidelberg Materials Helps Merkez"],
       departments: ["Sosyal Programlar", "Hibe Programları", "Ortaklıklar"]
-    },
-    {
-      id: "akbank-uk",
-      name: "Akbank AG London Branch",
-      shortName: "Akbank UK",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.co.uk",
-      type: "Banka",
-      countries: ["Birleşik Krallık"],
-      cities: ["Londra"],
-      campuses: ["London City Office"],
-      departments: ["International Trade Finance", "Treasury", "Compliance"]
-    },
-    {
-      id: "akcansa-uk",
-      name: "Akcansa UK Cement Trading Ltd.",
-      shortName: "Akçansa UK",
-      logo: "./assets/company-logos/akcansa.svg",
-      domain: "akcansa.co.uk",
-      type: "Yapı Malzemeleri",
-      countries: ["Birleşik Krallık"],
-      cities: ["Londra", "Bristol"],
-      campuses: ["Bristol Port Terminal"],
-      departments: ["Logistics", "Wholesale Sales"]
-    },
-    {
-      id: "akbank-us",
-      name: "Akbank US Representative Office",
-      shortName: "Akbank US",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.com",
-      type: "Banka",
-      countries: ["Amerika Birleşik Devletleri"],
-      cities: ["New York"],
-      campuses: ["Manhattan Office"],
-      departments: ["Investor Relations", "Corporate Banking Linkage"]
-    },
-    {
-      id: "temsa-us",
-      name: "Temsa North America Inc.",
-      shortName: "Temsa US",
-      logo: "./assets/company-logos/temsa.svg",
-      domain: "temsa.com",
-      type: "Otomotiv",
-      countries: ["Amerika Birleşik Devletleri"],
-      cities: ["Orlando", "Houston"],
-      campuses: ["Orlando Distribution Center"],
-      departments: ["Electric Bus Sales", "Spare Parts Logistics", "Customer Support"]
-    },
-    {
-      id: "akbank-de",
-      name: "Akbank AG (Frankfurt)",
-      shortName: "Akbank DE",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.de",
-      type: "Banka",
-      countries: ["Almanya"],
-      cities: ["Frankfurt", "Münih"],
-      campuses: ["Frankfurt HQ"],
-      departments: ["Retail Banking", "Risk Management", "Operations"]
-    },
-    {
-      id: "kordsa-de",
-      name: "Kordsa Germany GmbH",
-      shortName: "Kordsa DE",
-      logo: "./assets/company-logos/kordsa.svg",
-      domain: "kordsa.com",
-      type: "Sanayi",
-      countries: ["Almanya"],
-      cities: ["Münih"],
-      campuses: ["Munich Composite Research Lab"],
-      departments: ["Composite Engineering", "Quality Control"]
-    },
-    {
-      id: "akbank-es",
-      name: "Akbank Representative Office Spain",
-      shortName: "Akbank ES",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.com",
-      type: "Banka",
-      countries: ["İspanya"],
-      cities: ["Madrid"],
-      campuses: ["Madrid Financial District Office"],
-      departments: ["Corporate Relations", "Compliance"]
-    },
-    {
-      id: "temsa-es",
-      name: "Temsa España S.L.",
-      shortName: "Temsa ES",
-      logo: "./assets/company-logos/temsa.svg",
-      domain: "temsa.es",
-      type: "Otomotiv",
-      countries: ["İspanya"],
-      cities: ["Madrid", "Barcelona"],
-      campuses: ["Madrid Hub"],
-      departments: ["Mobility Sales", "Technical Service Operations"]
     }
   ];
 
@@ -14954,8 +14884,8 @@ function scaleMockDataset() {
     const ln = extraLastNames[(i + 3) % extraLastNames.length];
     const fullName = `${fn} ${ln}`;
     const randCompany = companyList[i % companyList.length];
-    const randCountry = randCompany.countries[0] || "Türkiye";
-    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
+    const randCountry = randCompany.countries[0] || "Almanya";
+    const countryCode = countryCodeFromName(randCountry);
     
     const userRole = randCompany.type === "Banka" ? "Müşteri İlişkileri Yöneticisi" : (randCompany.type === "Sanayi" ? "Mühendis" : "Uzman");
     const dept = randCompany.departments[i % randCompany.departments.length];
@@ -14965,13 +14895,13 @@ function scaleMockDataset() {
       id: `u-${i}`,
       name: fullName,
       email: `${fn.toLowerCase()}.${ln.toLowerCase()}@${randCompany.domain}`,
-      employeeId: `SA-${15000 + i}`,
+      employeeId: `HM-${15000 + i}`,
       company: randCompany.name,
       companyId: randCompany.id,
       department: dept,
       location: randCompany.campuses[0] || "Ofis",
-      city: randCompany.cities[0] || "İstanbul",
-      region: "Marmara",
+      city: randCompany.cities[0] || "Heidelberg",
+      region: "Baden-Württemberg",
       role: userRole,
       roleKey: "employee",
       seniority: "Uzman",
@@ -14992,8 +14922,8 @@ function scaleMockDataset() {
   // ideas/teams/announcements pick authors, since authorLabel snapshots u.name by value)
   demoUsers.forEach((u, index) => {
     if (u.id === "u3") {
-      u.name = "Can Koç";
-      u.email = "can.koc@sabanci.example";
+      u.name = "Lena Fischer";
+      u.email = "lena.fischer@heidelbergmaterials.example";
       u.photo = "https://randomuser.me/api/portraits/men/75.jpg";
       u.avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg";
       return;
@@ -15027,50 +14957,50 @@ function scaleMockDataset() {
         title: "Açık Bankacılık ile KOBİ Alacak Sigortası",
         summary: "KOBİ bankacılığı işlemlerinde açık bankacılık verileriyle alacak riskini saniyeler içinde hesaplayıp poliçe kesen modül.",
         problem: "KOBİ'ler ticari alacak risklerini sigortalamak için çok fazla evrak ve uzun bekleme süreleriyle karşılaşıyor.",
-        solution: "Akbank API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
+        solution: "Heidelberg Materials API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
       },
       en: {
         title: "SME Receivables Insurance with Open Banking",
         summary: "A module that calculates receivables risk in seconds using open banking data in SME banking transactions and issues policies.",
         problem: "SMEs face a lot of paperwork and long waiting times to insure commercial receivables risk.",
-        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through Akbank APIs."
+        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through Heidelberg Materials APIs."
       },
       de: {
         title: "KMU-Forderungsversicherung mit Open Banking",
         summary: "Ein Modul, das das Forderungsrisiko im KMU-Geschäft mithilfe von Open-Banking-Daten in Sekundenschnelle berechnet und Policen ausstellt.",
         problem: "KMU sind mit viel Papierkram und langen Wartezeiten konfrontiert, um das gewerbliche Forderungsrisiko abzusichern.",
-        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über Akbank-APIs sofortige Kredite und Forderungsversicherungen anbietet."
+        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über Heidelberg Materials-APIs sofortige Kredite und Forderungsversicherungen anbietet."
       },
       es: {
         title: "Seguro de Cuentas por Cobrar para Pymes con Banca Abierta",
         summary: "Un módulo que calcula el riesgo de cuentas por cobrar en segundos utilizando datos de banca abierta en transacciones de pymes.",
         problem: "Las pymes enfrentan mucho papeleo y largos tiempos de espera para asegurar el riesgo de cuentas por cobrar comerciales.",
-        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de Akbank."
+        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de Heidelberg Materials."
       }
     },
     {
       area: "Sürdürülebilirlik & Yeşil Enerji",
       tr: {
         title: "Fabrika Bacaları İçin Akıllı Karbon İzleme Ağı",
-        summary: "Çimsa ve Kordsa üretim tesislerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
+        summary: "Heidelberg Materials ve Heidelberg Materials India üretim tesislerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
         problem: "Karbon salınımı beyanları periyodik ve manuel yapıldığı için hata payı yüksek ve optimizasyon gecikiyor.",
         solution: "Fabrika bacalarına takılan IoT sensörleriyle emisyonu saniyelik kaydeden ve sınır aşımında uyaran akıllı yazılım."
       },
       en: {
         title: "Smart Carbon Monitoring Network for Factory Chimneys",
-        summary: "Green technology that measures carbon emissions in Cimsa and Kordsa production facilities with instant IoT sensors and reports to the cloud.",
+        summary: "Green technology that measures carbon emissions in Heidelberg Materials and Heidelberg Materials India production facilities with instant IoT sensors and reports to the cloud.",
         problem: "Since carbon emission statements are periodic and manual, the margin of error is high and optimization is delayed.",
         solution: "Smart software that records emissions in seconds with IoT sensors attached to factory chimneys and warns in case of limit violations."
       },
       de: {
         title: "Intelligentes Kohlenstoff-Überwachungsnetzwerk für Schornsteine",
-        summary: "Grüne Technologie, die Kohlenstoffemissionen in Cimsa- und Kordsa-Produktionsstätten mit IoT-Sensoren misst und in der Cloud meldet.",
+        summary: "Grüne Technologie, die Kohlenstoffemissionen in Heidelberg Materials- und Heidelberg Materials India-Produktionsstätten mit IoT-Sensoren misst und in der Cloud meldet.",
         problem: "Da CO2-Meldungen periodisch und manuell erfolgen, ist die Fehlerquote hoch und die Optimierung verzögert sich.",
         solution: "Intelligente Software, die Emissionen im Sekundentakt mit an Schornsteinen angebrachten IoT-Sensoren erfasst und bei Überschreitungen warnt."
       },
       es: {
         title: "Red de Monitoreo de Carbono Inteligente para Chimeneas",
-        summary: "Tecnología verde que mide las emisiones de carbono en las plantas de Cimsa y Kordsa con sensores IoT instantáneos y reporta a la nube.",
+        summary: "Tecnología verde que mide las emisiones de carbono en las plantas de Heidelberg Materials y Heidelberg Materials India con sensores IoT instantáneos y reporta a la nube.",
         problem: "Dado que las declaraciones de emisión de carbono son periódicas and manuales, el margen de error es alto y la optimización se retrasa.",
         solution: "Software inteligente que registra las emisiones en segundos con sensores IoT conectados a las chimeneas y advierte en caso de infracciones."
       }
@@ -15079,25 +15009,25 @@ function scaleMockDataset() {
       area: "Yapay Zekâ & Derin Teknoloji",
       tr: {
         title: "AI Destekli Lojistik Rota Optimizasyonu",
-        summary: "CarrefourSA sevkiyat kamyonları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
+        summary: "Heidelberg Materials NA sevkiyat kamyonları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
         problem: "Statik rotalar nedeniyle teslimat süreleri uzuyor ve yakıt tüketimi artıyor.",
         solution: "Her sabah siparişleri ve yol durumunu analiz ederek en verimli teslimat haritasını çıkaran yapay zeka motoru."
       },
       en: {
         title: "AI-Powered Logistics Route Optimization",
-        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for CarrefourSA delivery trucks.",
+        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for Heidelberg Materials NA delivery trucks.",
         problem: "Delivery times are prolonged and fuel consumption increases due to static routes.",
         solution: "An AI engine that analyzes orders and road conditions every morning to create the most efficient delivery map."
       },
       de: {
         title: "KI-gestützte Logistik-Routenoptimierung",
-        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für CarrefourSA-Lieferwagen verarbeitet.",
+        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für Heidelberg Materials NA-Lieferwagen verarbeitet.",
         problem: "Statische Routen verlängern die Lieferzeiten und erhöhen den Kraftstoffverbrauch.",
         solution: "Eine KI-Engine, die jeden Morgen Bestellungen und Straßenverhältnisse analysiert, um die effizienteste Lieferkarte zu erstellen."
       },
       es: {
         title: "Optimización de Rutas Logísticas con IA",
-        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para camiones de CarrefourSA.",
+        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para camiones de Heidelberg Materials NA.",
         problem: "Los tiempos de entrega se prolongan y el consumo de combustible aumenta debido a rutas estáticas.",
         solution: "Un motor de IA que analiza los pedidos y las condiciones de la carretera cada mañana para generar el mapa de entrega más eficiente."
       }
@@ -15106,25 +15036,25 @@ function scaleMockDataset() {
       area: "PropTech & Akıllı Şehirler",
       tr: {
         title: "Akıllı Binalar İçin Dinamik HVAC Kontrolü",
-        summary: "Sabancı Center ve iştirak plazalarında sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
+        summary: "Heidelberg Materials Hauptmerkez ve iştirak ofislerinde sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
         problem: "Binalar boş olduğunda bile HVAC sistemleri çalışıyor ve yüksek enerji israfına yol açıyor.",
         solution: "Kat doluluk oranları ve dış ortam sıcaklık tahminlerini işleyerek iklimlendirmeyi optimize eden AI entegrasyonu."
       },
       en: {
         title: "Dynamic HVAC Control for Smart Buildings",
-        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Sabanci Center and affiliate plazas.",
+        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Heidelberg Materials Hauptmerkez and affiliate plazas.",
         problem: "HVAC systems run even when buildings are empty, leading to high energy waste.",
         solution: "AI integration that optimizes climatization by processing floor occupancy rates and outdoor temperature forecasts."
       },
       de: {
         title: "Dynamische HVAC-Steuerung für intelligente Gebäude",
-        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Sabanci Center und in Partner-Plazas mit Sensordaten automatisch anpasst.",
+        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Heidelberg Materials Hauptmerkez und in Partner-Plazas mit Sensordaten automatisch anpasst.",
         problem: "Klimaanlagen laufen auch bei leeren Gebäuden, was zu einer hohen Energieverschwendung führt.",
         solution: "KI-Integration, die die Klimatisierung durch Verarbeitung der Belegungsraten und Außentemperaturprognosen optimiert."
       },
       es: {
         title: "Control Dinámico de HVAC para Edificios Inteligentes",
-        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Sabanci Center.",
+        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Heidelberg Materials Hauptmerkez.",
         problem: "Los sistemas de HVAC funcionan incluso cuando los edificios están vacíos, lo que genera un gran desperdicio de energía.",
         solution: "Integración de IA que optimiza la climatización procesando las tasas de ocupación de pisos y los pronósticos de temperatura exterior."
       }
@@ -15133,7 +15063,7 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  const countryCycle = ["TR", "US", "GB", "DE", "ES"];
+  const countryCycle = ["DE", "GB", "US", "ID", "IT", "BE", "IN", "EG"];
   const companiesByCountryCode = {};
   countryCycle.forEach(code => {
     companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
@@ -15150,7 +15080,7 @@ function scaleMockDataset() {
     const id = `idea-gen-${i}`;
     const ticker = `NIE-${100 + i}`;
     
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+    const originalLang = countryCode === "DE" ? "de" : "en";
     const title = trend[originalLang].title + ` (${randCompany.shortName})`;
     const summary = trend[originalLang].summary;
     const problem = trend[originalLang].problem;
@@ -15174,7 +15104,7 @@ function scaleMockDataset() {
       companyId: randCompany.id,
       department: randCompany.departments[0] || "İnovasyon",
       location: randCompany.campuses[0] || "Yerleşke",
-      city: randCompany.cities[0] || "İstanbul",
+      city: randCompany.cities[0] || "Heidelberg",
       authorId: randomUser.id,
       authorLabel: randomUser.name,
       anonymity: "İsmimle paylaş",
@@ -15192,7 +15122,7 @@ function scaleMockDataset() {
       supporters: 10 + (i % 40),
       country: countryCode,
       comments: [
-        { user: "Can Koç", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
+        { user: "Lena Fischer", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
       ],
       tags: [trend.area.split(" ")[0], randCompany.shortName],
       createdAt: `2026-06-${10 + (i % 8)}`,
@@ -15210,8 +15140,8 @@ function scaleMockDataset() {
   for (let i = currentTeamCount; i < targetTeamCount; i++) {
     const randCompany = companyList[i % companyList.length];
     const randIdea = initialIdeas[i % initialIdeas.length];
-    const teamCountry = randCompany.countries[0] || "Türkiye";
-    const teamCountryCode = teamCountry === "Türkiye" ? "TR" : (teamCountry === "Birleşik Krallık" || teamCountry === "United Kingdom" ? "GB" : (teamCountry === "Amerika Birleşik Devletleri" || teamCountry === "United States" ? "US" : (teamCountry === "Almanya" || teamCountry === "Germany" ? "DE" : "ES")));
+    const teamCountry = randCompany.countries[0] || "Almanya";
+    const teamCountryCode = countryCodeFromName(teamCountry);
     const teamUserPool = demoUsers.filter(u => u.country === teamCountryCode);
     const creatorUser = teamUserPool.length ? teamUserPool[Math.floor(Math.random() * teamUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
 
@@ -15257,7 +15187,7 @@ function scaleMockDataset() {
     const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
     const annUserPool = demoUsers.filter(u => u.country === countryCode);
     const randomUser = annUserPool.length ? annUserPool[Math.floor(Math.random() * annUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+    const originalLang = countryCode === "DE" ? "de" : "en";
     const projectNum = i + 10;
 
     state.announcements.push({
@@ -15314,14 +15244,14 @@ function scaleMockDataset() {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-industry", name: "Sanayi & Malzeme İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Kordsa ve Çimsa bünyesindeki kompozit malzeme ve çimento Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-energy", name: "Enerji Teknolojileri Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "Enerjisa Üretim yenilenebilir enerji, rüzgar ve hidrojen depolama teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-mobility", name: "Mobilite & Otomotiv Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Temsa elektrikli ve otonom otobüs yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "Teknosa ve CarrefourSA müşteri deneyimi, akıllı raf ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Heidelberg Materials Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-industry", name: "Sanayi & Malzeme İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Heidelberg Materials India ve Heidelberg Materials bünyesindeki kompozit malzeme ve çimento Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-energy", name: "Enerji Teknolojileri Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "Italcementi yenilenebilir enerji, rüzgar ve hidrojen depolama teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-mobility", name: "Mobilite & Otomotiv Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Heidelberg Materials France elektrikli ve otonom otobüs yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "Hanson UK ve Heidelberg Materials NA müşteri deneyimi, akıllı raf ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-sme", name: "KOBİ Destek ve Çözüm Stüdyosu", category: "KOBİ", status: "Kuruluyor", popularity: 72, createdAt: "2026-06-04", description: "KOBİ bankacılığı, sigortacılık ve finansman çözümleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-proptech", name: "Akıllı Şehirler & PropTech Stüdyosu", category: "PropTech", status: "Aktif", popularity: 80, createdAt: "2026-05-22", description: "Akıllı bina yönetim sistemleri, HVAC ve plaza iklimlendirme projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Agesa ve Aksigorta müşteri edinimi, poliçe pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Heidelberg Materials Northern Europe ve Heidelberg Materials Poland müşteri edinimi, pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-cloud", name: "Derin Teknoloji & Bulut Girişim Stüdyosu", category: "Derin Teknoloji", status: "Aktif", popularity: 89, createdAt: "2026-05-30", description: "Büyük veri analitiği, siber güvenlik ve kurumsal bulut çözümleri Ar-Ge stüdyosu.", linkedTeams: [], linkedIdeas: [] }
   ];
 
@@ -15361,17 +15291,17 @@ function scaleMockDataset() {
   const datasetTrends = [
     {
       area: "FinTech & Dijital Bankacılık",
-      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "Akbank API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
-      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of Akbank API transition times, load tests, and monthly call logs." },
-      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von Akbank-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
-      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de Akbank, pruebas de carga y registros de llamadas mensuales." }
+      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "Heidelberg Materials API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
+      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of Heidelberg Materials API transition times, load tests, and monthly call logs." },
+      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von Heidelberg Materials-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
+      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de Heidelberg Materials, pruebas de carga y registros de llamadas mensuales." }
     },
     {
       area: "Sürdürülebilirlik & Yeşil Enerji",
-      tr: { title: "Rüzgar Enerjisi Üretim Verimliliği Raporu", summary: "Enerjisa Üretim Çanakkale santralinin rüzgar hızı ve anlık megavat üretim ilişkisi ham verisi." },
-      en: { title: "Wind Energy Generation Efficiency Report", summary: "Raw data of wind speed and instantaneous megawatt generation relationship of Enerjisa Uretim Canakkale power plant." },
-      de: { title: "Effizienzbericht für Windkraftanlagen", summary: "Rohdaten zum Verhältnis von Windgeschwindigkeit und momentaner Megawatt-Erzeugung des Kraftwerks Enerjisa Uretim Canakkale." },
-      es: { title: "Informe de Eficiencia de Generación de Energía Eólica", summary: "Datos brutos de la velocidad del viento y la relación de generación de megavatios instantáneos de la planta de energía Enerjisa Uretim Canakkale." }
+      tr: { title: "Rüzgar Enerjisi Üretim Verimliliği Raporu", summary: "Italcementi Calusco tesisinin rüzgar hızı ve anlık megavat üretim ilişkisi ham verisi." },
+      en: { title: "Wind Energy Generation Efficiency Report", summary: "Raw data of wind speed and instantaneous megawatt generation relationship of Italcementi Calusco plant." },
+      de: { title: "Effizienzbericht für Windkraftanlagen", summary: "Rohdaten zum Verhältnis von Windgeschwindigkeit und momentaner Megawatt-Erzeugung des Werks Italcementi Calusco." },
+      es: { title: "Informe de Eficiencia de Generación de Energía Eólica", summary: "Datos brutos de la velocidad del viento y la relación de generación de megavatios instantáneos de la planta Italcementi Calusco." }
     },
     {
       area: "Yapay Zekâ & Derin Teknoloji",
@@ -15382,17 +15312,17 @@ function scaleMockDataset() {
     },
     {
       area: "PropTech & Akıllı Şehirler",
-      tr: { title: "Sabancı Center Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
-      en: { title: "Sabanci Center Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
-      de: { title: "Sabanci Center Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
-      es: { title: "Serie Temporal de Ocupación de Sabanci Center", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
+      tr: { title: "Heidelberg Materials Hauptmerkez Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
+      en: { title: "Heidelberg Materials Hauptmerkez Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
+      de: { title: "Heidelberg Materials Hauptmerkez Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
+      es: { title: "Serie Temporal de Ocupación de Heidelberg Materials Hauptmerkez", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
     },
     {
       area: "Akıllı Lojistik & Dağıtım",
-      tr: { title: "CarrefourSA Gebze Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
-      en: { title: "CarrefourSA Gebze Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
-      de: { title: "CarrefourSA Gebze Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
-      es: { title: "Conjunto de Tiempos de Despacho de Almacén CarrefourSA Gebze", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
+      tr: { title: "Heidelberg Materials NA Irving Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
+      en: { title: "Heidelberg Materials NA Irving Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
+      de: { title: "Heidelberg Materials NA Irving Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
+      es: { title: "Conjunto de Tiempos de Despacho de Almacén Heidelberg Materials NA Irving", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
     },
     {
       area: "Operasyon",
@@ -15403,10 +15333,10 @@ function scaleMockDataset() {
     },
     {
       area: "Borsa",
-      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Borsa İstanbul'da işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
-      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on Borsa Istanbul for the last 1 year." },
-      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Borsa Istanbul gehandelten Gruppenunternehmen für das letzte Jahr." },
-      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en Borsa Istanbul durante el último año." }
+      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Frankfurt Wertpapierbörse'de işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
+      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on the Frankfurt Wertpapierbörse for the last 1 year." },
+      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Frankfurt Wertpapierbörse gehandelten Gruppenunternehmen für das letzte Jahr." },
+      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en la Frankfurt Wertpapierbörse durante el último año." }
     },
     {
       area: "Diğer",
@@ -15417,10 +15347,10 @@ function scaleMockDataset() {
     }
   ];
 
-  const countries = ["TR", "US", "GB", "DE", "ES"];
+  const countries = ["DE", "GB", "US", "ID", "IT", "BE", "IN", "EG"];
   let datasetIdCount = 0;
   countries.forEach(country => {
-    const lang = country === "TR" ? "tr" : (country === "DE" ? "de" : (country === "ES" ? "es" : "en"));
+    const lang = country === "DE" ? "de" : "en";
     const dsCompanyPool = companiesByCountryCode[country];
     for (let i = 0; i < 12; i++) {
       const trend = datasetTrends[i % datasetTrends.length];
@@ -15458,30 +15388,30 @@ function scaleMockDataset() {
   const socialTemplates = {
     TR: [
       {
-        body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+        body: "Heidelberg Materials Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
         translations: {
-          tr: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
-          en: "Our Akbank Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
-          de: "Unser Akbank Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
-          es: "¡Nuestro proyecto de inversión de IA móvil de Akbank está listado en la bolsa de ideas! Esperamos su apoyo."
+          tr: "Heidelberg Materials Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+          en: "Our Heidelberg Materials Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
+          de: "Unser Heidelberg Materials Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
+          es: "¡Nuestro proyecto de inversión de IA móvil de Heidelberg Materials está listado en la bolsa de ideas! Esperamos su apoyo."
         }
       },
       {
-        body: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+        body: "Heidelberg Materials Technology Center olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
         translations: {
-          tr: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
-          en: "The multi-language supported artificial intelligence infrastructure we developed as SabancıDx is live.",
-          de: "Die von uns als SabancıDx entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
-          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como SabancıDx está en vivo."
+          tr: "Heidelberg Materials Technology Center olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+          en: "The multi-language supported artificial intelligence infrastructure we developed as Heidelberg Materials Technology Center is live.",
+          de: "Die von uns als Heidelberg Materials Technology Center entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
+          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como Heidelberg Materials Technology Center está en vivo."
         }
       },
       {
-        body: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+        body: "Hanson UK mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
         translations: {
-          tr: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
-          en: "The autonomous payment kiosk pilot in Teknosa stores increased customer satisfaction by 18%.",
-          de: "Das Pilotprojekt für autonome Zahlungskioske in Teknosa-Filialen steigerte die Kundenzufriedenheit um 18%.",
-          es: "El piloto de quioscos de pago autónomos en las tiendas Teknosa aumentó la satisfacción del cliente en un 18%."
+          tr: "Hanson UK mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+          en: "The autonomous payment kiosk pilot in Hanson UK stores increased customer satisfaction by 18%.",
+          de: "Das Pilotprojekt für autonome Zahlungskioske in Hanson UK-Filialen steigerte die Kundenzufriedenheit um 18%.",
+          es: "El piloto de quioscos de pago autónomos en las tiendas Hanson UK aumentó la satisfacción del cliente en un 18%."
         }
       }
     ],
@@ -15505,81 +15435,81 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
+        body: "Hanson Australia closed a new grid services agreement with a major utility this week.",
         translations: {
-          tr: "Sabancı Climate Texas bu hafta büyük bir elektrik dağıtım şirketiyle yeni bir şebeke hizmetleri anlaşması imzaladı.",
-          en: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
-          de: "Sabancı Climate Texas hat diese Woche eine neue Vereinbarung über Netzdienstleistungen mit einem großen Energieversorger abgeschlossen.",
-          es: "Sabancı Climate Texas firmó esta semana un nuevo acuerdo de servicios de red con una importante empresa de servicios públicos."
+          tr: "Hanson Australia bu hafta büyük bir elektrik dağıtım şirketiyle yeni bir şebeke hizmetleri anlaşması imzaladı.",
+          en: "Hanson Australia closed a new grid services agreement with a major utility this week.",
+          de: "Hanson Australia hat diese Woche eine neue Vereinbarung über Netzdienstleistungen mit einem großen Energieversorger abgeschlossen.",
+          es: "Hanson Australia firmó esta semana un nuevo acuerdo de servicios de red con una importante empresa de servicios públicos."
         }
       }
     ],
     GB: [
       {
-        body: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
+        body: "Heidelberg Materials Trading London office is hosting a demo day for green energy startups this Friday.",
         translations: {
-          tr: "Sabancı Ventures Londra ofisi bu Cuma yeşil enerji girişimleri için bir demo günü düzenliyor.",
-          en: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
-          de: "Das Londoner Büro von Sabancı Ventures veranstaltet diesen Freitag einen Demo-Tag für Start-ups im Bereich grüne Energie.",
-          es: "La oficina de Sabancı Ventures en Londres organizará una jornada de demostración para startups de energía verde este viernes."
+          tr: "Heidelberg Materials Trading Londra ofisi bu Cuma yeşil enerji girişimleri için bir demo günü düzenliyor.",
+          en: "Heidelberg Materials Trading London office is hosting a demo day for green energy startups this Friday.",
+          de: "Das Londoner Büro von Heidelberg Materials Trading veranstaltet diesen Freitag einen Demo-Tag für Start-ups im Bereich grüne Energie.",
+          es: "La oficina de Heidelberg Materials Trading en Londres organizará una jornada de demostración para startups de energía verde este viernes."
         }
       },
       {
-        body: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
+        body: "Hanson UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
         translations: {
-          tr: "Çimsa UK'nin yeni B2B satış portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
-          en: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
-          de: "Das neue B2B-Verkaufsportal von Çimsa UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
-          es: "El nuevo portal de ventas B2B de Çimsa UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
+          tr: "Hanson UK'nin yeni B2B satış portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
+          en: "Hanson UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
+          de: "Das neue B2B-Verkaufsportal von Hanson UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
+          es: "El nuevo portal de ventas B2B de Hanson UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
         }
       },
       {
-        body: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
+        body: "CBR Lixhe R&D begins aerospace-grade prepreg trials with a new aviation partner.",
         translations: {
-          tr: "Kordsa Londra Teknoloji Merkezi, yeni bir havacılık ortağıyla havacılık sınıfı prepreg denemelerine başlıyor.",
-          en: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
-          de: "Das Kordsa London Tech Center beginnt mit Prepreg-Tests in Luftfahrtqualität mit einem neuen Luftfahrtpartner.",
-          es: "El Centro Tecnológico de Kordsa en Londres inicia ensayos de preimpregnados de grado aeroespacial con un nuevo socio de aviación."
+          tr: "Heidelberg Materials India Londra Teknoloji Merkezi, yeni bir havacılık ortağıyla havacılık sınıfı prepreg denemelerine başlıyor.",
+          en: "CBR Lixhe R&D begins aerospace-grade prepreg trials with a new aviation partner.",
+          de: "Das CBR Lixhe R&D beginnt mit Prepreg-Tests in Luftfahrtqualität mit einem neuen Luftfahrtpartner.",
+          es: "El Centro Tecnológico de Heidelberg Materials India en Londres inicia ensayos de preimpregnados de grado aeroespacial con un nuevo socio de aviación."
         }
       }
     ],
     DE: [
       {
-        body: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
+        body: "Wir testen die neuen Lithium-Ionen-Zellen für die Heidelberg Materials France-Elektrobusse in Opole.",
         translations: {
-          tr: "Münih'teki Temsa elektrikli otobüsleri için yeni lityum iyon hücrelerini test ediyoruz.",
-          en: "We are testing the new lithium-ion cells for Temsa electric buses in Munich.",
-          de: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
-          es: "Estamos probando nuevas celdas de iones de litio para los autobuses eléctricos Temsa en Múnich."
+          tr: "Opole'teki Heidelberg Materials France elektrikli otobüsleri için yeni lityum iyon hücrelerini test ediyoruz.",
+          en: "We are testing the new lithium-ion cells for Heidelberg Materials France electric buses in Opole.",
+          de: "Wir testen die neuen Lithium-Ionen-Zellen für die Heidelberg Materials France-Elektrobusse in Opole.",
+          es: "Estamos probando nuevas celdas de iones de litio para los autobuses eléctricos Heidelberg Materials France en Múnich."
         }
       },
       {
-        body: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
+        body: "Die Effizienz im Heidelberg Materials-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
         translations: {
-          tr: "Çimsa Hamburg terminalinde yeni otomatik lojistik yazılımı sayesinde verimlilik artırıldı.",
-          en: "Efficiency at the Çimsa Hamburg terminal has been increased with new automated logistics software.",
-          de: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
-          es: "La eficiencia en la terminal de Çimsa en Hamburgo se ha incrementado con el nuevo software de logística automatizado."
+          tr: "Heidelberg Materials Lyon depoinde yeni otomatik lojistik yazılımı sayesinde verimlilik artırıldı.",
+          en: "Efficiency at the Heidelberg Materials Lyon depo has been increased with new automated logistics software.",
+          de: "Die Effizienz im Heidelberg Materials-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
+          es: "La eficiencia en la terminal de Heidelberg Materials en Hamburgo se ha incrementado con el nuevo software de logística automatizado."
         }
       },
       {
-        body: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
+        body: "Heidelberg Materials Opole Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
         translations: {
-          tr: "Temsa Münih Laboratuvarı, hidrojenli otobüs prototipinin ilk test sürüşünü başarıyla tamamladı.",
-          en: "Temsa Munich Lab has successfully completed the first test drive of the hydrogen bus prototype.",
-          de: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
-          es: "El laboratorio de Temsa en Múnich completó con éxito la primera prueba de conducción del prototipo de autobús de hidrógeno."
+          tr: "Heidelberg Materials Opole Laboratuvarı, hidrojenli otobüs prototipinin ilk test sürüşünü başarıyla tamamladı.",
+          en: "Heidelberg Materials Opole Lab has successfully completed the first test drive of the hydrogen bus prototype.",
+          de: "Heidelberg Materials Opole Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
+          es: "El laboratorio de Heidelberg Materials France en Múnich completó con éxito la primera prueba de conducción del prototipo de autobús de hidrógeno."
         }
       }
     ],
     ES: [
       {
-        body: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%.",
+        body: "Excelente avance en la planta de Heidelberg Materials en Helvan. Hemos reducido el consumo de energía un 12%.",
         translations: {
-          tr: "Çimsa Buñol tesisinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
-          en: "Excellent progress at the Çimsa plant in Buñol. We have reduced energy consumption by 12%.",
-          de: "Hervorragende Fortschritte im Çimsa-Werk in Buñol. Wir haben den Energieverbrauch um 12% gesenkt.",
-          es: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%."
+          tr: "Heidelberg Materials Helvan tesisinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
+          en: "Excellent progress at the Heidelberg Materials plant in Helvan. We have reduced energy consumption by 12%.",
+          de: "Hervorragende Fortschritte im Heidelberg Materials-Werk in Helvan. Wir haben den Energieverbrauch um 12% gesenkt.",
+          es: "Excelente avance en la planta de Heidelberg Materials en Helvan. Hemos reducido el consumo de energía un 12%."
         }
       },
       {
@@ -15592,12 +15522,12 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "El equipo de Buñol logró certificar el nuevo cemento blanco bajo en carbono para exportación a la UE.",
+        body: "El equipo de Helvan logró certificar el nuevo cemento blanco bajo en carbono para exportación a la UE.",
         translations: {
-          tr: "Buñol ekibi, düşük karbonlu yeni beyaz çimentoyu AB'ye ihracat için sertifikalandırmayı başardı.",
-          en: "The Buñol team successfully certified the new low-carbon white cement for export to the EU.",
-          de: "Das Buñol-Team hat erfolgreich den neuen kohlenstoffarmen Weißzement für den Export in die EU zertifiziert.",
-          es: "El equipo de Buñol logró certificar el nuevo cemento blanco bajo en carbono para exportación a la UE."
+          tr: "Helvan ekibi, düşük karbonlu yeni beyaz çimentoyu AB'ye ihracat için sertifikalandırmayı başardı.",
+          en: "The Helvan team successfully certified the new low-carbon white cement for export to the EU.",
+          de: "Das Helvan-Team hat erfolgreich den neuen kohlenstoffarmen Weißzement für den Export in die EU zertifiziert.",
+          es: "El equipo de Helvan logró certificar el nuevo cemento blanco bajo en carbono para exportación a la UE."
         }
       }
     ]
@@ -15659,23 +15589,23 @@ function scaleMockDataset() {
   const announcementTemplates = {
     TR: [
       {
-        title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-        body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+        title: "🚀 Heidelberg Materials Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+        body: "Merhabalar! Heidelberg Materials Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
         translations: {
           tr: {
-            title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-            body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
+            title: "🚀 Heidelberg Materials Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+            body: "Merhabalar! Heidelberg Materials Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
           },
           en: {
-            title: "🚀 Seeking UX Designer for Akbank Mobile AI Investment Project!",
-            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the Akbank Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
+            title: "🚀 Seeking UX Designer for Heidelberg Materials Mobile AI Investment Project!",
+            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the Heidelberg Materials Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
           },
           de: {
-            title: "🚀 UX Designer für Akbank Mobile AI Investment Projekt gesucht!",
-            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das Akbank Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
+            title: "🚀 UX Designer für Heidelberg Materials Mobile AI Investment Projekt gesucht!",
+            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das Heidelberg Materials Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
           },
           es: {
-            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de Akbank!",
+            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de Heidelberg Materials!",
             body: "¡Hola! Buscamos un diseñador UX para diseñar pantallas de prototipos para nuestro proyecto de IA y compartir presupuesto con nosotros. ¡Postula usando el botón de abajo!"
           }
         }
@@ -15708,71 +15638,71 @@ function scaleMockDataset() {
     GB: [
       {
         title: "🚀 Strategic Investment Program for Green Startups",
-        body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK.",
+        body: "Heidelberg Materials Trading launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK.",
         translations: {
           tr: {
             title: "🚀 Yeşil Girişimler için Stratejik Yatırım Programı",
-            body: "Sabancı Ventures UK, Birleşik Krallık'taki yenilenebilir enerji ve iklim teknolojisi girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
+            body: "Heidelberg Materials Trading, Birleşik Krallık'taki yenilenebilir enerji ve iklim teknolojisi girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
           },
           en: {
             title: "🚀 Strategic Investment Program for Green Startups",
-            body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK."
+            body: "Heidelberg Materials Trading launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK."
           },
           de: {
             title: "🚀 Strategisches Investitionsprogramm für grüne Start-ups",
-            body: "Sabancı Ventures UK startet ein neues strategisches Investitionsprogramm mit Fokus auf erneuerbare Energien und Climate-Tech-Start-ups in Großbritannien."
+            body: "Heidelberg Materials Trading startet ein neues strategisches Investitionsprogramm mit Fokus auf erneuerbare Energien und Climate-Tech-Start-ups in Großbritannien."
           },
           es: {
             title: "🚀 Programa de Inversión Estratégica para Startups Ecológicas",
-            body: "Sabancı Ventures UK lanza una nueva vía de inversión estratégica centrada en startups de energía renovable y tecnología climática en el Reino Unido."
+            body: "Heidelberg Materials Trading lanza una nueva vía de inversión estratégica centrada en startups de energía renovable y tecnología climática en el Reino Unido."
           }
         }
       }
     ],
     DE: [
       {
-        title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
-        body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland.",
+        title: "🚀 Heidelberg Materials Opole - MLOps-Ingenieur gesucht!",
+        body: "Hallo! Heidelberg Materials Opole sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland.",
         translations: {
           tr: {
-            title: "🚀 Temsa Münih - MLOps Mühendisi Aranıyor!",
-            body: "Merhaba! Temsa Münih, Almanya'daki yeni elektrikli araç modeli için telemetri ve pil deşarj modellerini izleyecek bir MLOps mühendisi arıyor."
+            title: "🚀 Heidelberg Materials Opole - MLOps Mühendisi Aranıyor!",
+            body: "Merhaba! Heidelberg Materials Opole, Polonya'daki yeni elektrikli araç modeli için telemetri ve pil deşarj modellerini izleyecek bir MLOps mühendisi arıyor."
           },
           en: {
-            title: "🚀 Temsa Munich - MLOps Engineer Wanted!",
-            body: "Hello! Temsa Munich is looking for an MLOps Engineer to monitor telemetry and battery discharge models for the new EV model in Germany."
+            title: "🚀 Heidelberg Materials Opole - MLOps Engineer Wanted!",
+            body: "Hello! Heidelberg Materials Opole is looking for an MLOps Engineer to monitor telemetry and battery discharge models for the new EV model in Germany."
           },
           de: {
-            title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
-            body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland."
+            title: "🚀 Heidelberg Materials Opole - MLOps-Ingenieur gesucht!",
+            body: "Hallo! Heidelberg Materials Opole sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland."
           },
           es: {
-            title: "🚀 Temsa Múnich - ¡Se busca Ingeniero MLOps!",
-            body: "¡Hola! Temsa Múnich busca un ingeniero MLOps para monitorear la telemetría y los modelos de descarga de baterías para el nuevo modelo eléctrico en Alemania."
+            title: "🚀 Heidelberg Materials Opole - ¡Se busca Ingeniero MLOps!",
+            body: "¡Hola! Heidelberg Materials Opole busca un ingeniero MLOps para monitorear la telemetría y los modelos de descarga de baterías para el nuevo modelo eléctrico en Alemania."
           }
         }
       }
     ],
     ES: [
       {
-        title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
-        body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol.",
+        title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Helvan!",
+        body: "Hola! Heidelberg Materials España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Helvan.",
         translations: {
           tr: {
-            title: "🚀 Buñol Tesisi için Kimya Mühendisi Arıyoruz!",
-            body: "Merhaba! Çimsa İspanya, Buñol tesisimizdeki alternatif yakma ve geri dönüşüm denemelerini denetlemek üzere bir kimya mühendisi arıyor."
+            title: "🚀 Helvan Tesisi için Kimya Mühendisi Arıyoruz!",
+            body: "Merhaba! Heidelberg Materials İspanya, Helvan tesisimizdeki alternatif yakma ve geri dönüşüm denemelerini denetlemek üzere bir kimya mühendisi arıyor."
           },
           en: {
-            title: "🚀 Seeking Chemical Engineer for Buñol Plant!",
-            body: "Hello! Çimsa Spain is looking for a chemical engineer to supervise alternative combustion and recycling trials at our Buñol plant."
+            title: "🚀 Seeking Chemical Engineer for Helvan Plant!",
+            body: "Hello! Heidelberg Materials Spain is looking for a chemical engineer to supervise alternative combustion and recycling trials at our Helvan plant."
           },
           de: {
-            title: "🚀 Chemieingenieur für das Werk Buñol gesucht!",
-            body: "Hallo! Çimsa Spanien sucht einen Chemieingenieur zur Überwachung der alternativen Verbrennungs- und Recyclingversuche im Werk Buñol."
+            title: "🚀 Chemieingenieur für das Werk Helvan gesucht!",
+            body: "Hallo! Heidelberg Materials Spanien sucht einen Chemieingenieur zur Überwachung der alternativen Verbrennungs- und Recyclingversuche im Werk Helvan."
           },
           es: {
-            title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
-            body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol."
+            title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Helvan!",
+            body: "Hola! Heidelberg Materials España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Helvan."
           }
         }
       }
@@ -15792,7 +15722,7 @@ function scaleMockDataset() {
         title: t.title,
         author: user.name,
         authorId: user.id,
-        companyId: user.companyId || "sabanci-holding",
+        companyId: user.companyId || "heidelberg-materials",
         type: "Topluluk",
         area: "Takım Arkadaşı Aranıyor",
         importanceScore: 5,
@@ -15809,27 +15739,27 @@ function scaleMockDataset() {
 
   // Add curated, localized per-country message spaces on top of the holding-wide
   // channels already loaded from initialMessageSpaces (do NOT reset - several other
-  // channels like msg-holding/msg-akbank are referenced elsewhere by id).
+  // channels like msg-holding/msg-heidelberg-materials-de are referenced elsewhere by id).
   const spaceTemplates = {
     TR: [
-      { id: "msg-tr-1", name: "Akbank FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "akbank" },
-      { id: "msg-tr-2", name: "SabancıDx Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "sabancidx" }
+      { id: "msg-tr-1", name: "Heidelberg Materials Innovation", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "heidelberg-materials-de" },
+      { id: "msg-tr-2", name: "Heidelberg Materials Technology Center Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "heidelberg-materials-htc" }
     ],
     US: [
-      { id: "msg-us-1", name: "Sabancı Climate Solar", desc: "Texas utility battery dispatch optimization discussion.", companyId: "sabanci-climate-us" },
-      { id: "msg-us-2", name: "Kordsa Chattanooga R&D", desc: "Graphene-infused composite material trials.", companyId: "kordsa-usa" }
+      { id: "msg-us-1", name: "Hanson Australia Solar", desc: "Texas utility battery dispatch optimization discussion.", companyId: "hanson-australia" },
+      { id: "msg-us-2", name: "Heidelberg Materials India Chattanooga R&D", desc: "Graphene-infused composite material trials.", companyId: "heidelberg-materials-india" }
     ],
     GB: [
-      { id: "msg-gb-1", name: "Sabancı Ventures UK", desc: "Renewable energy and green tech investment pipelines.", companyId: "sabanci-renewables-uk" },
-      { id: "msg-gb-2", name: "Çimsa UK Sales", desc: "White cement B2B distribution and client accounts.", companyId: "cimsa-uk" }
+      { id: "msg-gb-1", name: "Heidelberg Materials Trading", desc: "Renewable energy and green tech investment pipelines.", companyId: "heidelberg-materials-trading" },
+      { id: "msg-gb-2", name: "Hanson UK Sales", desc: "White cement B2B distribution and client accounts.", companyId: "hanson-uk" }
     ],
     DE: [
-      { id: "msg-de-1", name: "Temsa Mobility DE", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse.", companyId: "temsa-germany" },
-      { id: "msg-de-2", name: "Çimsa Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "cimsa-germany" }
+      { id: "msg-de-1", name: "Heidelberg Materials Poland Mobility", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse.", companyId: "heidelberg-materials-poland" },
+      { id: "msg-de-2", name: "Heidelberg Materials Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "heidelberg-materials-france" }
     ],
     ES: [
-      { id: "msg-es-1", name: "Çimsa Buñol", desc: "Discusión sobre combustibles alternativos y reducción de CO2.", companyId: "cimsa-spain" },
-      { id: "msg-es-2", name: "Çimsa Buñol Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "cimsa-spain" }
+      { id: "msg-es-1", name: "Heidelberg Materials Helvan", desc: "Discusión sobre combustibles alternativos y reducción de CO2.", companyId: "heidelberg-materials-spain" },
+      { id: "msg-es-2", name: "Heidelberg Materials Helvan Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "heidelberg-materials-spain" }
     ]
   };
 
@@ -15882,7 +15812,7 @@ function scaleMockDataset() {
         id: s.id,
         name: s.name,
         description: s.desc,
-        companyId: s.companyId || "sabanci-holding",
+        companyId: s.companyId || "heidelberg-materials",
         scope: "İştirak",
         members: countryUsers.slice(0, 5).map(u => u.id),
         messages: chatMessages,
@@ -15891,7 +15821,7 @@ function scaleMockDataset() {
     });
   });
 
-  // Scale demo user credits to SA Coins scale
+  // Scale demo user credits to HM Coins scale
   demoUsers.forEach(u => {
     if (u.voteCreditBalance < 100) u.voteCreditBalance = (u.voteCreditBalance || 0) * 100;
     if (u.monthlyVoteCredit < 100) u.monthlyVoteCredit = (u.monthlyVoteCredit || 0) * 100;

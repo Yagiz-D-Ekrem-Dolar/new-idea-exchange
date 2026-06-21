@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
-  <!-- AgeSA High-Fidelity SVG Logo -->
-  <text x="10" y="52" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-weight="800" font-size="38" fill="#FFFFFF" letter-spacing="-1">age<tspan fill="#00A39D">SA</tspan></text>
-  <!-- Premium brand circle/ring -->
-  <circle cx="160" cy="42" r="14" fill="none" stroke="#00A39D" stroke-width="4" />
-  <circle cx="160" cy="42" r="6" fill="#FFD700" />
-</svg>

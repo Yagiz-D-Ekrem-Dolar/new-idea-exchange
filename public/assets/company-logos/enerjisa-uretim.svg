@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40">
-  <g transform="translate(5, 5)">
-    <path d="M 5,25 C 5,12 15,5 25,5" stroke="#f39c12" stroke-width="4" stroke-linecap="round" fill="none"/>
-    <path d="M 12,28 C 12,18 20,12 28,12" stroke="#2980b9" stroke-width="4" stroke-linecap="round" fill="none"/>
-    <path d="M 19,31 C 19,24 25,19 31,19" stroke="#27ae60" stroke-width="4" stroke-linecap="round" fill="none"/>
-  </g>
-  <text x="50" y="26" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#1d1d1f">ENERJİSA</text>
-  <text x="128" y="26" font-family="'Inter', sans-serif" font-weight="400" font-size="13" fill="#7f8c8d">ÜRETİM</text>
-</svg>

@@ -40,9 +40,9 @@ doc = SimpleDocTemplate(
     pagesize=A4,
     leftMargin=20*mm, rightMargin=20*mm,
     topMargin=22*mm, bottomMargin=22*mm,
-    title="Sabancı Holding NIE Teknik Mimari Raporu",
-    author="Sabancı Holding NIE Platform Mühendislik Ekibi",
-    subject="Sabancı Innovation Exchange (NIE) — Technical Architecture Report v2.5.0"
+    title="Heidelberg Materials NIE Teknik Mimari Raporu",
+    author="Heidelberg Materials NIE Platform Mühendislik Ekibi",
+    subject="Heidelberg Materials Innovation Exchange (NIE) — Technical Architecture Report v2.5.0"
 )
 
 # ── Styles ────────────────────────────────────────────────────────────────────
@@ -91,18 +91,18 @@ story = []
 # COVER PAGE  (drawn as big coloured table = no canvas hack needed)
 # ─────────────────────────────────────────────────────────────────────────────
 cover_inner = [
-    [Paragraph("SABANCI HOLDİNG · NEW IDEA EXCHANGE", S("CE", fontSize=10, fontName="Helvetica-Bold",
+    [Paragraph("HEIDELBERG MATERIALS · NEW IDEA EXCHANGE", S("CE", fontSize=10, fontName="Helvetica-Bold",
                textColor=HexColor("#94a3b8"), letterSpacing=2))],
     [Spacer(1, 8*mm)],
     [Paragraph("Teknik Mimari<br/>Raporu", COVER_TITLE)],
     [Spacer(1, 3*mm)],
-    [Paragraph("Sabancı Holding ve istiraklerinin (Akbank, Cimsa, Temsa, Kordsa, Enerjisa ve digerleri) "
+    [Paragraph("Heidelberg Materials ve istiraklerinin (Hanson, Italcementi, Indocement, CBR, Heidelberg Materials Technology Center ve digerleri) "
                "5 ulke portalinda kullandigi platform altyapisi, teknoloji yigini, olceklenebilirlik plani ve<br/>"
                "aylik altyapi maliyet analizi.", COVER_SUB)],
     [Spacer(1, 12*mm)],
     [Table(
         [[Paragraph("v2.5.0",     COVER_META), Paragraph("Haziran 2026", COVER_META),
-          Paragraph("Sabancı Holding",COVER_META), Paragraph("Gizli",       COVER_META)]],
+          Paragraph("Heidelberg Materials",COVER_META), Paragraph("Gizli",       COVER_META)]],
         colWidths=[38*mm,38*mm,38*mm,38*mm],
         style=TableStyle([("VALIGN", (0,0), (-1,-1), "TOP")])
     )],
@@ -255,8 +255,8 @@ story.append(section(1, "Yönetici Özeti",
     "Platformun teknik vizyonu ve temel metrikler"))
 
 story.append(callout(
-    "<b>Sabancı Innovation Exchange (NIE)</b>, Sabancı Holding ve istiraklerinin "
-    "(Akbank, Cimsa, Temsa, Kordsa, Enerjisa, Teknosa, CarrefourSA, SabancıDx ve digerleri) "
+    "<b>Heidelberg Materials Innovation Exchange (NIE)</b>, Heidelberg Materials ve istiraklerinin "
+    "(Hanson, Italcementi, Indocement, CBR, Heidelberg Materials North America, Heidelberg Materials Technology Center ve digerleri) "
     "Turkiye, Birlesik Krallik, ABD, Almanya ve Ispanya portallarinda calisanlarin fikir "
     "uretmesini, ekip ve kulup kurmasini, kararlarini Karar Kurulu'na tasimasini ve "
     "inovasyon projelerini hayata gecirmesini saglayan cok dilli kurumsal inovasyon "
@@ -638,8 +638,8 @@ story.append(Spacer(1, 12*mm))
 # ── FOOTER LINE ───────────────────────────────────────────────────────────────
 story.append(HRFlowable(width="100%", thickness=1, color=LINE, spaceAfter=6))
 footer_row = Table(
-    [[Paragraph("<b>SABANCI HOLDİNG · NEW IDEA EXCHANGE</b> · Teknik Mimari Raporu v2.5.0", FOOTER_TXT),
-      Paragraph("Sabancı Holding NIE Platform Muhendislik Ekibi · Haziran 2026 · Gizli",
+    [[Paragraph("<b>HEIDELBERG MATERIALS · NEW IDEA EXCHANGE</b> · Teknik Mimari Raporu v2.5.0", FOOTER_TXT),
+      Paragraph("Heidelberg Materials NIE Platform Muhendislik Ekibi · Haziran 2026 · Gizli",
                 S("FR", fontSize=8, textColor=MUTED, fontName="Helvetica",
                   alignment=TA_RIGHT))]],
     colWidths=[(W-40*mm)/2]*2,
