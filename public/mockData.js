@@ -44,7 +44,8 @@ const countriesList = [
   { code: "CO", name: "Colombia", flag: "🇨🇴", lang: "es", label: "Colombia Portal" },
   { code: "PE", name: "Peru", flag: "🇵🇪", lang: "es", label: "Peru Portal" },
   { code: "AR", name: "Argentina", flag: "🇦🇷", lang: "es", label: "Argentina Portal" },
-  { code: "VE", name: "Venezuela", flag: "🇻🇪", lang: "es", label: "Venezuela Portal" }
+  { code: "VE", name: "Venezuela", flag: "🇻🇪", lang: "es", label: "Venezuela Portal" },
+  { code: "UY", name: "Uruguay", flag: "🇺🇾", lang: "es", label: "Uruguay Portal" }
 ];
 
 // affiliationCompanies[].countries uses Turkish display names (e.g. "İspanya"), while
@@ -57,7 +58,8 @@ const countryNameTR = {
   CO: "Kolombiya",
   PE: "Peru",
   AR: "Arjantin",
-  VE: "Venezuela"
+  VE: "Venezuela",
+  UY: "Uruguay"
 };
 
 const brandLogoSrc = "/assets/company-logos/bbva-group.svg";
@@ -135,7 +137,7 @@ const affiliationCompanies = [
     id: "bbva-colombia",
     name: "BBVA Colombia S.A.",
     shortName: "BBVA Colombia",
-    logo: "./assets/company-logos/bbva-colombia.svg",
+    logo: "./assets/company-logos/bbva-group.svg",
     domain: "bbva.com.co",
     type: "Banka",
     countries: ["Kolombiya"],
@@ -147,7 +149,7 @@ const affiliationCompanies = [
     id: "bbva-peru",
     name: "BBVA Perú S.A.",
     shortName: "BBVA Perú",
-    logo: "./assets/company-logos/bbva-peru.svg",
+    logo: "./assets/company-logos/bbva-group.svg",
     domain: "bbva.pe",
     type: "Banka",
     countries: ["Peru"],
@@ -159,7 +161,7 @@ const affiliationCompanies = [
     id: "bbva-argentina",
     name: "BBVA Argentina S.A.",
     shortName: "BBVA Argentina",
-    logo: "./assets/company-logos/bbva-argentina.svg",
+    logo: "./assets/company-logos/bbva-group.svg",
     domain: "bbva.com.ar",
     type: "Banka",
     countries: ["Arjantin"],
@@ -310,6 +312,18 @@ const affiliationCompanies = [
     cities: ["İstanbul"],
     campuses: ["Levent Ofisi"],
     departments: ["Operasyon", "Satış", "Risk Yönetimi"]
+  },
+  {
+    id: "bbva-uruguay",
+    name: "BBVA Uruguay S.A.",
+    shortName: "BBVA Uruguay",
+    logo: "./assets/company-logos/bbva-group.svg",
+    domain: "bbva.com.uy",
+    type: "Banka",
+    countries: ["Uruguay"],
+    cities: ["Montevideo"],
+    campuses: ["BBVA Uruguay HQ"],
+    departments: ["Kurumsal Bankacılık", "Dış Ticaret Finansmanı", "Dijital Bankacılık"]
   }
 ];
 
@@ -378,7 +392,10 @@ const peopleDirectory = [
   { id: "p26", name: "Tomás Ferreyra", companyId: "bbva-argentina", role: "Córdoba Satış Sorumlusu", team: "Pazarlama", city: "Córdoba", campus: "Córdoba Ofisi", photo: "https://randomuser.me/api/portraits/men/91.jpg", status: "Sahada", country: "AR" },
 
   // Venezuela (VE) - BBVA Provincial
-  { id: "p27", name: "Gabriela Rondón", companyId: "bbva-provincial", role: "Kurumsal Bankacılık Müdürü", team: "Kurumsal Bankacılık", city: "Caracas", campus: "BBVA Provincial HQ", photo: "https://randomuser.me/api/portraits/women/90.jpg", status: "Aktif", country: "VE" }
+  { id: "p27", name: "Gabriela Rondón", companyId: "bbva-provincial", role: "Kurumsal Bankacılık Müdürü", team: "Kurumsal Bankacılık", city: "Caracas", campus: "BBVA Provincial HQ", photo: "https://randomuser.me/api/portraits/women/90.jpg", status: "Aktif", country: "VE" },
+
+  // Uruguay (UY) - BBVA Uruguay
+  { id: "p28", name: "Martina Olivera", companyId: "bbva-uruguay", role: "Dış Ticaret Finansmanı Müdürü", team: "Dış Ticaret Finansmanı", city: "Montevideo", campus: "BBVA Uruguay HQ", photo: "https://randomuser.me/api/portraits/women/95.jpg", status: "Aktif", country: "UY" }
 ];
 
 const initialAnnouncements = [

@@ -54,7 +54,7 @@ const state = {
     title: "",
     summary: "",
     category: "Proje",
-    companyId: "is-new",
+    companyId: "bbva-group",
     scope: "Holding geneli",
     files: [],
     country: "TR"
@@ -278,7 +278,7 @@ const state = {
       category: "AI Host",
       date: "2026-06-14",
       tags: ["ai", "demo kapsamı", "veri güvenliği"],
-      author: "İş NEW",
+      author: "BBVA Group",
       isAiGenerated: true
     },
     {
@@ -852,7 +852,7 @@ function renderAvatarStack(ids, max = 4) {
 }
 
 function marketCompanyForIdea(idea) {
-  return companyById(idea.companyId || "is-new");
+  return companyById(idea.companyId || "bbva-group");
 }
 
 function marketPrice(idea) {
@@ -870,7 +870,7 @@ function marketTrendScore(idea) {
 
 function marketVisibleIdeas() {
   const companyIds = companyIdsInScope();
-  let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "is-new"));
+  let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "bbva-group"));
   if (state.filters.country === "Aktif Portal") {
     ideas = ideas.filter(idea => idea.country === state.activeCountry);
   } else if (state.filters.country !== "Tüm Ülkeler") {
@@ -963,7 +963,7 @@ function resetMarketDraft(context = state.marketComposerContext || "quickFlow") 
     title: "",
     summary: "",
     category: context === "announcements" ? "Araştırma" : "Proje",
-    companyId: state.affiliationFilter === "all" ? "is-new" : state.affiliationFilter,
+    companyId: state.affiliationFilter === "all" ? "bbva-group" : state.affiliationFilter,
     scope: "Holding geneli",
     files: [],
     country: state.activeCountry || "TR"
@@ -1041,10 +1041,10 @@ function pageSubtitle() {
     adminStorage: "Yönetici depolama alanı, dosyaları ve kaynak arşivi",
     studio: "İştirak inovasyon stüdyoları, proje geliştirme ekipleri ve kuluçkadaki ürünler",
     products: "Ürünleşen fikirler ve gelişim seviyeleri",
-    systemDetails: "İş NEW platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
+    systemDetails: "NEW IDEA EXCHANGE platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
     settings: "Marka, görünüm ve bildirim tercihleri",
     detail: "Problem, çözüm, skorlar ve yorumlar",
-    rules: "İş NEW platformunun kullanım ve topluluk kuralları",
+    rules: "NEW IDEA EXCHANGE platformunun kullanım ve topluluk kuralları",
     complaintBox: "Uygulama, teknik sorun veya kullanıcılar hakkında geri bildirim/şikayet",
     teams: "Ekip listesi, üyeler ve proje bağlantıları"
   };
@@ -1604,7 +1604,8 @@ function getSubsidiariesByCountry(code) {
     CO: ["Kolombiya", "Colombia"],
     PE: ["Peru", "Perú"],
     AR: ["Arjantin", "Argentina"],
-    VE: ["Venezuela"]
+    VE: ["Venezuela"],
+    UY: ["Uruguay"]
   };
   const names = mapping[code] || [];
   return affiliationCompanies.filter(comp => {
@@ -3824,7 +3825,7 @@ function renderNewIdea() {
     <div class="view-stack apple-page">
       <section class="apple-page-head" style="margin-bottom: 24px;">
         <div>
-          <span class="panel-kicker">İş NEW</span>
+          <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Yeni Başvuru / Proje Girişi</h2>
           <p>Fikir borsasında listelenecek projenizi, fikrinizi veya araştırmanızı detaylandırarak yayınlayın.</p>
         </div>
@@ -7424,7 +7425,7 @@ function renderProfileV2() {
     .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
     .filter(item => item.idea);
   const directoryMatch = peopleDirectory.find(person => person.name.split(" ")[0] === user.name.split(" ")[0]) || peopleDirectory[0];
-  const company = companyById(directoryMatch.companyId || "is-new");
+  const company = companyById(directoryMatch.companyId || "bbva-group");
 
   return `
     <div class="view-stack profile-detail-page">
@@ -8160,7 +8161,7 @@ function createIdeaFromWizard() {
     comments,
     tags: [w.department, w.ideaType, w.impact, w.cost],
     createdAt: new Date().toISOString().slice(0, 10),
-    companyId: state.marketDraft.companyId || "is-new",
+    companyId: state.marketDraft.companyId || "bbva-group",
     marketCategory: "Fikir",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
     marketPrice: 100,
@@ -8208,7 +8209,7 @@ function createComplaintFromEntry() {
     ],
     tags: [c.category, c.department, c.impact, "Şikayet", "Verimsizlik"],
     createdAt: new Date().toISOString().slice(0, 10),
-    companyId: "is-new",
+    companyId: "bbva-group",
     marketCategory: "Şikayet",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
     marketPrice: 100,
@@ -8222,7 +8223,7 @@ function createComplaintFromEntry() {
 
 function createMarketListing(context) {
   const draft = state.marketDraft;
-  const company = companyById(draft.companyId || "is-new");
+  const company = companyById(draft.companyId || "bbva-group");
   const id = `market-${Date.now()}`;
   const baseScore = draft.category === "Proje" ? 86 : draft.category === "Araştırma" ? 79 : draft.category === "Şikayet" ? 76 : 74;
   return {
@@ -8959,7 +8960,7 @@ document.addEventListener("click", event => {
       },
       {
         title: "Borsa Simülasyonu Hacim Rekoru Kırdı",
-        body: "İş NEW platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
+        body: "NEW IDEA EXCHANGE platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
         category: "Operasyon",
         tags: ["Borsa", "Hacim", "Hype"]
       }
@@ -10677,7 +10678,7 @@ if (action === "login") {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Başarıyla Hayata Geçirildi!`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
+          body: `NEW IDEA EXCHANGE Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-analizi", "ürünleşme", idea.marketTicker.toLowerCase()],
@@ -10689,7 +10690,7 @@ if (action === "login") {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Reddedildi`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
+          body: `NEW IDEA EXCHANGE Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-denetimi", "red", idea.marketTicker.toLowerCase()],
@@ -13303,7 +13304,7 @@ function renderProfileV2() {
               ${icon("building", "14")} ${company ? esc(company.name) : "Bağımsız / Topluluk"}
             </span>
             <span style="font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px;">
-              ${icon("mail", "14")} ${esc(user.email || (user.name.toLowerCase().replace(/\s+/g, '') + "@is-new.com"))}
+              ${icon("mail", "14")} ${esc(user.email || (user.name.toLowerCase().replace(/\s+/g, '') + "@bbva.com"))}
             </span>
           </div>
           
@@ -13616,7 +13617,7 @@ function renderSystemDetails() {
           ${icon("help-circle")} 1. İnovasyon Hunisi Nedir?
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          İş NEW platformu, iştirak ve departmanlarımızdan gelen tüm yenilikçi fikirleri ve süreç iyileştirmelerini objektif bir şekilde değerlendirmek, geliştirmek ve hayata geçirmek için tasarlanmış uçtan uca bir inovasyon hunisidir.
+          NEW IDEA EXCHANGE platformu, iştirak ve departmanlarımızdan gelen tüm yenilikçi fikirleri ve süreç iyileştirmelerini objektif bir şekilde değerlendirmek, geliştirmek ve hayata geçirmek için tasarlanmış uçtan uca bir inovasyon hunisidir.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 8px;">
           <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 16px; border-radius: 12px;">
@@ -13667,7 +13668,7 @@ function renderSystemDetails() {
           ${icon("cpu")} 1. Teknik Mimari
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          İş NEW, yüksek performanslı ve akıcı bir kullanıcı deneyimi sunabilmek için modern **Single Page Application (SPA)** mimarisiyle inşa edilmiştir. Tüm sayfalar, grafikler ve portföy durumları sayfa yenilenmeden anlık olarak güncellenir.
+          NEW IDEA EXCHANGE, yüksek performanslı ve akıcı bir kullanıcı deneyimi sunabilmek için modern **Single Page Application (SPA)** mimarisiyle inşa edilmiştir. Tüm sayfalar, grafikler ve portföy durumları sayfa yenilenmeden anlık olarak güncellenir.
         </p>
         <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 16px; border-radius: 12px;">
           <strong style="color: var(--ink); display: block; margin-bottom: 6px;">Client-Side State Engine</strong>
@@ -13828,7 +13829,7 @@ function renderSystemDetails() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft);">
         <span class="panel-kicker">PLATFORM KILAVUZU & TEKNİK REHBER</span>
         <h2>Sistem Detayları</h2>
-        <p>İş NEW platformunun çalışma mekanizması, arkasındaki teknoloji ve kullanım rehberi.</p>
+        <p>NEW IDEA EXCHANGE platformunun çalışma mekanizması, arkasındaki teknoloji ve kullanım rehberi.</p>
       </section>
 
       <div class="admin-layout" style="display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start;">
@@ -14095,7 +14096,7 @@ function handleAIChatResponse(msgText) {
     
     ${topAgenda ? `Gündem tarafında öne çıkan başlık: **${topAgenda.title}**.` : ""}
     
-    Bu sinyal sadece İş NEW içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
+    Bu sinyal sadece NEW IDEA EXCHANGE içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
   } else if (query.includes("ürün") || query.includes("urun") || query.includes("geliştirilmiş") || query.includes("gelistirilmis")) {
     const products = [...(state.ideas || [])].sort((a, b) => productProgress(b) - productProgress(a)).slice(0, 4);
     replyText = `**Ürünler görünümü:**
@@ -14165,7 +14166,7 @@ function renderRulesPage() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); margin-bottom: 20px;">
         <span class="panel-kicker">KURALLAR & REHBER</span>
         <h2>Topluluk Kuralları</h2>
-        <p>İş NEW İnovasyon Platformu'nda daha yapıcı ve verimli çalışabilmek için uymamız gereken kurallar.</p>
+        <p>NEW IDEA EXCHANGE İnovasyon Platformu'nda daha yapıcı ve verimli çalışabilmek için uymamız gereken kurallar.</p>
       </section>
 
       <section class="content-panel" style="padding: 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 20px; line-height: 1.6; color: var(--ink-soft);">
@@ -14226,7 +14227,7 @@ function renderComplaintBoxPage() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); margin-bottom: 20px;">
         <span class="panel-kicker">GERİ BİLDİRİM & ŞİKAYET</span>
         <h2>Şikayet Kutusu</h2>
-        <p>İş NEW platformu, içerikler, teknik hatalar veya diğer kullanıcılar hakkında geri bildirim veya şikayet gönderin.</p>
+        <p>NEW IDEA EXCHANGE platformu, içerikler, teknik hatalar veya diğer kullanıcılar hakkında geri bildirim veya şikayet gönderin.</p>
       </section>
 
       ${state.complaintBoxFeedback ? `
@@ -14768,7 +14769,7 @@ function scaleMockDataset() {
       id: "fundacion-microfinanzas-bbva",
       name: "Fundación Microfinanzas BBVA",
       shortName: "Fundación Microfinanzas BBVA",
-      logo: "./assets/company-logos/fundacion-microfinanzas-bbva.svg",
+      logo: "./assets/company-logos/fundacion-microfinanzas-bbva.png",
       domain: "fundacionmicrofinanzasbbva.org",
       type: "Sosyal Sorumluluk",
       countries: ["Kolombiya", "Peru"],
@@ -14976,7 +14977,7 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  const countryCycle = ["TR", "MX", "ES", "CO", "PE", "AR", "VE"];
+  const countryCycle = ["TR", "MX", "ES", "CO", "PE", "AR", "VE", "UY"];
   const companiesByCountryCode = {};
   countryCycle.forEach(code => {
     companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
@@ -15260,7 +15261,7 @@ function scaleMockDataset() {
     }
   ];
 
-  const countries = ["TR", "MX", "ES", "CO", "PE", "AR", "VE"];
+  const countries = ["TR", "MX", "ES", "CO", "PE", "AR", "VE", "UY"];
   let datasetIdCount = 0;
   countries.forEach(country => {
     const lang = country === "TR" ? "tr" : "es";
