@@ -4350,12 +4350,6 @@ function buildStaticAnalysis(idea) {
   };
 }
 
-function compactText(value, maxLength = 110) {
-  const text = String(value || "").replace(/\s+/g, " ").trim();
-  if (text.length <= maxLength) return text;
-  return `${text.slice(0, maxLength - 1).trim()}…`;
-}
-
 function commentBody(comment) {
   return String(comment?.body || comment?.text || comment?.message || "").trim();
 }
@@ -4425,12 +4419,16 @@ function buildAiSuggestionForIdea(idea) {
   const relatedDatasets = relatedDatasetsForIdea(idea, 2);
   const primaryDataset = relatedDatasets[0];
   const area = idea.area || idea.type || "proje alanı";
-  const metric = idea.successMetric || "pilot başarı metriği";
+  const metric = "seçilen pilot başarı metriği";
+  const datasetOwner = primaryDataset?.companyId
+    ? (companyById(primaryDataset.companyId)?.shortName || "ilgili iştirak")
+    : "ilgili iştirak";
+  const datasetArea = primaryDataset?.area || area;
   const datasetLine = primaryDataset
-    ? `${primaryDataset.title} veri setiyle ${primaryDataset.area || area} sinyallerini takip et.`
+    ? `${datasetOwner} tarafından paylaşılan ${datasetArea} veri setiyle sinyalleri takip et.`
     : "Veri&Bilgi havuzunda bu proje için küçük bir pilot ölçüm seti oluştur.";
   const conversationLine = latestComment
-    ? `${commentUser(latestComment)} yazışmasındaki geri bildirimi aksiyon listesine çevir: ${compactText(commentBody(latestComment), 96)}`
+    ? `${commentUser(latestComment)} yazışmasındaki geri bildirimi Türkçe aksiyon listesine çevir; önce veri sahibi, kullanıcı etkisi ve karar eşiğini netleştir.`
     : "Henüz yazışma yok; ilk tartışmayı hedef kullanıcı, veri sahibi ve karar eşiği üzerinden başlat.";
 
   return {
@@ -4451,14 +4449,18 @@ function buildAiSuggestionForDataset(dataset) {
   const relatedIdeas = relatedIdeasForDataset(dataset, 2);
   const primaryIdea = relatedIdeas[0];
   const area = dataset.area || "veri alanı";
+  const projectOwner = primaryIdea?.companyId
+    ? (companyById(primaryIdea.companyId)?.shortName || "ilgili ekip")
+    : "ilgili ekip";
+  const projectArea = primaryIdea?.area || area;
 
   return {
     recommendation: `${area} verisini proje kararına çevirmek için önce en güçlü kullanım senaryosunu seç, sonra ölçüm metriğini ve veri sahibini netleştir. AI önerisi Türkçe kalır ve yalnızca platform içi kayıtları temel alır.`,
     projectLine: primaryIdea
-      ? `${primaryIdea.title} projesiyle eşleştir; pilotta etki, maliyet ve kullanıcı geri bildirimini birlikte ölç.`
+      ? `${projectOwner} içindeki ${projectArea} projesiyle eşleştir; pilotta etki, maliyet ve kullanıcı geri bildirimini birlikte ölç.`
       : "Bu veri setinden yeni bir proje fikri çıkar ve ilk pilot sorusunu görünür hale getir.",
     conversationLine: latestComment
-      ? `${commentUser(latestComment)} yorumundaki ihtiyacı veri temizliği veya erişim görevi olarak yaz: ${compactText(commentBody(latestComment), 90)}`
+      ? `${commentUser(latestComment)} yorumunu Türkçe görev olarak ele al; veri kalitesi, erişim izni ve kullanım amacını netleştir.`
       : "Henüz yazışma yok; veri kalitesi, gizlilik ve kullanım amacı için ilk soruyu aç."
   };
 }
