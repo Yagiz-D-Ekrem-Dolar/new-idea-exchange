@@ -14857,11 +14857,13 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
 }
 
 
-/* BBVA Coin Premium Styling & Hover Animations */
+/* BBVA COIN styling */
 .bbva-coin-inline {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  font-weight: 600;
+  vertical-align: middle;
   background: linear-gradient(135deg, rgba(241, 196, 15, 0.06) 0%, rgba(212, 172, 13, 0.08) 100%);
   border: 1px solid rgba(212, 172, 13, 0.25);
   padding: 2px 6px;
@@ -14875,12 +14877,44 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
   box-shadow: 0 4px 12px rgba(241, 196, 15, 0.12);
 }
 
-.bbva-coin-svg {
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.bbva-coin-code {
+  color: var(--primary);
+  font-size: 0.76em;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-.bbva-coin-inline:hover .bbva-coin-svg {
-  transform: rotate(360deg);
+.bbva-coin-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe07d 0%, #f1c40f 48%, #d4ac0d 100%);
+  border: 1px solid #b8860b;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55), 0 1px 2px rgba(0,0,0,0.16);
+  vertical-align: middle;
+}
+
+.bbva-coin-icon.small {
+  width: 15px;
+  height: 15px;
+  padding: 2.5px;
+}
+
+.bbva-coin-icon.large {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+}
+
+.bbva-coin-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* User profile user selection active row styling */

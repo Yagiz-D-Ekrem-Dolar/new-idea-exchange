@@ -168,7 +168,7 @@ const state = {
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Lucía, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 BC tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Lucía, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 COIN tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
       { userId: "p06", body: "Thank you. The research team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
@@ -207,7 +207,7 @@ const state = {
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Lucía Hanım, BBVA México şube içi kiosk projemize 100 BC bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Lucía Hanım, BBVA México şube içi kiosk projemize 100 COIN bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
@@ -707,18 +707,7 @@ function esc(value) {
 
 function icon(name, extraAttrs = "") {
   if (name === "coins") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="bbva-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
-      <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
-      <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
-      <text x="50" y="65" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="900" font-size="42" fill="#072146">B</text>
-      <defs>
-        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ffe066" />
-          <stop offset="50%" stop-color="#f1c40f" />
-          <stop offset="100%" stop-color="#d4ac0d" />
-        </linearGradient>
-      </defs>
-    </svg>`;
+    return `<span class="bbva-coin-icon" ${extraAttrs}><img src="${esc(brandLogoSrc)}" alt="" /></span>`;
   }
   return `<i data-lucide="${name}" aria-hidden="true" ${extraAttrs}></i>`;
 }
@@ -856,7 +845,7 @@ function marketCompanyForIdea(idea) {
 }
 
 function marketPrice(idea) {
-  // Every idea starts from the same 100 BC base valuation; marketChange (driven by
+  // Every idea starts from the same 100 COIN base valuation; marketChange (driven by
   // buy/sell activity and per-idea performance drift) is applied on top so prices
   // actually move with trading instead of staying frozen at the base forever.
   const base = Number(idea.marketPrice || 100);
@@ -913,30 +902,16 @@ function marketDeltaClass(value) {
 }
 
 function formatCurrency(value) {
-  return `${Math.round(value).toLocaleString("tr-TR")} BC`;
+  return `${Math.round(value).toLocaleString("tr-TR")} COIN`;
 }
 
 function formatCurrencyHTML(value, size = "normal") {
-  return `<span class="bbva-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${bbvaCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">BC</span></span>`;
+  return `<span class="bbva-coin-inline">${bbvaCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span class="bbva-coin-code">COIN</span></span>`;
 }
 
 function bbvaCoinIcon(size = "normal") {
-  const sizePx = size === "large" ? "20" : size === "small" ? "13" : "16";
-  return `
-    <svg class="bbva-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
-      <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
-      <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
-      <text x="18" y="23.5" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#072146">B</text>
-      <defs>
-        <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#FFE07D"/>
-          <stop offset="30%" stop-color="#F1C40F"/>
-          <stop offset="70%" stop-color="#D4AC0D"/>
-          <stop offset="100%" stop-color="#9A7D0A"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  `;
+  const className = size === "large" ? "large" : size === "small" ? "small" : "";
+  return `<span class="bbva-coin-icon ${className}"><img src="${esc(brandLogoSrc)}" alt="" /></span>`;
 }
 
 function marketSparkline(points = [], change = 0) {
@@ -1457,7 +1432,8 @@ function renderShell() {
                     const isActive = c.code === state.activeCountry;
                     
                     const searchCountry = countryNameTR[c.code] || c.name;
-                    const subCount = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(searchCountry)).length;
+                    const countedSubs = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(searchCountry)).length;
+                    const subCount = Number(c.portalCount) || countedSubs;
                     
                     return `
                       <button class="portal-dropdown-item ${isActive ? "active" : ""}" data-action="change-active-portal" data-code="${esc(c.code)}">
@@ -1475,6 +1451,7 @@ function renderShell() {
             <span class="credit-pill" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); padding: 6px 12px; border-radius: 99px;">
               ${bbvaCoinIcon("normal")}
               <span>${Math.round(state.marketBudget).toLocaleString("tr-TR")}</span>
+              <span class="bbva-coin-code">COIN</span>
             </span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
             <button class="icon-button position-relative" data-page="notifications" aria-label="Bildirimler">
@@ -2083,7 +2060,7 @@ function renderStockTicker() {
               <span class="ticker__item">
                 <span style="color: var(--muted); margin-right: 4px;">$</span>
                 <strong>${esc(idea.marketTicker)}</strong>
-                <span style="margin-left: 6px; font-weight: 500;">${price} BC</span>
+                <span style="margin-left: 6px; font-weight: 500;">${price} COIN</span>
                 <span class="ticker-change ${isUp ? "up" : "down"}">
                   ${isUp ? "▲" : "▼"} ${Math.abs(change).toFixed(1)}%
                 </span>
@@ -4215,8 +4192,8 @@ function renderIdeaDetail() {
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
               </span>
             ` : `
-              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 BC karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
-                ${icon("gavel")} Karar Kurulu'na Taşı (5000 BC)
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 COIN karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (5000 COIN)
               </button>
             `
           ) : ""}
@@ -7266,7 +7243,7 @@ function renderProfile() {
         ${metricCard("badge-check", "Uygulamaya alınan", `${myIdeas.filter(idea => idea.status === "done").length + 1}`, "Katkının somut etkisi.", "+1", "green")}
         ${metricCard("thumbs-up", "Desteklediğin", "42", "Oy kredisiyle katkı verdiğin fikirler.", "+6", "purple")}
         ${metricCard("message-circle", "Yorum", "28", "Tartışmalara yaptığın katkılar.", "+4", "amber")}
-        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} BC`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
+        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} COIN`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
       </section>
       <section class="analytics-grid">
         <article class="analytics-card">
@@ -7309,8 +7286,8 @@ function renderManager() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="section-title">
           <div>
-            <h2>${icon("gavel")} 5000 BC ile Taşınan Talepler</h2>
-            <p>Sahipleri tarafından 5000 BC ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+            <h2>${icon("gavel")} 5000 COIN ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 5000 COIN ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
         </div>
@@ -7803,7 +7780,7 @@ function renderManagerV2() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="panel-head">
           <div>
-            <span class="panel-kicker">5000 BC ile taşınan talepler</span>
+            <span class="panel-kicker">5000 COIN ile taşınan talepler</span>
             <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
@@ -7937,7 +7914,7 @@ function renderAdminContent() {
                 <td>${esc(user.role)}</td>
                 <td>${esc(user.department)}</td>
                 <td>${esc(user.location)}</td>
-                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} BC</td>
+                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} COIN</td>
                 <td><span class="status-badge done">Aktif</span></td>
               </tr>
             `).join("")}
@@ -9078,7 +9055,7 @@ document.addEventListener("click", event => {
     }
 
     if (state.marketBudget < fee) {
-      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} BC (Mevcut: ${state.marketBudget} BC)`);
+      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} COIN (Mevcut: ${state.marketBudget} COIN)`);
       return;
     }
 
@@ -9222,12 +9199,12 @@ document.addEventListener("click", event => {
           if (royalty > 0) {
             if (idea.authorId === currentUser().id) {
               state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} BC) cüzdanınıza eklendi!`;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} COIN) cüzdanınıza eklendi!`;
             } else {
               const authorUser = demoUsers.find(u => u.id === idea.authorId);
               if (authorUser) {
                 authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} BC) telif ödendi.`;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} COIN) telif ödendi.`;
               }
             }
           }
@@ -10036,7 +10013,7 @@ if (action === "login") {
       const isProject = state.marketDraft.category === "Proje";
       const fee = isProject ? 100 : 0;
       if (state.marketBudget < fee) {
-        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} BC olmalıdır! (Mevcut: ${state.marketBudget} BC)`);
+        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} COIN olmalıdır! (Mevcut: ${state.marketBudget} COIN)`);
         return;
       }
       state.marketBudget -= fee;
@@ -10095,12 +10072,12 @@ if (action === "login") {
           if (royalty > 0) {
             if (idea.authorId === currentUser().id) {
               state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} BC) cüzdanınıza eklendi!`;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} COIN) cüzdanınıza eklendi!`;
             } else {
               const authorUser = demoUsers.find(u => u.id === idea.authorId);
               if (authorUser) {
                 authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} BC) telif ödendi.`;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} COIN) telif ödendi.`;
               }
             }
           }
@@ -10444,10 +10421,10 @@ if (action === "login") {
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea && !idea.escalatedToBoard) {
       if (state.marketBudget < ESCALATION_COST) {
-        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} BC (Mevcut: ${Math.round(state.marketBudget)} BC)`);
+        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} COIN (Mevcut: ${Math.round(state.marketBudget)} COIN)`);
         return;
       }
-      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} BC karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
+      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} COIN karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
       if (!confirmed) return;
       state.marketBudget -= ESCALATION_COST;
       idea.escalatedToBoard = true;
@@ -11514,7 +11491,7 @@ function supportIdea(id) {
   }
   
   if (user.voteCreditBalance < 100) {
-    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 BC gereklidir.");
+    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 COIN gereklidir.");
     return;
   }
   
@@ -13584,10 +13561,10 @@ function renderProfileTabContent(user, tab) {
                     </div>
                   </td>
                   <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${qty}</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} BC</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} BC</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} BC</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} BC</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)}</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)}</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)}</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)}</td>
                   <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isProfit ? '#2ecc71' : '#e74c3c'};">
                     <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isProfit ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
                       ${isProfit ? '▲ +' : '▼ '}${formatCurrency(profitLoss)} (${isProfit ? '+' : ''}${profitLossPercent.toFixed(1)}%)
