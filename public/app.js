@@ -3207,17 +3207,74 @@ function renderTradingExchange() {
       ${renderMarketTickerTape(rows, wallet, stats)}
 
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
-      <section class="info-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px 16px; margin: 10px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.4;">
-        <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--primary);">
-          ${icon("info")} Kurumsal İnovasyon Yatırım, Borsa Algoritması ve Teşvik Politikası:
+      <section class="premium-policy-section" style="margin: 16px 0; background: linear-gradient(135deg, rgba(7, 33, 70, 0.03) 0%, rgba(20, 84, 156, 0.05) 100%); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-soft);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">
+            ${icon("gavel", "style='width:16px;height:16px;color:var(--primary);'")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
+          </div>
+          <span style="font-size: 11px; background: var(--primary-soft); color: var(--primary); padding: 4px 10px; border-radius: 99px; font-weight: 600;">Aktif Tüzük v2.4</span>
         </div>
-        <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
-          <span>• <strong>Fiyatlama Algoritması:</strong> Fikirlerin borsa fiyatları; AI değerlendirme skoru (%40 ağırlık), lot hacmi (%30 ağırlık), çalışan destekçi oyları (%20 ağırlık) ve ekli dosya/kod paketi bütünlüğü (%10 ağırlık) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.</span>
-          <span>• <strong>Karar Kurulu Limiti:</strong> Projenizi <strong>10.000 Coin karşılığında</strong> Karar Kurulu'nun inceleme listesine taşıyabilir ve resmi oylama başlatabilirsiniz.</span>
-          <span>• <strong>Hisse Alım Sınırı:</strong> Bir kullanıcı, tek bir projeden en fazla <strong>10 lot (hisse)</strong> satın alabilir.</span>
-          <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
-          <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın <strong>10 katı</strong> oylama kredisi (ödül) aktarılır.</span>
-          <span>• Fikir hayata geçirildiğinde, girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırılır.</span>
+        <div class="policy-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          <!-- Card 1 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("chart-candlestick", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Fiyatlama Algoritması</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin borsa fiyatları; AI değerlendirme skoru (<strong>%40</strong>), lot hacmi (<strong>%30</strong>), çalışan oyları (<strong>%20</strong>) ve dosya/kod bütünlüğü (<strong>%10</strong>) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(20, 84, 156, 0.08); color: #14549c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("gavel", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Karar Kurulu</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projenizi <strong>10.000 Coin karşılığında</strong> Karar Kurulu'nun resmi inceleme listesine taşıyabilir ve resmi oylama başlatabilirsiniz.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(192, 57, 43, 0.08); color: #c0392b; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("shield-alert", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Hisse Alım Sınırı</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin adil ve dengeli dağıtılması için, tek bir projeden bir kullanıcı en fazla <strong>10 lot (hisse)</strong> satın alabilir.
+            </p>
+          </div>
+          <!-- Card 4 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("coins", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Girişimci Telifi (%5)</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projelerin borsa üzerinden aldığı her yatırımın (hisse satınalımının) <strong>%5'i doğrudan girişimcinin hesabına</strong> telif ödülü olarak anında eklenir.
+            </p>
+          </div>
+          <!-- Card 5 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(212, 172, 13, 0.08); color: #d4ac0d; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("rocket", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Teşvik & Ödüller</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Proje hayata geçtiğinde, hissedarlara yatırımlarının <strong>10 katı</strong> oylama kredisi verilir. Girişimci ödülünün %10'u yatırımcılara dağıtılır. AI skoru 70'in altındaki fikirler ise elenir.
+            </p>
+          </div>
         </div>
       </section>
 
