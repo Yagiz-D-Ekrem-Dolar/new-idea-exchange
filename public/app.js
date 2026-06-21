@@ -3213,6 +3213,8 @@ function renderTradingExchange() {
         </div>
         <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
           <span>• <strong>Fiyatlama Algoritması:</strong> Fikirlerin borsa fiyatları; AI değerlendirme skoru (%40 ağırlık), lot hacmi (%30 ağırlık), çalışan destekçi oyları (%20 ağırlık) ve ekli dosya/kod paketi bütünlüğü (%10 ağırlık) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.</span>
+          <span>• <strong>Karar Kurulu Limiti:</strong> Projenizi <strong>10.000 Coin karşılığında</strong> Karar Kurulu'nun inceleme listesine taşıyabilir ve resmi oylama başlatabilirsiniz.</span>
+          <span>• <strong>Hisse Alım Sınırı:</strong> Bir kullanıcı, tek bir projeden en fazla <strong>10 lot (hisse)</strong> satın alabilir.</span>
           <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
           <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın <strong>10 katı</strong> oylama kredisi (ödül) aktarılır.</span>
           <span>• Fikir hayata geçirildiğinde, girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırılır.</span>
@@ -3734,7 +3736,7 @@ function renderIdeaCard(idea, compact = false) {
           <span>${idea.supporters} destek</span>
           <span>AI ${idea.aiScore}</span>
         </div>
-        ${renderAiSuggestionPanel(idea, "list")}
+        
         <div class="idea-footer">
           <button class="btn ghost" data-action="open-idea" data-id="${esc(idea.id)}">${icon("arrow-up-right")} Aç</button>
           ${(() => {
@@ -9338,9 +9340,9 @@ document.addEventListener("click", event => {
       const totalPrice = price * quantity;
       if (action === "buy-market-qty") {
         const currentOwned = state.marketHoldings[idea.id] || 0;
-        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
+        const maxLimit = 10; // Max 10 Lots
         if (currentOwned + quantity > maxLimit) {
-          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
+          alert(`Bir projeden en fazla 10 lot (hisse) satın alabilirsiniz! (Şu anki varlığınız: ${currentOwned} Lot, Almak istediğiniz: ${quantity} Lot)`);
           return;
         }
 
@@ -10211,9 +10213,9 @@ if (action === "login") {
       const totalPrice = price * quantity;
       if (action === "buy-market") {
         const currentOwned = state.marketHoldings[idea.id] || 0;
-        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
+        const maxLimit = 10; // Max 10 Lots
         if (currentOwned + quantity > maxLimit) {
-          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
+          alert(`Bir projeden en fazla 10 lot (hisse) satın alabilirsiniz! (Şu anki varlığınız: ${currentOwned} Lot, Almak istediğiniz: ${quantity} Lot)`);
           return;
         }
 
@@ -10588,7 +10590,7 @@ if (action === "login") {
   }
 
   if (action === "escalate-to-board") {
-    const ESCALATION_COST = 5000;
+    const ESCALATION_COST = 10000;
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea && !idea.escalatedToBoard) {
       if (state.marketBudget < ESCALATION_COST) {
@@ -11988,7 +11990,7 @@ function renderBorsaCard(idea) {
             <span style="font-size: 11px; background: var(--bg); color: var(--muted); padding: 3px 8px; border-radius: 6px;">#${esc(tag)}</span>
           `).join("")}
         </div>
-        ${renderAiSuggestionPanel(idea, "card")}
+        
       </div>
 
       <!-- Author -->

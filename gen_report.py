@@ -532,29 +532,29 @@ story.append(section(10, "Aylik Altyapi Maliyet Analizi",
     "5.000 Aktif Kullanici Varsayimiyla Uretim Ortami"))
 
 story.append(callout(
-    "Asagidaki maliyetler <b>5.000 aylik aktif kullanici</b> icin tahmin edilmistir. "
-    "Kullanici sayisi 50.000'e ulastiginda aylik toplam ~$3.800 bandina cikmasi ongörulmektedir.",
+    "Asagidaki maliyetler <b>5.000 aylik aktif kullanici</b> icin AWS/GCP kurumsal bulut altyapisi temel alinarak tahmin edilmistir. "
+    "Maliyet hesaplamalarina %20 risk payi eklenmistir. Kullanici sayisi 50.000'e ulastiginda aylik toplam ~$15.000 bandina cikmasi ongörulmektedir.",
     bg=AMBER_SOFT, border=AMBER
 ))
 story.append(Spacer(1, 4*mm))
 
 cost_rows = [
-    ("Frontend Hosting",  "Vercel Pro",           "100GB bandwidth, 1000 deploy",    "$20"),
-    ("Ana Veritabani",    "Supabase Pro",          "8GB DB, 250GB bandwidth",          "$25"),
-    ("Realtime State DB", "SpacetimeDB Cloud",     "10M requests/mo, 5GB storage",     "$49"),
-    ("Redis Cache/Queue", "Upstash",               "10M commands/mo, global edge",     "$20"),
-    ("Vector Database",   "Pinecone Starter+",     "5M vectors, 1 index",              "$70"),
-    ("CDN & Security",    "Cloudflare Pro",        "DDoS, WAF, Workers 10M req",       "$20"),
-    ("Object Storage",    "Cloudflare R2",         "10GB, 10M Class A ops",            "$15"),
-    ("AI — Claude API",   "Anthropic",             "~500K tokens/mo",                  "$40"),
-    ("AI — Embeddings",   "OpenAI",                "~5M tokens/mo",                    "$10"),
-    ("Backend Compute",   "Fly.io / Railway",      "2 vCPU, 2GB RAM, always-on",       "$30"),
-    ("Realtime Collab",   "Partykit",              "1M connections, 10GB transfer",    "$25"),
-    ("Email Bildirim",    "Resend",                "50K emails/mo",                    "$20"),
-    ("Error Tracking",    "Sentry",                "100K errors, 5 users",             "$26"),
-    ("Monitoring & APM",  "Datadog",               "5 hosts, APM + logs",              "$30"),
-    ("Feature Flags",     "GrowthBook",            "OSS self-hosted",                  "$0"),
-    ("Domain & SSL",      "Cloudflare Registrar",  "nieplatform.com + wildcard SSL",   "$1.5"),
+    ("Frontend Hosting",  "AWS CloudFront & S3",   "Enterprise bandwidth & CDN",       "$150"),
+    ("Ana Veritabani",    "AWS RDS Postgres",      "Multi-AZ, 100GB Storage",          "$280"),
+    ("Realtime State DB", "AWS ECS / SpacetimeDB", "Managed Cluster",                  "$190"),
+    ("Redis Cache/Queue", "AWS ElastiCache Redis", "High Availability Cluster",        "$110"),
+    ("Vector Database",   "AWS OpenSearch",        "Managed Search Cluster",           "$240"),
+    ("CDN & Security",    "AWS WAF & Shield",      "Enterprise DDoS & WAF",            "$200"),
+    ("Object Storage",    "AWS S3",                "Multi-region replica, 100GB",      "$60"),
+    ("AI — Claude API",   "AWS Bedrock (Claude)",  "Enterprise API capacity",          "$180"),
+    ("AI — Embeddings",   "AWS Bedrock / OpenAI",  "High-volume embeddings",           "$60"),
+    ("Backend Compute",   "AWS ECS Fargate",       "Multi-container scale, always-on", "$240"),
+    ("Realtime Collab",   "AWS API Gateway WS",    "Managed connections",              "$90"),
+    ("Email Bildirim",    "AWS SES / SendGrid",    "Enterprise transactional sending", "$40"),
+    ("Error Tracking",    "Sentry Enterprise",     "Dedicated workspace",              "$80"),
+    ("Monitoring & APM",  "Datadog Enterprise",    "APM + logs + cloud watch",         "$150"),
+    ("Feature Flags",     "AWS AppConfig",         "Managed feature flags",            "$30"),
+    ("Domain & SSL",      "AWS Route 53 & ACM",    "Hosted zone & wildcard SSL",       "$10"),
 ]
 
 cost_data = [["Servis", "Provider", "Plan / Limit", "Aylik USD"]]
@@ -568,17 +568,31 @@ for s, p, pl, c in cost_rows:
     ])
 # Total row
 cost_data.append([
-    Paragraph("<b>TOPLAM</b>", TD_TOTAL),
+    Paragraph("<b>Base Toplam</b>", TD_TOTAL),
     Paragraph("5K kullanici/ay", S("TT2", fontSize=9, textColor=MUTED, fontName="Helvetica")),
     Paragraph("", TD),
-    Paragraph("<b>$401.5</b>", S("TV", fontSize=12, fontName="Helvetica-Bold",
+    Paragraph("<b>$2,110.0</b>", S("TV", fontSize=10, fontName="Helvetica-Bold",
+                                  textColor=INK, alignment=TA_RIGHT))
+])
+cost_data.append([
+    Paragraph("<b>Risk Payi (20%)</b>", TD_TOTAL),
+    Paragraph("Belirsizlik & Olcek", S("TT2", fontSize=9, textColor=MUTED, fontName="Helvetica")),
+    Paragraph("", TD),
+    Paragraph("<b>+$422.0</b>", S("TV", fontSize=10, fontName="Helvetica-Bold",
+                                  textColor=INK, alignment=TA_RIGHT))
+])
+cost_data.append([
+    Paragraph("<b>GENEL TOPLAM</b>", TD_TOTAL),
+    Paragraph("Risk payi dahil", S("TT2", fontSize=9, textColor=MUTED, fontName="Helvetica")),
+    Paragraph("", TD),
+    Paragraph("<b>$2,532.0</b>", S("TV", fontSize=12, fontName="Helvetica-Bold",
                                   textColor=GREEN, alignment=TA_RIGHT))
 ])
 cost_data.append([
     Paragraph("Kullanici basina", S("KT", fontSize=9, textColor=MUTED, fontName="Helvetica")),
     Paragraph("5K kullanici", S("KT2", fontSize=9, textColor=MUTED, fontName="Helvetica")),
     Paragraph("", TD),
-    Paragraph("~$0.08", S("KV", fontSize=9, fontName="Helvetica-Bold",
+    Paragraph("~$0.51", S("KV", fontSize=9, fontName="Helvetica-Bold",
                             textColor=MUTED, alignment=TA_RIGHT))
 ])
 
