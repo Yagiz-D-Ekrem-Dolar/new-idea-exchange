@@ -2118,6 +2118,8 @@ function renderQuickFlow() {
           ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası
         </div>
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
+          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.</li>
+          <li><strong>Hisse Alım Sınırı:</strong> Bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.</li>
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
           <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
@@ -3236,7 +3238,7 @@ function renderTradingExchange() {
               <strong style="color: var(--ink); font-size: 13px;">Karar Kurulu</strong>
             </div>
             <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
-              Projenizi <strong>10.000 Coin karşılığında</strong> Karar Kurulu'nun resmi inceleme listesine taşıyabilir ve resmi oylama başlatabilirsiniz.
+              Projenizi doğrudan Karar Kurulu'na taşımanız için <strong>10.000 Altın (Coin)</strong> gereklidir. Bu bakiye karşılığında projeniz resmi kurul onay listesine alınır.
             </p>
           </div>
           <!-- Card 3 -->
@@ -3248,7 +3250,7 @@ function renderTradingExchange() {
               <strong style="color: var(--ink); font-size: 13px;">Hisse Alım Sınırı</strong>
             </div>
             <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
-              Fikirlerin adil ve dengeli dağıtılması için, tek bir projeden bir kullanıcı en fazla <strong>10 lot (hisse)</strong> satın alabilir.
+              Fikirlerin adil dağıtımı için bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.
             </p>
           </div>
           <!-- Card 4 -->
@@ -14419,9 +14421,11 @@ function renderRulesPage() {
             ${icon("gavel")} 6. Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
           </h3>
           <p>
+            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.<br/>
+            • <strong>Hisse Alım Sınırı:</strong> Fikirlerin adil dağıtılması için, tek bir projeden en fazla <strong>10 adet (hisse/lot)</strong> satın alabilirsiniz.<br/>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
-            • <strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.<br/>
+            • <strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (done/pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.<br/>
             • <strong>Girişimci-Yatırımcı Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u yatırımcıları arasında paylaştırılacaktır.
           </p>
         </div>
