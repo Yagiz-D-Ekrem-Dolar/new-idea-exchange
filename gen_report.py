@@ -619,10 +619,10 @@ story.append(Spacer(1, 6*mm))
 
 # Scale estimates
 scale_data = [
-    ("5K kullanici/ay",  "$401",   "Mevcut MVP hedefi"),
-    ("10K kullanici/ay", "$680",   "Erken buyume asamasi"),
-    ("20K kullanici/ay", "$1,200", "Buyume asamasi"),
-    ("50K kullanici/ay", "$3,800", "Olcekli uretim"),
+    ("5K kullanici/ay",  "$2,532", "Mevcut MVP hedefi"),
+    ("10K kullanici/ay", "$4,200", "Erken buyume asamasi"),
+    ("20K kullanici/ay", "$6,500", "Buyume asamasi"),
+    ("50K kullanici/ay", "$15,000", "Olcekli uretim"),
 ]
 scale_inner = []
 for u, c, l in scale_data:

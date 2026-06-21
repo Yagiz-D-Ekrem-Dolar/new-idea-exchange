@@ -4253,8 +4253,8 @@ function renderIdeaDetail() {
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
               </span>
             ` : `
-              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 COIN karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
-                ${icon("gavel")} Karar Kurulu'na Taşı (5000 COIN)
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="10.000 COIN karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (10.000 COIN)
               </button>
             `
           ) : ""}
@@ -7516,8 +7516,8 @@ function renderManager() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="section-title">
           <div>
-            <h2>${icon("gavel")} 5000 COIN ile Taşınan Talepler</h2>
-            <p>Sahipleri tarafından 5000 COIN ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+            <h2>${icon("gavel")} 10.000 COIN ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 10.000 COIN ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
         </div>
@@ -8010,7 +8010,7 @@ function renderManagerV2() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="panel-head">
           <div>
-            <span class="panel-kicker">5000 COIN ile taşınan talepler</span>
+            <span class="panel-kicker">10.000 COIN ile taşınan talepler</span>
             <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
