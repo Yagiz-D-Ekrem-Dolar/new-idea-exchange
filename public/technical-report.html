@@ -848,7 +848,7 @@
     </div>
 
     <div class="callout amber">
-      Aşağıdaki maliyetler <strong>5.000 aylık aktif kullanıcı</strong> için tahmin edilmiştir. Kullanıcı sayısı 50.000'e ulaştığında aylık toplam ~$3.200–4.800 bandına çıkması öngörülmektedir.
+      Aşağıdaki maliyetler <strong>5.000 aylık aktif kullanıcı</strong> için AWS/GCP kurumsal bulut altyapısı temel alınarak tahmin edilmiştir. Maliyet hesaplamalarına %20 risk payı eklenmiştir. Kullanıcı sayısı 50.000'e ulaştığında aylık toplam ~$15.000 bandına çıkması öngörülmektedir.
     </div>
 
     <div class="table-wrap" style="margin-top:16px;">
@@ -862,29 +862,37 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td><strong>Frontend Hosting</strong></td><td>Vercel Pro</td><td>100GB bandwidth, 1000 deployments</td><td style="text-align:right;" class="td-cost">$20</td></tr>
-          <tr><td><strong>Ana Veritabanı</strong></td><td>Supabase Pro</td><td>8GB DB, 250GB bandwidth, 2 projects</td><td style="text-align:right;" class="td-cost">$25</td></tr>
-          <tr><td><strong>Realtime State DB</strong></td><td>SpacetimeDB Cloud</td><td>10M requests/mo, 5GB storage</td><td style="text-align:right;" class="td-cost">$49</td></tr>
-          <tr><td><strong>Redis Cache & Queue</strong></td><td>Upstash</td><td>10M commands/mo, global edge</td><td style="text-align:right;" class="td-cost">$20</td></tr>
-          <tr><td><strong>Vector Database</strong></td><td>Pinecone Starter+</td><td>5M vectors, 1 index</td><td style="text-align:right;" class="td-cost">$70</td></tr>
-          <tr><td><strong>CDN & Security</strong></td><td>Cloudflare Pro</td><td>DDoS, WAF, Workers 10M req</td><td style="text-align:right;" class="td-cost">$20</td></tr>
-          <tr><td><strong>Object Storage</strong></td><td>Cloudflare R2</td><td>10GB, 10M Class A ops</td><td style="text-align:right;" class="td-cost">$15</td></tr>
-          <tr><td><strong>AI — Claude API</strong></td><td>Anthropic</td><td>~500K tokens/mo (değerlendirme + rapor)</td><td style="text-align:right;" class="td-cost">$40</td></tr>
-          <tr><td><strong>AI — Embeddings</strong></td><td>OpenAI</td><td>~5M tokens/mo (text-embedding-3-small)</td><td style="text-align:right;" class="td-cost">$10</td></tr>
-          <tr><td><strong>Backend Compute</strong></td><td>Fly.io / Railway</td><td>2 vCPU, 2GB RAM, always-on</td><td style="text-align:right;" class="td-cost">$30</td></tr>
-          <tr><td><strong>Realtime Collab</strong></td><td>Partykit</td><td>1M connections, 10GB data transfer</td><td style="text-align:right;" class="td-cost">$25</td></tr>
-          <tr><td><strong>Email Bildirimleri</strong></td><td>Resend</td><td>50K emails/mo</td><td style="text-align:right;" class="td-cost">$20</td></tr>
-          <tr><td><strong>Error Tracking</strong></td><td>Sentry</td><td>100K errors, 5 users</td><td style="text-align:right;" class="td-cost">$26</td></tr>
-          <tr><td><strong>Monitoring & APM</strong></td><td>Datadog</td><td>5 hosts, APM + logs</td><td style="text-align:right;" class="td-cost">$30</td></tr>
-          <tr><td><strong>Feature Flags</strong></td><td>GrowthBook</td><td>OSS self-hosted</td><td style="text-align:right;" class="td-cost">$0</td></tr>
-          <tr><td><strong>Domain & SSL</strong></td><td>Cloudflare Registrar</td><td>nieplatform.com + wildcard SSL</td><td style="text-align:right;" class="td-cost">$1.5</td></tr>
+          <tr><td><strong>Frontend Hosting</strong></td><td>AWS CloudFront & S3</td><td>Enterprise bandwidth & CDN</td><td style="text-align:right;" class="td-cost">$150</td></tr>
+          <tr><td><strong>Ana Veritabanı</strong></td><td>AWS RDS Postgres</td><td>Multi-AZ, 100GB Storage</td><td style="text-align:right;" class="td-cost">$280</td></tr>
+          <tr><td><strong>Realtime State DB</strong></td><td>AWS ECS / SpacetimeDB</td><td>Managed Cluster</td><td style="text-align:right;" class="td-cost">$190</td></tr>
+          <tr><td><strong>Redis Cache & Queue</strong></td><td>AWS ElastiCache Redis</td><td>High Availability Cluster</td><td style="text-align:right;" class="td-cost">$110</td></tr>
+          <tr><td><strong>Vector Database</strong></td><td>AWS OpenSearch</td><td>Managed Search Cluster</td><td style="text-align:right;" class="td-cost">$240</td></tr>
+          <tr><td><strong>CDN & Security</strong></td><td>AWS WAF & Shield</td><td>Enterprise DDoS & WAF</td><td style="text-align:right;" class="td-cost">$200</td></tr>
+          <tr><td><strong>Object Storage</strong></td><td>AWS S3</td><td>Multi-region replica, 100GB</td><td style="text-align:right;" class="td-cost">$60</td></tr>
+          <tr><td><strong>AI — Claude API</strong></td><td>AWS Bedrock (Claude)</td><td>Enterprise API capacity</td><td style="text-align:right;" class="td-cost">$180</td></tr>
+          <tr><td><strong>AI — Embeddings</strong></td><td>AWS Bedrock / OpenAI</td><td>High-volume embeddings</td><td style="text-align:right;" class="td-cost">$60</td></tr>
+          <tr><td><strong>Backend Compute</strong></td><td>AWS ECS Fargate</td><td>Multi-container scale, always-on</td><td style="text-align:right;" class="td-cost">$240</td></tr>
+          <tr><td><strong>Realtime Collab</strong></td><td>AWS API Gateway WS</td><td>Managed connections</td><td style="text-align:right;" class="td-cost">$90</td></tr>
+          <tr><td><strong>Email Bildirimleri</strong></td><td>AWS SES / SendGrid</td><td>Enterprise transactional sending</td><td style="text-align:right;" class="td-cost">$40</td></tr>
+          <tr><td><strong>Error Tracking</strong></td><td>Sentry Enterprise</td><td>Dedicated workspace</td><td style="text-align:right;" class="td-cost">$80</td></tr>
+          <tr><td><strong>Monitoring & APM</strong></td><td>Datadog Enterprise</td><td>APM + logs + cloud watch</td><td style="text-align:right;" class="td-cost">$150</td></tr>
+          <tr><td><strong>Feature Flags</strong></td><td>AWS AppConfig</td><td>Managed feature flags</td><td style="text-align:right;" class="td-cost">$30</td></tr>
+          <tr><td><strong>Domain & SSL</strong></td><td>AWS Route 53 & ACM</td><td>Hosted zone & wildcard SSL</td><td style="text-align:right;" class="td-cost">$10</td></tr>
+          <tr style="background:#f8fafc;">
+            <td colspan="3"><strong>Base Toplam</strong></td>
+            <td style="text-align:right;"><strong class="td-cost">$2,110.0</strong></td>
+          </tr>
+          <tr style="background:#f8fafc;">
+            <td colspan="3"><strong>Risk Payı (%20)</strong></td>
+            <td style="text-align:right;"><strong class="td-cost">+$422.0</strong></td>
+          </tr>
           <tr style="background:#f0fdf4;">
-            <td colspan="3"><strong>TOPLAM (5K kullanıcı / ay)</strong></td>
-            <td style="text-align:right;"><strong class="td-cost" style="font-size:16px;">$401.5</strong></td>
+            <td colspan="3"><strong>GENEL TOPLAM (5K kullanıcı / ay)</strong></td>
+            <td style="text-align:right;"><strong class="td-cost" style="font-size:16px;color:#16a34a;">$2,532.0</strong></td>
           </tr>
           <tr>
             <td colspan="3" style="color:#64748b;font-size:12px;">Kullanıcı başına aylık maliyet (5K kullanıcı)</td>
-            <td style="text-align:right;color:#64748b;font-size:12px;"><strong>~$0.08 / kullanıcı</strong></td>
+            <td style="text-align:right;color:#64748b;font-size:12px;"><strong>~$0.51 / kullanıcı</strong></td>
           </tr>
         </tbody>
       </table>
@@ -895,10 +903,10 @@
     </div>
 
     <div class="highlight-row" style="margin-top:20px;">
-      <div class="highlight-item"><strong>$401</strong><span>Aylık (5K kullanıcı)</span></div>
-      <div class="highlight-item" style="border-color:var(--blue);"><strong>$0.08</strong><span>Kullanıcı Başına</span></div>
-      <div class="highlight-item"><strong>~$1,200</strong><span>Aylık (20K kullanıcı)</span></div>
-      <div class="highlight-item"><strong>~$3,800</strong><span>Aylık (50K kullanıcı)</span></div>
+      <div class="highlight-item"><strong>$2,532</strong><span>Aylık (5K kullanıcı)</span></div>
+      <div class="highlight-item" style="border-color:var(--blue);"><strong>$0.51</strong><span>Kullanıcı Başına</span></div>
+      <div class="highlight-item"><strong>~$6,500</strong><span>Aylık (20K kullanıcı)</span></div>
+      <div class="highlight-item"><strong>~$15,000</strong><span>Aylık (50K kullanıcı)</span></div>
     </div>
   </div>
 

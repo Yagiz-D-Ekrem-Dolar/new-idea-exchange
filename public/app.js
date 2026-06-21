@@ -2147,6 +2147,8 @@ function renderQuickFlow() {
           ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası
         </div>
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
+          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.</li>
+          <li><strong>Hisse Alım Sınırı:</strong> Bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.</li>
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
           <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
@@ -3236,14 +3238,62 @@ function renderTradingExchange() {
       ${renderMarketTickerTape(rows, wallet, stats)}
 
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
-      <section class="info-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px 16px; margin: 10px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.4;">
-        <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--primary);">
-          ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası:
+      <section class="premium-policy-section" style="margin: 16px 0; background: linear-gradient(135deg, rgba(7, 33, 70, 0.03) 0%, rgba(20, 84, 156, 0.05) 100%); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-soft);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">
+            ${icon("gavel", "style='width:16px;height:16px;color:var(--primary);'")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
+          </div>
+          <span style="font-size: 11px; background: var(--primary-soft); color: var(--primary); padding: 4px 10px; border-radius: 99px; font-weight: 600;">Aktif Tüzük v2.4</span>
         </div>
-        <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
-          <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
-          <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın <strong>10 katı</strong> oylama kredisi (ödül) aktarılır.</span>
-          <span>• Fikir hayata geçirildiğinde, girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırılır.</span>
+        <div class="policy-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          <!-- Card 1 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("chart-candlestick", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Fiyatlama Algoritması</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin borsa fiyatları; AI değerlendirme skoru (<strong>%40</strong>), lot hacmi (<strong>%30</strong>), çalışan oyları (<strong>%20</strong>) ve dosya/kod bütünlüğü (<strong>%10</strong>) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(20, 84, 156, 0.08); color: #14549c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("gavel", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Karar Kurulu</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projenizi doğrudan Karar Kurulu'na taşımanız için <strong>10.000 Altın (Coin)</strong> gereklidir. Bu bakiye karşılığında projeniz resmi kurul onay listesine alınır.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(192, 57, 43, 0.08); color: #c0392b; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("shield-alert", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Hisse Alım Sınırı</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin adil dağıtımı için bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.
+            </p>
+          </div>
+          <!-- Card 4 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("coins", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Girişimci Telifi (%5)</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projelerin borsa üzerinden aldığı her yatırımın (hisse satınalımının) <strong>%5'i doğrudan girişimcinin hesabına</strong> telif ödülü olarak anında eklenir.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -4221,8 +4271,8 @@ function renderIdeaDetail() {
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
               </span>
             ` : `
-              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 SA karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
-                ${icon("gavel")} Karar Kurulu'na Taşı (5000 SA)
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="10.000 SA karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (10.000 SA)
               </button>
             `
           ) : ""}
@@ -5406,6 +5456,7 @@ function renderClubCard(club) {
           </div>
         </div>
       </div>
+      ${renderClubAiSuggestion(club)}
     </article>
   `;
 }
@@ -6273,6 +6324,7 @@ function renderTeamCard(team, isMine) {
           </span>
         </div>
       ` : ""}
+      ${renderTeamAiSuggestion(team)}
     </article>
   `;
 }
@@ -7098,6 +7150,7 @@ function renderChallengeCard(challenge, index) {
           <span><strong>${challenge.ideas}</strong><small>fikir</small></span>
           <span><strong>${challenge.participants}</strong><small>katılımcı</small></span>
         </div>
+        ${renderChallengeAiSuggestionPanel(challenge)}
         <div class="challenge-footer">
           <small>${esc(challenge.sponsor)}</small>
           <div>
@@ -7315,8 +7368,8 @@ function renderManager() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="section-title">
           <div>
-            <h2>${icon("gavel")} 5000 SA ile Taşınan Talepler</h2>
-            <p>Sahipleri tarafından 5000 SA ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+            <h2>${icon("gavel")} 10.000 SA ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 10.000 SA ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
         </div>
@@ -7809,7 +7862,7 @@ function renderManagerV2() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="panel-head">
           <div>
-            <span class="panel-kicker">5000 SA ile taşınan talepler</span>
+            <span class="panel-kicker">10.000 SA ile taşınan talepler</span>
             <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
@@ -10440,7 +10493,7 @@ if (action === "login") {
   }
 
   if (action === "escalate-to-board") {
-    const ESCALATION_COST = 5000;
+    const ESCALATION_COST = 10000;
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea && !idea.escalatedToBoard) {
       if (state.marketBudget < ESCALATION_COST) {
@@ -13773,22 +13826,22 @@ function renderSystemDetails() {
           Sabancı Holding New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+          ${docCard("presentation", "⭐ Sabancı New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Sabancı New PDF dokümanı.", [
+            { href: sabanciNewHref, label: "PDF Görüntüle" },
+            { href: sabanciNewHref, label: "PDF İndir", download: true }
+          ])}
+          ${docCard("book-open", "⭐ Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
+            { href: academicIntegrationHref, label: "PDF Görüntüle" },
+            { href: academicIntegrationHref, label: "PDF İndir", download: true }
+          ])}
+          ${docCard("library", "⭐ Literatür ve Kanıtlar Raporu", "İnovasyon borsası yaklaşımını destekleyen akademik literatür, referanslar ve kanıt çerçevesini içeren rapor.", [
+            { href: academicEvidenceHref, label: "PDF Görüntüle" },
+            { href: academicEvidenceHref, label: "PDF İndir", download: true }
+          ])}
           ${docCard("file-text", "Güncel Teknik Rapor", "20 Haziran 2026 tarihli mimari inceleme, ürün mantığı, borsa fiyatlama modeli, AI kapsamı, teknik borçlar ve önerilen yol haritasını içeren güncel PDF raporu.", [
             { href: currentReportHref, label: "PDF Görüntüle" },
             { href: currentReportHref, label: "PDF İndir", download: true },
             { href: "/technical-report.html", label: "HTML Rapor" }
-          ])}
-          ${docCard("presentation", "Sabancı New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Sabancı New PDF dokümanı.", [
-            { href: sabanciNewHref, label: "PDF Görüntüle" },
-            { href: sabanciNewHref, label: "PDF İndir", download: true }
-          ])}
-          ${docCard("book-open", "Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
-            { href: academicIntegrationHref, label: "PDF Görüntüle" },
-            { href: academicIntegrationHref, label: "PDF İndir", download: true }
-          ])}
-          ${docCard("library", "Literatür ve Kanıtlar Raporu", "İnovasyon borsası yaklaşımını destekleyen akademik literatür, referanslar ve kanıt çerçevesini içeren rapor.", [
-            { href: academicEvidenceHref, label: "PDF Görüntüle" },
-            { href: academicEvidenceHref, label: "PDF İndir", download: true }
           ])}
           ${docCard("database", "Sistem Raporları", "Borsa mantığı, sanal para/ödül kuralları, veri modeli, stüdyo/ekip/ürün modeli ve operasyonel akışları kapsayan kapsamlı kurumsal ürün raporu.", [
             { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF Görüntüle" },
@@ -14210,9 +14263,11 @@ function renderRulesPage() {
             ${icon("gavel")} 6. Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
           </h3>
           <p>
+            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.<br/>
+            • <strong>Hisse Alım Sınırı:</strong> Fikirlerin adil dağıtılması için, tek bir projeden en fazla <strong>10 adet (hisse/lot)</strong> satın alabilirsiniz.<br/>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
-            • <strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.<br/>
+            • <strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (done/pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.<br/>
             • <strong>Girişimci-Yatırımcı Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u yatırımcıları arasında paylaştırılacaktır.
           </p>
         </div>
@@ -15902,3 +15957,94 @@ scaleMockDataset();
 ensureSocialEnhancements();
 render();
 
+
+
+// ============================================================================
+// AI SUGGESTIONS HELPER FUNCTIONS FOR CHALLENGES, TEAMS, AND CLUBS
+// ============================================================================
+
+function buildAiSuggestionForChallenge(challenge) {
+  const title = challenge.title || "";
+  const sector = challenge.sector || "";
+  let recommendation = "";
+  let steps = [];
+  
+  if (sector === "FinTech" || title.includes("Açık Bankacılık") || title.includes("FinTech")) {
+    recommendation = "Bu FinTech yarışmasında başarı şansını artırmak için, API gecikme sürelerini ve veri gizliliği (KVKK/BDDK) gereksinimlerini hesaba katan bir prototip geliştirin.";
+    steps = [
+      "Akbank Open API'lerini entegre edin.",
+      "Kullanıcı işlem geçmişini anlık olarak puanlayan hafif bir model tasarlayın.",
+      "Akbank mobil uygulamasıyla entegrasyon senaryosunu hazırlayın."
+    ];
+  } else if (sector === "Sürdürülebilirlik" || title.includes("Sürdürülebilirlik") || title.includes("Yeşil")) {
+    recommendation = "Sürdürülebilirlik odaklı bu yarışmada, karbon ayak izi hesaplamasını ve iştirakler arası enerji optimizasyonunu ön plana çıkarın.";
+    steps = [
+      "Tüm Sabancı Holding binalarının ve şubelerinin akıllı sayaç verilerini modelleyin.",
+      "Çalışanlar için yeşil davranışları teşvik eden ödül mekanizması (SA Coin) entegre edin.",
+      "Yıllık CapEx/OpEx tasarrufunu ve karbon azaltım oranını netleştirin."
+    ];
+  } else {
+    recommendation = `Bu ${sector} yarışması için şirket içi uzmanları bir araya getiren modüler bir ekip kurun ve fikrinizi gerçek zamanlı pilot verilerle destekleyin.`;
+    steps = [
+      "Fikir havuzundaki ilgili veri setlerini (Veri&Bilgi) inceleyin.",
+      "Sabancı Holding iştiraklerinin (Akbank, Çimsa, Teknosa vb.) bu projeyi nasıl ölçeklendirebileceğini tasarlayın.",
+      "Karar verici kurul için 5 dakikalık bir demo video / pitch deck hazırlayın."
+    ];
+  }
+  return { recommendation, steps };
+}
+
+function renderChallengeAiSuggestionPanel(challenge) {
+  const suggestion = buildAiSuggestionForChallenge(challenge);
+  return `
+    <div class="ai-suggestion-panel challenge compact" style="margin-top: 12px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 10px;">
+      <div class="ai-suggestion-head" style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 11px;">
+        <span class="ai-suggestion-icon" style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:12px;height:12px;'")}</span>
+        <span style="font-weight: 600; color: var(--ink);">AI Önerisi <small style="color: var(--muted); font-weight: normal; margin-left: 4px;">Yarışma Stratejisi</small></span>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-soft); line-height: 1.4; margin: 0 0 6px 0;">${esc(suggestion.recommendation)}</p>
+      <ul style="margin: 0; padding-left: 14px; font-size: 11px; color: var(--ink-soft); line-height: 1.4;">
+        ${suggestion.steps.map(step => `<li>${esc(step)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function renderTeamAiSuggestion(team) {
+  const openRoles = team.roles.filter(r => !r.filled);
+  let rec = "";
+  if (openRoles.length > 0) {
+    const roleTitles = openRoles.map(r => r.title).join(", ");
+    rec = `Ekibin sinerjisini artırmak için acilen şu açık pozisyonları doldurun: <strong>${esc(roleTitles)}</strong>. Fikir sahipleri listesinden aday davet edebilirsiniz.`;
+  } else {
+    rec = "Ekip kadrosu tamamlandı! AI sinerji skoru yüksek. Projeyi borsada fonlamak ve pilot aşamasına taşımak için ilk stüdyo toplantısını başlatın.";
+  }
+  return `
+    <div class="ai-suggestion-panel team compact" style="margin-top: 10px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px; font-size: 11px;">
+      <div class="ai-suggestion-head" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 10px;">
+        <span class="ai-suggestion-icon" style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:11px;height:11px;'")}</span>
+        <span style="font-weight: 600; color: var(--ink);">AI Önerisi <small style="color: var(--muted); font-weight: normal; margin-left: 2px;">Sinerji & Kadro</small></span>
+      </div>
+      <p style="color: var(--ink-soft); line-height: 1.35; margin: 0;">${rec}</p>
+    </div>
+  `;
+}
+
+function renderClubAiSuggestion(club) {
+  let rec = "";
+  if (club.category === "Teknoloji") {
+    rec = "Bu teknoloji kulübünde en son LLM ve RAG mimarilerini paylaşın, hackathonlara ortak ekipler hazırlayın.";
+  } else if (club.category === "Sosyal Sorumluluk") {
+    rec = "Kulüp bünyesinde çevre/iklim temalı bir proje başlatıp Fikir Borsası'nda yeşil fonlama talep edin.";
+  } else {
+    rec = `Bu ${club.category} kulübünde yeni üyeler kazanmak için her ay düzenli bir online meetup organize edin.`;
+  }
+  return `
+    <div class="ai-suggestion-panel club compact" style="margin-top: 10px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px; font-size: 11px;">
+      <p style="color: var(--ink-soft); line-height: 1.35; margin: 0; display: flex; align-items: center; gap: 4px;">
+        <span style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:11px;height:11px;'")}</span>
+        <span><strong>AI Önerisi:</strong> ${rec}</span>
+      </p>
+    </div>
+  `;
+}
