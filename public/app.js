@@ -14204,7 +14204,7 @@ function renderAIAssistantWidget() {
       <!-- Quick Prompt Suggestions -->
       <div style="padding: 8px 12px; display: flex; gap: 6px; overflow-x: auto; background: var(--surface); border-top: 1px solid var(--line-soft); white-space: nowrap;">
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Yeni bir FinTech fikir öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">FinTech Fikri Öner</button>
-        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Çimsa karbon emisyonu azaltım fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Çimsa Önerisi Al</button>
+        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Garanti BBVA yeşil finansman fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Garanti BBVA Önerisi Al</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Borsadaki en önemli projeleri listele" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Borsayı Özetle</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Kurumsal veri setlerini özetle" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Veri&Bilgi Listele</button>
       </div>
@@ -15403,7 +15403,7 @@ function scaleMockDataset() {
       tr: { title: "Grup İçi İnovasyon Yarışması Başvuru İstatistikleri", summary: "Yıllara göre sunulan fikir sayıları, iştirak bazlı katılım yüzdeleri ve ödül alan projelerin kategorik dağılımı." },
       en: { title: "In-Group Innovation Challenge Application Statistics", summary: "Number of ideas submitted by year, participation percentages based on affiliates, and categorical distribution of award-winning projects." },
       de: { title: "Bewerbungsstatistiken für den konzerneigenen Innovationspreis", summary: "Anzahl der eingereichten Ideen nach Jahren, Beteiligungsquoten nach Tochtergesellschaften und Verteilung der prämierten Projekte." },
-      es: { title: "Estadísticas de Solicitud de Desafío de Innovación Interno del Grupo", summary: "Número de ideas enviadas por año, porcentajes de participación según afiliadas y distribución categórica de proyectos galardonados." }
+      es: { title: "Estadísticas de Solicitud de Desafío de Innovación Interno del Grupo", summary: "Número de ideas enviadas por año, porcentajes de participación según afiliadas y distribución categórica de proyectos galarodados." }
     }
   ];
 
@@ -15515,12 +15515,12 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
+        body: "BBVA UK's new corporate banking portal processed its first 100 orders within 48 hours of launch.",
         translations: {
-          tr: "Çimsa UK'nin yeni B2B satış portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
-          en: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
-          de: "Das neue B2B-Verkaufsportal von Çimsa UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
-          es: "El nuevo portal de ventas B2B de Çimsa UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
+          tr: "BBVA UK'nin yeni kurumsal bankacılık portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
+          en: "BBVA UK's new corporate banking portal processed its first 100 orders within 48 hours of launch.",
+          de: "Das neue Firmenkunden-Portal von BBVA UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
+          es: "El nuevo portal de banca corporativa de BBVA UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
         }
       },
       {
@@ -15544,12 +15544,12 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
+        body: "Die Effizienz in der BBVA-Niederlassung Frankfurt wurde durch neue automatisierte Risikoanalyse-Software gesteigert.",
         translations: {
-          tr: "Çimsa Hamburg terminalinde yeni otomatik lojistik yazılımı sayesinde verimlilik artırıldı.",
-          en: "Efficiency at the Çimsa Hamburg terminal has been increased with new automated logistics software.",
-          de: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
-          es: "La eficiencia en la terminal de Çimsa en Hamburgo se ha incrementado con el nuevo software de logística automatizado."
+          tr: "BBVA Frankfurt şubesinde yeni otomatik risk analizi yazılımı sayesinde verimlilik artırıldı.",
+          en: "Efficiency at the BBVA Frankfurt branch has been increased with new automated risk analysis software.",
+          de: "Die Effizienz in der BBVA-Niederlassung Frankfurt wurde durch neue automatisierte Risikoanalyse-Software gesteigert.",
+          es: "La eficiencia en la sucursal de BBVA en Frankfurt se ha incrementado con el nuevo software de análisis de riesgos automatizado."
         }
       },
       {
@@ -15564,12 +15564,12 @@ function scaleMockDataset() {
     ],
     ES: [
       {
-        body: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%.",
+        body: "Excelente avance en el proyecto de sostenibilidad de BBVA en Madrid. Hemos reducido el consumo de energía un 12%.",
         translations: {
-          tr: "Çimsa Buñol tesisinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
-          en: "Excellent progress at the Çimsa plant in Buñol. We have reduced energy consumption by 12%.",
-          de: "Hervorragende Fortschritte im Çimsa-Werk in Buñol. Wir haben den Energieverbrauch um 12% gesenkt.",
-          es: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%."
+          tr: "BBVA Madrid sürdürülebilirlik projesinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
+          en: "Excellent progress in the BBVA Madrid sustainability project. We have reduced energy consumption by 12%.",
+          de: "Hervorragende Fortschritte beim Nachhaltigkeitsprojekt von BBVA in Madrid. Wir haben den Energieverbrauch um 12% gesenkt.",
+          es: "Excelente avance en el proyecto de sostenibilidad de BBVA en Madrid. Hemos reducido el consumo de energía un 12%."
         }
       },
       {
@@ -15745,24 +15745,24 @@ function scaleMockDataset() {
     ],
     ES: [
       {
-        title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
-        body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol.",
+        title: "🚀 ¡Buscamos un Analista de Ciberseguridad para la sede de Madrid!",
+        body: "Hola! BBVA España busca un analista de ciberseguridad para supervisar los protocolos de seguridad y protección de datos en nuestra sede de Madrid.",
         translations: {
           tr: {
-            title: "🚀 Buñol Tesisi için Kimya Mühendisi Arıyoruz!",
-            body: "Merhaba! Çimsa İspanya, Buñol tesisimizdeki alternatif yakma ve geri dönüşüm denemelerini denetlemek üzere bir kimya mühendisi arıyor."
+            title: "🚀 Madrid Genel Merkezi için Siber Güvenlik Analisti Arıyoruz!",
+            body: "Merhaba! BBVA İspanya, Madrid genel merkezimizdeki güvenlik protokollerini ve veri koruma süreçlerini denetlemek üzere bir siber güvenlik analisti arıyor."
           },
           en: {
-            title: "🚀 Seeking Chemical Engineer for Buñol Plant!",
-            body: "Hello! Çimsa Spain is looking for a chemical engineer to supervise alternative combustion and recycling trials at our Buñol plant."
+            title: "🚀 Seeking Cybersecurity Analyst for Madrid HQ!",
+            body: "Hello! BBVA Spain is looking for a cybersecurity analyst to supervise security protocols and data protection processes at our Madrid HQ."
           },
           de: {
-            title: "🚀 Chemieingenieur für das Werk Buñol gesucht!",
-            body: "Hallo! Çimsa Spanien sucht einen Chemieingenieur zur Überwachung der alternativen Verbrennungs- und Recyclingversuche im Werk Buñol."
+            title: "🚀 Cybersicherheitsanalyst für die Zentrale in Madrid gesucht!",
+            body: "Hallo! BBVA Spanien sucht einen Cybersicherheitsanalysten zur Überwachung der Sicherheitsprotokolle und Datenschutzprozesse in unserer Zentrale in Madrid."
           },
           es: {
-            title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
-            body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol."
+            title: "🚀 ¡Buscamos un Analista de Ciberseguridad para la sede de Madrid!",
+            body: "Hola! BBVA España busca un analista de ciberseguridad para supervisar los protocolos de seguridad y protección de datos en nuestra sede de Madrid."
           }
         }
       }

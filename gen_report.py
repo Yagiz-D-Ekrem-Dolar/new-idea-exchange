@@ -40,8 +40,8 @@ doc = SimpleDocTemplate(
     pagesize=A4,
     leftMargin=20*mm, rightMargin=20*mm,
     topMargin=22*mm, bottomMargin=22*mm,
-    title="BBVA Group NIE Teknik Mimari Raporu",
-    author="BBVA Group NIE Platform Mühendislik Ekibi",
+    title="BBVA Grup NIE Teknik Mimari Raporu",
+    author="BBVA Grup NIE Platform Mühendislik Ekibi",
     subject="BBVA Innovation Exchange (NIE) — Technical Architecture Report v2.5.0"
 )
 
@@ -91,18 +91,18 @@ story = []
 # COVER PAGE  (drawn as big coloured table = no canvas hack needed)
 # ─────────────────────────────────────────────────────────────────────────────
 cover_inner = [
-    [Paragraph("BBVA GROUP · NEW IDEA EXCHANGE", S("CE", fontSize=10, fontName="Helvetica-Bold",
+    [Paragraph("BBVA GRUP · NEW IDEA EXCHANGE", S("CE", fontSize=10, fontName="Helvetica-Bold",
                textColor=HexColor("#94a3b8"), letterSpacing=2))],
     [Spacer(1, 8*mm)],
     [Paragraph("Teknik Mimari<br/>Raporu", COVER_TITLE)],
     [Spacer(1, 3*mm)],
-    [Paragraph("BBVA Group ve istiraklerinin (BBVA, Garanti BBVA, BBVA Mexico, BBVA Technology ve digerleri) "
+    [Paragraph("BBVA Grup ve istiraklerinin (Garanti BBVA, BBVA Portfoy, BBVA Yatirim, BBVA Kart, BBVA Yesil Finansman ve digerleri) "
                "5 ulke portalinda kullandigi platform altyapisi, teknoloji yigini, olceklenebilirlik plani ve<br/>"
                "aylik altyapi maliyet analizi.", COVER_SUB)],
     [Spacer(1, 12*mm)],
     [Table(
         [[Paragraph("v2.5.0",     COVER_META), Paragraph("Haziran 2026", COVER_META),
-          Paragraph("BBVA Group",COVER_META), Paragraph("Gizli",       COVER_META)]],
+          Paragraph("BBVA Grup",COVER_META), Paragraph("Gizli",       COVER_META)]],
         colWidths=[38*mm,38*mm,38*mm,38*mm],
         style=TableStyle([("VALIGN", (0,0), (-1,-1), "TOP")])
     )],
@@ -255,9 +255,9 @@ story.append(section(1, "Yönetici Özeti",
     "Platformun teknik vizyonu ve temel metrikler"))
 
 story.append(callout(
-    "<b>BBVA Innovation Exchange (NIE)</b>, BBVA Group ve istiraklerinin "
-    "(BBVA, Garanti BBVA, BBVA Mexico, BBVA Colombia, BBVA Peru, BBVA Technology, BBVA Seguros ve digerleri) "
-    "Ispanya, Meksika, Turkiye, Kolombiya ve Peru portallarinda calisanlarin fikir "
+    "<b>BBVA Innovation Exchange (NIE)</b>, BBVA Grup ve istiraklerinin "
+    "(Garanti BBVA, BBVA Portfoy, BBVA Yatirim, BBVA Kart, BBVA Yesil Finansman, BBVA Odeme, BBVA Faktoring, BBVA Teknoloji ve digerleri) "
+    "Turkiye, Birlesik Krallik, ABD, Almanya ve Ispanya portallarinda calisanlarin fikir "
     "uretmesini, ekip ve kulup kurmasini, kararlarini Karar Kurulu'na tasimasini ve "
     "inovasyon projelerini hayata gecirmesini saglayan cok dilli kurumsal inovasyon "
     "platformudur. Sistem; fikir borsasi, ekip ve kulup yonetimi (kendi sohbet alanlariyla), "
@@ -638,8 +638,8 @@ story.append(Spacer(1, 12*mm))
 # ── FOOTER LINE ───────────────────────────────────────────────────────────────
 story.append(HRFlowable(width="100%", thickness=1, color=LINE, spaceAfter=6))
 footer_row = Table(
-    [[Paragraph("<b>BBVA GROUP · NEW IDEA EXCHANGE</b> · Teknik Mimari Raporu v2.5.0", FOOTER_TXT),
-      Paragraph("BBVA Group NIE Platform Muhendislik Ekibi · Haziran 2026 · Gizli",
+    [[Paragraph("<b>BBVA GRUP · NEW IDEA EXCHANGE</b> · Teknik Mimari Raporu v2.5.0", FOOTER_TXT),
+      Paragraph("BBVA Grup NIE Platform Muhendislik Ekibi · Haziran 2026 · Gizli",
                 S("FR", fontSize=8, textColor=MUTED, fontName="Helvetica",
                   alignment=TA_RIGHT))]],
     colWidths=[(W-40*mm)/2]*2,
