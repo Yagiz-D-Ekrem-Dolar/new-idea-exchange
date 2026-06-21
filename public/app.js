@@ -741,7 +741,7 @@ function icon(name, extraAttrs = "") {
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="hm-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
       <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
       <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
-      <text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-weight="700" font-size="46" fill="#004E2B">H</text>
+      <image href="/assets/company-logos/heidelberg-materials-icon.svg" x="28" y="28" width="44" height="44" />
       <defs>
         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#ffe066" />
@@ -957,7 +957,7 @@ function hmCoinIcon(size = "normal") {
     <svg class="hm-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
       <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
       <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
-      <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-weight="700" font-size="17" fill="#004E2B">H</text>
+      <image href="/assets/company-logos/heidelberg-materials-icon.svg" x="10" y="10" width="16" height="16" />
       <defs>
         <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#FFE07D"/>
@@ -13810,7 +13810,7 @@ function renderSystemDetails() {
             { href: currentReportHref, label: "PDF İndir", download: true },
             { href: "/technical-report.html", label: "HTML Rapor" }
           ])}
-          ${docCard("presentation", "Heidelberg Materials New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Heidelberg Materials New PDF dokümanı.", [
+          ${docCard("presentation", "Heidelberg Materials New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu görsel slaytlarla anlatan 232 sayfalık kapsamlı Heidelberg Materials New sunum dokümanı.", [
             { href: heidelbergNewHref, label: "PDF Görüntüle" },
             { href: heidelbergNewHref, label: "PDF İndir", download: true }
           ])}
