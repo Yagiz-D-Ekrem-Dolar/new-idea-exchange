@@ -45,7 +45,8 @@ const countriesList = [
   { code: "IT", name: "Italy", flag: "🇮🇹", lang: "en", label: "Italy Portal" },
   { code: "BE", name: "Belgium", flag: "🇧🇪", lang: "en", label: "Belgium Portal" },
   { code: "IN", name: "India", flag: "🇮🇳", lang: "en", label: "India Portal" },
-  { code: "EG", name: "Egypt", flag: "🇪🇬", lang: "en", label: "Egypt Portal" }
+  { code: "EG", name: "Egypt", flag: "🇪🇬", lang: "en", label: "Egypt Portal" },
+  { code: "TR", name: "Türkiye", flag: "🇹🇷", lang: "tr", label: "Türkiye Portal" }
 ];
 
 // affiliationCompanies[].countries uses Turkish display names (e.g. "İspanya"), while
@@ -59,7 +60,8 @@ const countryNameTR = {
   IT: "İtalya",
   BE: "Belçika",
   IN: "Hindistan",
-  EG: "Mısır"
+  EG: "Mısır",
+  TR: "Türkiye"
 };
 
 const brandLogoSrc = "/assets/company-logos/heidelberg-materials-group.svg";
@@ -261,7 +263,7 @@ const affiliationCompanies = [
     logo: "./assets/company-logos/heidelberg-materials-trading.svg",
     domain: "heidelbergmaterials.com",
     type: "Toptan Ticaret/Lojistik",
-    countries: ["Birleşik Krallık"],
+    countries: ["Birleşik Arap Emirlikleri"],
     cities: ["Dubai"],
     campuses: ["Dubai Trading Hub"],
     departments: ["Operations", "Trading", "Investment"]
@@ -273,7 +275,7 @@ const affiliationCompanies = [
     logo: "./assets/company-logos/hanson.svg",
     domain: "hanson.com.au",
     type: "Agrega/Hazır Beton",
-    countries: ["Birleşik Krallık"],
+    countries: ["Avustralya"],
     cities: ["Sydney", "Melbourne", "Brisbane"],
     campuses: ["Sydney HQ"],
     departments: ["Logistics", "Sales", "Supply Chain"]
@@ -285,10 +287,22 @@ const affiliationCompanies = [
     logo: "./assets/company-logos/heidelberg-materials-spain.svg",
     domain: "heidelbergmaterials.es",
     type: "Çimento",
-    countries: ["Almanya"],
+    countries: ["İspanya"],
     cities: ["Madrid", "Barcelona"],
     campuses: ["Madrid Hub"],
     departments: ["Sustainabilty", "Production", "R&D", "Logistics"]
+  },
+  {
+    id: "akcansa",
+    name: "Akçansa Çimento Sanayi ve Ticaret A.Ş.",
+    shortName: "Akçansa",
+    logo: "./assets/company-logos/akcansa.svg",
+    domain: "akcansa.com.tr",
+    type: "Çimento",
+    countries: ["Türkiye"],
+    cities: ["İstanbul", "Çanakkale", "Samsun"],
+    campuses: ["Büyükçekmece Fabrikası", "Çanakkale Fabrikası", "Ladik Fabrikası"],
+    departments: ["Üretim", "Sürdürülebilirlik", "Liman Operasyonları", "Satış"]
   }
 ];
 
@@ -321,36 +335,52 @@ const peopleDirectory = [
   // Germany (DE)
   { id: "p01", name: "Defne Arman", companyId: "heidelberg-materials", role: "Strateji Direktörü", team: "Holding Strateji", city: "Heidelberg", campus: "Heidelberg Materials Hauptmerkez", photo: "https://randomuser.me/api/portraits/women/12.jpg", status: "Aktif", country: "DE" },
   { id: "p02", name: "Mert Alkan", companyId: "heidelberg-materials-htc", role: "İnovasyon Lideri", team: "Yapay Zekâ Ofisi", city: "Leimen", campus: "Heidelberg Materials Technology Center Leimen", photo: "https://randomuser.me/api/portraits/men/12.jpg", status: "Toplantıda", country: "DE" },
-  { id: "p03", name: "Selin Eryılmaz", companyId: "heidelberg-materials-egypt", role: "Ar-Ge Lideri", team: "Helvan Fabrika Ar-Ge", city: "Helvan", campus: "Helvan Fabrika", photo: "https://randomuser.me/api/portraits/women/32.jpg", status: "Aktif", country: "DE" },
-  { id: "p04", name: "Baran İleri", companyId: "heidelberg-materials-france", role: "Üretim Müdürü", team: "Marsilya Fabrika", city: "Marsilya", campus: "Marsilya Fabrika", photo: "https://randomuser.me/api/portraits/men/27.jpg", status: "Sahada", country: "DE" },
-  { id: "p05", name: "Ece Uslu", companyId: "heidelberg-materials-de", role: "Sürdürülebilir Finans Yöneticisi", team: "İnovasyon Lab", city: "Heidelberg", campus: "Heidelberg Materials Hauptmerkez", photo: "https://randomuser.me/api/portraits/women/45.jpg", status: "Aktif", country: "DE" },
-  
+  { id: "p03", name: "Selin Eryılmaz", companyId: "heidelberg-materials-de", role: "Ar-Ge Lideri", team: "Berlin Ofisi Ar-Ge", city: "Berlin", campus: "Berlin Ofisi", photo: "https://randomuser.me/api/portraits/women/32.jpg", status: "Aktif", country: "DE" },
+  { id: "p04", name: "Baran İleri", companyId: "heidelberg-materials-de", role: "Üretim Müdürü", team: "Hamburg Ofisi", city: "Hamburg", campus: "Hamburg Ofisi", photo: "https://randomuser.me/api/portraits/men/27.jpg", status: "Sahada", country: "DE" },
+  { id: "p05", name: "Ece Uslu", companyId: "heidelberg-materials", role: "Sürdürülebilir Finans Yöneticisi", team: "İnovasyon Lab", city: "Heidelberg", campus: "Heidelberg Materials Hauptmerkez", photo: "https://randomuser.me/api/portraits/women/45.jpg", status: "Aktif", country: "DE" },
+
   // United Kingdom (GB)
-  { id: "p06", name: "John Sterling", companyId: "heidelberg-materials-trading", role: "Clean Energy Director", team: "Investment", city: "Londra", campus: "Dubai Trading Hub", photo: "https://randomuser.me/api/portraits/men/44.jpg", status: "Aktif", country: "GB" },
-  { id: "p07", name: "Sarah Jenkins", companyId: "hanson-uk", role: "UK Sales Lead", team: "Sales", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/women/64.jpg", status: "Aktif", country: "GB" },
-  { id: "p08", name: "David Miller", companyId: "cbr-belgium", role: "Composite Lead Scientist", team: "R&D", city: "Londra", campus: "Dubai Trading Hub", photo: "https://randomuser.me/api/portraits/men/53.jpg", status: "Aktif", country: "GB" },
+  { id: "p06", name: "John Sterling", companyId: "hanson-uk", role: "Sales Director", team: "Sales", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/men/44.jpg", status: "Aktif", country: "GB" },
+  { id: "p07", name: "Sarah Jenkins", companyId: "hanson-uk", role: "UK Sales Lead", team: "Sales", city: "Manchester", campus: "Manchester Ofisi", photo: "https://randomuser.me/api/portraits/women/64.jpg", status: "Aktif", country: "GB" },
+  { id: "p08", name: "David Miller", companyId: "hanson-uk", role: "Aggregates Lead Engineer", team: "Operations", city: "Birmingham", campus: "Birmingham Ofisi", photo: "https://randomuser.me/api/portraits/men/53.jpg", status: "Aktif", country: "GB" },
   { id: "p09", name: "Oliver Watson", companyId: "heidelberg-materials", role: "International Strategist", team: "Strategy", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/men/86.jpg", status: "Aktif", country: "GB" },
-  { id: "p17", name: "George Taylor", companyId: "cbr-belgium", role: "Aerospace Composites Engineer", team: "R&D", city: "Londra", campus: "Dubai Trading Hub", photo: "https://randomuser.me/api/portraits/men/41.jpg", status: "Toplantıda", country: "GB" },
-  { id: "p18", name: "Amelia Williams", companyId: "hanson-uk", role: "B2B Portal Product Owner", team: "Sales", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/women/52.jpg", status: "Aktif", country: "GB" },
+  { id: "p17", name: "George Taylor", companyId: "hanson-uk", role: "Asphalt Operations Engineer", team: "Operations", city: "Londra", campus: "London HQ", photo: "https://randomuser.me/api/portraits/men/41.jpg", status: "Toplantıda", country: "GB" },
+  { id: "p18", name: "Amelia Williams", companyId: "hanson-uk", role: "B2B Portal Product Owner", team: "Sales", city: "Manchester", campus: "Manchester Ofisi", photo: "https://randomuser.me/api/portraits/women/52.jpg", status: "Aktif", country: "GB" },
 
   // United States (US)
-  { id: "p10", name: "Michael Vance", companyId: "hanson-australia", role: "VP of Energy Storage", team: "Energy Storage", city: "Austin", campus: "Sydney HQ", photo: "https://randomuser.me/api/portraits/men/22.jpg", status: "Aktif", country: "US" },
-  { id: "p11", name: "Emily Rose", companyId: "heidelberg-materials-na", role: "Dallas Office Manager", team: "Operations", city: "Houston", campus: "Dallas Office", photo: "https://randomuser.me/api/portraits/women/36.jpg", status: "Sahada", country: "US" },
-  { id: "p12", name: "Robert Chen", companyId: "heidelberg-materials-india", role: "Material Lead Scientist", team: "Technical Services", city: "Chattanooga", campus: "Chattanooga Facility", photo: "https://randomuser.me/api/portraits/men/61.jpg", status: "Aktif", country: "US" },
-  { id: "p19", name: "Jennifer Miller", companyId: "hanson-australia", role: "Grid Services Manager", team: "Energy Storage", city: "Austin", campus: "Melbourne Office", photo: "https://randomuser.me/api/portraits/women/58.jpg", status: "Aktif", country: "US" },
-  { id: "p20", name: "Thomas Martin", companyId: "heidelberg-materials-india", role: "Graphene Composites Researcher", team: "Technical Services", city: "Chattanooga", campus: "Laurel R&D center", photo: "https://randomuser.me/api/portraits/men/19.jpg", status: "Sahada", country: "US" },
+  { id: "p10", name: "Michael Vance", companyId: "heidelberg-materials-na", role: "VP of Operations", team: "Operations", city: "Dallas", campus: "Dallas Office", photo: "https://randomuser.me/api/portraits/men/22.jpg", status: "Aktif", country: "US" },
+  { id: "p11", name: "Emily Rose", companyId: "heidelberg-materials-na", role: "Chicago Office Manager", team: "Operations", city: "Chicago", campus: "Chicago Ofisi", photo: "https://randomuser.me/api/portraits/women/36.jpg", status: "Sahada", country: "US" },
+  { id: "p12", name: "Robert Chen", companyId: "heidelberg-materials-na", role: "Material Lead Scientist", team: "Technical Services", city: "Irving", campus: "Irving Ofisi", photo: "https://randomuser.me/api/portraits/men/61.jpg", status: "Aktif", country: "US" },
+  { id: "p19", name: "Jennifer Miller", companyId: "heidelberg-materials-na", role: "Supply Chain Manager", team: "Operations", city: "Dallas", campus: "Dallas Office", photo: "https://randomuser.me/api/portraits/women/58.jpg", status: "Aktif", country: "US" },
+  { id: "p20", name: "Thomas Martin", companyId: "heidelberg-materials-na", role: "Aggregates Researcher", team: "Technical Services", city: "Chicago", campus: "Chicago Ofisi", photo: "https://randomuser.me/api/portraits/men/19.jpg", status: "Sahada", country: "US" },
 
   // Italy (IT)
-  { id: "p13", name: "Hans Müller", companyId: "heidelberg-materials-france", role: "Logistics Coordinator", team: "Logistics", city: "Hamburg", campus: "Lyon Depo", photo: "https://randomuser.me/api/portraits/men/72.jpg", status: "Aktif", country: "IT" },
-  { id: "p14", name: "Dieter Schmidt", companyId: "heidelberg-materials-poland", role: "Mobility Operations Mgr", team: "Mobility Lab", city: "Opole", campus: "Opole Mobility Lab", photo: "https://randomuser.me/api/portraits/men/95.jpg", status: "Aktif", country: "IT" },
-  { id: "p21", name: "Sabine Schmidt", companyId: "heidelberg-materials-france", role: "Opole Satış Sorumlusu", team: "Sales", city: "Opole", campus: "Paris Ofisi", photo: "https://randomuser.me/api/portraits/women/63.jpg", status: "Aktif", country: "IT" },
-  { id: "p22", name: "Andreas Weber", companyId: "heidelberg-materials-poland", role: "Telemetri Mühendisi", team: "Mobility Lab", city: "Opole", campus: "Opole Mobility Lab", photo: "https://randomuser.me/api/portraits/men/77.jpg", status: "Toplantıda", country: "IT" },
+  { id: "p13", name: "Hans Müller", companyId: "italcementi", role: "Logistics Coordinator", team: "Logistics", city: "Bergamo", campus: "Bergamo HQ", photo: "https://randomuser.me/api/portraits/men/72.jpg", status: "Aktif", country: "IT" },
+  { id: "p14", name: "Dieter Schmidt", companyId: "italcementi", role: "Operations Manager", team: "Production", city: "Milano", campus: "Milano Ofisi", photo: "https://randomuser.me/api/portraits/men/95.jpg", status: "Aktif", country: "IT" },
+  { id: "p21", name: "Sabine Schmidt", companyId: "italcementi", role: "Calusco Satış Sorumlusu", team: "Sales", city: "Calusco", campus: "Calusco Fabrikası", photo: "https://randomuser.me/api/portraits/women/63.jpg", status: "Aktif", country: "IT" },
+  { id: "p22", name: "Andreas Weber", companyId: "italcementi", role: "Süreç Mühendisi", team: "Production", city: "Bergamo", campus: "Bergamo HQ", photo: "https://randomuser.me/api/portraits/men/77.jpg", status: "Toplantıda", country: "IT" },
 
   // Belgium (BE)
-  { id: "p15", name: "Carlos Ruiz", companyId: "heidelberg-materials-spain", role: "Helvan Plant Manager", team: "Production", city: "Helvan", campus: "Helvan Plant", photo: "https://randomuser.me/api/portraits/men/38.jpg", status: "Aktif", country: "BE" },
-  { id: "p16", name: "Maria Ortega", companyId: "heidelberg-materials-spain", role: "Sustainability Lead Analyst", team: "R&D", city: "Helvan", campus: "Helvan Plant", photo: "https://randomuser.me/api/portraits/women/29.jpg", status: "Aktif", country: "BE" },
-  { id: "p23", name: "Antonio García", companyId: "heidelberg-materials-spain", role: "Valencia Satış Sorumlusu", team: "Sales", city: "Valencia", campus: "Valencia Sales Hub", photo: "https://randomuser.me/api/portraits/men/49.jpg", status: "Aktif", country: "BE" },
-  { id: "p24", name: "Isabel Martínez", companyId: "heidelberg-materials-spain", role: "Kalite Kontrol Mühendisi", team: "Production", city: "Helvan", campus: "Helvan White Cement Plant", photo: "https://randomuser.me/api/portraits/women/71.jpg", status: "Sahada", country: "BE" }
+  { id: "p15", name: "Carlos Ruiz", companyId: "cbr-belgium", role: "Plant Manager", team: "Production", city: "Brüksel", campus: "Brüksel HQ", photo: "https://randomuser.me/api/portraits/men/38.jpg", status: "Aktif", country: "BE" },
+  { id: "p16", name: "Maria Ortega", companyId: "cbr-belgium", role: "Sustainability Lead Analyst", team: "R&D", city: "Antwerp", campus: "Antwerp Ofisi", photo: "https://randomuser.me/api/portraits/women/29.jpg", status: "Aktif", country: "BE" },
+  { id: "p23", name: "Antonio García", companyId: "cbr-belgium", role: "Lixhe Satış Sorumlusu", team: "Sales", city: "Lixhe", campus: "Lixhe Fabrikası", photo: "https://randomuser.me/api/portraits/men/49.jpg", status: "Aktif", country: "BE" },
+  { id: "p24", name: "Isabel Martínez", companyId: "cbr-belgium", role: "Kalite Kontrol Mühendisi", team: "Production", city: "Brüksel", campus: "Brüksel HQ", photo: "https://randomuser.me/api/portraits/women/71.jpg", status: "Sahada", country: "BE" },
+
+  // Indonesia (ID)
+  { id: "p25", name: "Siti Wulandari", companyId: "indocement", role: "Operasyon Müdürü", team: "Production", city: "Jakarta", campus: "Jakarta HQ", photo: "https://randomuser.me/api/portraits/women/83.jpg", status: "Aktif", country: "ID" },
+  { id: "p26", name: "Budi Santoso", companyId: "indocement", role: "Satış Sorumlusu", team: "Sales", city: "Bogor", campus: "Bogor Fabrikası", photo: "https://randomuser.me/api/portraits/men/84.jpg", status: "Sahada", country: "ID" },
+
+  // India (IN)
+  { id: "p27", name: "Priya Sharma", companyId: "heidelberg-materials-india", role: "Bölge Satış Müdürü", team: "Sales", city: "Mumbai", campus: "Mumbai Ofisi", photo: "https://randomuser.me/api/portraits/women/81.jpg", status: "Aktif", country: "IN" },
+  { id: "p28", name: "Arjun Mehta", companyId: "heidelberg-materials-india", role: "Üretim Mühendisi", team: "Production", city: "Bangalore", campus: "Bangalore Ofisi", photo: "https://randomuser.me/api/portraits/men/82.jpg", status: "Toplantıda", country: "IN" },
+
+  // Egypt (EG)
+  { id: "p29", name: "Mona Farouk", companyId: "heidelberg-materials-egypt", role: "Operasyon Müdürü", team: "Production", city: "Kahire", campus: "Kahire Ofisi", photo: "https://randomuser.me/api/portraits/women/86.jpg", status: "Aktif", country: "EG" },
+  { id: "p30", name: "Tarek Hassan", companyId: "heidelberg-materials-egypt", role: "Liman Operasyonları Sorumlusu", team: "Logistics", city: "Süveyş", campus: "Süveyş Fabrikası", photo: "https://randomuser.me/api/portraits/men/88.jpg", status: "Sahada", country: "EG" },
+
+  // Türkiye (TR)
+  { id: "p31", name: "Ahmet Yıldız", companyId: "akcansa", role: "Fabrika Müdürü", team: "Üretim", city: "İstanbul", campus: "Büyükçekmece Fabrikası", photo: "https://randomuser.me/api/portraits/men/90.jpg", status: "Aktif", country: "TR" },
+  { id: "p32", name: "Zeynep Kaya", companyId: "akcansa", role: "Sürdürülebilirlik Uzmanı", team: "Sürdürülebilirlik", city: "Çanakkale", campus: "Çanakkale Fabrikası", photo: "https://randomuser.me/api/portraits/women/90.jpg", status: "Aktif", country: "TR" }
 ];
 
 const initialAnnouncements = [

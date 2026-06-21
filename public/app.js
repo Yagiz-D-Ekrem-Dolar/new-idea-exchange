@@ -1636,7 +1636,8 @@ function getSubsidiariesByCountry(code) {
     IT: ["İtalya", "Italy"],
     BE: ["Belçika", "Belgium"],
     IN: ["Hindistan", "India"],
-    EG: ["Mısır", "Egypt"]
+    EG: ["Mısır", "Egypt"],
+    TR: ["Türkiye", "Turkey"]
   };
   const names = mapping[code] || [];
   return affiliationCompanies.filter(comp => {
@@ -14534,7 +14535,7 @@ function getActiveLanguage() {
 function getTranslatedText(item, field) {
   if (!item) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = item.country === "DE" ? "de" : "en";
+  const originalLang = item.country === "DE" ? "de" : (item.country === "TR" ? "tr" : "en");
   
   if (activeLang === originalLang) {
     return item[field] || "";
@@ -14554,7 +14555,7 @@ function getTranslatedText(item, field) {
 function renderTranslationButton(idea) {
   if (!idea) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = idea.country === "DE" ? "de" : "en";
+  const originalLang = idea.country === "DE" ? "de" : (idea.country === "TR" ? "tr" : "en");
   
   if (activeLang === originalLang) return "";
   
@@ -14589,7 +14590,7 @@ function translateAllInState() {
       idea.originalProblem = idea.problem || "";
       idea.originalSolution = idea.solution || "";
     }
-    const originalLang = idea.country === "DE" ? "de" : "en";
+    const originalLang = idea.country === "DE" ? "de" : (idea.country === "TR" ? "tr" : "en");
     const showOriginal = !!(state.translatedIdeaIds && state.translatedIdeaIds[idea.id]);
     
     if (showOriginal || activeLang === originalLang) {
@@ -14614,7 +14615,7 @@ function translateAllInState() {
       ann.originalTitle = ann.title || "";
       ann.originalBody = ann.body || "";
     }
-    const originalLang = ann.country === "DE" ? "de" : "en";
+    const originalLang = ann.country === "DE" ? "de" : (ann.country === "TR" ? "tr" : "en");
     if (activeLang === originalLang) {
       ann.title = ann.originalTitle;
       ann.body = ann.originalBody;
@@ -14632,7 +14633,7 @@ function translateAllInState() {
     if (post.originalBody === undefined) {
       post.originalBody = post.body || "";
     }
-    const originalLang = post.country === "DE" ? "de" : "en";
+    const originalLang = post.country === "DE" ? "de" : (post.country === "TR" ? "tr" : "en");
     if (activeLang === originalLang) {
       post.body = post.originalBody;
     } else {
@@ -14661,7 +14662,7 @@ function translateAllInState() {
 
   // 4. Translate Chat Messages
   state.messageSpaces.forEach(space => {
-    const originalLang = space.country === "DE" ? "de" : "en";
+    const originalLang = space.country === "DE" ? "de" : (space.country === "TR" ? "tr" : "en");
     if (space.messages) {
       space.messages.forEach(msg => {
         if (msg.originalBody === undefined) {
@@ -14685,7 +14686,7 @@ function translateAllInState() {
       ds.originalTitle = ds.title || "";
       ds.originalSummary = ds.summary || "";
     }
-    const originalLang = ds.country === "DE" ? "de" : "en";
+    const originalLang = ds.country === "DE" ? "de" : (ds.country === "TR" ? "tr" : "en");
     if (activeLang === originalLang) {
       ds.title = ds.originalTitle;
       ds.summary = ds.originalSummary;
@@ -14704,7 +14705,7 @@ function translateAllInState() {
       ch.originalTitle = ch.title || "";
       ch.originalBrief = ch.brief || "";
     }
-    const originalLang = ch.country === "DE" ? "de" : "en";
+    const originalLang = ch.country === "DE" ? "de" : (ch.country === "TR" ? "tr" : "en");
     if (activeLang === originalLang) {
       ch.title = ch.originalTitle;
       ch.brief = ch.originalBrief;
@@ -15063,7 +15064,7 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  const countryCycle = ["DE", "GB", "US", "ID", "IT", "BE", "IN", "EG"];
+  const countryCycle = ["DE", "GB", "US", "ID", "IT", "BE", "IN", "EG", "TR"];
   const companiesByCountryCode = {};
   countryCycle.forEach(code => {
     companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
@@ -15080,7 +15081,7 @@ function scaleMockDataset() {
     const id = `idea-gen-${i}`;
     const ticker = `NIE-${100 + i}`;
     
-    const originalLang = countryCode === "DE" ? "de" : "en";
+    const originalLang = countryCode === "DE" ? "de" : (countryCode === "TR" ? "tr" : "en");
     const title = trend[originalLang].title + ` (${randCompany.shortName})`;
     const summary = trend[originalLang].summary;
     const problem = trend[originalLang].problem;
@@ -15187,7 +15188,7 @@ function scaleMockDataset() {
     const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
     const annUserPool = demoUsers.filter(u => u.country === countryCode);
     const randomUser = annUserPool.length ? annUserPool[Math.floor(Math.random() * annUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    const originalLang = countryCode === "DE" ? "de" : "en";
+    const originalLang = countryCode === "DE" ? "de" : (countryCode === "TR" ? "tr" : "en");
     const projectNum = i + 10;
 
     state.announcements.push({
@@ -15347,7 +15348,7 @@ function scaleMockDataset() {
     }
   ];
 
-  const countries = ["DE", "GB", "US", "ID", "IT", "BE", "IN", "EG"];
+  const countries = ["DE", "GB", "US", "ID", "IT", "BE", "IN", "EG", "TR"];
   let datasetIdCount = 0;
   countries.forEach(country => {
     const lang = country === "DE" ? "de" : "en";
