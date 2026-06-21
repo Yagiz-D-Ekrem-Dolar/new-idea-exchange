@@ -143,10 +143,10 @@ const state = {
     title: "",
     body: "",
     scope: "Holding geneli",
-    companyId: "sabanci-holding",
+    companyId: "bbva-group",
     country: "Türkiye",
     city: "İstanbul",
-    campus: "Sabancı Center",
+    campus: "Ciudad BBVA – La Vela Kulesi",
     department: "Tüm ekipler"
   },
   selectedMessageSpaceId: "msg-holding",
@@ -154,69 +154,69 @@ const state = {
   messageSpaces: structuredClone(initialMessageSpaces),
   directThreads: {
     "p02": [
-      { userId: "p02", body: "Merhaba Can Bey, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
+      { userId: "p02", body: "Merhaba Lucía Hanım, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
       { own: true, body: "Tabii Mert, verimlilik raporlarını inceledim. Yarın saat 10:00'da kısa bir toplantı yapalım.", time: "Dün 14:32" },
-      { userId: "p02", body: "Harika olur Can Bey, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
+      { userId: "p02", body: "Harika olur Lucía Hanım, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
     ],
     "p03": [
-      { userId: "p03", body: "Can Bey, Çimsa Mersin fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
+      { userId: "p03", body: "Lucía Hanım, Garanti BBVA Portföy Levent Ofisi'ndeki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
       { own: true, body: "Eline sağlık Selin, verileri inceledim. Oldukça temiz görünüyor. Hemen onay verdim.", time: "Dün 16:45" },
-      { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir hammadde optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
+      { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir veri optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
     ],
     "p05": [
       { userId: "p05", body: "Sürdürülebilir finans sprinti için borsa bütçesini kullanabilir miyiz? Sponsor arıyoruz.", time: "Bugün 10:12" },
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Can, I've updated the UK wind farm grid connection proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Lucía, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
-      { userId: "p06", body: "Thank you. The engineering team is eager to start prototyping.", time: "Yesterday 10:12" }
+      { userId: "p06", body: "Thank you. The research team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
     "p07": [
-      { userId: "p07", body: "Hi Can, the UK cement logistics portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
-      { own: true, body: "Sure Sarah, I will request SabancıDx AI lead to run a query for UK portal statistics.", time: "Yesterday 11:45" }
+      { userId: "p07", body: "Hi Lucía, the Madrid insurance portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
+      { own: true, body: "Sure Sarah, I will request BBVA Technology AI lead to run a query for Madrid portal statistics.", time: "Yesterday 11:45" }
     ],
     "p10": [
-      { userId: "p10", body: "Hello Can, Austin solar battery testing is going well. We need to align our pricing algorithm with the UK team.", time: "Yesterday 14:10" },
+      { userId: "p10", body: "Hello Lucía, Mexico City digital savings testing is going well. We need to align our pricing algorithm with the Madrid team.", time: "Yesterday 14:10" },
       { own: true, body: "Hi Michael, good progress. Let's arrange a joint call with John Sterling tomorrow.", time: "Yesterday 14:30" }
     ],
     "p11": [
-      { userId: "p11", body: "Can, we started testing the packing automation in Houston. It has reduced dust emissions significantly.", time: "Yesterday 15:40" },
+      { userId: "p11", body: "Lucía, we started testing the document automation in Monterrey. It has reduced processing time significantly.", time: "Yesterday 15:40" },
       { own: true, body: "That is fantastic news Emily! Let's submit this as a case study to the sustainability board.", time: "Yesterday 16:00" }
     ],
     "p12": [
-      { userId: "p12", body: "Hello Can, Chattanooga composite tests are finalized. The graphene nylon yarn performance is excellent.", time: "2 days ago" },
-      { own: true, body: "Thanks Robert. I saw the stress reports. We will feature this in the Kordsa global showcase.", time: "2 days ago" }
+      { userId: "p12", body: "Hello Lucía, Guadalajara customer experience tests are finalized. The new onboarding flow performance is excellent.", time: "2 days ago" },
+      { own: true, body: "Thanks Robert. I saw the metrics. We will feature this in the BBVA México global showcase.", time: "2 days ago" }
     ],
     "p13": [
-      { userId: "p13", body: "Hallo Can, der neue Bulk-Silo-Entwurf für Hamburg Terminal ist fertig. Können wir das Budget freigeben?", time: "Dün 10:12" },
-      { own: true, body: "Hallo Hans, ich werde das Budget prüfen. Wir müssen sicherstellen, dass die EU-Normen eingehalten werden.", time: "Dün 10:45" },
-      { userId: "p13", body: "Perfekt, danke. Die Dokumentation ist bereits im System hinterlegt.", time: "Dün 11:00" }
+      { userId: "p13", body: "Hola Lucía, el nuevo diseño de logística de almacén para Medellín está listo. ¿Podemos liberar el presupuesto?", time: "Dün 10:12" },
+      { own: true, body: "Hola Hans, voy a revisar el presupuesto. Debemos asegurarnos de cumplir con las normas regionales.", time: "Dün 10:45" },
+      { userId: "p13", body: "Perfecto, gracias. La documentación ya está en el sistema.", time: "Dün 11:00" }
     ],
     "p14": [
-      { userId: "p14", body: "Hallo Can, die Teststrecke für den Wasserstoffbus in München ist betriebsbereit. Die Sensoren laufen.", time: "Dün 13:00" },
-      { own: true, body: "Klasse Dieter! Bitte teile die ersten Telemetriedaten mit der Adana Software-Gruppe.", time: "Dün 13:20" }
+      { userId: "p14", body: "Hola Lucía, la prueba piloto de financiamiento verde en Lima está operativa. Los indicadores están funcionando.", time: "Dün 13:00" },
+      { own: true, body: "¡Excelente Dieter! Por favor comparte los primeros datos con el equipo de software de Bogotá.", time: "Dün 13:20" }
     ],
     "p15": [
-      { userId: "p15", body: "Hola Can, hemos completado el diseño del microgrid solar para Buñol. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
+      { userId: "p15", body: "Hola Lucía, hemos completado el diseño del producto de banca corporativa para Bilbao. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
       { own: true, body: "Hola Carlos, excelente. Por favor, súbelo usando el Borsa Composer seleccionando España como país objetivo.", time: "Bugün 09:45" },
       { userId: "p15", body: "Entendido, ya está publicado. Gracias por el soporte.", time: "Bugün 10:00" }
     ],
     "p16": [
-      { userId: "p16", body: "Can, I uploaded the carbon metrics for Çimsa Spain alternative fuels. It's ready for strategic score review.", time: "Dün 15:00" },
+      { userId: "p16", body: "Lucía, I uploaded the sustainability metrics for BBVA, S.A. Madrid treasury. It's ready for strategic score review.", time: "Dün 15:00" },
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Can Bey, Teknosa mağaza içi kiosk projemize 100 SA bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Lucía Hanım, BBVA México şube içi kiosk projemize 100 SA bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
-      { userId: "u2", body: "Can Bey, CarrefourSA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
+      { userId: "u2", body: "Lucía Hanım, BBVA Colombia tedarik zinciri takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
       { own: true, body: "Eline sağlık Mehmet, lojistik ekibiyle koordine edip bütçe onayını veriyorum.", time: "Dün 17:00" }
     ],
     "u4": [
-      { userId: "u4", body: "Can, Altın Yaka inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
-      { own: true, body: "Çok teşekkürler Kerem Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
+      { userId: "u4", body: "Lucía, inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
+      { own: true, body: "Çok teşekkürler Mateo Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
     ]
   },
   messageDraft: "",
@@ -269,7 +269,7 @@ const state = {
       category: "Operasyon",
       date: "2026-06-15",
       tags: ["şube", "müşteri deneyimi", "pilot"],
-      author: "Can Koç"
+      author: "Lucía Herrera"
     },
     {
       id: "ag-2",
@@ -341,7 +341,7 @@ const state = {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: ["team-001"], linkedIdeas: ["idea-1", "idea-3"] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: ["team-003"], linkedIdeas: ["idea-2", "idea-5"] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: ["team-002"], linkedIdeas: ["idea-1"] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "BBVA Mobile, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
   ],
   predictions: [
     {
@@ -356,7 +356,7 @@ const state = {
       date: "2026-06-16",
       likes: 14,
       comments: [
-        { userName: "Can Koç", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
+        { userName: "Lucía Herrera", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
       ]
     },
     {
@@ -381,7 +381,7 @@ const state = {
       description: "Girişim fikirlerinizi nasıl doğrularsınız, MVP (Minimum Uygulanabilir Ürün) nasıl kurgulanır ve müşteri görüşmeleri nasıl yürütülür sorularına pratik yanıtlar.",
       link: "https://www.youtube.com/watch?v=fEvKo90qBns",
       date: "Her Çarşamba, 14:00",
-      organizer: "Sabancı İnovasyon Ofisi"
+      organizer: "BBVA İnovasyon Ofisi"
     },
     {
       id: "edu-2",
@@ -390,7 +390,7 @@ const state = {
       description: "KVKK, BDDK lisanslama süreçleri, açık bankacılık regülasyonları ve ödeme kuruluşları mevzuatları hakkında bilgilendirici oturum.",
       link: "https://zoom.us/j/demo-fintech",
       date: "24 Haziran 2026, 11:00",
-      organizer: "Akbank Mobil Hukuk & Uyum Departmanı"
+      organizer: "BBVA Mobile Hukuk & Uyum Departmanı"
     },
     {
       id: "edu-3",
@@ -399,36 +399,36 @@ const state = {
       description: "Kullanıcı başına lisanslama, kullanım tabanlı fiyatlandırma modelleri ve kurumsal SaaS satış kanallarını optimize etme üzerine atölye çalışması.",
       link: "https://www.youtube.com/watch?v=0H73Z1tCeeM",
       date: "Kayıttan İzle (1.5 Saat)",
-      organizer: "SabancıDx Bulut Bilişim Grubu"
+      organizer: "BBVA Technology Bulut Bilişim Grubu"
     }
   ],
   mentors: [
     {
       id: "mentor-1",
       name: "Elif Şahin",
-      title: "FinTech & Ürün Yönetimi Müdürü (Akbank)",
+      title: "FinTech & Ürün Yönetimi Müdürü (BBVA)",
       specialties: ["Ürün Yönetimi", "FinTech", "İş Modeli Geliştirme"],
-      bio: "12+ yıllık ürün yönetim deneyimi. Akbank Mobil dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
+      bio: "12+ yıllık ürün yönetim deneyimi. BBVA Mobile dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
       avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-      email: "elif.sahin@sabanci.example"
+      email: "elif.sahin@bbva.example"
     },
     {
       id: "mentor-2",
       name: "Emir Arslan",
-      title: "Yapay Zekâ Çözüm Mimarı (SabancıDx)",
+      title: "Yapay Zekâ Çözüm Mimarı (BBVA Technology)",
       specialties: ["Yapay Zekâ", "Makine Öğrenmesi", "Teknik Altyapı"],
       bio: "Büyük dil modelleri (LLM), veri analitiği ve akıllı tahminleme altyapıları üzerine uzmanlaşmıştır. Fikirlerin teknik fizibilitesini değerlendirmede destek sağlar.",
       avatar: "https://randomuser.me/api/portraits/men/41.jpg",
-      email: "emir.arslan@sabanci.example"
+      email: "emir.arslan@bbva.example"
     },
     {
       id: "mentor-3",
       name: "Zeynep Kaya",
-      title: "Sürdürülebilirlik & ESG Koordinatörü (Enerjisa)",
+      title: "Sürdürülebilirlik & ESG Koordinatörü (BBVA Perú)",
       specialties: ["Yeşil Finans", "ESG Uyum", "Karbon Takip"],
       bio: "Girişimlerin yeşil finansman imkanlarına erişimi, ESG raporlama standartları ve karbon nötrleme projelerinin kurgulanması konularında mentörlük sunuyor.",
       avatar: "https://randomuser.me/api/portraits/women/51.jpg",
-      email: "zeynep.kaya@sabanci.example"
+      email: "zeynep.kaya@bbva.example"
     }
   ],
   mentorApplications: [],
@@ -440,16 +440,16 @@ const state = {
       date: "28 Haziran 2026, 14:00 - 17:00",
       description: "İştirak stüdyolarında kuluçkaya alınan en iyi 5 projenin üst yönetim ve jüri karşısında sunum yapacağı, demo ve soru-cevap oturumlarının düzenleneceği büyük final.",
       link: "https://zoom.us/j/demo-day-2026",
-      organizer: "Sabancı İnovasyon Ofisi"
+      organizer: "BBVA İnovasyon Ofisi"
     },
     {
       id: "event-2",
       title: "FinTech & Yapay Zekâ Fikir Maratonu (Hackathon)",
       topic: "Yarışmalar",
       date: "10-12 Temmuz 2026",
-      description: "Sabancı Holding iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
+      description: "BBVA Group iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
       link: "https://fikirkovani.com/hackathon-kayit",
-      organizer: "SabancıDx"
+      organizer: "BBVA Technology"
     },
     {
       id: "event-3",
@@ -483,15 +483,15 @@ const state = {
     {
       id: "ds-1",
       title: "2026 Yapay Zeka Sektör Raporu",
-      summary: "SabancıDx tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
+      summary: "BBVA Technology tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
       sharedBy: "Mert Alkan",
-      companyId: "sabancidx",
+      companyId: "bbva-technology",
       type: "Kurumsal",
       area: "Yapay Zekâ & Derin Teknoloji",
       importanceScore: 5,
       date: "2026-06-05",
       comments: [
-        { user: "Can Koç", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
+        { user: "Lucía Herrera", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
       ],
       likes: 18,
       downloads: 42,
@@ -499,10 +499,10 @@ const state = {
     },
     {
       id: "ds-2",
-      title: "Akbank QR ve Biyometrik Ödeme Kullanım Analizi",
+      title: "BBVA QR ve Biyometrik Ödeme Kullanım Analizi",
       summary: "QR ve biyometrik ödeme entegrasyonları için pazar payı, işlem hızları ve müşteri kullanım oranları.",
-      sharedBy: "Can Koç",
-      companyId: "akbank",
+      sharedBy: "Lucía Herrera",
+      companyId: "garanti-bbva",
       type: "Kurumsal",
       area: "FinTech & Dijital Bankacılık",
       importanceScore: 4,
@@ -514,10 +514,10 @@ const state = {
     },
     {
       id: "ds-3",
-      title: "Texas Grid Peak Hours Pricing Datetime Set",
-      summary: "Historical grid pricing data for Texas solar farm battery storage management.",
+      title: "Mexico City Savings Peak Hours Pricing Datetime Set",
+      summary: "Historical market pricing data for Mexico City digital savings dispatch management.",
       sharedBy: "Michael Vance",
-      companyId: "sabanci-climate-us",
+      companyId: "bbva-mexico",
       type: "Kurumsal",
       area: "Sürdürülebilirlik & Yeşil Enerji",
       importanceScore: 5,
@@ -525,21 +525,21 @@ const state = {
       comments: [],
       likes: 24,
       downloads: 58,
-      country: "US"
+      country: "MX"
     }
   ],
-  
+
   announcements: [
     {
       id: "ann-rec-1",
-      title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-      author: "Can Koç",
+      title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
+      author: "Lucía Herrera",
       authorId: "u3",
-      companyId: "akbank",
+      companyId: "garanti-bbva",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+      body: "Merhabalar! BBVA Mobile AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
       date: "2026-06-08",
       comments: [],
       likes: 42,
@@ -550,21 +550,21 @@ const state = {
     },
     {
       id: "ann-rec-2",
-      title: "🚀 Texas Solar Battery Storage System Project (US) - Seeking MLOps Engineer!",
+      title: "🚀 Mexico City Digital Savings System Project (MX) - Seeking MLOps Engineer!",
       author: "Michael Vance",
       authorId: "u10",
-      companyId: "sabanci-climate-us",
+      companyId: "bbva-mexico",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Hello! We are looking for an MLOps Engineer to deploy predictive grid models at the Texas solar farm project site. Remote/Austin. Apply below!",
+      body: "Hello! We are looking for an MLOps Engineer to deploy predictive savings models at the Mexico City project site. Remote/Mexico City. Apply below!",
       date: "2026-06-10",
       comments: [],
       likes: 20,
       ideaId: "idea-6",
       missingRoles: ["MLOps Engineer"],
       imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80",
-      country: "US"
+      country: "MX"
     },
     ...structuredClone(initialAnnouncements)
   ],
@@ -575,8 +575,8 @@ const state = {
       userId: "p02",
       userName: "Mert Alkan",
       userAvatar: "https://randomuser.me/api/portraits/men/12.jpg",
-      userBio: "İnovasyon Lideri · SabancıDx",
-      body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
+      userBio: "İnovasyon Lideri · BBVA Technology",
+      body: "BBVA Mobile AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
       date: "2 saat önce",
       likes: 12,
       likedByMe: false,
@@ -590,7 +590,7 @@ const state = {
       userId: "u10",
       userName: "Michael Vance",
       userAvatar: "https://randomuser.me/api/portraits/men/22.jpg",
-      userBio: "Energy Storage Director · Sabancı Climate US",
+      userBio: "Digital Banking Director · BBVA México",
       body: "Texas utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
       date: "3 hours ago",
       likes: 15,
@@ -606,11 +606,11 @@ const state = {
 function currentUser() {
   const c = state.activeCountry || state.currentCountry || "TR";
   const userConfigs = {
-    TR: { id: "u3", name: "Can Koç", email: "can.koc@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    GB: { id: "u3", name: "Can Koç", email: "can.koc.uk@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    US: { id: "u3", name: "Can Koç", email: "can.koc.us@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    DE: { id: "u3", name: "Can Koç", email: "can.koc.de@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    ES: { id: "u3", name: "Can Koç", email: "can.koc.es@sabanci.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
+    TR: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    ES: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.es@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    MX: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.mx@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    CO: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.co@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    PE: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.pe@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
   };
   const config = userConfigs[c] || userConfigs.TR;
 
@@ -639,56 +639,55 @@ function currentUser() {
 
   switch (c) {
     case "TR":
-      adapted.company = "Akbank T.A.Ş.";
-      adapted.companyId = "akbank";
+      adapted.company = "Garanti BBVA A.Ş.";
+      adapted.companyId = "garanti-bbva";
       adapted.department = "Dijital Bankacılık";
-      adapted.location = "Akbank Genel Müdürlük";
+      adapted.location = "Levent Ofisi";
       adapted.city = "İstanbul";
       adapted.region = "Marmara";
       adapted.role = "İnovasyon Yöneticisi";
       break;
-    case "UK":
-    case "GB":
-      adapted.company = "Çimsa UK";
-      adapted.companyId = "cimsa-uk";
+    case "MX":
+      adapted.company = "BBVA México, S.A.";
+      adapted.companyId = "bbva-mexico";
       adapted.department = "Strategy";
-      adapted.location = "London Office";
-      adapted.city = "London";
-      adapted.region = "England";
+      adapted.location = "BBVA México HQ";
+      adapted.city = "Mexico City";
+      adapted.region = "CDMX";
       adapted.role = "Strategy Manager";
       break;
-    case "US":
-      adapted.company = "Kordsa Inc.";
-      adapted.companyId = "kordsa-us";
+    case "CO":
+      adapted.company = "BBVA Colombia S.A.";
+      adapted.companyId = "bbva-colombia";
       adapted.department = "Operations";
-      adapted.location = "Chattanooga Plant";
-      adapted.city = "Chattanooga";
-      adapted.region = "TN";
+      adapted.location = "BBVA Colombia Plaza";
+      adapted.city = "Bogotá";
+      adapted.region = "Bogotá D.C.";
       adapted.role = "Operations Director";
       break;
-    case "DE":
-      adapted.company = "Akbank AG";
-      adapted.companyId = "akbank-de";
+    case "PE":
+      adapted.company = "BBVA Perú S.A.";
+      adapted.companyId = "bbva-peru";
       adapted.department = "Corporate Banking";
-      adapted.location = "Frankfurt HQ";
-      adapted.city = "Frankfurt";
-      adapted.region = "Hesse";
+      adapted.location = "BBVA Perú HQ";
+      adapted.city = "Lima";
+      adapted.region = "Lima";
       adapted.role = "Corporate Manager";
       break;
     case "ES":
-      adapted.company = "Çimsa Spain";
-      adapted.companyId = "cimsa-spain";
+      adapted.company = "BBVA, S.A.";
+      adapted.companyId = "bbva-es";
       adapted.department = "Sales";
-      adapted.location = "Madrid Office";
+      adapted.location = "Ciudad BBVA – La Vela Kulesi";
       adapted.city = "Madrid";
       adapted.region = "Madrid";
       adapted.role = "Sales Director";
       break;
     default:
-      adapted.company = "Hacı Ömer Sabancı Holding A.Ş.";
-      adapted.companyId = "sabanci-holding";
+      adapted.company = "Banco Bilbao Vizcaya Argentaria, S.A.";
+      adapted.companyId = "bbva-group";
       adapted.department = "Strateji";
-      adapted.location = "Sabancı Center";
+      adapted.location = "Ciudad BBVA – La Vela Kulesi";
       adapted.city = "İstanbul";
       adapted.region = "Marmara";
       adapted.role = "Yönetici";
@@ -764,7 +763,7 @@ function personById(id) {
       photo: cUser.photo,
       status: "Aktif",
       bio: cUser.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-      cv: cUser.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+      cv: cUser.cv || "Eğitim: Universidad Autónoma de Madrid. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
       email: cUser.email,
       badges: cUser.badges || [],
       country: cUser.country
@@ -776,15 +775,15 @@ function personById(id) {
       return {
         id: du.id,
         name: du.name,
-        companyId: du.companyId || "sabanci-holding",
+        companyId: du.companyId || "bbva-group",
         role: du.role,
         team: du.department,
         city: du.city || "İstanbul",
-        campus: du.location || "Sabancı Center",
+        campus: du.location || "Ciudad BBVA – La Vela Kulesi",
         photo: du.photo || du.avatarUrl || profilePhotos[du.id] || "https://randomuser.me/api/portraits/men/75.jpg",
         status: "Aktif",
         bio: du.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-        cv: du.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+        cv: du.cv || "Eğitim: Universidad Autónoma de Madrid. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
         email: du.email,
         badges: du.badges || [],
         country: du.country || "TR"
@@ -832,7 +831,7 @@ function announcementsInScope() {
 
 function spacesInScope() {
   const ids = companyIdsInScope();
-  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "sabanci-holding");
+  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "bbva-group");
 }
 
 function syncAnnouncementDraftCompany(companyId) {
@@ -1007,8 +1006,8 @@ function avatar(name, size = "", imageUrl = "") {
 
 function brandLockup(compact = false) {
   return `
-    <span class="sabanci-lockup ${compact ? "compact" : ""}" aria-label="Türkiye Sabancı Holding - NEW IDEA EXCHANGE">
-      <img class="sabanci-logo-image" src="${esc(brandLogoSrc)}" alt="Türkiye Sabancı Holding" />
+    <span class="bbva-lockup ${compact ? "compact" : ""}" aria-label="Türkiye BBVA Group - NEW IDEA EXCHANGE">
+      <img class="bbva-logo-image" src="${esc(brandLogoSrc)}" alt="Türkiye BBVA Group" />
       <small>${esc(state.brandName)}</small>
     </span>
   `;
@@ -1103,8 +1102,8 @@ function renderLogin() {
             ${brandLockup()}
           </div>
           <div class="apple-login-copy">
-            <h1 style="font-family: 'Space Grotesk', sans-serif;">Sabancı Innovation Exchange</h1>
-            <p>Sabancı Holding iç inovasyon alanına giriş için exchange key'ini gir.</p>
+            <h1 style="font-family: 'Space Grotesk', sans-serif;">BBVA Innovation Exchange</h1>
+            <p>BBVA Grubu iç inovasyon alanına giriş için exchange key'ini gir.</p>
           </div>
           <label class="field apple-key-field">
             <span>Exchange key</span>
@@ -1651,7 +1650,7 @@ function renderSubsidiaryBranchingPanel() {
         <div>
           <span class="panel-kicker" style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent);">
             <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 18px; height: 12px; object-fit: cover; border-radius: 2px;" alt="" />
-            SABANCI ${activeC.name.toUpperCase()} EKOSİSTEMİ
+            BBVA ${activeC.name.toUpperCase()} EKOSİSTEMİ
           </span>
           <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--ink);">Şubeleşme, İştirakler ve Yerleşke Yapısı</h3>
           <p style="color: var(--muted); font-size: 13px; margin-top: 2px;">Aktif portala bağlı iştiraklerin coğrafi yerleşke, departman ve inovasyon ağacı.</p>
@@ -1680,12 +1679,12 @@ function renderSubsidiaryBranchingPanel() {
         <!-- Left Side: Interactive Branch Tree & Org Map -->
         <div style="display: flex; flex-direction: column; gap: 16px; background: rgba(var(--primary-rgb), 0.015); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; min-height: 380px; justify-content: center; position: relative; overflow: hidden;">
           
-          <!-- Root Parent Node: Sabancı Holding -->
+          <!-- Root Parent Node: BBVA Group -->
           <div style="display: flex; justify-content: center; margin-bottom: 28px; position: relative; z-index: 2;">
             <div style="display: flex; align-items: center; gap: 12px; background: var(--surface); border: 2px solid var(--accent); padding: 10px 24px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 93, 170, 0.12); text-align: left;">
-              <img src="/assets/company-logos/sabanci-holding.svg" style="height: 22px; width: auto;" alt="" />
+              <img src="/assets/company-logos/bbva-group.svg" style="height: 22px; width: auto;" alt="" />
               <span>
-                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">H.Ö. Sabancı Holding</strong>
+                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">BBVA Group</strong>
                 <small style="color: var(--muted); font-size: 11px; font-weight: 500;">Holding Merkez Çatısı</small>
               </span>
             </div>
@@ -4406,7 +4405,7 @@ function renderAffiliationFilter() {
     <section class="corp-filter-panel">
       <div class="corp-filter-head">
         <div>
-          <span class="panel-kicker">SABANCI HOLDİNG VE İŞTİRAK FİLTRESİ</span>
+          <span class="panel-kicker">BBVA GRUBU VE İŞTİRAK FİLTRESİ</span>
           <h3>Kurumsal kapsam</h3>
         </div>
         <label class="field compact-field">
@@ -4418,7 +4417,7 @@ function renderAffiliationFilter() {
       </div>
       <div class="affiliate-strip" aria-label="İştirakler">
         <button class="affiliate-chip ${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">
-          ${companyLogo(companyById("sabanci-holding"), "mini")}
+          ${companyLogo(companyById("bbva-group"), "mini")}
           <span>Tümü</span>
         </button>
         ${countryCompanies.map(company => `
@@ -4596,7 +4595,7 @@ function renderMessages() {
   const messages = selectedPerson
     ? (state.directThreads[selectedPerson.id] || [])
     : (selectedSpace?.messages || []);
-  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "sabanci-holding");
+  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "bbva-group");
 
   return `
     <div class="view-stack corp-page">
@@ -4909,7 +4908,7 @@ function managerVoteEvents() {
     { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: 1620, quantity: 12, date: "14.06.2026" },
     { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: 1380, quantity: 9, date: "14.06.2026" },
     { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
-    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
+    { userId: "u3", userName: "Lucía Herrera", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
   ];
   return [...base, ...seeded].filter(tx => {
     const idea = state.ideas.find(i => i.id === tx.ideaId);
@@ -5537,7 +5536,7 @@ function renderCreateClub() {
         <div class="create-step-body" style="display: flex; flex-direction: column; gap: 16px;">
           <label class="field">
             <span>Kulüp Adı *</span>
-            <input class="input" placeholder="Örn: Akbank Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
+            <input class="input" placeholder="Örn: BBVA Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
           </label>
           <label class="field">
             <span>Kulüp Açıklaması / Amacı *</span>
@@ -5776,7 +5775,7 @@ function renderEducationPage() {
             </label>
             <label class="field">
               <span>Düzenleyen Birim</span>
-              <input class="input" id="edu-composer-organizer" placeholder="Örn: Akbank Mobil İnovasyon Ekibi" />
+              <input class="input" id="edu-composer-organizer" placeholder="Örn: BBVA Mobile İnovasyon Ekibi" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, YouTube vb.)</span>
@@ -5840,7 +5839,7 @@ function renderEducationPage() {
               </label>
               <label class="field">
                 <span>Unvan / Şirket</span>
-                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (Akbank)" />
+                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (BBVA)" />
               </label>
               <label class="field" style="grid-column: 1 / -1;">
                 <span>Uzmanlık Alanları (Virgülle ayırın)</span>
@@ -5848,7 +5847,7 @@ function renderEducationPage() {
               </label>
               <label class="field">
                 <span>E-posta</span>
-                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@sabanci.example')}" placeholder="E-posta adresiniz" />
+                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@bbva.example')}" placeholder="E-posta adresiniz" />
               </label>
               <label class="field full" style="grid-column: 1 / -1;">
                 <span>Hakkımda / Mentörlük Kapsamı</span>
@@ -5991,7 +5990,7 @@ function renderEventsPage() {
             </label>
             <label class="field">
               <span>Düzenleyen / Organizatör</span>
-              <input class="input" id="evt-organizer" placeholder="Örn: SabancıDx" />
+              <input class="input" id="evt-organizer" placeholder="Örn: BBVA Technology" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, Teams, Kayıt formu vb.)</span>
@@ -8017,9 +8016,9 @@ function renderAdminContent() {
       <div class="section-title"><div><h2>Denetim Kayıtları</h2><p>Admin işlemleri ve kritik güvenlik olayları.</p></div></div>
       <div class="mini-list">
         ${[
-          ["Kerem Yıldız", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
+          ["Mateo Aguirre", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
           ["Sistem", "Anonim fikir denetim kaydı oluşturdu", "Dün 17:42"],
-          ["Can Koç", "Fikri pilot seçti", "Dün 15:11"],
+          ["Lucía Herrera", "Fikri pilot seçti", "Dün 15:11"],
           ["Merve Aydın", "Yarışma duyurusu yayınladı", "31 Mayıs"]
         ].map(item => `<div class="mini-item"><span><strong>${esc(item[0])}</strong><span>${esc(item[1])}</span></span><span>${esc(item[2])}</span></div>`).join("")}
       </div>
@@ -8837,7 +8836,7 @@ document.addEventListener("click", event => {
     const title = document.getElementById("mentor-composer-title")?.value.trim();
     const specialtiesStr = document.getElementById("mentor-composer-specialties")?.value.trim();
     const bio = document.getElementById("mentor-composer-bio")?.value.trim();
-    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@sabanci.example";
+    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@bbva.example";
     
     if (!name || !title || !specialtiesStr || !bio) {
       alert("Lütfen tüm alanları doldurun.");
@@ -9118,7 +9117,7 @@ document.addEventListener("click", event => {
       type: marketCategoryVal,
       company: companyVal,
       department: departmentVal,
-      location: user.location || "Sabancı Center",
+      location: user.location || "Ciudad BBVA – La Vela Kulesi",
       city: user.city || "İstanbul",
       authorId: user.id,
       authorLabel: anonymityVal === "İsmimle paylaş" ? user.name : anonymityVal === "Tam anonim" ? "Anonim Çalışan" : `Anonim ${user.role || 'Çalışan'}`,
@@ -9138,7 +9137,7 @@ document.addEventListener("click", event => {
       comments: [],
       tags: [departmentVal || "İnovasyon", marketCategoryVal, impactVal + " Etki", costVal + " Maliyet"],
       createdAt: new Date().toISOString().slice(0, 10),
-      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "sabanci-holding"),
+      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "bbva-group"),
       marketCategory: marketCategoryVal,
       marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
       marketPrice: 100,
@@ -9915,7 +9914,7 @@ document.addEventListener("click", event => {
     state.currentCountry = actionButton.dataset.code;
     state.activeCountry = actionButton.dataset.code;
     state.loginCountrySelected = true;
-    state.currentUserId = "u3"; // Always Can Koç
+    state.currentUserId = "u3"; // Always Lucía Herrera
     state.loggedIn = true; // Auto login
     render();
     resetScroll();
@@ -12164,20 +12163,20 @@ function renderSuggestionsSection() {
   state.suggestionsPool = state.suggestionsPool || [
     {
       id: "sug-1",
-      title: "Akbank Mobil Ödeme API Dokümantasyonu Güncellemesi",
+      title: "BBVA Mobile Ödeme API Dokümantasyonu Güncellemesi",
       category: "Veri Seti İsteği",
-      description: "Akbank Mobil API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
-      companyId: "akbank",
-      author: "Can Koç",
+      description: "BBVA Mobile API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
+      companyId: "garanti-bbva",
+      author: "Lucía Herrera",
       date: "2026-06-08",
       status: "İnceleniyor"
     },
     {
       id: "sug-2",
-      title: "SabancıDx Portalında Mobil Giriş Hatası",
+      title: "BBVA Technology Portalında Mobil Giriş Hatası",
       category: "Uygulama Hataları",
-      description: "iOS 16+ sürümlerinde SabancıDx iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
-      companyId: "sabancidx",
+      description: "iOS 16+ sürümlerinde BBVA Technology Portalı iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
+      companyId: "bbva-technology",
       author: "Defne Arman",
       date: "2026-06-06",
       status: "İletildi"
@@ -12186,8 +12185,8 @@ function renderSuggestionsSection() {
       id: "sug-3",
       title: "Karbon Ayak İzi Hesaplama Formülü Standartlaşması",
       category: "Genel Öneri",
-      description: "Çimsa ve Enerjisa karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
-      companyId: "cimsa",
+      description: "Garanti BBVA Portföy ve BBVA Perú karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
+      companyId: "garanti-bbva-portfoy",
       author: "Selin Eryılmaz",
       date: "2026-06-05",
       status: "Çözüldü"
@@ -12197,7 +12196,7 @@ function renderSuggestionsSection() {
       title: "Leasing Ödeme Planı Simülasyon Veri Seti Talebi",
       category: "Veri Seti İsteği",
       description: "Tarım ve inşaat sektöründeki müşteriler için geliştirilecek esnek ödeme planı (balon ödemeli, sezonluk ödemeli vb.) algoritmalarını test etmek için anonimleştirilmiş geçmiş ödeme performansı veri setine ihtiyacımız var.",
-      companyId: "aklease",
+      companyId: "garanti-bbva-leasing",
       author: "Nazlı Durukan",
       date: "2026-06-09",
       status: "İnceleniyor"
@@ -12206,8 +12205,8 @@ function renderSuggestionsSection() {
       id: "sug-leasing-2",
       title: "İkinci El İş Makinesi Değerleme Entegrasyonu",
       category: "Genel Öneri",
-      description: "Aklease portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
-      companyId: "aklease",
+      description: "Garanti BBVA Leasing portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
+      companyId: "garanti-bbva-leasing",
       author: "Mert Alkan",
       date: "2026-06-08",
       status: "İletildi"
@@ -12217,7 +12216,7 @@ function renderSuggestionsSection() {
       title: "Leasing Sözleşmesi E-İmza Sürecindeki Gecikmeler",
       category: "Uygulama Hataları",
       description: "Mobil imza doğrulama adımlarında bazen SMS şifrelerinin gelmemesi veya gecikmesi nedeniyle sözleşme onay süreleri uzuyor. Servis sağlayıcı entegrasyonunun kontrol edilmeli.",
-      companyId: "aklease",
+      companyId: "garanti-bbva-leasing",
       author: "Nazlı Durukan",
       date: "2026-06-07",
       status: "Çözüldü"
@@ -13105,7 +13104,7 @@ function socialLeaderboardRows() {
   ];
   return rows.map(row => {
     const person = personById(row.userId) || {};
-    const company = companyById(person.companyId || "sabanci-holding");
+    const company = companyById(person.companyId || "bbva-group");
     return {
       ...row,
       name: person.name || "NEW IDEA EXCHANGE Üyesi",
@@ -13199,7 +13198,7 @@ function createRichSocialPost(kind, bodyText, photoFile = null) {
     base.link = {
       title: "Fikir doğrulama notları",
       description: "Kısa problem tanımı, veri ihtiyacı ve beklenen etki özeti.",
-      url: "https://www.sabanci.com/"
+      url: "https://www.bbva.com/"
     };
   }
   return base;
@@ -13239,9 +13238,9 @@ function createRichMessage(kind) {
       ...message,
       body: "Kaynak linki burada, yorumlarınızı bekliyorum.",
       link: {
-        title: "Sabancı dijital kanallar notu",
+        title: "BBVA dijital kanallar notu",
         description: "Süreç iyileştirme için referans bağlantı.",
-        url: "https://www.sabanci.com/"
+        url: "https://www.bbva.com/"
       }
     };
   }
@@ -13746,9 +13745,9 @@ function renderSystemDetails() {
     `;
   } else if (state.systemDetailsTab === "Belgeler") {
     const currentReportHref = "/NIE-Kurumsal-Teknik-Rapor-2026.pdf";
-    const sabanciNewHref = "/Sabanci-New.pdf";
-    const academicIntegrationHref = "/Sabanci-New-Akademik-ve-Entegrasyon-Raporu.pdf";
-    const academicEvidenceHref = "/Sabanci-New-Akademik-Literatur-ve-Kanitlar-Raporu.pdf";
+    const bbvaNewHref = "/BBVA-New.pdf";
+    const academicIntegrationHref = "/BBVA-New-Akademik-ve-Entegrasyon-Raporu.pdf";
+    const academicEvidenceHref = "/BBVA-New-Akademik-Literatur-ve-Kanitlar-Raporu.pdf";
     const docCard = (iconName, title, desc, links) => `
       <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 18px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
         <div style="display: flex; align-items: center; gap: 10px;">
@@ -13770,7 +13769,7 @@ function renderSystemDetails() {
           ${icon("folder-open")} Platform Belgeleri
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          Sabancı Holding New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
+          BBVA Group New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
           ${docCard("file-text", "Güncel Teknik Rapor", "20 Haziran 2026 tarihli mimari inceleme, ürün mantığı, borsa fiyatlama modeli, AI kapsamı, teknik borçlar ve önerilen yol haritasını içeren güncel PDF raporu.", [
@@ -13778,9 +13777,9 @@ function renderSystemDetails() {
             { href: currentReportHref, label: "PDF İndir", download: true },
             { href: "/technical-report.html", label: "HTML Rapor" }
           ])}
-          ${docCard("presentation", "Sabancı New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel Sabancı New PDF dokümanı.", [
-            { href: sabanciNewHref, label: "PDF Görüntüle" },
-            { href: sabanciNewHref, label: "PDF İndir", download: true }
+          ${docCard("presentation", "BBVA New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel BBVA New PDF dokümanı.", [
+            { href: bbvaNewHref, label: "PDF Görüntüle" },
+            { href: bbvaNewHref, label: "PDF İndir", download: true }
           ])}
           ${docCard("book-open", "Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
             { href: academicIntegrationHref, label: "PDF Görüntüle" },
@@ -13984,7 +13983,7 @@ function formatAIMessage(text) {
 function renderAIAssistantWidget() {
   state.aiAssistantOpen = !!state.aiAssistantOpen;
   state.aiAssistantMessages = state.aiAssistantMessages || [
-    { role: 'assistant', text: 'Merhaba. Ben Sabancı AI Asistanı; yalnızca platform içindeki fikirler, gündem, duyurular, gelişmiş ürünler ve yönetici kaynaklarından özet çıkarırım. Demo kapsamında internette arama yapmam veya dış haber çekmem.' },
+    { role: 'assistant', text: 'Merhaba. Ben BBVA AI Asistanı; yalnızca platform içindeki fikirler, gündem, duyurular, gelişmiş ürünler ve yönetici kaynaklarından özet çıkarırım. Demo kapsamında internette arama yapmam veya dış haber çekmem.' },
     { role: 'user', text: 'Şu an platform içinde hype hangi alana kayıyor?' },
     { role: 'assistant', text: '**Platform içi trend okuması:**\n\nBorsa hareketleri, gündem başlıkları ve ürünleşen fikirler birlikte bakıldığında operasyon verimliliği, AI destekli özetleme ve yeşil finans başlıkları öne çıkıyor. Bu yorum yalnızca demo içindeki kayıtlar üzerinden üretilmiştir.' }
   ];
@@ -14035,7 +14034,7 @@ function renderAIAssistantWidget() {
       <header style="background: linear-gradient(135deg, #005daa 0%, #3730a3 100%); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 8px;">
           ${icon("bot")}
-          <span style="font-weight: 600; font-size: 14.5px;">Sabancı AI Asistanı</span>
+          <span style="font-weight: 600; font-size: 14.5px;">BBVA AI Asistanı</span>
         </div>
         <button data-action="toggle-ai-assistant" style="background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 0;">&times;</button>
       </header>
@@ -14111,13 +14110,13 @@ function handleAIChatResponse(msgText) {
     ${resources.map(item => `- **${item.title}** (${item.category}): ${item.description}`).join("\n")}
     
     Bu kayıtlar adminlerin demo içindeki Yönetici Depolama alanına eklediği kaynaklardan gelir.`;
-  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("aklease")) {
-    replyText = `**Yapay Zekâ Fikir Önerisi (Aklease):**
+  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("garanti bbva leasing")) {
+    replyText = `**Yapay Zekâ Fikir Önerisi (Garanti BBVA Leasing):**
 
     *Öneri:* **Güneş Enerjisi Santralleri (GES) için Dijital Leasing Paketi**
     *Açıklama:* KOBİ'lerin çatı tipi GES ve yeşil enerji yatırımlarını hızlandırmak için, fizibilite verilerinden otomatik teminat oranı ve vade yapısı çıkaran, tamamen kağıtsız bir başvuru/onay modülü.
 
-    Bunu Ak Finansal Kiralama (Aklease) bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
+    Bunu Garanti BBVA Leasing bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
   } else if (query.includes("fintech") || query.includes("ödeme") || query.includes("bankacılık") || query.includes("fikir")) {
     replyText = `**Yapay Zekâ Fikir Önerisi (FinTech):**
     
@@ -14188,7 +14187,7 @@ function renderRulesPage() {
           <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; margin-top: 0;">
             ${icon("eye-off")} 3. Bilgi Güvenliği ve Gizlilik
           </h3>
-          <p>Sabancı Holding iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
+          <p>BBVA Grubu iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
         </div>
 
         <div style="border-top: 1px solid var(--line-soft); padding-top: 16px;">
@@ -14383,7 +14382,7 @@ function ensureSocialEnhancements() {
     dataPost.link = {
       title: "Yeşil finans veri notu",
       description: "ESG veri alanları, örnek KPI seti ve proje kullanım senaryoları.",
-      url: "https://www.sabanci.com/"
+      url: "https://www.bbva.com/"
     };
   }
 
@@ -14408,11 +14407,11 @@ function ensureSocialEnhancements() {
         ]
       }
     }),
-    createSeedSocialPost("sp-rich-3", "p15", "Akbank Mobil API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
+    createSeedSocialPost("sp-rich-3", "p15", "BBVA Mobile API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
       link: {
         title: "API akış kontrol listesi",
         description: "Onay, test, hata izleme ve canlıya geçiş adımları.",
-        url: "https://www.sabanci.com/"
+        url: "https://www.bbva.com/"
       }
     })
   ];
@@ -14446,7 +14445,7 @@ function ensureSocialEnhancements() {
         link: {
           title: "Haftalık karar notu",
           description: "Fikir üretimi, al/sat hareketi ve bekleyen pilotlar.",
-          url: "https://www.sabanci.com/"
+          url: "https://www.bbva.com/"
         }
       },
       {
@@ -14468,14 +14467,14 @@ function ensureSocialEnhancements() {
       body: "Yeni onboarding kontrol ekranından görüntü paylaşıyorum.",
       time: "13:18",
       imageUrl: remoteImages.ideaVisuals[1],
-      imageCaption: "Akbank Mobil onboarding kontrol akışı"
+      imageCaption: "BBVA Mobile onboarding kontrol akışı"
     });
   }
 }
 
 function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
   const person = personById(userId) || {};
-  const company = companyById(person.companyId || "sabanci-holding");
+  const company = companyById(person.companyId || "bbva-group");
   return {
     id,
     userId,
@@ -14488,7 +14487,7 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
     likedByMe: false,
     country: person.country || "TR",
     comments: [
-      { id: `${id}-c1`, userName: "Can Koç", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
+      { id: `${id}-c1`, userName: "Lucía Herrera", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
     ],
     ...extras
   };
@@ -14754,184 +14753,28 @@ function scaleMockDataset() {
   // 1. Add new iştirakler (subsidiaries) dynamically
   const newSubs = [
     {
-      id: "ak-yatirim",
-      name: "Ak Yatırım Menkul Değerler A.Ş.",
-      shortName: "Ak Yatırım",
-      logo: "./assets/company-logos/ak-yatirim.svg",
-      domain: "akyatirim.com.tr",
-      type: "Yatırım & Finans",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Ankara", "İzmir"],
-      campuses: ["Ak Yatırım Genel Müdürlük", "Akatlar Ofis"],
-      departments: ["Araştırma", "Portföy Yönetimi", "Kurumsal Finansman", "Hisse Senedi Piyasaları"]
-    },
-    {
-      id: "ak-portfoy",
-      name: "Ak Portföy Yönetimi A.Ş.",
-      shortName: "Ak Portföy",
-      logo: "./assets/company-logos/ak-portfoy.svg",
-      domain: "akportfoy.com.tr",
-      type: "Varlık Yönetimi",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Ak Portföy HQ"],
-      departments: ["Yatırım Komitesi", "Risk Yönetimi", "Fon Yönetimi"]
-    },
-    {
-      id: "akcansa",
-      name: "Akçansa Çimento Sanayi ve Ticaret A.Ş.",
-      shortName: "Akçansa",
-      logo: "./assets/company-logos/akcansa.svg",
-      domain: "akcansa.com.tr",
-      type: "Yapı Malzemeleri",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Çanakkale", "Samsun"],
-      campuses: ["Çanakkale Fabrika", "Büyükçekmece Fabrika", "Ambarlı Liman Terminali"],
-      departments: ["Sürdürülebilirlik", "Üretim", "Lojistik", "Ar-Ge"]
-    },
-    {
-      id: "aklease",
-      name: "Ak Finansal Kiralama A.Ş.",
-      shortName: "Aklease",
-      logo: "./assets/company-logos/aklease.svg",
-      domain: "aklease.com",
-      type: "Finansal Kiralama",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Aklease HQ"],
-      departments: ["Kredi Tahsis", "Satış", "Finans"]
-    },
-    {
-      id: "enerjisa-uretim",
-      name: "Enerjisa Üretim Santralleri A.Ş.",
-      shortName: "Enerjisa Üretim",
-      logo: "./assets/company-logos/enerjisa-uretim.svg",
-      domain: "enerjisauretim.com.tr",
-      type: "Enerji Üretimi",
-      countries: ["Türkiye"],
-      cities: ["Adana", "Çanakkale", "Aydın", "Balıkesir"],
-      campuses: ["Tufanbeyli Termik Santrali", "Bandırma Doğalgaz Santrali", "Çanakkale Rüzgar Santrali"],
-      departments: ["Yeşil Enerji Operasyonları", "Santral Yönetimi", "Ar-Ge"]
-    },
-    {
-      id: "sabanci-univ",
-      name: "Sabancı Üniversitesi",
-      shortName: "Sabancı Üni.",
-      logo: "./assets/company-logos/sabanci-univ.svg",
-      domain: "sabanciuniv.edu",
+      id: "fundacion-bbva",
+      name: "Fundación BBVA",
+      shortName: "Fundación BBVA",
+      logo: "./assets/company-logos/fundacion-bbva.svg",
+      domain: "fundacionbbva.es",
       type: "Eğitim & Akademi",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Tuzla Kampüsü", "Karaköy İletişim Merkezi"],
-      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme (TÜMER)"]
-    },
-    {
-      id: "sabanci-vakfi",
-      name: "Hacı Ömer Sabancı Vakfı",
-      shortName: "Sabancı Vakfı",
-      logo: "./assets/company-logos/sabanci-vakfi.svg",
-      domain: "sabancivakfi.org",
-      type: "Sosyal Sorumluluk",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Ankara"],
-      campuses: ["Sabancı Vakfı Merkez"],
-      departments: ["Sosyal Programlar", "Hibe Programları", "Ortaklıklar"]
-    },
-    {
-      id: "akbank-uk",
-      name: "Akbank AG London Branch",
-      shortName: "Akbank UK",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.co.uk",
-      type: "Banka",
-      countries: ["Birleşik Krallık"],
-      cities: ["Londra"],
-      campuses: ["London City Office"],
-      departments: ["International Trade Finance", "Treasury", "Compliance"]
-    },
-    {
-      id: "akcansa-uk",
-      name: "Akcansa UK Cement Trading Ltd.",
-      shortName: "Akçansa UK",
-      logo: "./assets/company-logos/akcansa.svg",
-      domain: "akcansa.co.uk",
-      type: "Yapı Malzemeleri",
-      countries: ["Birleşik Krallık"],
-      cities: ["Londra", "Bristol"],
-      campuses: ["Bristol Port Terminal"],
-      departments: ["Logistics", "Wholesale Sales"]
-    },
-    {
-      id: "akbank-us",
-      name: "Akbank US Representative Office",
-      shortName: "Akbank US",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.com",
-      type: "Banka",
-      countries: ["Amerika Birleşik Devletleri"],
-      cities: ["New York"],
-      campuses: ["Manhattan Office"],
-      departments: ["Investor Relations", "Corporate Banking Linkage"]
-    },
-    {
-      id: "temsa-us",
-      name: "Temsa North America Inc.",
-      shortName: "Temsa US",
-      logo: "./assets/company-logos/temsa.svg",
-      domain: "temsa.com",
-      type: "Otomotiv",
-      countries: ["Amerika Birleşik Devletleri"],
-      cities: ["Orlando", "Houston"],
-      campuses: ["Orlando Distribution Center"],
-      departments: ["Electric Bus Sales", "Spare Parts Logistics", "Customer Support"]
-    },
-    {
-      id: "akbank-de",
-      name: "Akbank AG (Frankfurt)",
-      shortName: "Akbank DE",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.de",
-      type: "Banka",
-      countries: ["Almanya"],
-      cities: ["Frankfurt", "Münih"],
-      campuses: ["Frankfurt HQ"],
-      departments: ["Retail Banking", "Risk Management", "Operations"]
-    },
-    {
-      id: "kordsa-de",
-      name: "Kordsa Germany GmbH",
-      shortName: "Kordsa DE",
-      logo: "./assets/company-logos/kordsa.svg",
-      domain: "kordsa.com",
-      type: "Sanayi",
-      countries: ["Almanya"],
-      cities: ["Münih"],
-      campuses: ["Munich Composite Research Lab"],
-      departments: ["Composite Engineering", "Quality Control"]
-    },
-    {
-      id: "akbank-es",
-      name: "Akbank Representative Office Spain",
-      shortName: "Akbank ES",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.com",
-      type: "Banka",
       countries: ["İspanya"],
       cities: ["Madrid"],
-      campuses: ["Madrid Financial District Office"],
-      departments: ["Corporate Relations", "Compliance"]
+      campuses: ["Fundación BBVA Madrid Kampüsü"],
+      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme"]
     },
     {
-      id: "temsa-es",
-      name: "Temsa España S.L.",
-      shortName: "Temsa ES",
-      logo: "./assets/company-logos/temsa.svg",
-      domain: "temsa.es",
-      type: "Otomotiv",
-      countries: ["İspanya"],
-      cities: ["Madrid", "Barcelona"],
-      campuses: ["Madrid Hub"],
-      departments: ["Mobility Sales", "Technical Service Operations"]
+      id: "fundacion-microfinanzas-bbva",
+      name: "Fundación Microfinanzas BBVA",
+      shortName: "Fundación Microfinanzas BBVA",
+      logo: "./assets/company-logos/fundacion-microfinanzas-bbva.svg",
+      domain: "fundacionmicrofinanzasbbva.org",
+      type: "Sosyal Sorumluluk",
+      countries: ["Kolombiya", "Peru"],
+      cities: ["Bogotá", "Lima"],
+      campuses: ["Fundación Microfinanzas BBVA Merkez"],
+      departments: ["Sosyal Programlar", "Hibe Programları", "Ortaklıklar"]
     }
   ];
 
@@ -14955,7 +14798,7 @@ function scaleMockDataset() {
     const fullName = `${fn} ${ln}`;
     const randCompany = companyList[i % companyList.length];
     const randCountry = randCompany.countries[0] || "Türkiye";
-    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
+    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Meksika" || randCountry === "Mexico" ? "MX" : (randCountry === "Kolombiya" || randCountry === "Colombia" ? "CO" : (randCountry === "Peru" ? "PE" : "ES")));
     
     const userRole = randCompany.type === "Banka" ? "Müşteri İlişkileri Yöneticisi" : (randCompany.type === "Sanayi" ? "Mühendis" : "Uzman");
     const dept = randCompany.departments[i % randCompany.departments.length];
@@ -14992,8 +14835,8 @@ function scaleMockDataset() {
   // ideas/teams/announcements pick authors, since authorLabel snapshots u.name by value)
   demoUsers.forEach((u, index) => {
     if (u.id === "u3") {
-      u.name = "Can Koç";
-      u.email = "can.koc@sabanci.example";
+      u.name = "Lucía Herrera";
+      u.email = "lucia.herrera@bbva.example";
       u.photo = "https://randomuser.me/api/portraits/men/75.jpg";
       u.avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg";
       return;
@@ -15027,50 +14870,50 @@ function scaleMockDataset() {
         title: "Açık Bankacılık ile KOBİ Alacak Sigortası",
         summary: "KOBİ bankacılığı işlemlerinde açık bankacılık verileriyle alacak riskini saniyeler içinde hesaplayıp poliçe kesen modül.",
         problem: "KOBİ'ler ticari alacak risklerini sigortalamak için çok fazla evrak ve uzun bekleme süreleriyle karşılaşıyor.",
-        solution: "Akbank API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
+        solution: "BBVA API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
       },
       en: {
         title: "SME Receivables Insurance with Open Banking",
         summary: "A module that calculates receivables risk in seconds using open banking data in SME banking transactions and issues policies.",
         problem: "SMEs face a lot of paperwork and long waiting times to insure commercial receivables risk.",
-        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through Akbank APIs."
+        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through BBVA APIs."
       },
       de: {
         title: "KMU-Forderungsversicherung mit Open Banking",
         summary: "Ein Modul, das das Forderungsrisiko im KMU-Geschäft mithilfe von Open-Banking-Daten in Sekundenschnelle berechnet und Policen ausstellt.",
         problem: "KMU sind mit viel Papierkram und langen Wartezeiten konfrontiert, um das gewerbliche Forderungsrisiko abzusichern.",
-        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über Akbank-APIs sofortige Kredite und Forderungsversicherungen anbietet."
+        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über BBVA-APIs sofortige Kredite und Forderungsversicherungen anbietet."
       },
       es: {
         title: "Seguro de Cuentas por Cobrar para Pymes con Banca Abierta",
         summary: "Un módulo que calcula el riesgo de cuentas por cobrar en segundos utilizando datos de banca abierta en transacciones de pymes.",
         problem: "Las pymes enfrentan mucho papeleo y largos tiempos de espera para asegurar el riesgo de cuentas por cobrar comerciales.",
-        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de Akbank."
+        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de BBVA."
       }
     },
     {
       area: "Sürdürülebilirlik & Yeşil Enerji",
       tr: {
         title: "Fabrika Bacaları İçin Akıllı Karbon İzleme Ağı",
-        summary: "Çimsa ve Kordsa üretim tesislerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
+        summary: "Garanti BBVA Portföy ve Garanti BBVA Yatırım veri merkezlerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
         problem: "Karbon salınımı beyanları periyodik ve manuel yapıldığı için hata payı yüksek ve optimizasyon gecikiyor.",
         solution: "Fabrika bacalarına takılan IoT sensörleriyle emisyonu saniyelik kaydeden ve sınır aşımında uyaran akıllı yazılım."
       },
       en: {
         title: "Smart Carbon Monitoring Network for Factory Chimneys",
-        summary: "Green technology that measures carbon emissions in Cimsa and Kordsa production facilities with instant IoT sensors and reports to the cloud.",
+        summary: "Green technology that measures carbon emissions in Garanti BBVA Portföy and Garanti BBVA Yatırım data centers with instant IoT sensors and reports to the cloud.",
         problem: "Since carbon emission statements are periodic and manual, the margin of error is high and optimization is delayed.",
         solution: "Smart software that records emissions in seconds with IoT sensors attached to factory chimneys and warns in case of limit violations."
       },
       de: {
         title: "Intelligentes Kohlenstoff-Überwachungsnetzwerk für Schornsteine",
-        summary: "Grüne Technologie, die Kohlenstoffemissionen in Cimsa- und Kordsa-Produktionsstätten mit IoT-Sensoren misst und in der Cloud meldet.",
+        summary: "Grüne Technologie, die Kohlenstoffemissionen in den Rechenzentren von Garanti BBVA Portföy und Garanti BBVA Yatırım mit IoT-Sensoren misst und in der Cloud meldet.",
         problem: "Da CO2-Meldungen periodisch und manuell erfolgen, ist die Fehlerquote hoch und die Optimierung verzögert sich.",
         solution: "Intelligente Software, die Emissionen im Sekundentakt mit an Schornsteinen angebrachten IoT-Sensoren erfasst und bei Überschreitungen warnt."
       },
       es: {
         title: "Red de Monitoreo de Carbono Inteligente para Chimeneas",
-        summary: "Tecnología verde que mide las emisiones de carbono en las plantas de Cimsa y Kordsa con sensores IoT instantáneos y reporta a la nube.",
+        summary: "Tecnología verde que mide las emisiones de carbono en los centros de datos de Garanti BBVA Portföy y Garanti BBVA Yatırım con sensores IoT instantáneos y reporta a la nube.",
         problem: "Dado que las declaraciones de emisión de carbono son periódicas and manuales, el margen de error es alto y la optimización se retrasa.",
         solution: "Software inteligente que registra las emisiones en segundos con sensores IoT conectados a las chimeneas y advierte en caso de infracciones."
       }
@@ -15079,25 +14922,25 @@ function scaleMockDataset() {
       area: "Yapay Zekâ & Derin Teknoloji",
       tr: {
         title: "AI Destekli Lojistik Rota Optimizasyonu",
-        summary: "CarrefourSA sevkiyat kamyonları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
+        summary: "BBVA Colombia sevkiyat araçları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
         problem: "Statik rotalar nedeniyle teslimat süreleri uzuyor ve yakıt tüketimi artıyor.",
         solution: "Her sabah siparişleri ve yol durumunu analiz ederek en verimli teslimat haritasını çıkaran yapay zeka motoru."
       },
       en: {
         title: "AI-Powered Logistics Route Optimization",
-        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for CarrefourSA delivery trucks.",
+        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for BBVA Colombia delivery vehicles.",
         problem: "Delivery times are prolonged and fuel consumption increases due to static routes.",
         solution: "An AI engine that analyzes orders and road conditions every morning to create the most efficient delivery map."
       },
       de: {
         title: "KI-gestützte Logistik-Routenoptimierung",
-        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für CarrefourSA-Lieferwagen verarbeitet.",
+        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für BBVA-Colombia-Lieferfahrzeuge verarbeitet.",
         problem: "Statische Routen verlängern die Lieferzeiten und erhöhen den Kraftstoffverbrauch.",
         solution: "Eine KI-Engine, die jeden Morgen Bestellungen und Straßenverhältnisse analysiert, um die effizienteste Lieferkarte zu erstellen."
       },
       es: {
         title: "Optimización de Rutas Logísticas con IA",
-        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para camiones de CarrefourSA.",
+        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para vehículos de BBVA Colombia.",
         problem: "Los tiempos de entrega se prolongan y el consumo de combustible aumenta debido a rutas estáticas.",
         solution: "Un motor de IA que analiza los pedidos y las condiciones de la carretera cada mañana para generar el mapa de entrega más eficiente."
       }
@@ -15106,25 +14949,25 @@ function scaleMockDataset() {
       area: "PropTech & Akıllı Şehirler",
       tr: {
         title: "Akıllı Binalar İçin Dinamik HVAC Kontrolü",
-        summary: "Sabancı Center ve iştirak plazalarında sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
+        summary: "Ciudad BBVA ve iştirak ofislerinde sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
         problem: "Binalar boş olduğunda bile HVAC sistemleri çalışıyor ve yüksek enerji israfına yol açıyor.",
         solution: "Kat doluluk oranları ve dış ortam sıcaklık tahminlerini işleyerek iklimlendirmeyi optimize eden AI entegrasyonu."
       },
       en: {
         title: "Dynamic HVAC Control for Smart Buildings",
-        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Sabanci Center and affiliate plazas.",
+        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Ciudad BBVA and affiliate offices.",
         problem: "HVAC systems run even when buildings are empty, leading to high energy waste.",
         solution: "AI integration that optimizes climatization by processing floor occupancy rates and outdoor temperature forecasts."
       },
       de: {
         title: "Dynamische HVAC-Steuerung für intelligente Gebäude",
-        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Sabanci Center und in Partner-Plazas mit Sensordaten automatisch anpasst.",
+        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Ciudad BBVA und in Partner-Büros mit Sensordaten automatisch anpasst.",
         problem: "Klimaanlagen laufen auch bei leeren Gebäuden, was zu einer hohen Energieverschwendung führt.",
         solution: "KI-Integration, die die Klimatisierung durch Verarbeitung der Belegungsraten und Außentemperaturprognosen optimiert."
       },
       es: {
         title: "Control Dinámico de HVAC para Edificios Inteligentes",
-        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Sabanci Center.",
+        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Ciudad BBVA.",
         problem: "Los sistemas de HVAC funcionan incluso cuando los edificios están vacíos, lo que genera un gran desperdicio de energía.",
         solution: "Integración de IA que optimiza la climatización procesando las tasas de ocupación de pisos y los pronósticos de temperatura exterior."
       }
@@ -15133,7 +14976,7 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  const countryCycle = ["TR", "US", "GB", "DE", "ES"];
+  const countryCycle = ["TR", "MX", "ES", "CO", "PE"];
   const companiesByCountryCode = {};
   countryCycle.forEach(code => {
     companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
@@ -15149,8 +14992,8 @@ function scaleMockDataset() {
     const randomUser = countryUserPool.length ? countryUserPool[Math.floor(Math.random() * countryUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
     const id = `idea-gen-${i}`;
     const ticker = `NIE-${100 + i}`;
-    
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+
+    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "ES" ? "es" : "en");
     const title = trend[originalLang].title + ` (${randCompany.shortName})`;
     const summary = trend[originalLang].summary;
     const problem = trend[originalLang].problem;
@@ -15192,7 +15035,7 @@ function scaleMockDataset() {
       supporters: 10 + (i % 40),
       country: countryCode,
       comments: [
-        { user: "Can Koç", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
+        { user: "Lucía Herrera", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
       ],
       tags: [trend.area.split(" ")[0], randCompany.shortName],
       createdAt: `2026-06-${10 + (i % 8)}`,
@@ -15211,7 +15054,7 @@ function scaleMockDataset() {
     const randCompany = companyList[i % companyList.length];
     const randIdea = initialIdeas[i % initialIdeas.length];
     const teamCountry = randCompany.countries[0] || "Türkiye";
-    const teamCountryCode = teamCountry === "Türkiye" ? "TR" : (teamCountry === "Birleşik Krallık" || teamCountry === "United Kingdom" ? "GB" : (teamCountry === "Amerika Birleşik Devletleri" || teamCountry === "United States" ? "US" : (teamCountry === "Almanya" || teamCountry === "Germany" ? "DE" : "ES")));
+    const teamCountryCode = teamCountry === "Türkiye" ? "TR" : (teamCountry === "Meksika" || teamCountry === "Mexico" ? "MX" : (teamCountry === "Kolombiya" || teamCountry === "Colombia" ? "CO" : (teamCountry === "Peru" ? "PE" : "ES")));
     const teamUserPool = demoUsers.filter(u => u.country === teamCountryCode);
     const creatorUser = teamUserPool.length ? teamUserPool[Math.floor(Math.random() * teamUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
 
@@ -15257,7 +15100,7 @@ function scaleMockDataset() {
     const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
     const annUserPool = demoUsers.filter(u => u.country === countryCode);
     const randomUser = annUserPool.length ? annUserPool[Math.floor(Math.random() * annUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "ES" ? "es" : "en");
     const projectNum = i + 10;
 
     state.announcements.push({
@@ -15314,14 +15157,14 @@ function scaleMockDataset() {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-industry", name: "Sanayi & Malzeme İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Kordsa ve Çimsa bünyesindeki kompozit malzeme ve çimento Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-energy", name: "Enerji Teknolojileri Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "Enerjisa Üretim yenilenebilir enerji, rüzgar ve hidrojen depolama teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-mobility", name: "Mobilite & Otomotiv Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Temsa elektrikli ve otonom otobüs yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "Teknosa ve CarrefourSA müşteri deneyimi, akıllı raf ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "BBVA Mobile, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-industry", name: "Yatırım & Portföy İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Garanti BBVA Yatırım ve Garanti BBVA Portföy bünyesindeki yeni nesil yatırım ürünleri Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-energy", name: "Sürdürülebilir Finans Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "BBVA Perú yenilenebilir enerji finansmanı ve yeşil kredi teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-mobility", name: "Mobilite & Leasing Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Garanti BBVA Leasing elektrikli ve otonom filo yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "BBVA México ve BBVA Colombia müşteri deneyimi, akıllı kaynak ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-sme", name: "KOBİ Destek ve Çözüm Stüdyosu", category: "KOBİ", status: "Kuruluyor", popularity: 72, createdAt: "2026-06-04", description: "KOBİ bankacılığı, sigortacılık ve finansman çözümleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-proptech", name: "Akıllı Şehirler & PropTech Stüdyosu", category: "PropTech", status: "Aktif", popularity: 80, createdAt: "2026-05-22", description: "Akıllı bina yönetim sistemleri, HVAC ve plaza iklimlendirme projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Agesa ve Aksigorta müşteri edinimi, poliçe pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Garanti BBVA Emeklilik ve BBVA Seguros müşteri edinimi, poliçe pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-cloud", name: "Derin Teknoloji & Bulut Girişim Stüdyosu", category: "Derin Teknoloji", status: "Aktif", popularity: 89, createdAt: "2026-05-30", description: "Büyük veri analitiği, siber güvenlik ve kurumsal bulut çözümleri Ar-Ge stüdyosu.", linkedTeams: [], linkedIdeas: [] }
   ];
 
@@ -15361,17 +15204,17 @@ function scaleMockDataset() {
   const datasetTrends = [
     {
       area: "FinTech & Dijital Bankacılık",
-      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "Akbank API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
-      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of Akbank API transition times, load tests, and monthly call logs." },
-      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von Akbank-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
-      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de Akbank, pruebas de carga y registros de llamadas mensuales." }
+      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "BBVA API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
+      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of BBVA API transition times, load tests, and monthly call logs." },
+      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von BBVA-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
+      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de BBVA, pruebas de carga y registros de llamadas mensuales." }
     },
     {
       area: "Sürdürülebilirlik & Yeşil Enerji",
-      tr: { title: "Rüzgar Enerjisi Üretim Verimliliği Raporu", summary: "Enerjisa Üretim Çanakkale santralinin rüzgar hızı ve anlık megavat üretim ilişkisi ham verisi." },
-      en: { title: "Wind Energy Generation Efficiency Report", summary: "Raw data of wind speed and instantaneous megawatt generation relationship of Enerjisa Uretim Canakkale power plant." },
-      de: { title: "Effizienzbericht für Windkraftanlagen", summary: "Rohdaten zum Verhältnis von Windgeschwindigkeit und momentaner Megawatt-Erzeugung des Kraftwerks Enerjisa Uretim Canakkale." },
-      es: { title: "Informe de Eficiencia de Generación de Energía Eólica", summary: "Datos brutos de la velocidad del viento y la relación de generación de megavatios instantáneos de la planta de energía Enerjisa Uretim Canakkale." }
+      tr: { title: "Yeşil Finansman Portföy Verimliliği Raporu", summary: "BBVA Perú yeşil finansman portföyünün rüzgar enerjisi projeleri finansman hacmi ve anlık geri ödeme ilişkisi ham verisi." },
+      en: { title: "Green Financing Portfolio Efficiency Report", summary: "Raw data of green financing volume and instantaneous repayment relationship of BBVA Perú's wind energy project portfolio." },
+      de: { title: "Effizienzbericht für das Portfolio grüner Finanzierungen", summary: "Rohdaten zum Verhältnis von Finanzierungsvolumen und momentaner Rückzahlung im Windenergie-Portfolio von BBVA Perú." },
+      es: { title: "Informe de Eficiencia de la Cartera de Financiamiento Verde", summary: "Datos brutos del volumen de financiamiento y la relación de pago instantáneo de la cartera de proyectos eólicos de BBVA Perú." }
     },
     {
       area: "Yapay Zekâ & Derin Teknoloji",
@@ -15382,17 +15225,17 @@ function scaleMockDataset() {
     },
     {
       area: "PropTech & Akıllı Şehirler",
-      tr: { title: "Sabancı Center Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
-      en: { title: "Sabanci Center Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
-      de: { title: "Sabanci Center Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
-      es: { title: "Serie Temporal de Ocupación de Sabanci Center", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
+      tr: { title: "Ciudad BBVA Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
+      en: { title: "Ciudad BBVA Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
+      de: { title: "Ciudad BBVA Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
+      es: { title: "Serie Temporal de Ocupación de Ciudad BBVA", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
     },
     {
       area: "Akıllı Lojistik & Dağıtım",
-      tr: { title: "CarrefourSA Gebze Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
-      en: { title: "CarrefourSA Gebze Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
-      de: { title: "CarrefourSA Gebze Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
-      es: { title: "Conjunto de Tiempos de Despacho de Almacén CarrefourSA Gebze", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
+      tr: { title: "BBVA Colombia Medellín Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
+      en: { title: "BBVA Colombia Medellín Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
+      de: { title: "BBVA Colombia Medellín Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
+      es: { title: "Conjunto de Tiempos de Despacho de Almacén BBVA Colombia Medellín", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
     },
     {
       area: "Operasyon",
@@ -15417,10 +15260,10 @@ function scaleMockDataset() {
     }
   ];
 
-  const countries = ["TR", "US", "GB", "DE", "ES"];
+  const countries = ["TR", "MX", "ES", "CO", "PE"];
   let datasetIdCount = 0;
   countries.forEach(country => {
-    const lang = country === "TR" ? "tr" : (country === "DE" ? "de" : (country === "ES" ? "es" : "en"));
+    const lang = country === "TR" ? "tr" : (country === "ES" ? "es" : "en");
     const dsCompanyPool = companiesByCountryCode[country];
     for (let i = 0; i < 12; i++) {
       const trend = datasetTrends[i % datasetTrends.length];
@@ -15458,30 +15301,30 @@ function scaleMockDataset() {
   const socialTemplates = {
     TR: [
       {
-        body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+        body: "BBVA Mobile AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
         translations: {
-          tr: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
-          en: "Our Akbank Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
-          de: "Unser Akbank Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
-          es: "¡Nuestro proyecto de inversión de IA móvil de Akbank está listado en la bolsa de ideas! Esperamos su apoyo."
+          tr: "BBVA Mobile AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+          en: "Our BBVA Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
+          de: "Unser BBVA Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
+          es: "¡Nuestro proyecto de inversión de IA móvil de BBVA está listado en la bolsa de ideas! Esperamos su apoyo."
         }
       },
       {
-        body: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+        body: "BBVA Technology olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
         translations: {
-          tr: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
-          en: "The multi-language supported artificial intelligence infrastructure we developed as SabancıDx is live.",
-          de: "Die von uns als SabancıDx entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
-          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como SabancıDx está en vivo."
+          tr: "BBVA Technology olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+          en: "The multi-language supported artificial intelligence infrastructure we developed as BBVA Technology is live.",
+          de: "Die von uns als BBVA Technology entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
+          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como BBVA Technology está en vivo."
         }
       },
       {
-        body: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+        body: "BBVA México şubelerinde otonom işlem kiosku pilotu müşteri memnuniyetini %18 artırdı.",
         translations: {
-          tr: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
-          en: "The autonomous payment kiosk pilot in Teknosa stores increased customer satisfaction by 18%.",
-          de: "Das Pilotprojekt für autonome Zahlungskioske in Teknosa-Filialen steigerte die Kundenzufriedenheit um 18%.",
-          es: "El piloto de quioscos de pago autónomos en las tiendas Teknosa aumentó la satisfacción del cliente en un 18%."
+          tr: "BBVA México şubelerinde otonom işlem kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+          en: "The autonomous transaction kiosk pilot in BBVA México branches increased customer satisfaction by 18%.",
+          de: "Das Pilotprojekt für autonome Transaktionskioske in BBVA-México-Filialen steigerte die Kundenzufriedenheit um 18%.",
+          es: "El piloto de quioscos de transacciones autónomas en las sucursales de BBVA México aumentó la satisfacción del cliente en un 18%."
         }
       }
     ],
@@ -15505,23 +15348,23 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
+        body: "BBVA México closed a new digital savings agreement with a major retailer this week.",
         translations: {
-          tr: "Sabancı Climate Texas bu hafta büyük bir elektrik dağıtım şirketiyle yeni bir şebeke hizmetleri anlaşması imzaladı.",
-          en: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
-          de: "Sabancı Climate Texas hat diese Woche eine neue Vereinbarung über Netzdienstleistungen mit einem großen Energieversorger abgeschlossen.",
-          es: "Sabancı Climate Texas firmó esta semana un nuevo acuerdo de servicios de red con una importante empresa de servicios públicos."
+          tr: "BBVA México bu hafta büyük bir perakende şirketiyle yeni bir dijital tasarruf anlaşması imzaladı.",
+          en: "BBVA México closed a new digital savings agreement with a major retailer this week.",
+          de: "BBVA México hat diese Woche eine neue Vereinbarung über digitale Sparprodukte mit einem großen Einzelhändler abgeschlossen.",
+          es: "BBVA México firmó esta semana un nuevo acuerdo de ahorro digital con una importante empresa minorista."
         }
       }
     ],
     GB: [
       {
-        body: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
+        body: "BBVA Research Madrid office is hosting a demo day for fintech startups this Friday.",
         translations: {
-          tr: "Sabancı Ventures Londra ofisi bu Cuma yeşil enerji girişimleri için bir demo günü düzenliyor.",
-          en: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
-          de: "Das Londoner Büro von Sabancı Ventures veranstaltet diesen Freitag einen Demo-Tag für Start-ups im Bereich grüne Energie.",
-          es: "La oficina de Sabancı Ventures en Londres organizará una jornada de demostración para startups de energía verde este viernes."
+          tr: "BBVA Research Madrid ofisi bu Cuma fintech girişimleri için bir demo günü düzenliyor.",
+          en: "BBVA Research Madrid office is hosting a demo day for fintech startups this Friday.",
+          de: "Das Madrider Büro von BBVA Research veranstaltet diesen Freitag einen Demo-Tag für Fintech-Start-ups.",
+          es: "La oficina de BBVA Research en Madrid organizará una jornada de demostración para startups fintech este viernes."
         }
       },
       {
@@ -15534,23 +15377,23 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
+        body: "Garanti BBVA Yatırım Levent Ofisi begins institutional-grade trading algorithm trials with a new fintech partner.",
         translations: {
-          tr: "Kordsa Londra Teknoloji Merkezi, yeni bir havacılık ortağıyla havacılık sınıfı prepreg denemelerine başlıyor.",
-          en: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
-          de: "Das Kordsa London Tech Center beginnt mit Prepreg-Tests in Luftfahrtqualität mit einem neuen Luftfahrtpartner.",
-          es: "El Centro Tecnológico de Kordsa en Londres inicia ensayos de preimpregnados de grado aeroespacial con un nuevo socio de aviación."
+          tr: "Garanti BBVA Yatırım Levent Ofisi, yeni bir fintech ortağıyla kurumsal sınıf algoritmik işlem denemelerine başlıyor.",
+          en: "Garanti BBVA Yatırım Levent Ofisi begins institutional-grade trading algorithm trials with a new fintech partner.",
+          de: "Das Garanti BBVA Yatırım Levent-Büro beginnt mit institutionellen Handelsalgorithmus-Tests mit einem neuen Fintech-Partner.",
+          es: "La oficina de Garanti BBVA Yatırım en Levent inicia ensayos de algoritmos de trading de grado institucional con un nuevo socio fintech."
         }
       }
     ],
     DE: [
       {
-        body: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
+        body: "Wir testen die neuen Risikobewertungsmodelle für die Garanti-BBVA-Leasing-Flottenfinanzierung in Lima.",
         translations: {
-          tr: "Münih'teki Temsa elektrikli otobüsleri için yeni lityum iyon hücrelerini test ediyoruz.",
-          en: "We are testing the new lithium-ion cells for Temsa electric buses in Munich.",
-          de: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
-          es: "Estamos probando nuevas celdas de iones de litio para los autobuses eléctricos Temsa en Múnich."
+          tr: "Lima'daki Garanti BBVA Leasing filo finansmanı için yeni risk değerlendirme modellerini test ediyoruz.",
+          en: "We are testing the new risk assessment models for Garanti BBVA Leasing fleet financing in Lima.",
+          de: "Wir testen die neuen Risikobewertungsmodelle für die Garanti-BBVA-Leasing-Flottenfinanzierung in Lima.",
+          es: "Estamos probando nuevos modelos de evaluación de riesgo para el financiamiento de flotas de Garanti BBVA Leasing en Lima."
         }
       },
       {
@@ -15563,12 +15406,12 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
+        body: "Garanti BBVA Leasing Lima Labor hat die erste Testphase des Risikomodell-Prototyps erfolgreich abgeschlossen.",
         translations: {
-          tr: "Temsa Münih Laboratuvarı, hidrojenli otobüs prototipinin ilk test sürüşünü başarıyla tamamladı.",
-          en: "Temsa Munich Lab has successfully completed the first test drive of the hydrogen bus prototype.",
-          de: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
-          es: "El laboratorio de Temsa en Múnich completó con éxito la primera prueba de conducción del prototipo de autobús de hidrógeno."
+          tr: "Garanti BBVA Leasing Lima Laboratuvarı, risk modeli prototipinin ilk test aşamasını başarıyla tamamladı.",
+          en: "Garanti BBVA Leasing Lima Lab has successfully completed the first test phase of the risk model prototype.",
+          de: "Garanti BBVA Leasing Lima Labor hat die erste Testphase des Risikomodell-Prototyps erfolgreich abgeschlossen.",
+          es: "El laboratorio de Garanti BBVA Leasing en Lima completó con éxito la primera fase de prueba del prototipo de modelo de riesgo."
         }
       }
     ],
@@ -15659,23 +15502,23 @@ function scaleMockDataset() {
   const announcementTemplates = {
     TR: [
       {
-        title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-        body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+        title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
+        body: "Merhabalar! BBVA Mobile AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
         translations: {
           tr: {
-            title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-            body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
+            title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
+            body: "Merhabalar! BBVA Mobile AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
           },
           en: {
-            title: "🚀 Seeking UX Designer for Akbank Mobile AI Investment Project!",
-            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the Akbank Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
+            title: "🚀 Seeking UX Designer for BBVA Mobile AI Investment Project!",
+            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the BBVA Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
           },
           de: {
-            title: "🚀 UX Designer für Akbank Mobile AI Investment Projekt gesucht!",
-            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das Akbank Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
+            title: "🚀 UX Designer für BBVA Mobile AI Investment Projekt gesucht!",
+            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das BBVA Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
           },
           es: {
-            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de Akbank!",
+            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de BBVA!",
             body: "¡Hola! Buscamos un diseñador UX para diseñar pantallas de prototipos para nuestro proyecto de IA y compartir presupuesto con nosotros. ¡Postula usando el botón de abajo!"
           }
         }
@@ -15708,47 +15551,47 @@ function scaleMockDataset() {
     GB: [
       {
         title: "🚀 Strategic Investment Program for Green Startups",
-        body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK.",
+        body: "BBVA México launches a new strategic investment track focusing on fintech and digital banking startups in Mexico.",
         translations: {
           tr: {
             title: "🚀 Yeşil Girişimler için Stratejik Yatırım Programı",
-            body: "Sabancı Ventures UK, Birleşik Krallık'taki yenilenebilir enerji ve iklim teknolojisi girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
+            body: "BBVA México, Meksika'daki fintech ve dijital bankacılık girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
           },
           en: {
             title: "🚀 Strategic Investment Program for Green Startups",
-            body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK."
+            body: "BBVA México launches a new strategic investment track focusing on fintech and digital banking startups in Mexico."
           },
           de: {
             title: "🚀 Strategisches Investitionsprogramm für grüne Start-ups",
-            body: "Sabancı Ventures UK startet ein neues strategisches Investitionsprogramm mit Fokus auf erneuerbare Energien und Climate-Tech-Start-ups in Großbritannien."
+            body: "BBVA México startet ein neues strategisches Investitionsprogramm mit Fokus auf Fintech- und Digital-Banking-Start-ups in Mexiko."
           },
           es: {
             title: "🚀 Programa de Inversión Estratégica para Startups Ecológicas",
-            body: "Sabancı Ventures UK lanza una nueva vía de inversión estratégica centrada en startups de energía renovable y tecnología climática en el Reino Unido."
+            body: "BBVA México lanza una nueva vía de inversión estratégica centrada en startups fintech y de banca digital en México."
           }
         }
       }
     ],
     DE: [
       {
-        title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
-        body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland.",
+        title: "🚀 Garanti BBVA Leasing Lima - MLOps-Ingenieur gesucht!",
+        body: "Hallo! Garanti BBVA Leasing Lima sucht einen MLOps-Ingenieur zur Überwachung der Risiko- und Zahlungsmodelle für das neue Finanzierungsprodukt in Peru.",
         translations: {
           tr: {
-            title: "🚀 Temsa Münih - MLOps Mühendisi Aranıyor!",
-            body: "Merhaba! Temsa Münih, Almanya'daki yeni elektrikli araç modeli için telemetri ve pil deşarj modellerini izleyecek bir MLOps mühendisi arıyor."
+            title: "🚀 Garanti BBVA Leasing Lima - MLOps Mühendisi Aranıyor!",
+            body: "Merhaba! Garanti BBVA Leasing Lima, Peru'daki yeni finansman ürünü için risk ve ödeme modellerini izleyecek bir MLOps mühendisi arıyor."
           },
           en: {
-            title: "🚀 Temsa Munich - MLOps Engineer Wanted!",
-            body: "Hello! Temsa Munich is looking for an MLOps Engineer to monitor telemetry and battery discharge models for the new EV model in Germany."
+            title: "🚀 Garanti BBVA Leasing Lima - MLOps Engineer Wanted!",
+            body: "Hello! Garanti BBVA Leasing Lima is looking for an MLOps Engineer to monitor risk and repayment models for the new financing product in Peru."
           },
           de: {
-            title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
-            body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland."
+            title: "🚀 Garanti BBVA Leasing Lima - MLOps-Ingenieur gesucht!",
+            body: "Hallo! Garanti BBVA Leasing Lima sucht einen MLOps-Ingenieur zur Überwachung der Risiko- und Zahlungsmodelle für das neue Finanzierungsprodukt in Peru."
           },
           es: {
-            title: "🚀 Temsa Múnich - ¡Se busca Ingeniero MLOps!",
-            body: "¡Hola! Temsa Múnich busca un ingeniero MLOps para monitorear la telemetría y los modelos de descarga de baterías para el nuevo modelo eléctrico en Alemania."
+            title: "🚀 Garanti BBVA Leasing Lima - ¡Se busca Ingeniero MLOps!",
+            body: "¡Hola! Garanti BBVA Leasing Lima busca un ingeniero MLOps para monitorear los modelos de riesgo y pago para el nuevo producto de financiamiento en Perú."
           }
         }
       }
@@ -15792,7 +15635,7 @@ function scaleMockDataset() {
         title: t.title,
         author: user.name,
         authorId: user.id,
-        companyId: user.companyId || "sabanci-holding",
+        companyId: user.companyId || "bbva-group",
         type: "Topluluk",
         area: "Takım Arkadaşı Aranıyor",
         importanceScore: 5,
@@ -15809,27 +15652,27 @@ function scaleMockDataset() {
 
   // Add curated, localized per-country message spaces on top of the holding-wide
   // channels already loaded from initialMessageSpaces (do NOT reset - several other
-  // channels like msg-holding/msg-akbank are referenced elsewhere by id).
+  // channels like msg-holding/msg-tr-1 are referenced elsewhere by id).
   const spaceTemplates = {
     TR: [
-      { id: "msg-tr-1", name: "Akbank FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "akbank" },
-      { id: "msg-tr-2", name: "SabancıDx Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "sabancidx" }
+      { id: "msg-tr-1", name: "BBVA FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "garanti-bbva" },
+      { id: "msg-tr-2", name: "BBVA Technology Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "bbva-technology" }
     ],
-    US: [
-      { id: "msg-us-1", name: "Sabancı Climate Solar", desc: "Texas utility battery dispatch optimization discussion.", companyId: "sabanci-climate-us" },
-      { id: "msg-us-2", name: "Kordsa Chattanooga R&D", desc: "Graphene-infused composite material trials.", companyId: "kordsa-usa" }
+    MX: [
+      { id: "msg-mx-1", name: "BBVA México Digital Savings", desc: "Mexico City digital savings dispatch optimization discussion.", companyId: "bbva-mexico" },
+      { id: "msg-mx-2", name: "BBVA México Monterrey R&D", desc: "Document automation and process trials.", companyId: "bbva-mexico" }
     ],
-    GB: [
-      { id: "msg-gb-1", name: "Sabancı Ventures UK", desc: "Renewable energy and green tech investment pipelines.", companyId: "sabanci-renewables-uk" },
-      { id: "msg-gb-2", name: "Çimsa UK Sales", desc: "White cement B2B distribution and client accounts.", companyId: "cimsa-uk" }
+    CO: [
+      { id: "msg-co-1", name: "BBVA Colombia Bogotá", desc: "Credit risk and digital banking investment pipelines.", companyId: "bbva-colombia" },
+      { id: "msg-co-2", name: "BBVA Colombia Medellín Sales", desc: "Retail banking distribution and client accounts.", companyId: "bbva-colombia" }
     ],
-    DE: [
-      { id: "msg-de-1", name: "Temsa Mobility DE", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse.", companyId: "temsa-germany" },
-      { id: "msg-de-2", name: "Çimsa Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "cimsa-germany" }
+    PE: [
+      { id: "msg-pe-1", name: "BBVA Perú Green Finance", desc: "Telemetría y modelos de financiamiento verde.", companyId: "bbva-peru" },
+      { id: "msg-pe-2", name: "BBVA Perú Lima Operaciones", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "bbva-peru" }
     ],
     ES: [
-      { id: "msg-es-1", name: "Çimsa Buñol", desc: "Discusión sobre combustibles alternativos y reducción de CO2.", companyId: "cimsa-spain" },
-      { id: "msg-es-2", name: "Çimsa Buñol Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "cimsa-spain" }
+      { id: "msg-es-1", name: "BBVA Research Madrid", desc: "Discusión sobre modelos macroeconómicos y riesgo.", companyId: "bbva-research" },
+      { id: "msg-es-2", name: "BBVA Seguros Madrid Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "bbva-seguros" }
     ]
   };
 
@@ -15838,21 +15681,21 @@ function scaleMockDataset() {
       { body: "KOBİ'ler için yeşil finansman API'leri test ortamında stabil çalışıyor.", tr: "KOBİ'ler için yeşil finansman API'leri test ortamında stabil çalışıyor.", en: "Green financing APIs for SMEs are working stably in the test environment.", de: "Grüne Finanzierungs-APIs für KMU laufen stabil in der Testumgebung.", es: "Las APIs de financiamiento verde para pymes funcionan de manera estable en el entorno de prueba." },
       { body: "Mükemmel, entegrasyon dokümanını paylaşıyorum.", tr: "Mükemmel, entegrasyon dokümanını paylaşıyorum.", en: "Excellent, sharing the integration document.", de: "Ausgezeichnet, ich teile das Integrationsdokument.", es: "Excelente, comparto el documento de integración." }
     ],
-    US: [
-      { body: "Please check the new solar dataset parameters in the shared workspace.", tr: "Lütfen paylaşılan çalışma alanındaki yeni güneş enerjisi veri kümesi parametrelerini kontrol edin.", en: "Please check the new solar dataset parameters in the shared workspace.", de: "Bitte überprüfen Sie die Parameter des neuen Solardatensatzes im gemeinsamen Arbeitsbereich.", es: "Verifique los parámetros del nuevo conjunto de datos solar en el espacio de trabajo compartido." },
+    MX: [
+      { body: "Please check the new digital savings dataset parameters in the shared workspace.", tr: "Lütfen paylaşılan çalışma alanındaki yeni dijital tasarruf veri kümesi parametrelerini kontrol edin.", en: "Please check the new digital savings dataset parameters in the shared workspace.", de: "Bitte überprüfen Sie die Parameter des neuen Sparkassen-Datensatzes im gemeinsamen Arbeitsbereich.", es: "Verifique los parámetros del nuevo conjunto de datos de ahorro en el espacio de trabajo compartido." },
       { body: "Acknowledged, checking the volume history now.", tr: "Anlaşıldı, hacim geçmişini şimdi kontrol ediyorum.", en: "Acknowledged, checking the volume history now.", de: "Bestätigt, ich überprüfe jetzt den Volumenverlauf.", es: "Entendido, comprobando el historial de volumen ahora." }
     ],
-    GB: [
-      { body: "We are reviewing three new startups from Manchester today.", tr: "Bugün Manchester'dan üç yeni girişimi inceliyoruz.", en: "We are reviewing three new startups from Manchester today.", de: "Wir prüfen heute drei neue Start-ups aus Manchester.", es: "Hoy estamos revisando tres nuevas startups de Manchester." },
+    CO: [
+      { body: "We are reviewing three new fintech startups from Bogotá today.", tr: "Bugün Bogotá'dan üç yeni fintech girişimini inceliyoruz.", en: "We are reviewing three new fintech startups from Bogotá today.", de: "Wir prüfen heute drei neue Fintech-Start-ups aus Bogotá.", es: "Hoy estamos revisando tres nuevas startups fintech de Bogotá." },
       { body: "Send over their slide decks, please.", tr: "Sunum dosyalarını gönderin lütfen.", en: "Send over their slide decks, please.", de: "Bitte senden Sie uns deren Präsentationen.", es: "Por favor, envíe sus presentaciones." }
     ],
-    DE: [
-      { body: "Der Prototyp des Wasserstoffbusses ist jetzt bereit für die ersten Straßentests.", tr: "Hidrojenli otobüs prototipi ilk yol testlerine hazır.", en: "The prototype of the hydrogen bus is now ready for the first road tests.", de: "Der Prototyp des Wasserstoffbusses ist jetzt bereit für die ersten Straßentests.", es: "El prototipo del autobús de hidrógeno ya está listo para las primeras pruebas en carretera." },
-      { body: "Sehr gut, ich werde die Telemetriedaten überwachen.", tr: "Çok iyi, telemetri verilerini izleyeceğim.", en: "Very good, I will monitor the telemetry data.", de: "Sehr gut, ich werde die Telemetriedaten überwachen.", es: "Muy bien, vigilaré los datos de telemetría." }
+    PE: [
+      { body: "El piloto de financiamiento verde ya está listo para las primeras pruebas en Lima.", tr: "Yeşil finansman pilotu Lima'daki ilk testlere hazır.", en: "The green financing pilot is now ready for the first tests in Lima.", de: "Das Pilotprojekt für grüne Finanzierung ist jetzt bereit für die ersten Tests in Lima.", es: "El piloto de financiamiento verde ya está listo para las primeras pruebas en Lima." },
+      { body: "Muy bien, vigilaré los indicadores de seguimiento.", tr: "Çok iyi, takip göstergelerini izleyeceğim.", en: "Very good, I will monitor the tracking indicators.", de: "Sehr gut, ich werde die Verfolgungsindikatoren überwachen.", es: "Muy bien, vigilaré los indicadores de seguimiento." }
     ],
     ES: [
-      { body: "Los ingenieros ya terminaron la calibración de los sensores térmicos en el horno.", tr: "Mühendisler fırındaki termal sensörlerin kalibrasyonunu tamamladı.", en: "Engineers have finished calibrating the thermal sensors in the kiln.", de: "Die Ingenieure haben die Kalibrierung der Thermosensoren im Ofen abgeschlossen.", es: "Los ingenieros ya terminaron la calibración de los sensores térmicos en el horno." },
-      { body: "Excelente, iniciemos el precalentamiento del sistema.", tr: "Mükemmel, sistemin ön ısıtmasını başlatalım.", en: "Excellent, let's start the system preheating.", de: "Ausgezeichnet, starten wir die Systemvorheizung.", es: "Excelente, iniciemos el precalentamiento del sistema." }
+      { body: "Los analistas ya terminaron la calibración de los modelos de riesgo macroeconómico.", tr: "Analistler makroekonomik risk modellerinin kalibrasyonunu tamamladı.", en: "Analysts have finished calibrating the macroeconomic risk models.", de: "Die Analysten haben die Kalibrierung der makroökonomischen Risikomodelle abgeschlossen.", es: "Los analistas ya terminaron la calibración de los modelos de riesgo macroeconómico." },
+      { body: "Excelente, iniciemos la revisión del sistema.", tr: "Mükemmel, sistemin incelemesini başlatalım.", en: "Excellent, let's start the system review.", de: "Ausgezeichnet, starten wir die Systemüberprüfung.", es: "Excelente, iniciemos la revisión del sistema." }
     ]
   };
 
@@ -15882,7 +15725,7 @@ function scaleMockDataset() {
         id: s.id,
         name: s.name,
         description: s.desc,
-        companyId: s.companyId || "sabanci-holding",
+        companyId: s.companyId || "bbva-group",
         scope: "İştirak",
         members: countryUsers.slice(0, 5).map(u => u.id),
         messages: chatMessages,

@@ -1,16 +1,16 @@
 :root {
-  --navy: #050505;
-  --primary: #111111;
-  --primary-strong: #000000;
-  --primary-soft: #f2f2f2;
+  --navy: #072146;
+  --primary: #072146;
+  --primary-strong: #051530;
+  --primary-soft: #eef3f9;
   --green: #12805c;
   --green-soft: #e7f7ef;
-  --amber: #c87913;
-  --amber-soft: #fff4df;
+  --amber: #14549c;
+  --amber-soft: #e7f1fb;
   --red: #c0392b;
   --red-soft: #ffeceb;
-  --purple: #111111;
-  --purple-soft: #f1f1f1;
+  --purple: #072146;
+  --purple-soft: #eef3f9;
   --ink: #0b0b0b;
   --text: #232323;
   --muted: #666666;
@@ -5183,7 +5183,7 @@ body[data-theme="dark"] {
     var(--bg);
 }
 
-.sabanci-lockup {
+.bbva-lockup {
   display: grid;
   gap: 7px;
   min-width: 0;
@@ -5191,26 +5191,26 @@ body[data-theme="dark"] {
   color: var(--accent);
 }
 
-.sabanci-logo-image {
+.bbva-logo-image {
   width: min(100%, 430px);
   height: auto;
   display: block;
   object-fit: contain;
 }
 
-.sabanci-lockup small {
+.bbva-lockup small {
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0;
 }
 
-.sabanci-lockup.compact .sabanci-logo-image {
+.bbva-lockup.compact .bbva-logo-image {
   width: min(100%, 242px);
   max-height: 76px;
 }
 
-.sabanci-lockup.compact small {
+.bbva-lockup.compact small {
   font-size: 10px;
 }
 
@@ -6423,11 +6423,11 @@ body[data-theme="dark"] .mobile-tab.active {
     align-self: center;
   }
 
-  .sabanci-logo-image {
+  .bbva-logo-image {
     width: min(100%, 360px);
   }
 
-  .sabanci-lockup.compact .sabanci-logo-image {
+  .bbva-lockup.compact .bbva-logo-image {
     width: 220px;
   }
 
@@ -14857,7 +14857,7 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
 }
 
 
-/* Sabancı Coin Premium Styling & Hover Animations */
+/* BBVA Coin Premium Styling & Hover Animations */
 .sa-coin-inline {
   display: inline-flex;
   align-items: center;
