@@ -42,7 +42,9 @@ const countriesList = [
   { code: "MX", name: "Mexico", flag: "🇲🇽", lang: "es", label: "Mexico Portal" },
   { code: "TR", name: "Türkiye", flag: "🇹🇷", lang: "tr", label: "Türkiye Portal" },
   { code: "CO", name: "Colombia", flag: "🇨🇴", lang: "es", label: "Colombia Portal" },
-  { code: "PE", name: "Peru", flag: "🇵🇪", lang: "es", label: "Peru Portal" }
+  { code: "PE", name: "Peru", flag: "🇵🇪", lang: "es", label: "Peru Portal" },
+  { code: "AR", name: "Argentina", flag: "🇦🇷", lang: "es", label: "Argentina Portal" },
+  { code: "VE", name: "Venezuela", flag: "🇻🇪", lang: "es", label: "Venezuela Portal" }
 ];
 
 // affiliationCompanies[].countries uses Turkish display names (e.g. "İspanya"), while
@@ -53,7 +55,9 @@ const countryNameTR = {
   MX: "Meksika",
   TR: "Türkiye",
   CO: "Kolombiya",
-  PE: "Peru"
+  PE: "Peru",
+  AR: "Arjantin",
+  VE: "Venezuela"
 };
 
 const brandLogoSrc = "/assets/company-logos/bbva-group.svg";
@@ -367,7 +371,14 @@ const peopleDirectory = [
   { id: "p14", name: "Dieter Schmidt", companyId: "bbva-peru", role: "Operasyon Müdürü", team: "Şebeke Operasyonları", city: "Lima", campus: "BBVA Perú HQ", photo: "https://randomuser.me/api/portraits/men/95.jpg", status: "Aktif", country: "PE" },
   { id: "p22", name: "Andreas Weber", companyId: "bbva-peru", role: "Arequipa Müşteri Hizmetleri Uzmanı", team: "Müşteri Hizmetleri", city: "Arequipa", campus: "Lima Operasyon Merkezi", photo: "https://randomuser.me/api/portraits/men/77.jpg", status: "Toplantıda", country: "PE" },
   { id: "p19", name: "Jennifer Miller", companyId: "bbva-peru", role: "BT Servis Yöneticisi", team: "BT", city: "Trujillo", campus: "BBVA Perú HQ", photo: "https://randomuser.me/api/portraits/women/58.jpg", status: "Aktif", country: "PE" },
-  { id: "p20", name: "Thomas Martin", companyId: "bbva-colombia", role: "E-Ticaret Araştırmacısı", team: "E-Ticaret", city: "Bogotá", campus: "BBVA Colombia Plaza", photo: "https://randomuser.me/api/portraits/men/19.jpg", status: "Sahada", country: "CO" }
+  { id: "p20", name: "Thomas Martin", companyId: "bbva-colombia", role: "E-Ticaret Araştırmacısı", team: "E-Ticaret", city: "Bogotá", campus: "BBVA Colombia Plaza", photo: "https://randomuser.me/api/portraits/men/19.jpg", status: "Sahada", country: "CO" },
+
+  // Argentina (AR) - BBVA Argentina
+  { id: "p25", name: "Florencia Acosta", companyId: "bbva-argentina", role: "Dijital Bankacılık Müdürü", team: "Dijital Bankacılık", city: "Buenos Aires", campus: "BBVA Argentina HQ", photo: "https://randomuser.me/api/portraits/women/85.jpg", status: "Aktif", country: "AR" },
+  { id: "p26", name: "Tomás Ferreyra", companyId: "bbva-argentina", role: "Córdoba Satış Sorumlusu", team: "Pazarlama", city: "Córdoba", campus: "Córdoba Ofisi", photo: "https://randomuser.me/api/portraits/men/91.jpg", status: "Sahada", country: "AR" },
+
+  // Venezuela (VE) - BBVA Provincial
+  { id: "p27", name: "Gabriela Rondón", companyId: "bbva-provincial", role: "Kurumsal Bankacılık Müdürü", team: "Kurumsal Bankacılık", city: "Caracas", campus: "BBVA Provincial HQ", photo: "https://randomuser.me/api/portraits/women/90.jpg", status: "Aktif", country: "VE" }
 ];
 
 const initialAnnouncements = [
@@ -711,7 +722,7 @@ const initialAnnouncements = [
   {
     id: "ann-44",
     title: "BBVA İnovasyon Ödülleri Açıklandı",
-    body: "Bu yılki Altın Yaka inovasyon kategorilerinde dereceye giren fikir sahiplerine toplamda 500.000 SA ödül dağıtılacaktır.",
+    body: "Bu yılki Altın Yaka inovasyon kategorilerinde dereceye giren fikir sahiplerine toplamda 500.000 BC ödül dağıtılacaktır.",
     scope: "Holding geneli",
     companyId: "bbva-group",
     country: "TR",
@@ -888,7 +899,7 @@ const initialMessageSpaces = [
     members: ["p01", "p02", "p05", "p06", "p10", "p15"],
     messages: [
       { userId: "p02", body: "Bu hafta BBVA Technology olarak yapay zeka analiz motorunu çoklu dil desteğine uyarladık. İspanyolca ve Portekizce fikirler de artık otomatik puanlanabiliyor.", time: "09:22" },
-      { userId: "p01", body: "Harika! BBVA, S.A. sürdürülebilirlik fonlama fikrini de borsa tahtasına aldık, SA Coin bakiyelerinizi kontrol edin.", time: "09:27" },
+      { userId: "p01", body: "Harika! BBVA, S.A. sürdürülebilirlik fonlama fikrini de borsa tahtasına aldık, BBVA Coin bakiyelerinizi kontrol edin.", time: "09:27" },
       { userId: "p10", body: "BBVA México banking app energy storage designs are uploaded. Ready for group strategy review.", time: "10:14" },
       { userId: "p15", body: "We started a new carbon offset financing pilot in Madrid. Early portfolio performance remains excellent.", time: "11:35" }
     ]
@@ -1036,7 +1047,7 @@ const demoUsers = [
     id: "u1",
     name: "Ayşe Yılmaz",
     email: "ayse.yilmaz@bbva.example",
-    employeeId: "SA-10452",
+    employeeId: "BBVA-10452",
     company: "Garanti BBVA A.Ş.",
     companyId: "garanti-bbva",
     department: "Müşteri Deneyimi",
@@ -1057,7 +1068,7 @@ const demoUsers = [
     id: "u2",
     name: "Mehmet Demir",
     email: "mehmet.demir@bbva.example",
-    employeeId: "SA-88312",
+    employeeId: "BBVA-88312",
     company: "Garanti BBVA Faktoring A.Ş.",
     companyId: "garanti-bbva-faktoring",
     department: "Operasyon",
@@ -1078,7 +1089,7 @@ const demoUsers = [
     id: "u3",
     name: "Lucía Herrera",
     email: "lucia.herrera@bbva.example",
-    employeeId: "SA-22018",
+    employeeId: "BBVA-22018",
     company: "Garanti BBVA A.Ş.",
     companyId: "garanti-bbva",
     department: "Dijital Bankacılık",
@@ -1100,7 +1111,7 @@ const demoUsers = [
     id: "u4",
     name: "Mateo Aguirre",
     email: "mateo.aguirre@bbva.example",
-    employeeId: "SA-01004",
+    employeeId: "BBVA-01004",
     company: "Banco Bilbao Vizcaya Argentaria, S.A.",
     companyId: "bbva-group",
     department: "Strateji",
@@ -1121,7 +1132,7 @@ const demoUsers = [
     id: "u5",
     name: "Merve Aydın",
     email: "merve.aydin@bbva.example",
-    employeeId: "SA-55102",
+    employeeId: "BBVA-55102",
     company: "Garanti BBVA Emeklilik ve Hayat A.Ş.",
     companyId: "garanti-bbva-emeklilik",
     department: "İnsan Kaynakları",
@@ -1143,7 +1154,7 @@ const demoUsers = [
     id: "u6",
     name: "Sarah Jenkins",
     email: "sarah.jenkins@bbva.example",
-    employeeId: "SA-ES-021",
+    employeeId: "BBVA-ES-021",
     company: "BBVA Seguros, S.A.",
     companyId: "bbva-seguros",
     department: "Sales",
@@ -1164,7 +1175,7 @@ const demoUsers = [
     id: "u7",
     name: "John Sterling",
     email: "john.sterling@bbva.example",
-    employeeId: "SA-ES-001",
+    employeeId: "BBVA-ES-001",
     company: "BBVA Research, S.A.",
     companyId: "bbva-research",
     department: "Makroekonomi",
@@ -1185,7 +1196,7 @@ const demoUsers = [
     id: "u8",
     name: "Oliver Watson",
     email: "oliver.watson@bbva.example",
-    employeeId: "SA-ES-002",
+    employeeId: "BBVA-ES-002",
     company: "Banco Bilbao Vizcaya Argentaria, S.A.",
     companyId: "bbva-group",
     department: "Strategy",
@@ -1207,7 +1218,7 @@ const demoUsers = [
     id: "u9",
     name: "Emily Rose",
     email: "emily.rose@bbva.example",
-    employeeId: "SA-MX-015",
+    employeeId: "BBVA-MX-015",
     company: "BBVA México, S.A.",
     companyId: "bbva-mexico",
     department: "Tedarik Zinciri",
@@ -1228,7 +1239,7 @@ const demoUsers = [
     id: "u10",
     name: "Michael Vance",
     email: "michael.vance@bbva.example",
-    employeeId: "SA-MX-001",
+    employeeId: "BBVA-MX-001",
     company: "BBVA México, S.A.",
     companyId: "bbva-mexico",
     department: "Dijital Bankacılık",
@@ -1249,7 +1260,7 @@ const demoUsers = [
     id: "u11",
     name: "Jessica Taylor",
     email: "jessica.taylor@bbva.example",
-    employeeId: "SA-MX-002",
+    employeeId: "BBVA-MX-002",
     company: "Banco Bilbao Vizcaya Argentaria, S.A.",
     companyId: "bbva-group",
     department: "Strategy",
@@ -1271,7 +1282,7 @@ const demoUsers = [
     id: "u12",
     name: "Hans Müller",
     email: "hans.mueller@bbva.example",
-    employeeId: "SA-CO-012",
+    employeeId: "BBVA-CO-012",
     company: "BBVA Colombia S.A.",
     companyId: "bbva-colombia",
     department: "Tedarik Zinciri",
@@ -1292,7 +1303,7 @@ const demoUsers = [
     id: "u13",
     name: "Dieter Schmidt",
     email: "dieter.schmidt@bbva.example",
-    employeeId: "SA-PE-001",
+    employeeId: "BBVA-PE-001",
     company: "BBVA Perú S.A.",
     companyId: "bbva-peru",
     department: "Şebeke Operasyonları",
@@ -1314,7 +1325,7 @@ const demoUsers = [
     id: "u14",
     name: "Carlos Ruiz",
     email: "carlos.ruiz@bbva.example",
-    employeeId: "SA-ES-001",
+    employeeId: "BBVA-ES-001",
     company: "BBVA, S.A.",
     companyId: "bbva-es",
     department: "Kurumsal Bankacılık",
@@ -1335,7 +1346,7 @@ const demoUsers = [
     id: "u15",
     name: "Maria Ortega",
     email: "maria.ortega@bbva.example",
-    employeeId: "SA-ES-010",
+    employeeId: "BBVA-ES-010",
     company: "BBVA, S.A.",
     companyId: "bbva-es",
     department: "Hazine",
@@ -1924,7 +1935,7 @@ const challenges = [
     brief: "Kullanıcıların günlük harcamalarını analiz ederek tasarruf önerileri sunan fintech çözümleri.",
     date: "1 Haz - 30 Haz",
     deadline: "12 gün kaldı",
-    reward: "75.000 SA + Hızlı Inovasyon Bütçesi",
+    reward: "75.000 BC + Hızlı Inovasyon Bütçesi",
     rewardType: "Terfi + Para",
     sponsor: "BBVA İnovasyon Lab",
     status: "Aktif",
@@ -1949,7 +1960,7 @@ const challenges = [
     brief: "Online siparişlerin mağaza stoklarıyla anlık eşlenip teslimat süresini yarıya indiren lojistik akışları.",
     date: "5 Haz - 5 Tem",
     deadline: "18 gün kaldı",
-    reward: "50.000 SA + Gebze Lojistik Pilotu",
+    reward: "50.000 BC + Gebze Lojistik Pilotu",
     rewardType: "Teknoloji Hediye",
     sponsor: "BBVA México Tedarik Zinciri",
     status: "Aktif",
@@ -1975,7 +1986,7 @@ const challenges = [
     brief: "Algorithms to optimize allocation/reallocation schedules of Mexico City customer savings based on peak market prices.",
     date: "10 Jun - 15 Jul",
     deadline: "27 days left",
-    reward: "100.000 SA + Mexico City lab pilot project",
+    reward: "100.000 BC + Mexico City lab pilot project",
     rewardType: "Para",
     sponsor: "BBVA México",
     status: "Aktif",
@@ -2001,7 +2012,7 @@ const challenges = [
     brief: "AI algorithms to predict next-quarter credit demand and risk outputs in Bogotá branch connections.",
     date: "15 Jun - 25 Jul",
     deadline: "35 days left",
-    reward: "60.000 SA + Bogotá tech team support",
+    reward: "60.000 BC + Bogotá tech team support",
     rewardType: "Para + Sertifika",
     sponsor: "BBVA Colombia",
     status: "Aktif",
@@ -2027,7 +2038,7 @@ const challenges = [
     brief: "Algoritmos para predecir y extender el alcance de financiamiento verde bajo condiciones reales de mercado en Lima.",
     date: "12 Jun - 20 Jul",
     deadline: "30 days left",
-    reward: "80.000 SA + Lima Pilot-Flotte",
+    reward: "80.000 BC + Lima Pilot-Flotte",
     rewardType: "Para + Sertifika",
     sponsor: "BBVA Perú Sürdürülebilirlik",
     status: "Aktif",
@@ -2053,7 +2064,7 @@ const challenges = [
     brief: "Innovative methods to channel carbon-neutral financing and ESG scoring inside BBVA Research's Madrid models.",
     date: "20 Jun - 20 Aug",
     deadline: "60 days left",
-    reward: "150.000 SA + Green Finance Pilot",
+    reward: "150.000 BC + Green Finance Pilot",
     rewardType: "Para",
     sponsor: "BBVA Research",
     status: "Yakında",

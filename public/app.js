@@ -168,7 +168,7 @@ const state = {
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Lucía, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Lucía, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 BC tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
       { userId: "p06", body: "Thank you. The research team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
@@ -207,7 +207,7 @@ const state = {
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Lucía Hanım, BBVA México şube içi kiosk projemize 100 SA bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Lucía Hanım, BBVA México şube içi kiosk projemize 100 BC bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
@@ -591,12 +591,12 @@ const state = {
       userName: "Michael Vance",
       userAvatar: "https://randomuser.me/api/portraits/men/22.jpg",
       userBio: "Digital Banking Director · BBVA México",
-      body: "Texas utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
+      body: "Monterrey industrial energy dispatch optimization dataset is uploaded under Data section. Open for model research.",
       date: "3 hours ago",
       likes: 15,
       likedByMe: false,
       comments: [],
-      country: "US"
+      country: "MX"
     }
   ]
 };
@@ -618,7 +618,7 @@ function currentUser() {
     id: config.id,
     name: config.name,
     email: config.email,
-    employeeId: "SA-22018",
+    employeeId: "BBVA-22018",
     roleKey: "manager",
     seniority: "Yönetici",
     isManager: true,
@@ -707,14 +707,10 @@ function esc(value) {
 
 function icon(name, extraAttrs = "") {
   if (name === "coins") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="sa-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="bbva-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
       <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
       <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
-      <g transform="translate(22.22, 34.8) scale(0.6)">
-        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#8b6508"/>
-        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
-        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
-      </g>
+      <text x="50" y="65" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="900" font-size="42" fill="#072146">B</text>
       <defs>
         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#ffe066" />
@@ -860,7 +856,7 @@ function marketCompanyForIdea(idea) {
 }
 
 function marketPrice(idea) {
-  // Every idea starts from the same 100 SA base valuation; marketChange (driven by
+  // Every idea starts from the same 100 BC base valuation; marketChange (driven by
   // buy/sell activity and per-idea performance drift) is applied on top so prices
   // actually move with trading instead of staying frozen at the base forever.
   const base = Number(idea.marketPrice || 100);
@@ -917,24 +913,20 @@ function marketDeltaClass(value) {
 }
 
 function formatCurrency(value) {
-  return `${Math.round(value).toLocaleString("tr-TR")} SA`;
+  return `${Math.round(value).toLocaleString("tr-TR")} BC`;
 }
 
 function formatCurrencyHTML(value, size = "normal") {
-  return `<span class="sa-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${saCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">SA</span></span>`;
+  return `<span class="bbva-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${bbvaCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">BC</span></span>`;
 }
 
-function saCoinIcon(size = "normal") {
+function bbvaCoinIcon(size = "normal") {
   const sizePx = size === "large" ? "20" : size === "small" ? "13" : "16";
   return `
-    <svg class="sa-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
+    <svg class="bbva-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
       <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
       <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
-      <g transform="translate(7.35, 12.17) scale(0.23)">
-        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#5C4033"/>
-        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
-        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
-      </g>
+      <text x="18" y="23.5" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="900" font-size="15" fill="#072146">B</text>
       <defs>
         <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#FFE07D"/>
@@ -1481,7 +1473,7 @@ function renderShell() {
               ` : ""}
             </div>
             <span class="credit-pill" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); padding: 6px 12px; border-radius: 99px;">
-              ${saCoinIcon("normal")}
+              ${bbvaCoinIcon("normal")}
               <span>${Math.round(state.marketBudget).toLocaleString("tr-TR")}</span>
             </span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
@@ -1606,11 +1598,13 @@ function renderPage() {
 
 function getSubsidiariesByCountry(code) {
   const mapping = {
-    TR: ["Türkiye"],
-    GB: ["Birleşik Krallık", "United Kingdom"],
-    US: ["Amerika Birleşik Devletleri", "United States"],
-    DE: ["Almanya", "Germany"],
-    ES: ["İspanya", "Spain"]
+    ES: ["İspanya", "Spain"],
+    MX: ["Meksika", "México", "Mexico"],
+    TR: ["Türkiye", "Turkey"],
+    CO: ["Kolombiya", "Colombia"],
+    PE: ["Peru", "Perú"],
+    AR: ["Arjantin", "Argentina"],
+    VE: ["Venezuela"]
   };
   const names = mapping[code] || [];
   return affiliationCompanies.filter(comp => {
@@ -1806,7 +1800,7 @@ function renderDashboard() {
   const highlights = [...countryIdeas].sort((a, b) => b.aiScore + b.communityScore - (a.aiScore + a.communityScore)).slice(0, 3);
   const focusIdea = highlights[0] || countryIdeas[0] || state.ideas[0];
   
-  const countMultiplier = state.activeCountry === "TR" ? 12 : state.activeCountry === "US" ? 6 : state.activeCountry === "GB" ? 4 : 2;
+  const countMultiplier = state.activeCountry === "ES" ? 12 : state.activeCountry === "MX" ? 8 : state.activeCountry === "TR" ? 6 : 3;
   const queueCount = countryIdeas.filter(idea => ["new", "review", "pilot"].includes(idea.status)).length;
   const reviewCount = countryIdeas.filter(idea => idea.status === "review").length + countMultiplier * 2;
   const pilotCount = countryIdeas.filter(idea => idea.status === "pilot").length + countMultiplier;
@@ -2088,7 +2082,7 @@ function renderStockTicker() {
               <span class="ticker__item">
                 <span style="color: var(--muted); margin-right: 4px;">$</span>
                 <strong>${esc(idea.marketTicker)}</strong>
-                <span style="margin-left: 6px; font-weight: 500;">${price} SA</span>
+                <span style="margin-left: 6px; font-weight: 500;">${price} BC</span>
                 <span class="ticker-change ${isUp ? "up" : "down"}">
                   ${isUp ? "▲" : "▼"} ${Math.abs(change).toFixed(1)}%
                 </span>
@@ -4220,8 +4214,8 @@ function renderIdeaDetail() {
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
               </span>
             ` : `
-              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 SA karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
-                ${icon("gavel")} Karar Kurulu'na Taşı (5000 SA)
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 BC karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (5000 BC)
               </button>
             `
           ) : ""}
@@ -7271,7 +7265,7 @@ function renderProfile() {
         ${metricCard("badge-check", "Uygulamaya alınan", `${myIdeas.filter(idea => idea.status === "done").length + 1}`, "Katkının somut etkisi.", "+1", "green")}
         ${metricCard("thumbs-up", "Desteklediğin", "42", "Oy kredisiyle katkı verdiğin fikirler.", "+6", "purple")}
         ${metricCard("message-circle", "Yorum", "28", "Tartışmalara yaptığın katkılar.", "+4", "amber")}
-        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} SA`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
+        ${metricCard("coins", "Kalan Bakiye", `${Math.round(state.marketBudget).toLocaleString("tr-TR")} BC`, "Portal genelinde kullanabileceğiniz bakiye.", "+0", "green")}
       </section>
       <section class="analytics-grid">
         <article class="analytics-card">
@@ -7314,8 +7308,8 @@ function renderManager() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="section-title">
           <div>
-            <h2>${icon("gavel")} 5000 SA ile Taşınan Talepler</h2>
-            <p>Sahipleri tarafından 5000 SA ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+            <h2>${icon("gavel")} 5000 BC ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 5000 BC ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
         </div>
@@ -7808,7 +7802,7 @@ function renderManagerV2() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="panel-head">
           <div>
-            <span class="panel-kicker">5000 SA ile taşınan talepler</span>
+            <span class="panel-kicker">5000 BC ile taşınan talepler</span>
             <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
@@ -7942,7 +7936,7 @@ function renderAdminContent() {
                 <td>${esc(user.role)}</td>
                 <td>${esc(user.department)}</td>
                 <td>${esc(user.location)}</td>
-                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} SA</td>
+                <td>${Math.round(user.voteCreditBalance).toLocaleString("tr-TR")} / ${Math.round(user.monthlyVoteCredit || 3000).toLocaleString("tr-TR")} BC</td>
                 <td><span class="status-badge done">Aktif</span></td>
               </tr>
             `).join("")}
@@ -9083,7 +9077,7 @@ document.addEventListener("click", event => {
     }
 
     if (state.marketBudget < fee) {
-      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} SA (Mevcut: ${state.marketBudget} SA)`);
+      alert(`Bu işlemi gerçekleştirmek için yeterli bakiyeniz yok! Gerekli: ${fee} BC (Mevcut: ${state.marketBudget} BC)`);
       return;
     }
 
@@ -9227,12 +9221,12 @@ document.addEventListener("click", event => {
           if (royalty > 0) {
             if (idea.authorId === currentUser().id) {
               state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} BC) cüzdanınıza eklendi!`;
             } else {
               const authorUser = demoUsers.find(u => u.id === idea.authorId);
               if (authorUser) {
                 authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} BC) telif ödendi.`;
               }
             }
           }
@@ -9959,12 +9953,18 @@ if (action === "login") {
   }
 
   if (action === "toggle-theme") {
-    state.theme = "light";
+    state.theme = state.theme === "dark" ? "light" : "dark";
     render();
   }
 
   if (action === "set-view") {
     state.ideaView = actionButton.dataset.view;
+    render();
+  }
+
+  if (action === "reset-ledger-filters") {
+    state.ledgerUserFilter = "Tümü";
+    state.ledgerProjectFilter = "Tümü";
     render();
   }
 
@@ -10035,7 +10035,7 @@ if (action === "login") {
       const isProject = state.marketDraft.category === "Proje";
       const fee = isProject ? 100 : 0;
       if (state.marketBudget < fee) {
-        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} SA olmalıdır! (Mevcut: ${state.marketBudget} SA)`);
+        alert(`Yeni Proje eklemek için cüzdanınızda en az ${fee} BC olmalıdır! (Mevcut: ${state.marketBudget} BC)`);
         return;
       }
       state.marketBudget -= fee;
@@ -10094,12 +10094,12 @@ if (action === "login") {
           if (royalty > 0) {
             if (idea.authorId === currentUser().id) {
               state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} BC) cüzdanınıza eklendi!`;
             } else {
               const authorUser = demoUsers.find(u => u.id === idea.authorId);
               if (authorUser) {
                 authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} BC) telif ödendi.`;
               }
             }
           }
@@ -10443,10 +10443,10 @@ if (action === "login") {
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea && !idea.escalatedToBoard) {
       if (state.marketBudget < ESCALATION_COST) {
-        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} SA (Mevcut: ${Math.round(state.marketBudget)} SA)`);
+        alert(`Karar Kurulu'na taşımak için yeterli bakiyeniz yok! Gerekli: ${ESCALATION_COST} BC (Mevcut: ${Math.round(state.marketBudget)} BC)`);
         return;
       }
-      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} SA karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
+      const confirmed = confirm(`"${idea.title}" fikrini ${ESCALATION_COST} BC karşılığında Karar Kurulu'nun inceleme listesine taşımak istiyor musunuz? Tutar onayladığınızda hesabınızdan düşülecek.`);
       if (!confirmed) return;
       state.marketBudget -= ESCALATION_COST;
       idea.escalatedToBoard = true;
@@ -11513,7 +11513,7 @@ function supportIdea(id) {
   }
   
   if (user.voteCreditBalance < 100) {
-    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 SA gereklidir.");
+    alert("Yeterli bakiyeniz bulunmamaktadır! Desteklemek için en az 100 BC gereklidir.");
     return;
   }
   
@@ -13583,10 +13583,10 @@ function renderProfileTabContent(user, tab) {
                     </div>
                   </td>
                   <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${qty}</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} SA</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} BC</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} BC</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} BC</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} BC</td>
                   <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isProfit ? '#2ecc71' : '#e74c3c'};">
                     <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isProfit ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
                       ${isProfit ? '▲ +' : '▼ '}${formatCurrency(profitLoss)} (${isProfit ? '+' : ''}${profitLossPercent.toFixed(1)}%)
@@ -14502,7 +14502,7 @@ function getActiveLanguage() {
 function getTranslatedText(item, field) {
   if (!item) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = item.country === "TR" ? "tr" : (item.country === "DE" ? "de" : (item.country === "ES" ? "es" : "en"));
+  const originalLang = item.country === "TR" ? "tr" : "es";
   
   if (activeLang === originalLang) {
     return item[field] || "";
@@ -14522,7 +14522,7 @@ function getTranslatedText(item, field) {
 function renderTranslationButton(idea) {
   if (!idea) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+  const originalLang = idea.country === "TR" ? "tr" : "es";
   
   if (activeLang === originalLang) return "";
   
@@ -14557,7 +14557,7 @@ function translateAllInState() {
       idea.originalProblem = idea.problem || "";
       idea.originalSolution = idea.solution || "";
     }
-    const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+    const originalLang = idea.country === "TR" ? "tr" : "es";
     const showOriginal = !!(state.translatedIdeaIds && state.translatedIdeaIds[idea.id]);
     
     if (showOriginal || activeLang === originalLang) {
@@ -14582,7 +14582,7 @@ function translateAllInState() {
       ann.originalTitle = ann.title || "";
       ann.originalBody = ann.body || "";
     }
-    const originalLang = ann.country === "TR" ? "tr" : (ann.country === "DE" ? "de" : (ann.country === "ES" ? "es" : "en"));
+    const originalLang = ann.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       ann.title = ann.originalTitle;
       ann.body = ann.originalBody;
@@ -14600,7 +14600,7 @@ function translateAllInState() {
     if (post.originalBody === undefined) {
       post.originalBody = post.body || "";
     }
-    const originalLang = post.country === "TR" ? "tr" : (post.country === "DE" ? "de" : (post.country === "ES" ? "es" : "en"));
+    const originalLang = post.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       post.body = post.originalBody;
     } else {
@@ -14629,7 +14629,7 @@ function translateAllInState() {
 
   // 4. Translate Chat Messages
   state.messageSpaces.forEach(space => {
-    const originalLang = space.country === "TR" ? "tr" : (space.country === "DE" ? "de" : (space.country === "ES" ? "es" : "en"));
+    const originalLang = space.country === "TR" ? "tr" : "es";
     if (space.messages) {
       space.messages.forEach(msg => {
         if (msg.originalBody === undefined) {
@@ -14653,7 +14653,7 @@ function translateAllInState() {
       ds.originalTitle = ds.title || "";
       ds.originalSummary = ds.summary || "";
     }
-    const originalLang = ds.country === "TR" ? "tr" : (ds.country === "DE" ? "de" : (ds.country === "ES" ? "es" : "en"));
+    const originalLang = ds.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       ds.title = ds.originalTitle;
       ds.summary = ds.originalSummary;
@@ -14672,7 +14672,7 @@ function translateAllInState() {
       ch.originalTitle = ch.title || "";
       ch.originalBrief = ch.brief || "";
     }
-    const originalLang = ch.country === "TR" ? "tr" : (ch.country === "DE" ? "de" : (ch.country === "ES" ? "es" : "en"));
+    const originalLang = ch.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       ch.title = ch.originalTitle;
       ch.brief = ch.originalBrief;
@@ -14808,7 +14808,7 @@ function scaleMockDataset() {
       id: `u-${i}`,
       name: fullName,
       email: `${fn.toLowerCase()}.${ln.toLowerCase()}@${randCompany.domain}`,
-      employeeId: `SA-${15000 + i}`,
+      employeeId: `BBVA-${15000 + i}`,
       company: randCompany.name,
       companyId: randCompany.id,
       department: dept,
@@ -14976,7 +14976,7 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  const countryCycle = ["TR", "MX", "ES", "CO", "PE"];
+  const countryCycle = ["TR", "MX", "ES", "CO", "PE", "AR", "VE"];
   const companiesByCountryCode = {};
   countryCycle.forEach(code => {
     companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
@@ -14993,7 +14993,7 @@ function scaleMockDataset() {
     const id = `idea-gen-${i}`;
     const ticker = `NIE-${100 + i}`;
 
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "ES" ? "es" : "en");
+    const originalLang = countryCode === "TR" ? "tr" : "es";
     const title = trend[originalLang].title + ` (${randCompany.shortName})`;
     const summary = trend[originalLang].summary;
     const problem = trend[originalLang].problem;
@@ -15100,7 +15100,7 @@ function scaleMockDataset() {
     const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
     const annUserPool = demoUsers.filter(u => u.country === countryCode);
     const randomUser = annUserPool.length ? annUserPool[Math.floor(Math.random() * annUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "ES" ? "es" : "en");
+    const originalLang = countryCode === "TR" ? "tr" : "es";
     const projectNum = i + 10;
 
     state.announcements.push({
@@ -15246,10 +15246,10 @@ function scaleMockDataset() {
     },
     {
       area: "Borsa",
-      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Borsa İstanbul'da işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
-      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on Borsa Istanbul for the last 1 year." },
-      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Borsa Istanbul gehandelten Gruppenunternehmen für das letzte Jahr." },
-      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en Borsa Istanbul durante el último año." }
+      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Bolsa de Madrid'de işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
+      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on Bolsa de Madrid for the last 1 year." },
+      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Bolsa de Madrid gehandelten Gruppenunternehmen für das letzte Jahr." },
+      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en la Bolsa de Madrid durante el último año." }
     },
     {
       area: "Diğer",
@@ -15260,10 +15260,10 @@ function scaleMockDataset() {
     }
   ];
 
-  const countries = ["TR", "MX", "ES", "CO", "PE"];
+  const countries = ["TR", "MX", "ES", "CO", "PE", "AR", "VE"];
   let datasetIdCount = 0;
   countries.forEach(country => {
-    const lang = country === "TR" ? "tr" : (country === "ES" ? "es" : "en");
+    const lang = country === "TR" ? "tr" : "es";
     const dsCompanyPool = companiesByCountryCode[country];
     for (let i = 0; i < 12; i++) {
       const trend = datasetTrends[i % datasetTrends.length];
@@ -15734,7 +15734,7 @@ function scaleMockDataset() {
     });
   });
 
-  // Scale demo user credits to SA Coins scale
+  // Scale demo user credits to BBVA Coins scale
   demoUsers.forEach(u => {
     if (u.voteCreditBalance < 100) u.voteCreditBalance = (u.voteCreditBalance || 0) * 100;
     if (u.monthlyVoteCredit < 100) u.monthlyVoteCredit = (u.monthlyVoteCredit || 0) * 100;

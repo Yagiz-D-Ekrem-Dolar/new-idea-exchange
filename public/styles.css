@@ -14858,7 +14858,7 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
 
 
 /* BBVA Coin Premium Styling & Hover Animations */
-.sa-coin-inline {
+.bbva-coin-inline {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -14869,17 +14869,17 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.sa-coin-inline:hover {
+.bbva-coin-inline:hover {
   transform: translateY(-1px);
   border-color: rgba(241, 196, 15, 0.5);
   box-shadow: 0 4px 12px rgba(241, 196, 15, 0.12);
 }
 
-.sa-coin-svg {
+.bbva-coin-svg {
   transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.sa-coin-inline:hover .sa-coin-svg {
+.bbva-coin-inline:hover .bbva-coin-svg {
   transform: rotate(360deg);
 }
 
