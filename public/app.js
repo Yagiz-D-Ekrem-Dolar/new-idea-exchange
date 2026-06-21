@@ -3209,9 +3209,10 @@ function renderTradingExchange() {
       <!-- AI & Yatırım Politikası Bilgi Bandı -->
       <section class="info-banner" style="background: rgba(59, 130, 246, 0.06); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px 16px; margin: 10px 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.4;">
         <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--primary);">
-          ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası:
+          ${icon("info")} Kurumsal İnovasyon Yatırım, Borsa Algoritması ve Teşvik Politikası:
         </div>
         <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
+          <span>• <strong>Fiyatlama Algoritması:</strong> Fikirlerin borsa fiyatları; AI değerlendirme skoru (%40 ağırlık), lot hacmi (%30 ağırlık), çalışan destekçi oyları (%20 ağırlık) ve ekli dosya/kod paketi bütünlüğü (%10 ağırlık) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.</span>
           <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
           <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın <strong>10 katı</strong> oylama kredisi (ödül) aktarılır.</span>
           <span>• Fikir hayata geçirildiğinde, girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırılır.</span>
@@ -5544,6 +5545,7 @@ function renderClubCard(club) {
           </div>
         </div>
       </div>
+      ${renderClubAiSuggestion(club)}
     </article>
   `;
 }
@@ -6411,6 +6413,7 @@ function renderTeamCard(team, isMine) {
           </span>
         </div>
       ` : ""}
+      ${renderTeamAiSuggestion(team)}
     </article>
   `;
 }
@@ -7236,6 +7239,7 @@ function renderChallengeCard(challenge, index) {
           <span><strong>${challenge.ideas}</strong><small>fikir</small></span>
           <span><strong>${challenge.participants}</strong><small>katılımcı</small></span>
         </div>
+        ${renderChallengeAiSuggestionPanel(challenge)}
         <div class="challenge-footer">
           <small>${esc(challenge.sponsor)}</small>
           <div>
@@ -13919,22 +13923,22 @@ function renderSystemDetails() {
           BBVA Group New Idea Exchange platformuna ait teknik raporlar, akademik kanıt dokümanları, entegrasyon raporları ve ürün belgeleri bu sayfada toplanmıştır.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+          ${docCard("presentation", "⭐ BBVA New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel BBVA New PDF dokümanı.", [
+            { href: bbvaNewHref, label: "PDF Görüntüle" },
+            { href: bbvaNewHref, label: "PDF İndir", download: true }
+          ])}
+          ${docCard("book-open", "⭐ Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
+            { href: academicIntegrationHref, label: "PDF Görüntüle" },
+            { href: academicIntegrationHref, label: "PDF İndir", download: true }
+          ])}
+          ${docCard("library", "⭐ Literatür ve Kanıtlar Raporu", "İnovasyon borsası yaklaşımını destekleyen akademik literatür, referanslar ve kanıt çerçevesini içeren rapor.", [
+            { href: academicEvidenceHref, label: "PDF Görüntüle" },
+            { href: academicEvidenceHref, label: "PDF İndir", download: true }
+          ])}
           ${docCard("file-text", "Güncel Teknik Rapor", "20 Haziran 2026 tarihli mimari inceleme, ürün mantığı, borsa fiyatlama modeli, AI kapsamı, teknik borçlar ve önerilen yol haritasını içeren güncel PDF raporu.", [
             { href: currentReportHref, label: "PDF Görüntüle" },
             { href: currentReportHref, label: "PDF İndir", download: true },
             { href: "/technical-report.html", label: "HTML Rapor" }
-          ])}
-          ${docCard("presentation", "BBVA New", "Platformun ürün vizyonu, akışları ve anlatım kurgusunu içeren güncel BBVA New PDF dokümanı.", [
-            { href: bbvaNewHref, label: "PDF Görüntüle" },
-            { href: bbvaNewHref, label: "PDF İndir", download: true }
-          ])}
-          ${docCard("book-open", "Akademik ve Entegrasyon Raporu", "Akademik arka plan, kurumsal entegrasyon yaklaşımı, sistemin uygulanabilirliği ve ölçeklenme gerekçelerini açıklayan rapor.", [
-            { href: academicIntegrationHref, label: "PDF Görüntüle" },
-            { href: academicIntegrationHref, label: "PDF İndir", download: true }
-          ])}
-          ${docCard("library", "Literatür ve Kanıtlar Raporu", "İnovasyon borsası yaklaşımını destekleyen akademik literatür, referanslar ve kanıt çerçevesini içeren rapor.", [
-            { href: academicEvidenceHref, label: "PDF Görüntüle" },
-            { href: academicEvidenceHref, label: "PDF İndir", download: true }
           ])}
           ${docCard("database", "Sistem Raporları", "Borsa mantığı, sanal para/ödül kuralları, veri modeli, stüdyo/ekip/ürün modeli ve operasyonel akışları kapsayan kapsamlı kurumsal ürün raporu.", [
             { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF Görüntüle" },
@@ -15892,3 +15896,94 @@ scaleMockDataset();
 ensureSocialEnhancements();
 render();
 
+
+
+// ============================================================================
+// AI SUGGESTIONS HELPER FUNCTIONS FOR CHALLENGES, TEAMS, AND CLUBS
+// ============================================================================
+
+function buildAiSuggestionForChallenge(challenge) {
+  const title = challenge.title || "";
+  const sector = challenge.sector || "";
+  let recommendation = "";
+  let steps = [];
+  
+  if (sector === "FinTech" || title.includes("Açık Bankacılık") || title.includes("FinTech")) {
+    recommendation = "Bu FinTech yarışmasında başarı şansını artırmak için, API gecikme sürelerini ve veri gizliliği (KVKK/BDDK) gereksinimlerini hesaba katan bir prototip geliştirin.";
+    steps = [
+      "BBVA Open Platform API'lerini entegre edin.",
+      "Kullanıcı işlem geçmişini anlık olarak puanlayan hafif bir model tasarlayın.",
+      "Garanti BBVA mobil uygulamasıyla entegrasyon senaryosunu hazırlayın."
+    ];
+  } else if (sector === "Sürdürülebilirlik" || title.includes("Sürdürülebilirlik") || title.includes("Yeşil")) {
+    recommendation = "Sürdürülebilirlik odaklı bu yarışmada, karbon ayak izi hesaplamasını ve iştirakler arası enerji optimizasyonunu ön plana çıkarın.";
+    steps = [
+      "Tüm BBVA binalarının ve şubelerinin akıllı sayaç verilerini modelleyin.",
+      "Çalışanlar için yeşil davranışları teşvik eden ödül mekanizması (BBVA Coin) entegre edin.",
+      "Yıllık CapEx/OpEx tasarrufunu ve karbon azaltım oranını netleştirin."
+    ];
+  } else {
+    recommendation = `Bu ${sector} yarışması için şirket içi uzmanları bir araya getiren modüler bir ekip kurun ve fikrinizi gerçek zamanlı pilot verilerle destekleyin.`;
+    steps = [
+      "Fikir havuzundaki ilgili veri setlerini (Veri&Bilgi) inceleyin.",
+      "BBVA iştiraklerinin (Portföy, Yatırım vb.) bu projeyi nasıl ölçeklendirebileceğini tasarlayın.",
+      "Karar verici kurul için 5 dakikalık bir demo video / pitch deck hazırlayın."
+    ];
+  }
+  return { recommendation, steps };
+}
+
+function renderChallengeAiSuggestionPanel(challenge) {
+  const suggestion = buildAiSuggestionForChallenge(challenge);
+  return `
+    <div class="ai-suggestion-panel challenge compact" style="margin-top: 12px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 10px;">
+      <div class="ai-suggestion-head" style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 11px;">
+        <span class="ai-suggestion-icon" style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:12px;height:12px;'")}</span>
+        <span style="font-weight: 600; color: var(--ink);">AI Önerisi <small style="color: var(--muted); font-weight: normal; margin-left: 4px;">Yarışma Stratejisi</small></span>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-soft); line-height: 1.4; margin: 0 0 6px 0;">${esc(suggestion.recommendation)}</p>
+      <ul style="margin: 0; padding-left: 14px; font-size: 11px; color: var(--ink-soft); line-height: 1.4;">
+        ${suggestion.steps.map(step => `<li>${esc(step)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function renderTeamAiSuggestion(team) {
+  const openRoles = team.roles.filter(r => !r.filled);
+  let rec = "";
+  if (openRoles.length > 0) {
+    const roleTitles = openRoles.map(r => r.title).join(", ");
+    rec = `Ekibin sinerjisini artırmak için acilen şu açık pozisyonları doldurun: <strong>${esc(roleTitles)}</strong>. Fikir sahipleri listesinden aday davet edebilirsiniz.`;
+  } else {
+    rec = "Ekip kadrosu tamamlandı! AI sinerji skoru yüksek. Projeyi borsada fonlamak ve pilot aşamasına taşımak için ilk stüdyo toplantısını başlatın.";
+  }
+  return `
+    <div class="ai-suggestion-panel team compact" style="margin-top: 10px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px; font-size: 11px;">
+      <div class="ai-suggestion-head" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 10px;">
+        <span class="ai-suggestion-icon" style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:11px;height:11px;'")}</span>
+        <span style="font-weight: 600; color: var(--ink);">AI Önerisi <small style="color: var(--muted); font-weight: normal; margin-left: 2px;">Sinerji & Kadro</small></span>
+      </div>
+      <p style="color: var(--ink-soft); line-height: 1.35; margin: 0;">${rec}</p>
+    </div>
+  `;
+}
+
+function renderClubAiSuggestion(club) {
+  let rec = "";
+  if (club.category === "Teknoloji") {
+    rec = "Bu teknoloji kulübünde en son LLM ve RAG mimarilerini paylaşın, hackathonlara ortak ekipler hazırlayın.";
+  } else if (club.category === "Sosyal Sorumluluk") {
+    rec = "Kulüp bünyesinde çevre/iklim temalı bir proje başlatıp Fikir Borsası'nda yeşil fonlama talep edin.";
+  } else {
+    rec = `Bu ${club.category} kulübünde yeni üyeler kazanmak için her ay düzenli bir online meetup organize edin.`;
+  }
+  return `
+    <div class="ai-suggestion-panel club compact" style="margin-top: 10px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px; font-size: 11px;">
+      <p style="color: var(--ink-soft); line-height: 1.35; margin: 0; display: flex; align-items: center; gap: 4px;">
+        <span style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:11px;height:11px;'")}</span>
+        <span><strong>AI Önerisi:</strong> ${rec}</span>
+      </p>
+    </div>
+  `;
+}
