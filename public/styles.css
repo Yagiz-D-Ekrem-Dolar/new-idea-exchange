@@ -5107,12 +5107,12 @@ body[data-theme="dark"] .tinder-comment-panel {
 
 /* Apple / Notion simplification pass */
 :root {
-  --accent: #005daa;
-  --accent-strong: #004b95;
+  --accent: #004481;
+  --accent-strong: #072146;
   --accent-soft: #e8f2ff;
-  --primary: #0A3A60;
-  --primary-rgb: 10, 58, 96;
-  --indigo: #3730a3;
+  --primary: #072146;
+  --primary-rgb: 7, 33, 70;
+  --indigo: #0082c9;
   --positive: #16a34a;
   --positive-rgb: 22, 163, 74;
   --negative: #dc2626;
@@ -5141,11 +5141,11 @@ body[data-theme="dark"] .tinder-comment-panel {
 }
 
 body[data-theme="dark"] {
-  --accent: #2997ff;
-  --accent-strong: #62b5ff;
-  --accent-soft: #10253b;
-  --primary: #2997ff;
-  --primary-rgb: 41, 151, 255;
+  --accent: #48aeef;
+  --accent-strong: #0082c9;
+  --accent-soft: #0e263d;
+  --primary: #48aeef;
+  --primary-rgb: 72, 174, 239;
   --indigo: #818cf8;
   --positive: #22c55e;
   --positive-rgb: 34, 197, 94;
@@ -5183,7 +5183,7 @@ body[data-theme="dark"] {
     var(--bg);
 }
 
-.sabanci-lockup {
+.bbva-lockup {
   display: grid;
   gap: 7px;
   min-width: 0;
@@ -5191,26 +5191,26 @@ body[data-theme="dark"] {
   color: var(--accent);
 }
 
-.sabanci-logo-image {
+.bbva-logo-image {
   width: min(100%, 430px);
   height: auto;
   display: block;
   object-fit: contain;
 }
 
-.sabanci-lockup small {
+.bbva-lockup small {
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0;
 }
 
-.sabanci-lockup.compact .sabanci-logo-image {
+.bbva-lockup.compact .bbva-logo-image {
   width: min(100%, 242px);
   max-height: 76px;
 }
 
-.sabanci-lockup.compact small {
+.bbva-lockup.compact small {
   font-size: 10px;
 }
 
@@ -6423,11 +6423,11 @@ body[data-theme="dark"] .mobile-tab.active {
     align-self: center;
   }
 
-  .sabanci-logo-image {
+  .bbva-logo-image {
     width: min(100%, 360px);
   }
 
-  .sabanci-lockup.compact .sabanci-logo-image {
+  .bbva-lockup.compact .bbva-logo-image {
     width: 220px;
   }
 
@@ -14857,13 +14857,13 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
 }
 
 
-/* Sabancı Coin Premium Styling & Hover Animations */
+/* BBVA Coin Premium Styling & Hover Animations */
 .sa-coin-inline {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: linear-gradient(135deg, rgba(241, 196, 15, 0.06) 0%, rgba(212, 172, 13, 0.08) 100%);
-  border: 1px solid rgba(212, 172, 13, 0.25);
+  background: linear-gradient(135deg, rgba(0, 130, 201, 0.06) 0%, rgba(7, 33, 70, 0.08) 100%);
+  border: 1px solid rgba(0, 130, 201, 0.25);
   padding: 2px 6px;
   border-radius: 6px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -14871,8 +14871,8 @@ body[data-theme="light"] .recruitment-missing-roles { background: rgba(0,93,170,
 
 .sa-coin-inline:hover {
   transform: translateY(-1px);
-  border-color: rgba(241, 196, 15, 0.5);
-  box-shadow: 0 4px 12px rgba(241, 196, 15, 0.12);
+  border-color: rgba(0, 130, 201, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 130, 201, 0.12);
 }
 
 .sa-coin-svg {
