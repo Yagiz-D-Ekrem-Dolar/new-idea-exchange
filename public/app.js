@@ -188,12 +188,12 @@ const state = {
   messageSpaces: structuredClone(initialMessageSpaces),
   directThreads: {
     "p02": [
-      { userId: "p02", body: "Merhaba Lucía Hanım, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
+      { userId: "p02", body: "Merhaba Can Bey, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
       { own: true, body: "Tabii Mert, verimlilik raporlarını inceledim. Yarın saat 10:00'da kısa bir toplantı yapalım.", time: "Dün 14:32" },
-      { userId: "p02", body: "Harika olur Lucía Hanım, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
+      { userId: "p02", body: "Harika olur Can Bey, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
     ],
     "p03": [
-      { userId: "p03", body: "Lucía Hanım, Garanti BBVA Portföy Levent Ofisi'ndeki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
+      { userId: "p03", body: "Can Bey, Garanti BBVA Portföy Levent Ofisi'ndeki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
       { own: true, body: "Eline sağlık Selin, verileri inceledim. Oldukça temiz görünüyor. Hemen onay verdim.", time: "Dün 16:45" },
       { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir veri optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
     ],
@@ -202,54 +202,54 @@ const state = {
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Lucía, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 COIN tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Can, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 COIN tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
       { userId: "p06", body: "Thank you. The research team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
     "p07": [
-      { userId: "p07", body: "Hi Lucía, the Madrid insurance portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
+      { userId: "p07", body: "Hi Can, the Madrid insurance portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
       { own: true, body: "Sure Sarah, I will request BBVA Technology AI lead to run a query for Madrid portal statistics.", time: "Yesterday 11:45" }
     ],
     "p10": [
-      { userId: "p10", body: "Hello Lucía, Mexico City digital savings testing is going well. We need to align our pricing algorithm with the Madrid team.", time: "Yesterday 14:10" },
+      { userId: "p10", body: "Hello Can, Mexico City digital savings testing is going well. We need to align our pricing algorithm with the Madrid team.", time: "Yesterday 14:10" },
       { own: true, body: "Hi Michael, good progress. Let's arrange a joint call with John Sterling tomorrow.", time: "Yesterday 14:30" }
     ],
     "p11": [
-      { userId: "p11", body: "Lucía, we started testing the document automation in Monterrey. It has reduced processing time significantly.", time: "Yesterday 15:40" },
+      { userId: "p11", body: "Can, we started testing the document automation in Monterrey. It has reduced processing time significantly.", time: "Yesterday 15:40" },
       { own: true, body: "That is fantastic news Emily! Let's submit this as a case study to the sustainability board.", time: "Yesterday 16:00" }
     ],
     "p12": [
-      { userId: "p12", body: "Hello Lucía, Guadalajara customer experience tests are finalized. The new onboarding flow performance is excellent.", time: "2 days ago" },
+      { userId: "p12", body: "Hello Can, Guadalajara customer experience tests are finalized. The new onboarding flow performance is excellent.", time: "2 days ago" },
       { own: true, body: "Thanks Robert. I saw the metrics. We will feature this in the BBVA México global showcase.", time: "2 days ago" }
     ],
     "p13": [
-      { userId: "p13", body: "Hola Lucía, el nuevo diseño de logística de almacén para Medellín está listo. ¿Podemos liberar el presupuesto?", time: "Dün 10:12" },
+      { userId: "p13", body: "Hola Can, el nuevo diseño de logística de almacén para Medellín está listo. ¿Podemos liberar el presupuesto?", time: "Dün 10:12" },
       { own: true, body: "Hola Hans, voy a revisar el presupuesto. Debemos asegurarnos de cumplir con las normas regionales.", time: "Dün 10:45" },
       { userId: "p13", body: "Perfecto, gracias. La documentación ya está en el sistema.", time: "Dün 11:00" }
     ],
     "p14": [
-      { userId: "p14", body: "Hola Lucía, la prueba piloto de financiamiento verde en Lima está operativa. Los indicadores están funcionando.", time: "Dün 13:00" },
+      { userId: "p14", body: "Hola Can, la prueba piloto de financiamiento verde en Lima está operativa. Los indicadores están funcionando.", time: "Dün 13:00" },
       { own: true, body: "¡Excelente Dieter! Por favor comparte los primeros datos con el equipo de software de Bogotá.", time: "Dün 13:20" }
     ],
     "p15": [
-      { userId: "p15", body: "Hola Lucía, hemos completado el diseño del producto de banca corporativa para Bilbao. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
+      { userId: "p15", body: "Hola Can, hemos completado el diseño del producto de banca corporativa para Bilbao. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
       { own: true, body: "Hola Carlos, excelente. Por favor, súbelo usando el Borsa Composer seleccionando España como país objetivo.", time: "Bugün 09:45" },
       { userId: "p15", body: "Entendido, ya está publicado. Gracias por el soporte.", time: "Bugün 10:00" }
     ],
     "p16": [
-      { userId: "p16", body: "Lucía, I uploaded the sustainability metrics for BBVA, S.A. Madrid treasury. It's ready for strategic score review.", time: "Dün 15:00" },
+      { userId: "p16", body: "Can, I uploaded the sustainability metrics for BBVA, S.A. Madrid treasury. It's ready for strategic score review.", time: "Dün 15:00" },
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Lucía Hanım, BBVA México şube içi kiosk projemize 100 COIN bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Can Bey, BBVA México şube içi kiosk projemize 100 COIN bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
-      { userId: "u2", body: "Lucía Hanım, BBVA Colombia tedarik zinciri takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
+      { userId: "u2", body: "Can Bey, BBVA Colombia tedarik zinciri takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
       { own: true, body: "Eline sağlık Mehmet, lojistik ekibiyle koordine edip bütçe onayını veriyorum.", time: "Dün 17:00" }
     ],
     "u4": [
-      { userId: "u4", body: "Lucía, inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
+      { userId: "u4", body: "Can, inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
       { own: true, body: "Çok teşekkürler Mateo Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
     ]
   },
@@ -303,7 +303,7 @@ const state = {
       category: "Operasyon",
       date: "2026-06-15",
       tags: ["şube", "müşteri deneyimi", "pilot"],
-      author: "Lucía Herrera"
+      author: "Can Koç"
     },
     {
       id: "ag-2",
@@ -390,7 +390,7 @@ const state = {
       date: "2026-06-16",
       likes: 14,
       comments: [
-        { userName: "Lucía Herrera", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
+        { userName: "Can Koç", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
       ]
     },
     {
@@ -525,7 +525,7 @@ const state = {
       importanceScore: 5,
       date: "2026-06-05",
       comments: [
-        { user: "Lucía Herrera", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
+        { user: "Can Koç", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
       ],
       likes: 18,
       downloads: 42,
@@ -535,7 +535,7 @@ const state = {
       id: "ds-2",
       title: "BBVA QR ve Biyometrik Ödeme Kullanım Analizi",
       summary: "QR ve biyometrik ödeme entegrasyonları için pazar payı, işlem hızları ve müşteri kullanım oranları.",
-      sharedBy: "Lucía Herrera",
+      sharedBy: "Can Koç",
       companyId: "garanti-bbva",
       type: "Kurumsal",
       area: "FinTech & Dijital Bankacılık",
@@ -567,7 +567,7 @@ const state = {
     {
       id: "ann-rec-1",
       title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
-      author: "Lucía Herrera",
+      author: "Can Koç",
       authorId: "u3",
       companyId: "garanti-bbva",
       type: "Topluluk",
@@ -640,11 +640,11 @@ const state = {
 function currentUser() {
   const c = state.activeCountry || state.currentCountry || "TR";
   const userConfigs = {
-    TR: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    ES: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.es@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    MX: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.mx@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    CO: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.co@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    PE: { id: "u3", name: "Lucía Herrera", email: "lucia.herrera.pe@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
+    TR: { id: "u3", name: "Can Koç", email: "can.koc@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    ES: { id: "u3", name: "Can Koç", email: "can.koc.es@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    MX: { id: "u3", name: "Can Koç", email: "can.koc.mx@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    CO: { id: "u3", name: "Can Koç", email: "can.koc.co@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    PE: { id: "u3", name: "Can Koç", email: "can.koc.pe@bbva.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
   };
   const config = userConfigs[c] || userConfigs.TR;
 
@@ -5226,7 +5226,7 @@ function managerVoteEvents() {
     { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: 1620, quantity: 12, date: "14.06.2026" },
     { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: 1380, quantity: 9, date: "14.06.2026" },
     { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
-    { userId: "u3", userName: "Lucía Herrera", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
+    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
   ];
   return [...base, ...seeded].filter(tx => {
     const idea = state.ideas.find(i => i.id === tx.ideaId);
@@ -8402,7 +8402,7 @@ function renderAdminContent() {
         ${[
           ["Mateo Aguirre", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
           ["Sistem", "Anonim fikir denetim kaydı oluşturdu", "Dün 17:42"],
-          ["Lucía Herrera", "Fikri pilot seçti", "Dün 15:11"],
+          ["Can Koç", "Fikri pilot seçti", "Dün 15:11"],
           ["Merve Aydın", "Yarışma duyurusu yayınladı", "31 Mayıs"]
         ].map(item => `<div class="mini-item"><span><strong>${esc(item[0])}</strong><span>${esc(item[1])}</span></span><span>${esc(item[2])}</span></div>`).join("")}
       </div>
@@ -10298,7 +10298,7 @@ document.addEventListener("click", event => {
     state.currentCountry = actionButton.dataset.code;
     state.activeCountry = actionButton.dataset.code;
     state.loginCountrySelected = true;
-    state.currentUserId = "u3"; // Always Lucía Herrera
+    state.currentUserId = "u3"; // Always Can Koç
     state.loggedIn = true; // Auto login
     render();
     resetScroll();
@@ -12686,7 +12686,7 @@ function renderSuggestionsSection() {
       category: "Veri Seti İsteği",
       description: "BBVA Mobile API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
       companyId: "garanti-bbva",
-      author: "Lucía Herrera",
+      author: "Can Koç",
       date: "2026-06-08",
       status: "İnceleniyor"
     },
@@ -15009,7 +15009,7 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
     likedByMe: false,
     country: person.country || "TR",
     comments: [
-      { id: `${id}-c1`, userName: "Lucía Herrera", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
+      { id: `${id}-c1`, userName: "Can Koç", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
     ],
     ...extras
   };
@@ -15357,8 +15357,8 @@ function scaleMockDataset() {
   // ideas/teams/announcements pick authors, since authorLabel snapshots u.name by value)
   demoUsers.forEach((u, index) => {
     if (u.id === "u3") {
-      u.name = "Lucía Herrera";
-      u.email = "lucia.herrera@bbva.example";
+      u.name = "Can Koç";
+      u.email = "can.koc@bbva.example";
       u.photo = "https://randomuser.me/api/portraits/men/75.jpg";
       u.avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg";
       return;
@@ -15557,7 +15557,7 @@ function scaleMockDataset() {
       supporters: 10 + (i % 40),
       country: countryCode,
       comments: [
-        { user: "Lucía Herrera", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
+        { user: "Can Koç", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
       ],
       tags: [trend.area.split(" ")[0], randCompany.shortName],
       createdAt: `2026-06-${10 + (i % 8)}`,

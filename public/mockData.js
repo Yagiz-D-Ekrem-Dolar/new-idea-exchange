@@ -85,7 +85,7 @@ const profilePhotos = {
 const namedAvatarPhotos = {
   "Ayşe Yılmaz": "https://randomuser.me/api/portraits/women/44.jpg",
   "Mehmet Demir": "https://randomuser.me/api/portraits/men/32.jpg",
-  "Lucía Herrera": "https://randomuser.me/api/portraits/men/75.jpg",
+  "Can Koç": "https://randomuser.me/api/portraits/men/75.jpg",
   "Mateo Aguirre": "https://randomuser.me/api/portraits/men/65.jpg",
   "Merve Aydın": "https://randomuser.me/api/portraits/women/68.jpg",
   "John Sterling": "https://randomuser.me/api/portraits/men/41.jpg",
@@ -930,7 +930,7 @@ const initialMessageSpaces = [
     members: ["p02", "p05", "u3", "u4", "u5"],
     messages: [
       { userId: "u3", body: "KOBİ'ler için geliştirdiğimiz yeşil finansman API'leri test ortamında stabil çalışıyor. Fikirlerinizi bekliyoruz.", time: "10:05" },
-      { userId: "p05", body: "Lucía Hanım, sürdürülebilirlik puan kartı servisini de bu API ile bağlayabiliriz. Entegrasyon dokümanını inceledim.", time: "10:14" },
+      { userId: "p05", body: "Can Bey, sürdürülebilirlik puan kartı servisini de bu API ile bağlayabiliriz. Entegrasyon dokümanını inceledim.", time: "10:14" },
       { userId: "p02", body: "Yapay zeka analiz modelimiz de KOBİ işlem geçmişini tarayıp karbon emisyon katsayısı üretebiliyor. BBVA, S.A. veritabanıyla entegre edebiliriz.", time: "10:30" },
       { userId: "u5", body: "Emeklilik tarafındaki tasarruf verilerini de buraya akıtıp bireysel kullanıcılara çevre rozeti dağıtabiliriz.", time: "11:15" }
     ]
@@ -1104,8 +1104,8 @@ const demoUsers = [
   },
   {
     id: "u3",
-    name: "Lucía Herrera",
-    email: "lucia.herrera@bbva.example",
+    name: "Can Koç",
+    email: "can.koc@bbva.example",
     employeeId: "BBVA-22018",
     company: "Garanti BBVA A.Ş.",
     companyId: "garanti-bbva",
@@ -1401,7 +1401,7 @@ const initialIdeas = [
     location: "Levent Ofisi",
     city: "İstanbul",
     authorId: "u3",
-    authorLabel: "Lucía Herrera",
+    authorLabel: "Can Koç",
     anonymity: "İsmimle paylaş",
     visibility: "Holding geneli",
     status: "pilot",
@@ -1480,7 +1480,7 @@ const initialIdeas = [
     marketChange: 3.8,
     country: "TR",
     comments: [
-      { user: "Lucía Herrera", body: "Gebze deposundaki otomasyon sistemleri ile entegre edilirse harika olur.", manager: true }
+      { user: "Can Koç", body: "Gebze deposundaki otomasyon sistemleri ile entegre edilirse harika olur.", manager: true }
     ],
     tags: ["Perakende", "Tedarik", "BBVA México", "Akıllı Raf"],
     createdAt: "2026-06-12",

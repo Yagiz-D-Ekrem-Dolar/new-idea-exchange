@@ -18,6 +18,6 @@ http://localhost:4173/
 
 - İlk girişte şirket içi demo key istenir: `NIE-DEMO-2026`.
 - Login ekranındaki demo hesap seçimi rol bazlı menüyü değiştirir.
-- `Lucía Herrera` yönetici panelini, `Mateo Aguirre` yönetici ve admin panelini gösterir.
+- `Can Koç` yönetici panelini, `Mateo Aguirre` yönetici ve admin panelini gösterir.
 - AI analiz akışı `/api/ai/analyze-idea` endpoint'i üzerinden çalışır.
 - `GROQ_API_KEY` veya `GROK_API_KEY` frontend'e yazılmaz; sunucu tarafı ortam değişkeni olarak ayrılmıştır. Anahtar yoksa demo analiz yanıtı döner.
