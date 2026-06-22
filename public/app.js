@@ -18,6 +18,40 @@ const state = {
   loginError: "",
   currentUserId: "u3",
   selectedLoginUserId: "u3",
+  externalApplications: [
+    {
+      id: "ext-1",
+      name: "Ahmet Yılmaz",
+      email: "ahmet.yilmaz@novasolutions.io",
+      startupName: "Nova Solutions",
+      ideaTitle: "Yapay Zeka Destekli Portföy Yönetim Asistanı",
+      summary: "BBVA ve Sabancı müşterilerinin yatırım tercihlerine göre otomatik portföy optimizasyonu yapan ve anlık piyasa analizleri sunan akıllı bir SaaS çözümü.",
+      portal: "BBVA",
+      status: "new",
+      date: "22.06.2026"
+    },
+    {
+      id: "ext-2",
+      name: "Selin Kaya",
+      email: "selin@solarpower.co",
+      startupName: "SolarPower IoT",
+      ideaTitle: "Güneş Panelleri İçin Akıllı Verimlilik Takip Cihazı",
+      summary: "Sabancı iştiraklerindeki çatı tipi güneş panellerinin kirlilik ve hasar durumunu IoT sensörleri ile tespit eden bulut izleme yazılımı.",
+      portal: "Sabancı",
+      status: "new",
+      date: "21.06.2026"
+    }
+  ],
+  externalDraft: {
+    name: "",
+    email: "",
+    startupName: "",
+    ideaTitle: "",
+    summary: "",
+    portal: "Sabancı"
+  },
+  loginView: "default",
+  externalSubmitSuccess: false,
   investmentLedger: [
     { id: "tx-1", user: "Nazlı Durukan", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, date: "2026-06-10" },
     { id: "tx-2", user: "Aras Kılınç", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 800, date: "2026-06-11" },
@@ -1094,8 +1128,86 @@ function resetScroll() {
   setTimeout(jump, 80);
 }
 
+function renderExternalSignup() {
+  const draft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+  const successMessage = state.externalSubmitSuccess ? `
+    <div class="alert alert-success" style="background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.3); color: #2ecc71; padding: 16px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
+      ${icon("check-circle-2", "20")}
+      <div>
+        <strong style="display: block; margin-bottom: 4px;">Başvurunuz Alındı!</strong>
+        Dış girişimci katılım başvurunuz sisteme kaydedildi. Karar kurulu değerlendirmesinden sonra tarafınıza e-posta ile dönüş yapılacaktır.
+      </div>
+    </div>
+  ` : "";
+
+  return `
+    <main class="login-page apple-login">
+      <section class="apple-access-card" style="max-width: 500px; width: 90%; padding: 32px;">
+        <div class="apple-access-brand">
+          ${brandLockup()}
+        </div>
+        <div class="apple-login-copy" style="margin-bottom: 24px; text-align: center;">
+          <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 8px;">Dış Girişimci Başvuru Formu</h1>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.4;">Şirket dışı bir girişimci veya ekip olarak platformumuza katılmak ve projenizi sunmak için bilgilerinizi doldurun.</p>
+        </div>
+
+        ${successMessage}
+
+        ${!state.externalSubmitSuccess ? `
+          <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Ad Soyad</span>
+              <input class="input" data-ext-draft="name" value="${esc(draft.name)}" placeholder="Örn. Burak Yılmaz" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">E-posta Adresi</span>
+              <input class="input" type="email" data-ext-draft="email" value="${esc(draft.email)}" placeholder="Örn. burak@startup.com" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Girişim Adı</span>
+              <input class="input" data-ext-draft="startupName" value="${esc(draft.startupName)}" placeholder="Örn. NovaTech AI" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Fikir / Proje Başlığı</span>
+              <input class="input" data-ext-draft="ideaTitle" value="${esc(draft.ideaTitle)}" placeholder="Örn. Akıllı Portföy Asistanı" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Fikir / Girişim Özeti</span>
+              <textarea class="textarea" data-ext-draft="summary" rows="3" placeholder="Girişiminizin sunduğu değer önerisi nedir?" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); font-family: inherit;">${esc(draft.summary)}</textarea>
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Başvurulan İnovasyon Kanalı</span>
+              <select class="select" data-ext-draft="portal" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface);">
+                <option value="Sabancı" ${draft.portal === "Sabancı" ? "selected" : ""}>Sabancı Holding Inovasyon Portalı</option>
+                <option value="BBVA" ${draft.portal === "BBVA" ? "selected" : ""}>BBVA Group Inovasyon Portalı</option>
+              </select>
+            </label>
+
+            ${state.loginError ? `<small class="form-error" style="color: #e74c3c; font-weight: 600; font-size: 12px;">${esc(state.loginError)}</small>` : ""}
+
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+              <button class="btn secondary" style="flex: 1; padding: 12px;" data-action="toggle-login-default">${icon("arrow-left")} Geri Dön</button>
+              <button class="btn primary" style="flex: 1; padding: 12px;" data-action="submit-external-application">${icon("send")} Başvuruyu Gönder</button>
+            </div>
+          </div>
+        ` : `
+          <button class="btn primary block" data-action="toggle-login-default" style="margin-top: 12px; width: 100%; padding: 12px;">${icon("arrow-left")} Giriş Ekranına Dön</button>
+        `}
+      </section>
+    </main>
+  `;
+}
+
 function renderLogin() {
   if (!state.accessKeyAccepted) {
+    if (state.loginView === "external-signup") {
+      return renderExternalSignup();
+    }
     return `
       <main class="login-page apple-login">
         <section class="apple-access-card">
@@ -1117,6 +1229,11 @@ function renderLogin() {
           </div>
           <button class="btn primary block" data-action="validate-key">${icon("unlock-keyhole")} Girişe devam et</button>
           <p class="security-note">Demo key altta görünür. Gerçek ortamda erişim şirket içi kimlikle doğrulanır.</p>
+          <div style="margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px; text-align: center;">
+            <button class="btn secondary block" data-action="toggle-external-signup" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; height: 38px; font-weight: 600;">
+              ${icon("user-plus")} Şirket Dışı Girişimci Girişi / Başvurusu
+            </button>
+          </div>
         </section>
       </main>
     `;
@@ -7794,6 +7911,9 @@ function renderManagerV2() {
     { title: "İnceleme", status: "review", icon: "clipboard-check" },
     { title: "Pilot", status: "pilot", icon: "rocket" }
   ];
+  
+  const extApps = state.externalApplications || [];
+  const extPending = extApps.filter(app => app.status === "new");
 
   return `
     <div class="view-stack apple-page manager-view">
@@ -7877,6 +7997,66 @@ function renderManagerV2() {
         </div>
       </section>
       ` : ""}
+
+      <section class="content-panel external-applications-panel" style="margin-top: 24px; border: 1px solid rgba(var(--primary-rgb), 0.25); background: rgba(var(--primary-rgb), 0.01);">
+        <div class="panel-head" style="margin-bottom: 16px;">
+          <div>
+            <span class="panel-kicker">Açık İnovasyon & Girişimcilik</span>
+            <h3>${icon("users")} Dış Girişimci Başvuruları</h3>
+          </div>
+          <span class="status-badge new">${extPending.length} bekleyen başvuru</span>
+        </div>
+        
+        ${extApps.length === 0 ? `
+          <p class="muted" style="text-align: center; padding: 24px 0;">Henüz dış girişimci başvurusu bulunmamaktadır.</p>
+        ` : `
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            ${extApps.map(app => `
+              <div class="external-app-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
+                  <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 15px; color: var(--ink); text-align: left;">${esc(app.ideaTitle)}</h4>
+                    <p style="margin: 0; font-size: 13px; color: var(--muted); text-align: left; line-height: 1.4;">${esc(app.summary)}</p>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="status-badge" style="background: rgba(0,102,255,0.1); color: #0066ff; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 6px;">
+                      ${esc(app.portal)} Portalı
+                    </span>
+                    ${app.status === 'new' ? `
+                      <span class="status-badge review">Bekliyor</span>
+                    ` : app.status === 'accepted' ? `
+                      <span class="status-badge done">Kabul Edildi</span>
+                    ` : `
+                      <span class="status-badge rejected">Reddedildi</span>
+                    `}
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--line-soft); padding-top: 12px; font-size: 12.5px; flex-wrap: wrap; gap: 12px;">
+                  <div style="color: var(--muted);">
+                    <span><strong>Girişim:</strong> ${esc(app.startupName)}</span>
+                    <span style="margin: 0 8px;">•</span>
+                    <span><strong>Kurucu:</strong> ${esc(app.name)} (${esc(app.email)})</span>
+                    <span style="margin: 0 8px;">•</span>
+                    <span><strong>Tarih:</strong> ${esc(app.date)}</span>
+                  </div>
+                  
+                  ${app.status === 'new' ? `
+                    <div style="display: flex; gap: 8px;">
+                      <button class="btn ghost btn-sm text-rejected" data-action="reject-external-app" data-id="${esc(app.id)}" style="padding: 6px 12px; height: auto; border: 1px solid rgba(231,76,60,0.2); color: #e74c3c; cursor: pointer; font-size: 12px; border-radius: 6px; display: flex; align-items: center; gap: 4px;">
+                        ${icon("x", "14")} Reddet
+                      </button>
+                      <button class="btn primary btn-sm" data-action="accept-external-app" data-id="${esc(app.id)}" style="padding: 6px 12px; height: auto; cursor: pointer; font-size: 12px; border-radius: 6px; display: flex; align-items: center; gap: 4px;">
+                        ${icon("check", "14")} Kabul Et ve Fikirlere Ekle
+                      </button>
+                    </div>
+                  ` : ""}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `}
+      </section>
 
       <section class="decision-board" aria-label="Karar akışı">
         ${lanes.map(lane => {
@@ -10002,6 +10182,120 @@ if (action === "login") {
     resetScroll();
   }
 
+  if (action === "toggle-external-signup") {
+    state.loginView = "external-signup";
+    state.loginError = "";
+    state.externalSubmitSuccess = false;
+    render();
+    return;
+  }
+
+  if (action === "toggle-login-default") {
+    state.loginView = "default";
+    state.loginError = "";
+    state.externalSubmitSuccess = false;
+    render();
+    return;
+  }
+
+  if (action === "submit-external-application") {
+    const draft = state.externalDraft || {};
+    if (!draft.name || !draft.name.trim() ||
+        !draft.email || !draft.email.trim() ||
+        !draft.startupName || !draft.startupName.trim() ||
+        !draft.ideaTitle || !draft.ideaTitle.trim() ||
+        !draft.summary || !draft.summary.trim()) {
+      state.loginError = "Lütfen tüm alanları doldurun.";
+      render();
+      return;
+    }
+
+    const newApp = {
+      id: "ext-" + Date.now(),
+      name: draft.name.trim(),
+      email: draft.email.trim(),
+      startupName: draft.startupName.trim(),
+      ideaTitle: draft.ideaTitle.trim(),
+      summary: draft.summary.trim(),
+      portal: draft.portal || "Sabancı",
+      status: "new",
+      date: new Date().toLocaleDateString("tr-TR")
+    };
+
+    state.externalApplications = state.externalApplications || [];
+    state.externalApplications.push(newApp);
+    state.externalDraft = { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+    state.externalSubmitSuccess = true;
+    state.loginError = "";
+    render();
+    return;
+  }
+
+  if (action === "accept-external-app") {
+    const appId = actionButton.dataset.id;
+    const app = state.externalApplications.find(a => a.id === appId);
+    if (app) {
+      app.status = "accepted";
+      
+      const id = `idea-ext-${Date.now()}`;
+      const newIdea = {
+        id,
+        title: app.ideaTitle,
+        summary: app.summary,
+        problem: "Dış girişimci tarafından iletilen iş birliği veya yatırım başvurusudur.",
+        solution: "Teknoloji veya süreç entegrasyonu ile pilot çalışma başlatılması.",
+        type: "Girişimci Fikri",
+        company: app.startupName + " (Girişim)",
+        department: "Dış Girişimcilik",
+        location: "Dış Hızlandırıcı",
+        city: "İstanbul",
+        authorId: "ext-user-" + app.id,
+        authorLabel: app.name,
+        anonymity: "İsmimle paylaş",
+        visibility: "Kurum içi",
+        status: "new",
+        estimatedImpact: "Yüksek",
+        estimatedCost: "Orta",
+        implementationTime: "3 Ay",
+        successMetric: "Entegrasyon başarısı",
+        riskNotes: "Süreç ve KVKK uyumu kontrol edilmelidir.",
+        communityScore: 65,
+        strategicScore: 78,
+        aiScore: 82,
+        credits: 0,
+        supporters: 0,
+        comments: [],
+        tags: ["Dış Girişimci", app.portal],
+        createdAt: new Date().toISOString().slice(0, 10),
+        companyId: app.portal === "Sabancı" ? "sabanci-holding" : "bbva-group",
+        marketCategory: "Girişimci Fikri",
+        marketTicker: `EXT-${String(state.ideas.length + 1).padStart(2, "0")}`,
+        marketPrice: 100,
+        marketChange: 0.0,
+        marketVolume: 0,
+        marketShares: 1000,
+        marketSpark: [80, 81, 82, 82],
+        files: [],
+        applications: [],
+        country: "TR"
+      };
+      
+      state.ideas.unshift(newIdea);
+    }
+    render();
+    return;
+  }
+
+  if (action === "reject-external-app") {
+    const appId = actionButton.dataset.id;
+    const app = state.externalApplications.find(a => a.id === appId);
+    if (app) {
+      app.status = "rejected";
+    }
+    render();
+    return;
+  }
+
   if (action === "toggle-menu") {
     state.mobileOpen = !state.mobileOpen;
     render();
@@ -10771,6 +11065,13 @@ if (action === "login") {
 });
 
 document.addEventListener("input", event => {
+  if (event.target.matches("[data-ext-draft]")) {
+    const field = event.target.dataset.extDraft;
+    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+    state.externalDraft[field] = event.target.value;
+    return;
+  }
+
   if (event.target.matches("[data-global-search]")) {
     state.globalSearchQuery = event.target.value;
     const inputs = document.querySelectorAll("[data-global-search]");
@@ -11171,6 +11472,13 @@ document.addEventListener("keydown", event => {
 });
 
 document.addEventListener("change", event => {
+  if (event.target.matches("[data-ext-draft]")) {
+    const field = event.target.dataset.extDraft;
+    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+    state.externalDraft[field] = event.target.value;
+    return;
+  }
+
   const actionEl = event.target.closest("[data-action]");
   if (actionEl) {
     const action = actionEl.dataset.action;
