@@ -466,7 +466,36 @@ simple_table(["Oncelik", "Aksiyon", "Gerekce"], [
     ["P3", "Backend persistence", "Demo state uretim verisine donusturulmeli."],
 ], widths=[25 * mm, 65 * mm, (W - 40 * mm) - 90 * mm])
 
-section("20. Sonuc")
+section("20. AI Gundem Asistani (DeepSeek Modeli)")
+para("Platforma eklenmesi planlanan bir sonraki AI katmani, DeepSeek dil modelini kullanarak gundem "
+     "onerisi ve yonetici raporlamasi uretir. Bu katman, mevcut rule-based AI Asistan widget'indan "
+     "(handleAIChatResponse) ayri, ek bir arka plan servisi olarak tasarlanmistir; kullaniciyla sohbet "
+     "etmez, periyodik olarak platform verisini tarayip sinyal uretir.")
+sub("Veri Kaynaklari ve Tarama Kapsami")
+bullets([
+    "Fikir Borsasi: yeni fikirler, AI/stratejik skor degisimleri, yuksek hacimli al/sat hareketleri.",
+    "Duyurular ve Gundem: sirket/ulke/kampus olcekli duyuru akisi, henuz yanitlanmamis kritik basliklar.",
+    "Yarismalar (Challenges): yaklasan teslim tarihleri, dusuk katilimli yarisma basliklari.",
+    "Veri & Bilgi sayfasi: yeni eklenen veri setleri ve bunlara baglanan fikir/oneri trafigi.",
+])
+sub("Calisma Modeli")
+para("Servis, gunluk veya haftalik tetiklenen bir batch is olarak calisir: ilgili veri kumesini "
+     "DeepSeek API'sine baglam (context) olarak gonderir, modelden onceliklendirilmis bir gundem "
+     "maddesi listesi ve kisa gerekce metni alir. Uretilen her gundem maddesi otomatik etiketiyle "
+     "(\"DeepSeek AI onerisi\") Gundem sayfasina dusurulur; onaylama veya gizleme yetkisi yoneticidedir, "
+     "model dogrudan yayinlama yapmaz.")
+sub("Yonetici Raporlama Akisi")
+para("Ayni tarama sonucundan haftalik bir yonetici ozet raporu uretilir: en aktif fikirler, "
+     "departman/ulke kirilimli katilim, riskli/gecikmis basliklar ve karar bekleyen konular. Bu rapor "
+     "Yonetici Dashboardu'nda bir kart olarak gosterilir ve ayni icerik haftalik e-posta ozeti olarak "
+     "ilgili yoneticilere iletilir.")
+sub("Maliyet ve Kapsam Notu")
+para("Bu katmanin uretim eforu ayri bir is paketi olarak Uretim ve Yonetim Sureci Raporu'nda "
+     "belirtilmistir (bkz. \"AI Gundem Asistani (DeepSeek Entegrasyonu)\" satiri). Canliya gecis "
+     "oncesinde DeepSeek API anahtari, hiz siniri (rate limit) ve veri paylasimi kapsami hukuk/uyum "
+     "ekibiyle dogrulanmalidir; model yalniz oneri uretir, nihai karar her zaman insan onayina baglidir.")
+
+section("21. Sonuc")
 para("NEW IDEA EXCHANGE mevcut haliyle guclu bir demo urunudur. Heidelberg Materials markasina "
      "uyarlanmis istirak verisi, cok ulkeli kullanici seti, fikir borsasi, portfoy, studio, ekip, sosyal, "
      "yarisma, egitim, etkinlik, yonetici dashboardu ve AI destekli fikir analizi gibi genis bir urun "
