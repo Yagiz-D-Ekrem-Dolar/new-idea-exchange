@@ -18,6 +18,40 @@ const state = {
   loginError: "",
   currentUserId: "u3",
   selectedLoginUserId: "u3",
+  externalApplications: [
+    {
+      id: "ext-1",
+      name: "Lukas Brenner",
+      email: "lukas.brenner@greenmix-tech.de",
+      startupName: "GreenMix Technologies",
+      ideaTitle: "Düşük Karbonlu Çimento Reçetesi İçin AI Optimizasyon Motoru",
+      summary: "Heidelberg Materials fabrikalarındaki klinker oranını gerçek zamanlı sensör verisiyle optimize ederek CO2 emisyonunu azaltan, üretim hattına entegre edilebilen bir yapay zeka platformu.",
+      portal: "Heidelberg Materials",
+      status: "new",
+      date: "22.06.2026"
+    },
+    {
+      id: "ext-2",
+      name: "Mara Albrecht",
+      email: "mara@circuload.io",
+      startupName: "CircuLoad",
+      ideaTitle: "İnşaat Yıkım Atığının Yeniden Değerlendirilmesi İçin IoT Takip Sistemi",
+      summary: "Yıkım sahalarından toplanan beton ve agrega atıklarını sensörlerle sınıflandırıp Heidelberg Materials tesislerine geri kazanım için yönlendiren bulut tabanlı lojistik yazılımı.",
+      portal: "Heidelberg Materials",
+      status: "new",
+      date: "21.06.2026"
+    }
+  ],
+  externalDraft: {
+    name: "",
+    email: "",
+    startupName: "",
+    ideaTitle: "",
+    summary: "",
+    portal: "Heidelberg Materials"
+  },
+  loginView: "default",
+  externalSubmitSuccess: false,
   investmentLedger: [
     { id: "tx-1", user: "Nazlı Durukan", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, date: "2026-06-10" },
     { id: "tx-2", user: "Aras Kılınç", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 800, date: "2026-06-11" },
@@ -1116,8 +1150,85 @@ function resetScroll() {
   setTimeout(jump, 80);
 }
 
+function renderExternalSignup() {
+  const draft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Heidelberg Materials" };
+  const successMessage = state.externalSubmitSuccess ? `
+    <div class="alert alert-success" style="background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.3); color: #2ecc71; padding: 16px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
+      ${icon("check-circle-2", "20")}
+      <div>
+        <strong style="display: block; margin-bottom: 4px;">Başvurunuz Alındı!</strong>
+        Dış girişimci katılım başvurunuz sisteme kaydedildi. Karar kurulu değerlendirmesinden sonra tarafınıza e-posta ile dönüş yapılacaktır.
+      </div>
+    </div>
+  ` : "";
+
+  return `
+    <main class="login-page apple-login">
+      <section class="apple-access-card" style="max-width: 500px; width: 90%; padding: 32px;">
+        <div class="apple-access-brand">
+          ${brandLockup()}
+        </div>
+        <div class="apple-login-copy" style="margin-bottom: 24px; text-align: center;">
+          <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 8px;">Dış Girişimci Başvuru Formu</h1>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.4;">Şirket dışı bir girişimci veya ekip olarak platformumuza katılmak ve projenizi sunmak için bilgilerinizi doldurun.</p>
+        </div>
+
+        ${successMessage}
+
+        ${!state.externalSubmitSuccess ? `
+          <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Ad Soyad</span>
+              <input class="input" data-ext-draft="name" value="${esc(draft.name)}" placeholder="Örn. Burak Yılmaz" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">E-posta Adresi</span>
+              <input class="input" type="email" data-ext-draft="email" value="${esc(draft.email)}" placeholder="Örn. burak@startup.com" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Girişim Adı</span>
+              <input class="input" data-ext-draft="startupName" value="${esc(draft.startupName)}" placeholder="Örn. NovaTech AI" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Fikir / Proje Başlığı</span>
+              <input class="input" data-ext-draft="ideaTitle" value="${esc(draft.ideaTitle)}" placeholder="Örn. Akıllı Portföy Asistanı" required autocomplete="off" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line);" />
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Fikir / Girişim Özeti</span>
+              <textarea class="textarea" data-ext-draft="summary" rows="3" placeholder="Girişiminizin sunduğu değer önerisi nedir?" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); font-family: inherit;">${esc(draft.summary)}</textarea>
+            </label>
+
+            <label class="field">
+              <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Başvurulan İnovasyon Kanalı</span>
+              <select class="select" data-ext-draft="portal" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface);">
+                <option value="Heidelberg Materials" ${draft.portal === "Heidelberg Materials" ? "selected" : ""}>Heidelberg Materials İnovasyon Portalı</option>
+              </select>
+            </label>
+
+            ${state.loginError ? `<small class="form-error" style="color: #e74c3c; font-weight: 600; font-size: 12px;">${esc(state.loginError)}</small>` : ""}
+
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+              <button class="btn secondary" style="flex: 1; padding: 12px;" data-action="toggle-login-default">${icon("arrow-left")} Geri Dön</button>
+              <button class="btn primary" style="flex: 1; padding: 12px;" data-action="submit-external-application">${icon("send")} Başvuruyu Gönder</button>
+            </div>
+          </div>
+        ` : `
+          <button class="btn primary block" data-action="toggle-login-default" style="margin-top: 12px; width: 100%; padding: 12px;">${icon("arrow-left")} Giriş Ekranına Dön</button>
+        `}
+      </section>
+    </main>
+  `;
+}
+
 function renderLogin() {
   if (!state.accessKeyAccepted) {
+    if (state.loginView === "external-signup") {
+      return renderExternalSignup();
+    }
     return `
       <main class="login-page apple-login">
         <section class="apple-access-card">
@@ -1139,6 +1250,11 @@ function renderLogin() {
           </div>
           <button class="btn primary block" data-action="validate-key">${icon("unlock-keyhole")} Girişe devam et</button>
           <p class="security-note">Demo key altta görünür. Gerçek ortamda erişim şirket içi kimlikle doğrulanır.</p>
+          <div style="margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px; text-align: center;">
+            <button class="btn secondary block" data-action="toggle-external-signup" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; height: 38px; font-weight: 600;">
+              ${icon("user-plus")} Şirket Dışı Girişimci Girişi / Başvurusu
+            </button>
+          </div>
         </section>
       </main>
     `;
@@ -2173,6 +2289,8 @@ function renderQuickFlow() {
           ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası
         </div>
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
+          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 HM</strong> gereklidir.</li>
+          <li><strong>Hisse Alım Sınırı:</strong> Bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.</li>
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
           <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
@@ -3267,9 +3385,83 @@ function renderTradingExchange() {
           ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası:
         </div>
         <div style="color: var(--ink-soft); display: flex; flex-direction: column; gap: 2px; padding-left: 4px;">
+          <span>• Projenizi doğrudan Karar Kurulu'na taşımak için <strong>10.000 HM</strong> gereklidir.</span>
+          <span>• Bir projeden en fazla <strong>10 adet (hisse/lot)</strong> satın alınabilir. Limit aşımına izin verilmez.</span>
           <span>• AI Değerlendirme skoru <strong>70'in altında</strong> olan veya tüzüğe aykırı görülen projeler doğrudan REDDEDİLİR.</span>
           <span>• Proje hayata geçirildiğinde (pivotlaştığında), yatırım sahiplerine yaptıkları yatırımın <strong>10 katı</strong> oylama kredisi (ödül) aktarılır.</span>
           <span>• Fikir hayata geçirildiğinde, girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırılır.</span>
+        </div>
+      </section>
+
+      <!-- Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü -->
+      <section class="premium-policy-section" style="margin: 16px 0; background: linear-gradient(135deg, rgba(7, 33, 70, 0.03) 0%, rgba(20, 84, 156, 0.05) 100%); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-soft);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">
+            ${icon("gavel", "style='width:16px;height:16px;color:var(--primary);'")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
+          </div>
+          <span style="font-size: 11px; background: var(--primary-soft); color: var(--primary); padding: 4px 10px; border-radius: 99px; font-weight: 600;">Aktif Tüzük v2.4</span>
+        </div>
+        <div class="policy-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          <!-- Card 1 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("chart-candlestick", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Fiyatlama Algoritması</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin borsa fiyatları; AI değerlendirme skoru (<strong>%40</strong>), lot hacmi (<strong>%30</strong>), çalışan oyları (<strong>%20</strong>) ve dosya/kod bütünlüğü (<strong>%10</strong>) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(20, 84, 156, 0.08); color: #14549c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("gavel", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Karar Kurulu</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projenizi doğrudan Karar Kurulu'na taşımanız için <strong>10.000 HM</strong> gereklidir. Bu bakiye karşılığında projeniz resmi kurul onay listesine alınır.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(192, 57, 43, 0.08); color: #c0392b; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("shield-alert", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Hisse Alım Sınırı</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin adil dağıtımı için bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.
+            </p>
+          </div>
+          <!-- Card 4 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("coins", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Girişimci Telifi (%5)</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projelerin borsa üzerinden aldığı her yatırımın (hisse satınalımının) <strong>%5'i doğrudan girişimcinin hesabına</strong> telif ödülü olarak anında eklenir.
+            </p>
+          </div>
+          <!-- Card 5 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(212, 172, 13, 0.08); color: #d4ac0d; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("rocket", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Teşvik & Ödüller</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Proje hayata geçtiğinde, hissedarlara yatırımlarının <strong>10 katı</strong> oylama kredisi verilir. Girişimci ödülünün %10'u yatırımcılara dağıtılır. AI skoru 70'in altındaki fikirler ise elenir.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -4247,8 +4439,8 @@ function renderIdeaDetail() {
                 ${icon("gavel")} Karar Kurulu'nda İnceleniyor
               </span>
             ` : `
-              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="5000 HM karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
-                ${icon("gavel")} Karar Kurulu'na Taşı (5000 HM)
+              <button class="btn soft" data-action="escalate-to-board" data-id="${esc(idea.id)}" style="background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2);" title="10.000 HM karşılığında bu fikri/projeyi Karar Kurulu'nun inceleme listesine taşı">
+                ${icon("gavel")} Karar Kurulu'na Taşı (10.000 HM)
               </button>
             `
           ) : ""}
@@ -5432,6 +5624,7 @@ function renderClubCard(club) {
           </div>
         </div>
       </div>
+      ${renderClubAiSuggestion(club)}
     </article>
   `;
 }
@@ -6299,6 +6492,7 @@ function renderTeamCard(team, isMine) {
           </span>
         </div>
       ` : ""}
+      ${renderTeamAiSuggestion(team)}
     </article>
   `;
 }
@@ -7124,6 +7318,7 @@ function renderChallengeCard(challenge, index) {
           <span><strong>${challenge.ideas}</strong><small>fikir</small></span>
           <span><strong>${challenge.participants}</strong><small>katılımcı</small></span>
         </div>
+        ${renderChallengeAiSuggestionPanel(challenge)}
         <div class="challenge-footer">
           <small>${esc(challenge.sponsor)}</small>
           <div>
@@ -7341,8 +7536,8 @@ function renderManager() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="section-title">
           <div>
-            <h2>${icon("gavel")} 5000 HM ile Taşınan Talepler</h2>
-            <p>Sahipleri tarafından 5000 HM ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
+            <h2>${icon("gavel")} 10.000 HM ile Taşınan Talepler</h2>
+            <p>Sahipleri tarafından 10.000 HM ödenerek doğrudan Karar Kurulu'na taşınan fikir ve kararlar.</p>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
         </div>
@@ -7768,6 +7963,9 @@ function renderManagerV2() {
     { title: "Pilot", status: "pilot", icon: "rocket" }
   ];
 
+  const extApps = state.externalApplications || [];
+  const extPending = extApps.filter(app => app.status === "new");
+
   return `
     <div class="view-stack apple-page manager-view">
       <section class="apple-page-head">
@@ -7835,7 +8033,7 @@ function renderManagerV2() {
       <section class="content-panel" style="border: 1px solid rgba(241, 196, 15, 0.3); background: rgba(241, 196, 15, 0.04);">
         <div class="panel-head">
           <div>
-            <span class="panel-kicker">5000 HM ile taşınan talepler</span>
+            <span class="panel-kicker">10.000 HM ile taşınan talepler</span>
             <h3>${icon("gavel")} Doğrudan Karar Kurulu'na Taşınanlar</h3>
           </div>
           <span class="status-badge review">${escalated.length} talep</span>
@@ -7850,6 +8048,66 @@ function renderManagerV2() {
         </div>
       </section>
       ` : ""}
+
+      <section class="content-panel external-applications-panel" style="margin-top: 24px; border: 1px solid rgba(var(--primary-rgb), 0.25); background: rgba(var(--primary-rgb), 0.01);">
+        <div class="panel-head" style="margin-bottom: 16px;">
+          <div>
+            <span class="panel-kicker">Açık İnovasyon & Girişimcilik</span>
+            <h3>${icon("users")} Dış Girişimci Başvuruları</h3>
+          </div>
+          <span class="status-badge new">${extPending.length} bekleyen başvuru</span>
+        </div>
+
+        ${extApps.length === 0 ? `
+          <p class="muted" style="text-align: center; padding: 24px 0;">Henüz dış girişimci başvurusu bulunmamaktadır.</p>
+        ` : `
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            ${extApps.map(app => `
+              <div class="external-app-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
+                  <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 15px; color: var(--ink); text-align: left;">${esc(app.ideaTitle)}</h4>
+                    <p style="margin: 0; font-size: 13px; color: var(--muted); text-align: left; line-height: 1.4;">${esc(app.summary)}</p>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="status-badge" style="background: rgba(0,102,255,0.1); color: #0066ff; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 6px;">
+                      ${esc(app.portal)} Portalı
+                    </span>
+                    ${app.status === 'new' ? `
+                      <span class="status-badge review">Bekliyor</span>
+                    ` : app.status === 'accepted' ? `
+                      <span class="status-badge done">Kabul Edildi</span>
+                    ` : `
+                      <span class="status-badge rejected">Reddedildi</span>
+                    `}
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--line-soft); padding-top: 12px; font-size: 12.5px; flex-wrap: wrap; gap: 12px;">
+                  <div style="color: var(--muted);">
+                    <span><strong>Girişim:</strong> ${esc(app.startupName)}</span>
+                    <span style="margin: 0 8px;">•</span>
+                    <span><strong>Kurucu:</strong> ${esc(app.name)} (${esc(app.email)})</span>
+                    <span style="margin: 0 8px;">•</span>
+                    <span><strong>Tarih:</strong> ${esc(app.date)}</span>
+                  </div>
+
+                  ${app.status === 'new' ? `
+                    <div style="display: flex; gap: 8px;">
+                      <button class="btn ghost btn-sm text-rejected" data-action="reject-external-app" data-id="${esc(app.id)}" style="padding: 6px 12px; height: auto; border: 1px solid rgba(231,76,60,0.2); color: #e74c3c; cursor: pointer; font-size: 12px; border-radius: 6px; display: flex; align-items: center; gap: 4px;">
+                        ${icon("x", "14")} Reddet
+                      </button>
+                      <button class="btn primary btn-sm" data-action="accept-external-app" data-id="${esc(app.id)}" style="padding: 6px 12px; height: auto; cursor: pointer; font-size: 12px; border-radius: 6px; display: flex; align-items: center; gap: 4px;">
+                        ${icon("check", "14")} Kabul Et ve Fikirlere Ekle
+                      </button>
+                    </div>
+                  ` : ""}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `}
+      </section>
 
       <section class="decision-board" aria-label="Karar akışı">
         ${lanes.map(lane => {
@@ -9222,9 +9480,9 @@ document.addEventListener("click", event => {
       const totalPrice = price * quantity;
       if (action === "buy-market-qty") {
         const currentOwned = state.marketHoldings[idea.id] || 0;
-        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
+        const maxLimit = 10; // Max 10 Lots
         if (currentOwned + quantity > maxLimit) {
-          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
+          alert(`Bir projeden en fazla 10 lot (hisse) satın alabilirsiniz! (Şu anki varlığınız: ${currentOwned} Lot, Almak istediğiniz: ${quantity} Lot)`);
           return;
         }
 
@@ -9234,7 +9492,7 @@ document.addEventListener("click", event => {
           idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
           idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
           state.marketSelectedId = idea.id;
-          
+
           if (!state.investmentLedger) state.investmentLedger = [];
           state.investmentLedger.push({
             userId: currentUser().id,
@@ -9975,6 +10233,120 @@ if (action === "login") {
     resetScroll();
   }
 
+  if (action === "toggle-external-signup") {
+    state.loginView = "external-signup";
+    state.loginError = "";
+    state.externalSubmitSuccess = false;
+    render();
+    return;
+  }
+
+  if (action === "toggle-login-default") {
+    state.loginView = "default";
+    state.loginError = "";
+    state.externalSubmitSuccess = false;
+    render();
+    return;
+  }
+
+  if (action === "submit-external-application") {
+    const draft = state.externalDraft || {};
+    if (!draft.name || !draft.name.trim() ||
+        !draft.email || !draft.email.trim() ||
+        !draft.startupName || !draft.startupName.trim() ||
+        !draft.ideaTitle || !draft.ideaTitle.trim() ||
+        !draft.summary || !draft.summary.trim()) {
+      state.loginError = "Lütfen tüm alanları doldurun.";
+      render();
+      return;
+    }
+
+    const newApp = {
+      id: "ext-" + Date.now(),
+      name: draft.name.trim(),
+      email: draft.email.trim(),
+      startupName: draft.startupName.trim(),
+      ideaTitle: draft.ideaTitle.trim(),
+      summary: draft.summary.trim(),
+      portal: draft.portal || "Heidelberg Materials",
+      status: "new",
+      date: new Date().toLocaleDateString("tr-TR")
+    };
+
+    state.externalApplications = state.externalApplications || [];
+    state.externalApplications.push(newApp);
+    state.externalDraft = { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Heidelberg Materials" };
+    state.externalSubmitSuccess = true;
+    state.loginError = "";
+    render();
+    return;
+  }
+
+  if (action === "accept-external-app") {
+    const appId = actionButton.dataset.id;
+    const app = state.externalApplications.find(a => a.id === appId);
+    if (app) {
+      app.status = "accepted";
+
+      const id = `idea-ext-${Date.now()}`;
+      const newIdea = {
+        id,
+        title: app.ideaTitle,
+        summary: app.summary,
+        problem: "Dış girişimci tarafından iletilen iş birliği veya yatırım başvurusudur.",
+        solution: "Teknoloji veya süreç entegrasyonu ile pilot çalışma başlatılması.",
+        type: "Girişimci Fikri",
+        company: app.startupName + " (Girişim)",
+        department: "Dış Girişimcilik",
+        location: "Dış Hızlandırıcı",
+        city: "İstanbul",
+        authorId: "ext-user-" + app.id,
+        authorLabel: app.name,
+        anonymity: "İsmimle paylaş",
+        visibility: "Kurum içi",
+        status: "new",
+        estimatedImpact: "Yüksek",
+        estimatedCost: "Orta",
+        implementationTime: "3 Ay",
+        successMetric: "Entegrasyon başarısı",
+        riskNotes: "Süreç ve KVKK uyumu kontrol edilmelidir.",
+        communityScore: 65,
+        strategicScore: 78,
+        aiScore: 82,
+        credits: 0,
+        supporters: 0,
+        comments: [],
+        tags: ["Dış Girişimci", app.portal],
+        createdAt: new Date().toISOString().slice(0, 10),
+        companyId: "heidelberg-materials",
+        marketCategory: "Girişimci Fikri",
+        marketTicker: `EXT-${String(state.ideas.length + 1).padStart(2, "0")}`,
+        marketPrice: 100,
+        marketChange: 0.0,
+        marketVolume: 0,
+        marketShares: 1000,
+        marketSpark: [80, 81, 82, 82],
+        files: [],
+        applications: [],
+        country: "DE"
+      };
+
+      state.ideas.unshift(newIdea);
+    }
+    render();
+    return;
+  }
+
+  if (action === "reject-external-app") {
+    const appId = actionButton.dataset.id;
+    const app = state.externalApplications.find(a => a.id === appId);
+    if (app) {
+      app.status = "rejected";
+    }
+    render();
+    return;
+  }
+
   if (action === "toggle-menu") {
     state.mobileOpen = !state.mobileOpen;
     render();
@@ -10095,9 +10467,9 @@ if (action === "login") {
       const totalPrice = price * quantity;
       if (action === "buy-market") {
         const currentOwned = state.marketHoldings[idea.id] || 0;
-        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
+        const maxLimit = 10; // Max 10 Lots
         if (currentOwned + quantity > maxLimit) {
-          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
+          alert(`Bir projeden en fazla 10 lot (hisse) satın alabilirsiniz! (Şu anki varlığınız: ${currentOwned} Lot, Almak istediğiniz: ${quantity} Lot)`);
           return;
         }
 
@@ -10107,7 +10479,7 @@ if (action === "login") {
           idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
           idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
           state.marketSelectedId = idea.id;
-          
+
           if (!state.investmentLedger) state.investmentLedger = [];
           state.investmentLedger.push({
             userId: currentUser().id,
@@ -10472,7 +10844,7 @@ if (action === "login") {
   }
 
   if (action === "escalate-to-board") {
-    const ESCALATION_COST = 5000;
+    const ESCALATION_COST = 10000;
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
     if (idea && !idea.escalatedToBoard) {
       if (state.marketBudget < ESCALATION_COST) {
@@ -10750,6 +11122,13 @@ if (action === "login") {
 });
 
 document.addEventListener("input", event => {
+  if (event.target.matches("[data-ext-draft]")) {
+    const field = event.target.dataset.extDraft;
+    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Heidelberg Materials" };
+    state.externalDraft[field] = event.target.value;
+    return;
+  }
+
   if (event.target.matches("[data-global-search]")) {
     state.globalSearchQuery = event.target.value;
     const inputs = document.querySelectorAll("[data-global-search]");
@@ -11150,6 +11529,13 @@ document.addEventListener("keydown", event => {
 });
 
 document.addEventListener("change", event => {
+  if (event.target.matches("[data-ext-draft]")) {
+    const field = event.target.dataset.extDraft;
+    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Heidelberg Materials" };
+    state.externalDraft[field] = event.target.value;
+    return;
+  }
+
   const actionEl = event.target.closest("[data-action]");
   if (actionEl) {
     const action = actionEl.dataset.action;
@@ -14242,6 +14628,8 @@ function renderRulesPage() {
             ${icon("gavel")} 6. Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
           </h3>
           <p>
+            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 HM</strong> gereklidir.<br/>
+            • <strong>Hisse Alım Sınırı:</strong> Fikirlerin adil dağıtılması için, tek bir projeden en fazla <strong>10 adet (hisse/lot)</strong> satın alabilirsiniz.<br/>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
             • <strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (pivotlaşma sonrası destek), o projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında yatırılır.<br/>
@@ -15832,4 +16220,117 @@ function scaleMockDataset() {
 scaleMockDataset();
 ensureSocialEnhancements();
 render();
+
+
+
+// ============================================================================
+// AI SUGGESTIONS HELPER FUNCTIONS FOR CHALLENGES, TEAMS, AND CLUBS
+// ============================================================================
+
+function buildAiSuggestionForChallenge(challenge) {
+  const title = challenge.title || "";
+  const sector = challenge.sector || "";
+  let recommendation = "";
+  let steps = [];
+
+  if (sector === "Finans" || title.includes("Finans") || title.includes("Bütçe")) {
+    recommendation = "Bu Finans yarışmasında başarı şansını artırmak için, çimento/agrega fiyatlama verilerini ve şirket içi hazine süreçlerini hesaba katan bir prototip geliştirin.";
+    steps = [
+      "Heidelberg Materials Hazine ve Kurumsal Satış ekiplerinin veri setlerini entegre edin.",
+      "Tesis bazlı maliyet ve nakit akışını anlık izleyen hafif bir model tasarlayın.",
+      "HM Coin tabanlı teşvik mekanizmasıyla uyumlu bir ödül/raporlama akışı önerin."
+    ];
+  } else if (sector === "Enerji" || title.includes("Enerji") || title.includes("Sürdürülebilirlik") || title.includes("Karbon")) {
+    recommendation = "Enerji ve sürdürülebilirlik odaklı bu yarışmada, karbon ayak izi hesaplamasını ve fabrikalar arası enerji optimizasyonunu ön plana çıkarın.";
+    steps = [
+      "Italcementi ve CBR Belgium fabrikalarının akıllı sayaç ve enerji tüketim verilerini modelleyin.",
+      "Çalışanlar için yeşil davranışları teşvik eden ödül mekanizması (HM Coin) entegre edin.",
+      "Yıllık CapEx/OpEx tasarrufunu ve klinker oranı azaltımını netleştirin."
+    ];
+  } else if (sector === "Sanayi" || title.includes("Üretim") || title.includes("Sanayi")) {
+    recommendation = "Sanayi/üretim odaklı bu yarışmada, fabrika hattı verimliliğini ve tesisler arası süreç standardizasyonunu öne çıkaran bir çözüm kurgulayın.";
+    steps = [
+      "Hanson UK ve Heidelberg Materials North America tesislerinin üretim verilerini karşılaştırmalı analiz edin.",
+      "Öngörücü bakım (predictive maintenance) senaryosu için sensör verisi akışı tasarlayın.",
+      "Pilot tesis için 5 dakikalık bir demo video / pitch deck hazırlayın."
+    ];
+  } else if (sector === "Otomotiv" || title.includes("Lojistik") || title.includes("Filo")) {
+    recommendation = "Otomotiv/lojistik odaklı bu yarışmada, hazır beton ve agrega sevkiyat filolarının rota ve yakıt verimliliğini öne çıkarın.";
+    steps = [
+      "Heidelberg Materials North America ve Indocement lojistik filosu verilerini inceleyin.",
+      "Elektrikli/düşük emisyonlu araç geçişini destekleyen bir rota optimizasyon modeli tasarlayın.",
+      "Karar verici kurul için somut yakıt/CO2 tasarrufu projeksiyonu sunun."
+    ];
+  } else if (sector === "Perakende" || title.includes("Müşteri") || title.includes("Bayi")) {
+    recommendation = "Perakende/bayi odaklı bu yarışmada, inşaat malzemeleri bayi ağı ve müşteri deneyimini iyileştiren bir çözüme odaklanın.";
+    steps = [
+      "Hanson UK Müşteri Deneyimi ve Kategori Yönetimi ekiplerinin bayi verilerini inceleyin.",
+      "Bayiler için dijital sipariş ve stok takip deneyimini kolaylaştıran bir akış tasarlayın.",
+      "Heidelberg Materials iştiraklerinin (Indocement, Italcementi, CBR Belgium) bu çözümü nasıl ölçeklendirebileceğini değerlendirin."
+    ];
+  } else {
+    recommendation = `Bu ${sector} yarışması için şirket içi uzmanları bir araya getiren modüler bir ekip kurun ve fikrinizi gerçek zamanlı pilot verilerle destekleyin.`;
+    steps = [
+      "Fikir havuzundaki ilgili veri setlerini (Veri&Bilgi) inceleyin.",
+      "Heidelberg Materials iştiraklerinin (Hanson UK, Indocement, Italcementi vb.) bu projeyi nasıl ölçeklendirebileceğini tasarlayın.",
+      "Karar verici kurul için 5 dakikalık bir demo video / pitch deck hazırlayın."
+    ];
+  }
+  return { recommendation, steps };
+}
+
+function renderChallengeAiSuggestionPanel(challenge) {
+  const suggestion = buildAiSuggestionForChallenge(challenge);
+  return `
+    <div class="ai-suggestion-panel challenge compact" style="margin-top: 12px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 10px;">
+      <div class="ai-suggestion-head" style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 11px;">
+        <span class="ai-suggestion-icon" style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:12px;height:12px;'")}</span>
+        <span style="font-weight: 600; color: var(--ink);">AI Önerisi <small style="color: var(--muted); font-weight: normal; margin-left: 4px;">Yarışma Stratejisi</small></span>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-soft); line-height: 1.4; margin: 0 0 6px 0;">${esc(suggestion.recommendation)}</p>
+      <ul style="margin: 0; padding-left: 14px; font-size: 11px; color: var(--ink-soft); line-height: 1.4;">
+        ${suggestion.steps.map(step => `<li>${esc(step)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function renderTeamAiSuggestion(team) {
+  const openRoles = team.roles.filter(r => !r.filled);
+  let rec = "";
+  if (openRoles.length > 0) {
+    const roleTitles = openRoles.map(r => r.title).join(", ");
+    rec = `Ekibin sinerjisini artırmak için acilen şu açık pozisyonları doldurun: <strong>${esc(roleTitles)}</strong>. Fikir sahipleri listesinden aday davet edebilirsiniz.`;
+  } else {
+    rec = "Ekip kadrosu tamamlandı! AI sinerji skoru yüksek. Projeyi borsada fonlamak ve pilot aşamasına taşımak için ilk stüdyo toplantısını başlatın.";
+  }
+  return `
+    <div class="ai-suggestion-panel team compact" style="margin-top: 10px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px; font-size: 11px;">
+      <div class="ai-suggestion-head" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 10px;">
+        <span class="ai-suggestion-icon" style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:11px;height:11px;'")}</span>
+        <span style="font-weight: 600; color: var(--ink);">AI Önerisi <small style="color: var(--muted); font-weight: normal; margin-left: 2px;">Sinerji & Kadro</small></span>
+      </div>
+      <p style="color: var(--ink-soft); line-height: 1.35; margin: 0;">${rec}</p>
+    </div>
+  `;
+}
+
+function renderClubAiSuggestion(club) {
+  let rec = "";
+  if (club.category === "Teknoloji") {
+    rec = "Bu teknoloji kulübünde en son LLM ve RAG mimarilerini paylaşın, hackathonlara ortak ekipler hazırlayın.";
+  } else if (club.category === "Sosyal Sorumluluk") {
+    rec = "Kulüp bünyesinde çevre/iklim temalı bir proje başlatıp Fikir Borsası'nda yeşil fonlama talep edin.";
+  } else {
+    rec = `Bu ${club.category} kulübünde yeni üyeler kazanmak için her ay düzenli bir online meetup organize edin.`;
+  }
+  return `
+    <div class="ai-suggestion-panel club compact" style="margin-top: 10px; background: rgba(59, 130, 246, 0.03); border: 1px solid var(--line-soft); border-radius: 8px; padding: 8px; font-size: 11px;">
+      <p style="color: var(--ink-soft); line-height: 1.35; margin: 0; display: flex; align-items: center; gap: 4px;">
+        <span style="color: var(--primary); display: inline-flex;">${icon("sparkles", "style='width:11px;height:11px;'")}</span>
+        <span><strong>AI Önerisi:</strong> ${rec}</span>
+      </p>
+    </div>
+  `;
+}
 
