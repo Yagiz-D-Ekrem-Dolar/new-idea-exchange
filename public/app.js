@@ -14155,6 +14155,10 @@ function renderSystemDetails() {
             { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF Görüntüle" },
             { href: "/NIE-Kurumsal-Urun-Raporu.pdf", label: "PDF İndir", download: true }
           ])}
+          ${docCard("clipboard-list", "Üretim ve Yönetim Raporu", "Platformun üretim eforu, ekip/takvim senaryoları, admin operasyon modeli, ülke-kullanıcı-dil kırılımı ve DeepSeek tabanlı AI Gündem Asistanı'nın maliyet kapsamını içeren Sabancı Holding'e özel değerlendirme raporu.", [
+            { href: "/Sabanci-Holding-ID-Exchange-Uretim-Yonetim-Raporu.pdf", label: "PDF Görüntüle" },
+            { href: "/Sabanci-Holding-ID-Exchange-Uretim-Yonetim-Raporu.pdf", label: "PDF İndir", download: true }
+          ])}
           ${docCard("file-stack", "Proje Dokümanları", "Her projenin kendi AI raporu, proje raporu, sunumu ve dosya bundle'ı ilgili fikrin detay sayfasından indirilebilir. Kapsamlı ürün dokümantasyonu için Sistem Raporları kartına bakın.", [
             { page: "ideas", label: "Fikir Havuzuna Git" }
           ])}
