@@ -188,12 +188,12 @@ const state = {
   messageSpaces: structuredClone(initialMessageSpaces),
   directThreads: {
     "p02": [
-      { userId: "p02", body: "Merhaba Lena Hanım, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
+      { userId: "p02", body: "Merhaba Can Bey, borsa sistemindeki yeni veri analitiği fikrimiz hakkında kurulda görüşebilir miyiz?", time: "Dün 14:15" },
       { own: true, body: "Tabii Mert, verimlilik raporlarını inceledim. Yarın saat 10:00'da kısa bir toplantı yapalım.", time: "Dün 14:32" },
-      { userId: "p02", body: "Harika olur Lena Hanım, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
+      { userId: "p02", body: "Harika olur Can Bey, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
     ],
     "p03": [
-      { userId: "p03", body: "Lena Hanım, Heidelberg Materials Helvan fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
+      { userId: "p03", body: "Can Bey, Heidelberg Materials Helvan fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
       { own: true, body: "Eline sağlık Selin, verileri inceledim. Oldukça temiz görünüyor. Hemen onay verdim.", time: "Dün 16:45" },
       { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir hammadde optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
     ],
@@ -202,7 +202,7 @@ const state = {
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Lena, I've updated the Dubai trading hub proposal. We need to reserve 1200 HM tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Can, I've updated the Dubai trading hub proposal. We need to reserve 1200 HM tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
       { userId: "p06", body: "Thank you. The engineering team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
@@ -241,11 +241,11 @@ const state = {
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Lena Hanım, Hanson UK mağaza içi kiosk projemize 100 HM bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Can Bey, Hanson UK mağaza içi kiosk projemize 100 HM bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
-      { userId: "u2", body: "Lena Hanım, Heidelberg Materials NA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
+      { userId: "u2", body: "Can Bey, Heidelberg Materials NA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
       { own: true, body: "Eline sağlık Mehmet, lojistik ekibiyle koordine edip bütçe onayını veriyorum.", time: "Dün 17:00" }
     ],
     "u4": [
@@ -303,7 +303,7 @@ const state = {
       category: "Operasyon",
       date: "2026-06-15",
       tags: ["şube", "müşteri deneyimi", "pilot"],
-      author: "Lena Fischer"
+      author: "Can Koç"
     },
     {
       id: "ag-2",
@@ -390,7 +390,7 @@ const state = {
       date: "2026-06-16",
       likes: 14,
       comments: [
-        { userName: "Lena Fischer", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
+        { userName: "Can Koç", body: "Katılıyorum, veriye dayalı planlama her zaman kazandırır.", date: "2026-06-16" }
       ]
     },
     {
@@ -525,7 +525,7 @@ const state = {
       importanceScore: 5,
       date: "2026-06-05",
       comments: [
-        { user: "Lena Fischer", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
+        { user: "Can Koç", body: "SaaS entegrasyonu projemiz için harika bir hammadde kaynağı.", manager: false }
       ],
       likes: 18,
       downloads: 42,
@@ -535,7 +535,7 @@ const state = {
       id: "ds-2",
       title: "Heidelberg Materials QR ve Biyometrik Ödeme Kullanım Analizi",
       summary: "QR ve biyometrik ödeme entegrasyonları için pazar payı, işlem hızları ve müşteri kullanım oranları.",
-      sharedBy: "Lena Fischer",
+      sharedBy: "Can Koç",
       companyId: "heidelberg-materials-de",
       type: "Kurumsal",
       area: "FinTech & Dijital Bankacılık",
@@ -567,7 +567,7 @@ const state = {
     {
       id: "ann-rec-1",
       title: "🚀 Heidelberg Materials Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-      author: "Lena Fischer",
+      author: "Can Koç",
       authorId: "u3",
       companyId: "heidelberg-materials-de",
       type: "Topluluk",
@@ -640,14 +640,14 @@ const state = {
 function currentUser() {
   const c = state.activeCountry || state.currentCountry || "DE";
   const userConfigs = {
-    DE: { id: "u3", name: "Lena Fischer", email: "lena.fischer@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    GB: { id: "u3", name: "Lena Fischer", email: "lena.fischer.uk@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    US: { id: "u3", name: "Lena Fischer", email: "lena.fischer.us@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    ID: { id: "u3", name: "Lena Fischer", email: "lena.fischer.id@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    IT: { id: "u3", name: "Lena Fischer", email: "lena.fischer.it@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    BE: { id: "u3", name: "Lena Fischer", email: "lena.fischer.be@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    IN: { id: "u3", name: "Lena Fischer", email: "lena.fischer.in@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
-    EG: { id: "u3", name: "Lena Fischer", email: "lena.fischer.eg@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
+    DE: { id: "u3", name: "Can Koç", email: "can.koc@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    GB: { id: "u3", name: "Can Koç", email: "can.koc.uk@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    US: { id: "u3", name: "Can Koç", email: "can.koc.us@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    ID: { id: "u3", name: "Can Koç", email: "can.koc.id@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    IT: { id: "u3", name: "Can Koç", email: "can.koc.it@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    BE: { id: "u3", name: "Can Koç", email: "can.koc.be@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    IN: { id: "u3", name: "Can Koç", email: "can.koc.in@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" },
+    EG: { id: "u3", name: "Can Koç", email: "can.koc.eg@heidelbergmaterials.example", photo: "https://randomuser.me/api/portraits/men/75.jpg" }
   };
   const config = userConfigs[c] || userConfigs.DE;
 
@@ -5127,7 +5127,7 @@ function managerVoteEvents() {
     { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: 1620, quantity: 12, date: "14.06.2026" },
     { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: 1380, quantity: 9, date: "14.06.2026" },
     { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
-    { userId: "u3", userName: "Lena Fischer", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
+    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
   ];
   return [...base, ...seeded].filter(tx => {
     const idea = state.ideas.find(i => i.id === tx.ideaId);
@@ -8303,7 +8303,7 @@ function renderAdminContent() {
         ${[
           ["Markus Bauer", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
           ["Sistem", "Anonim fikir denetim kaydı oluşturdu", "Dün 17:42"],
-          ["Lena Fischer", "Fikri pilot seçti", "Dün 15:11"],
+          ["Can Koç", "Fikri pilot seçti", "Dün 15:11"],
           ["Merve Aydın", "Yarışma duyurusu yayınladı", "31 Mayıs"]
         ].map(item => `<div class="mini-item"><span><strong>${esc(item[0])}</strong><span>${esc(item[1])}</span></span><span>${esc(item[2])}</span></div>`).join("")}
       </div>
@@ -10199,7 +10199,7 @@ document.addEventListener("click", event => {
     state.currentCountry = actionButton.dataset.code;
     state.activeCountry = actionButton.dataset.code;
     state.loginCountrySelected = true;
-    state.currentUserId = "u3"; // Always Lena Fischer
+    state.currentUserId = "u3"; // Always Can Koç
     state.loggedIn = true; // Auto login
     render();
     resetScroll();
@@ -12586,7 +12586,7 @@ function renderSuggestionsSection() {
       category: "Veri Seti İsteği",
       description: "Heidelberg Materials Mobil API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
       companyId: "heidelberg-materials-de",
-      author: "Lena Fischer",
+      author: "Can Koç",
       date: "2026-06-08",
       status: "İnceleniyor"
     },
@@ -14908,7 +14908,7 @@ function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
     likedByMe: false,
     country: person.country || "DE",
     comments: [
-      { id: `${id}-c1`, userName: "Lena Fischer", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
+      { id: `${id}-c1`, userName: "Can Koç", userAvatar: personById("u3")?.photo || "", body: "Bunu karar notuna da ekleyelim.", date: "Az önce" }
     ],
     ...extras
   };
@@ -15311,8 +15311,8 @@ function scaleMockDataset() {
   // ideas/teams/announcements pick authors, since authorLabel snapshots u.name by value)
   demoUsers.forEach((u, index) => {
     if (u.id === "u3") {
-      u.name = "Lena Fischer";
-      u.email = "lena.fischer@heidelbergmaterials.example";
+      u.name = "Can Koç";
+      u.email = "can.koc@heidelbergmaterials.example";
       u.photo = "https://randomuser.me/api/portraits/men/75.jpg";
       u.avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg";
       return;
@@ -15511,7 +15511,7 @@ function scaleMockDataset() {
       supporters: 10 + (i % 40),
       country: countryCode,
       comments: [
-        { user: "Lena Fischer", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
+        { user: "Can Koç", body: "Sinerji analizi çok tutarlı görünüyor.", manager: true }
       ],
       tags: [trend.area.split(" ")[0], randCompany.shortName],
       createdAt: `2026-06-${10 + (i % 8)}`,
