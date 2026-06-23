@@ -1368,7 +1368,7 @@ const demoUsers = [
     employeeId: "HM-22018",
     company: "Heidelberg Materials AG",
     companyId: "heidelberg-materials-de",
-    department: "Dijital Bankacılık",
+    department: "Müşteri Deneyimi",
     location: "Heidelberg Materials Hauptmerkez",
     city: "Heidelberg",
     region: "Baden-Württemberg",
@@ -1602,11 +1602,11 @@ const demoUsers = [
     name: "Carlos Ruiz",
     email: "carlos.ruiz@heidelbergmaterials.example",
     employeeId: "HM-BE-001",
-    company: "Heidelberg Materials España S.A.",
-    companyId: "heidelberg-materials-spain",
+    company: "Suez Cement S.A.E.",
+    companyId: "suez-cement",
     department: "Production",
-    location: "Helvan Plant",
-    city: "Helvan",
+    location: "Helwan Plant",
+    city: "Helwan",
     region: "Valencia",
     role: "Helvan Plant Manager",
     roleKey: "manager",
@@ -1649,14 +1649,14 @@ const initialIdeas = [
   // DE Ideas (German)
   {
     id: "idea-1",
-    title: "Heidelberg Materials Mobil kullanıcıları için AI destekli yatırım danışmanı",
-    summary: "Müşterilerin harcama alışkanlıkları ve risk eğilimlerine göre fon ve hisse sepeti öneren yapay zeka entegrasyonu.",
-    problem: "Bireysel yatırımcılar karmaşık piyasa verileri yüzünden yatırım kararı almakta zorlanıyor.",
-    solution: "Mobil şubeye entegre, portföy dağılımını otomatik yapıp öneriler sunan bir AI asistan modülü.",
+    title: "Heidelberg Materials Müşterileri için AI Destekli Sipariş ve Beton Reçetesi Danışmanı",
+    summary: "Müşterilerin şantiye gereksinimleri ve hava durumuna göre doğru beton sınıfı ve döküm planlaması öneren yapay zeka entegrasyonu.",
+    problem: "Şantiye yöneticileri ve yükleniciler hava koşulları ve yapısal gereksinimler için en uygun hazır beton tipini seçmekte zorlanıyor.",
+    solution: "Heidelberg müşteri portalına entegre, şantiye verilerini analiz edip en uygun çimento ve beton reçetesini öneren AI asistanı.",
     type: "Yeni ürün / hizmet",
     company: "Heidelberg Materials AG",
     companyId: "heidelberg-materials-de",
-    department: "Dijital Bankacılık",
+    department: "Müşteri Deneyimi",
     location: "Heidelberg Materials Hauptmerkez",
     city: "Heidelberg",
     authorId: "u3",
@@ -1680,7 +1680,7 @@ const initialIdeas = [
       { user: "Markus Bauer", body: "Çok değerli bir çalışma, Heidelberg Materials Lab ekibiyle test etmeye başlayalım.", manager: true },
       { user: "Ayşe Yılmaz", body: "Kullanıcı deneyimi akışını basitleştirmek kritik olacaktır.", manager: false }
     ],
-    tags: ["FinTech", "AI", "Heidelberg Materials", "Yatırım"],
+    tags: ["Çimento", "AI", "Heidelberg Materials", "İnşaat"],
     createdAt: "2026-06-10",
     translations: {
           "tr": {
@@ -1711,10 +1711,10 @@ const initialIdeas = [
   },
   {
     id: "idea-2",
-    title: "Hanson UK mağazalarında akıllı tedarik ve dinamik raf ataması",
-    summary: "Manchester lojistik merkezi verileriyle mağaza stoklarını anlık eşleyip en çok satan ürünleri öne çıkaran akıllı raf sistemi.",
-    problem: "Bazı ürünler rafta uzun süre kalırken popüler teknolojik ürünlerin stoku hızlı bitiyor ve satış kaçıyor.",
-    solution: "Satış hızı ve lojistik transit sürelerini tahminleyen yapay zeka destekli bir mağaza stok paneli.",
+    title: "Hanson UK Hazır Beton Tesislerinde Akıllı Üretim ve Dinamik Agrega Ataması",
+    summary: "Bölgesel altyapı projelerinin sipariş yoğunluğuna göre agrega silolarının anlık doluluk ve tedarik eşleşmesini sağlayan akıllı tahminleme sistemi.",
+    problem: "Büyük ölçekli beton dökümlerinde agrega tedarik zinciri aksamaları yüzünden mikserlerin şantiyede beklemesi ve betonun priz almaya başlaması.",
+    solution: "Tesis stok seviyeleri ile agrega ocaklarının lojistik transit sürelerini eşleyen yapay zeka destekli bir sevkiyat paneli.",
     type: "Süreç otomasyonu",
     company: "Hanson UK Ltd.",
     companyId: "hanson-uk",
@@ -1741,7 +1741,7 @@ const initialIdeas = [
     comments: [
       { user: "Can Koç", body: "Manchester deposundaki otomasyon sistemleri ile entegre edilirse harika olur.", manager: true }
     ],
-    tags: ["Perakende", "Tedarik", "Hanson UK", "Akıllı Raf"],
+    tags: ["Lojistik", "Tedarik", "Hanson UK", "Hazır Beton"],
     createdAt: "2026-06-12",
     translations: {
           "tr": {
@@ -1772,10 +1772,10 @@ const initialIdeas = [
   },
   {
     id: "idea-3",
-    title: "CBR EV-Tire: Elektrikli araçlar için optimize edilmiş akıllı sensör",
-    summary: "Ağır batarya yükü taşıyan elektrikli araç lastiklerinin aşınmasını ve hava basıncını anlık izleyen IoT modülü.",
-    problem: "Elektrikli araçlarda batarya ağırlığı yüzünden lastikler %30 daha hızlı aşınıyor ve sürüş riski oluşuyor.",
-    solution: "Lastik diş derinliğini ve sıcaklığını kablosuz olarak ölçüp araç ekranına ve telefona uyarı gönderen sensör.",
+    title: "CBR Lixhe Çimento Değirmenlerinde Akıllı Aşınma ve Titreşim Sensörü",
+    summary: "Çimento üretimi sırasında değirmen gövdesindeki aşınma ve rulman titreşimini anlık izleyen IoT modülü.",
+    problem: "Döner fırın ve değirmenlerin plan dışı duruşları günlük 50 bin Euro'ya varan ciro kayıplarına neden oluyor.",
+    solution: "Değirmen dişlilerinin aşınmasını ve yatak titreşimini akustik sensörlerle ölçüp yapay zeka ile kestirimci bakım uyarısı gönderen sistem.",
     type: "Yeni ürün / hizmet",
     company: "CBR S.A./N.V.",
     companyId: "cbr-belgium",
@@ -1800,7 +1800,7 @@ const initialIdeas = [
     marketChange: -1.4,
     country: "DE",
     comments: [],
-    tags: ["Sanayi", "IoT", "Elektrikli Araç", "CBR"],
+    tags: ["Çimento", "IoT", "Kestirimci Bakım", "CBR"],
     createdAt: "2026-06-14",
     translations: {
           "tr": {
@@ -1833,10 +1833,10 @@ const initialIdeas = [
   // GB Ideas (English)
   {
     id: "idea-4",
-    title: "Off-shore wind forecasting using predictive AI models",
-    summary: "Using historical weather and wind turbine telemetry to predict energy output with 95% accuracy for UK grid matching.",
-    problem: "Wind variability causes power fluctuation, leading to inefficiencies in matching the UK grid demand.",
-    solution: "Implement an AI-based forecast panel in Dubai Trading Hub to feed real-time generation forecasts.",
+    title: "Cement kiln thermal efficiency optimization using predictive AI models",
+    summary: "Using sensor telemetry from rotary cement kilns to predict and optimize thermal energy consumption with 95% efficiency matching.",
+    problem: "High fuel consumption volatility inside cement kilns leads to high energy costs and carbon tax penalties.",
+    solution: "Implement an AI-based thermal control panel at the plant terminal to optimize fuel-to-oxygen ratios in real-time.",
     type: "Teknik geliştirme",
     company: "Heidelberg Materials Trading FZE",
     companyId: "heidelberg-materials-trading",
@@ -1863,7 +1863,7 @@ const initialIdeas = [
     comments: [
       { user: "Oliver Watson", body: "Excellent model. Fits our renewable expansion roadmap in the UK.", manager: true }
     ],
-    tags: ["Energy", "AI", "Renewables", "Wind Grid"],
+    tags: ["Energy", "AI", "Efficiency", "Rotary Kiln"],
     createdAt: "2026-06-11",
     translations: {
           "tr": {
@@ -1894,9 +1894,9 @@ const initialIdeas = [
   },
   {
     id: "idea-5",
-    title: "Dubai trading port bagging speedup through OCR barcode scan",
-    summary: "Implement high-speed OCR cameras at London docks to automatically register incoming Heidelberg Materials white cement shipments.",
-    problem: "Manual manifest entries at port warehouse cause logistic bottlenecks and delay deliveries to UK clients.",
+    title: "London import terminal cement shipping manifest OCR barcode scan",
+    summary: "Implement high-speed OCR cameras at London docks to automatically register incoming Hanson UK bulk cement shipping manifests.",
+    problem: "Manual manifest entries at the London terminal cause logistics bottlenecks and delay bulk deliveries to UK clients.",
     solution: "Deploy a small OCR camera rig on the crane pathway to scan shipping manifest barcodes automatically.",
     type: "Süreç otomasyonu",
     company: "Hanson UK Ltd.",
@@ -1955,15 +1955,15 @@ const initialIdeas = [
   // US Ideas (English)
   {
     id: "idea-6",
-    title: "Texas solar farm utility-scale battery management system (BMS)",
-    summary: "A smart software layer to dynamically charge and discharge lithium iron phosphate battery packs during peak pricing.",
-    problem: "Solar energy generated during midday is sold at low rates, while evening demand pricing spikes.",
-    solution: "Install an AI battery dispatch controller that automatically releases stored energy during grid peak hours.",
+    title: "Heidelberg Materials quarry fleet electric haul truck charging optimizer",
+    summary: "An AI-powered software layer to dynamically schedule electric haul truck charging at quarries during off-peak electricity pricing.",
+    problem: "Electrification of heavy quarry haul trucks leads to massive electricity demand peaks, causing high utility charges.",
+    solution: "Install an AI charge controller that schedules truck battery charging based on quarry operations and grid price signals.",
     type: "Süreç otomasyonu",
     company: "Hanson Australia Pty Ltd.",
     companyId: "hanson-australia",
-    department: "Energy Storage",
-    location: "Melbourne Office",
+    department: "Operations",
+    location: "Quarry Site",
     city: "Houston",
     authorId: "u10",
     authorLabel: "Michael Vance",
@@ -1985,7 +1985,7 @@ const initialIdeas = [
     comments: [
       { user: "Jessica Taylor", body: "This will solidify Heidelberg Materials Trading position in the region.", manager: true }
     ],
-    tags: ["Solar", "BMS", "Climate", "Battery"],
+    tags: ["Quarry", "Electrification", "Fleet", "Charging"],
     createdAt: "2026-06-14",
     translations: {
           "tr": {
@@ -2082,10 +2082,10 @@ const initialIdeas = [
     problem: "Die begrenzte Lagerfläche im Logistikzentrum Opole schränkt die Weißzementmenge ein, die wir lagern können.",
     solution: "Nutzung der vertikalen Höhe mit einem intelligenten robotischen Liftsystem, das Paletten automatisch stapelt und auslagert.",
     type: "Maliyet azaltma",
-    company: "Heidelberg Materials France S.A.S.",
-    companyId: "heidelberg-materials-france",
+    company: "Górażdże Cement S.A.",
+    companyId: "gorazdze-cement",
     department: "Logistics",
-    location: "Paris Ofisi",
+    location: "Opole Cement Plant",
     city: "Opole",
     authorId: "u12",
     authorLabel: "Hans Müller",
@@ -2145,11 +2145,11 @@ const initialIdeas = [
     problem: "La fabricación de clínker genera una huella de carbono significativa, arriesgando futuras multas ESG de la UE.",
     solution: "Un circuito piloto que captura hasta 10 toneladas de CO2 al día, comprimido para su uso industrial local.",
     type: "Sürdürülebilirlik",
-    company: "Heidelberg Materials España S.A.",
-    companyId: "heidelberg-materials-spain",
+    company: "Suez Cement S.A.E.",
+    companyId: "suez-cement",
     department: "Production",
-    location: "Helvan Plant",
-    city: "Helvan",
+    location: "Helwan Plant",
+    city: "Helwan",
     authorId: "u14",
     authorLabel: "Carlos Ruiz",
     anonymity: "İsmimle paylaş",
@@ -2168,9 +2168,9 @@ const initialIdeas = [
     marketChange: 4.7,
     country: "BE",
     comments: [
-      { user: "Maria Ortega", body: "This will make Helvan the cleanest white cement plant in Spain.", manager: false }
+      { user: "Maria Ortega", body: "This will make Helwan the cleanest white cement plant in Suez.", manager: false }
     ],
-    tags: ["Carbon Capture", "ESG", "Spain", "Cement", "Sustainability"],
+    tags: ["Carbon Capture", "ESG", "Suez", "Cement", "Sustainability"],
     createdAt: "2026-06-14",
     translations: {
           "tr": {
@@ -2206,9 +2206,9 @@ const challenges = [
   {
     id: "challenge-ops-wait",
     title: "Heidelberg Materials Dijital Üretim Hackathonu",
-    theme: "Müşteri deneyimi",
-    sector: "Finans",
-    brief: "Kullanıcıların günlük harcamalarını analiz ederek tasarruf önerileri sunan fintech çözümleri.",
+    theme: "Üretim Verimliliği",
+    sector: "Sanayi",
+    brief: "Çimento fabrikalarında üretim süreçlerini, atık ısı geri kazanımını veya enerji verimliliğini optimize eden dijital çözümler.",
     date: "1 Haz - 30 Haz",
     deadline: "12 gün kaldı",
     reward: "75.000 HM + Hızlı Inovasyon Bütçesi",
@@ -2222,18 +2222,18 @@ const challenges = [
     shortlist: ["Pilot bütçesi", "Yönetim sunumu", "Heidelberg Materials Lab desteği"],
     country: "DE",
     translations: {
-      tr: { title: "Heidelberg Materials Dijital Üretim Hackathonu", brief: "Kullanıcıların günlük harcamalarını analiz ederek tasarruf önerileri sunan fintech çözümleri." },
-      en: { title: "Heidelberg Materials Open Innovation Hackathon", brief: "Fintech solutions that analyze users' daily spending and offer savings suggestions." },
-      de: { title: "Heidelberg Materials Open-Innovation-Hackathon", brief: "Fintech-Lösungen, die die täglichen Ausgaben der Nutzer analysieren und Sparvorschläge liefern." },
-      es: { title: "Hackathon de Innovación Abierta de Heidelberg Materials", brief: "Soluciones fintech que analizan el gasto diario de los usuarios y ofrecen sugerencias de ahorro." }
+      tr: { title: "Heidelberg Materials Dijital Üretim Hackathonu", brief: "Çimento fabrikalarında üretim süreçlerini, atık ısı geri kazanımını veya enerji verimliliğini optimize eden dijital çözümler." },
+      en: { title: "Heidelberg Materials Open Innovation Hackathon", brief: "Digital solutions that optimize production processes, waste heat recovery, or energy efficiency in cement plants." },
+      de: { title: "Heidelberg Materials Open-Innovation-Hackathon", brief: "Digitale Lösungen zur Optimierung von Produktionsprozessen, Abwärmenutzung oder Energieeffizienz in Zementwerken." },
+      es: { title: "Hackathon de Innovación Abierta de Heidelberg Materials", brief: "Soluciones digitales que optimicen los procesos de producción, la recuperación de calor residual o la eficiencia energética en las plantas de cemento." }
     }
   },
   {
     id: "challenge-ai-docs",
     title: "Hanson UK Çok Kanallı Lojistik Yarışması",
     theme: "Süreç otomasyonu",
-    sector: "Perakende",
-    brief: "Online siparişlerin mağaza stoklarıyla anlık eşlenip teslimat süresini yarıya indiren lojistik akışları.",
+    sector: "Lojistik",
+    brief: "Hazır beton mikserlerinin trafik ve şantiye hazır olma durumuna göre sevkiyat planlamasını optimize eden lojistik akışları.",
     date: "5 Haz - 5 Tem",
     deadline: "18 gün kaldı",
     reward: "50.000 HM + Manchester Lojistik Pilotu",
@@ -2247,10 +2247,10 @@ const challenges = [
     shortlist: ["MacBook", "Hanson UK Pilot", "Tedarik rozeti"],
     country: "DE",
     translations: {
-      tr: { title: "Hanson UK Çok Kanallı Lojistik Yarışması", brief: "Online siparişlerin mağaza stoklarıyla anlık eşlenip teslimat süresini yarıya indiren lojistik akışları." },
-      en: { title: "Hanson UK Omnichannel Logistics Contest", brief: "Logistics flows that match online orders with store stock in real time, cutting delivery time in half." },
-      de: { title: "Hanson UK Omnichannel-Logistikwettbewerb", brief: "Logistikabläufe, die Online-Bestellungen in Echtzeit mit dem Filiallager abgleichen und die Lieferzeit halbieren." },
-      es: { title: "Concurso de Logística Omnicanal de Hanson UK", brief: "Flujos logísticos que emparejan pedidos en línea con el stock de tienda en tiempo real, reduciendo el tiempo de entrega a la mitad." }
+      tr: { title: "Hanson UK Hazır Beton Lojistik Yarışması", brief: "Hazır beton mikserlerinin trafik ve şantiye hazır olma durumuna göre sevkiyat planlamasını optimize eden ve bekleme süresini azaltan lojistik akışları." },
+      en: { title: "Hanson UK Concrete Logistics Contest", brief: "Logistics flows that optimize delivery scheduling for ready-mix concrete trucks based on traffic and site readiness, reducing waiting times." },
+      de: { title: "Hanson UK Beton-Logistikwettbewerb", brief: "Logistikabläufe, die die Lieferplanung für Transportbetonmischer basierend auf Verkehr und Baustellenbereitschaft optimieren." },
+      es: { title: "Concurso de Logística de Concreto de Hanson UK", brief: "Flujos logísticos que optimizan la programación de entregas para camiones mezcladores de concreto listos en función del tráfico y la preparación del sitio." }
     }
   },
   // US Challenges
@@ -2308,10 +2308,10 @@ const challenges = [
   // IT Challenges
   {
     id: "challenge-de-hydrogen-bus",
-    title: "Heidelberg Materials Opole Wasserstoffbus-Reichweiten-Challenge",
-    theme: "Sürdürülebilirlik",
-    sector: "Otomotiv",
-    brief: "Algorithmen zur Vorhersage und Verlängerung der Reichweite von Wasserstoffbussen unter realen Münchner Streckenbedingungen.",
+    title: "Heidelberg Materials Opole Akıllı Agrega Demiryolu Lojistik Challenge",
+    theme: "Süreç otomasyonu",
+    sector: "Lojistik",
+    brief: "Opole agrega ocaklarından Avrupa şantiyelerine demiryolu vagon yükleme ve sevkiyat planlamasını optimize eden algoritmalar.",
     date: "12 Jun - 20 Jul",
     deadline: "30 days left",
     reward: "80.000 HM + Opole Pilot-Flotte",
@@ -2325,10 +2325,10 @@ const challenges = [
     shortlist: ["Pilot-Flotte", "Opole Lab-Demo", "Mobility Badge"],
     country: "IT",
     translations: {
-      tr: { title: "Heidelberg Materials Opole Hidrojen Otobüs Menzil Yarışması", brief: "Opole'teki gerçek güzergah koşullarında hidrojenli otobüslerin menzilini tahmin eden ve uzatan algoritmalar." },
-      en: { title: "Heidelberg Materials Opole Hydrogen Bus Range Challenge", brief: "Algorithms to predict and extend the range of hydrogen buses under real Opole route conditions." },
-      de: { title: "Heidelberg Materials Opole Wasserstoffbus-Reichweiten-Challenge", brief: "Algorithmen zur Vorhersage und Verlängerung der Reichweite von Wasserstoffbussen unter realen Münchner Streckenbedingungen." },
-      es: { title: "Desafío de Autonomía de Autobuses de Hidrógeno de Heidelberg Materials Opole", brief: "Algoritmos para predecir y extender la autonomía de los autobuses de hidrógeno en condiciones reales de ruta en Múnich." }
+      tr: { title: "Heidelberg Materials Opole Demiryolu Lojistik Yarışması", brief: "Opole agrega ocaklarından Avrupa şantiyelerine demiryolu vagon yükleme ve sevkiyat planlamasını optimize eden algoritmalar." },
+      en: { title: "Heidelberg Materials Opole Railway Logistics Challenge", brief: "Algorithms that optimize railway wagon loading and scheduling from Opole aggregate quarries to European construction sites." },
+      de: { title: "Heidelberg Materials Opole Schienenlogistik-Wettbewerb", brief: "Algorithmen zur Optimierung der Waggonbeladung und -planung von Opole-Zuschlagstoffbrüchen zu europäischen Baustellen." },
+      es: { title: "Desafío de Logística Ferroviaria de Heidelberg Materials Opole", brief: "Algoritmos que optimizan la carga y programación de vagones ferroviarios desde las canteras de áridos de Opole hasta las obras de construcción europeas." }
     }
   },
   // BE Challenges
@@ -2360,9 +2360,9 @@ const challenges = [
 ];
 
 const initialNotificationsList = [
-  { id: "n1", type: "Fikir", title: "Fikrine 5 yeni destek kredisi geldi", body: "AI destekli yatırım danışmanı fikri yükseliyor.", unread: true },
-  { id: "n2", type: "Yönetici", title: "Bir fikir yönetici incelemesine alındı", body: "Lojistik dinamik raf sistemi operasyon kuyruğuna taşındı.", unread: true },
-  { id: "n3", type: "AI", title: "AI analizi tamamlandı", body: "Texas solar farm BMS fikri için pilot önerisi oluşturuldu.", unread: false }
+  { id: "n1", type: "Fikir", title: "Fikrine 5 yeni destek kredisi geldi", body: "AI destekli sipariş ve beton reçetesi danışmanı fikri yükseliyor.", unread: true },
+  { id: "n2", type: "Yönetici", title: "Bir fikir yönetici incelemesine alındı", body: "Akıllı agrega atama sistemi operasyon kuyruğuna taşındı.", unread: true },
+  { id: "n3", type: "AI", title: "AI analizi tamamlandı", body: "Quarry elektrikli kamyon şarj optimizasyonu fikri için pilot önerisi oluşturuldu.", unread: false }
 ];
 
 const navItems = [
@@ -2404,7 +2404,7 @@ const wizardSteps = [
 ];
 
 const initialWizard = {
-  title: "Heidelberg Materials Mobil kullanıcıları için AI destekli yatırım danışmanı",
+  title: "Heidelberg Materials Müşterileri için AI Destekli Sipariş ve Beton Reçetesi Danışmanı",
   oneSentence: "Kullanıcıların harcama alışkanlıkları ve risk eğilimlerine göre fon ve hisse sepeti öneren yapay zeka entegrasyonu.",
   ideaType: "Yeni ürün / hizmet",
   visibility: "Şirket içi",
@@ -2417,7 +2417,7 @@ const initialWizard = {
   userGroup: "Mobil şube kullanıcıları",
   otherDepartments: "Müşteri Deneyimi, Veri Analitiği",
   contributionTeams: "Yatırım planlama, veri analitiği",
-  problem: "Bireysel yatırımcılar karmaşık piyasa verileri yüzünden yatırım kararı almakta zorlanıyor.",
+  problem: "Şantiye yöneticileri ve yükleniciler hava koşulları ve yapısal gereksinimler için en uygun hazır beton tipini seçmekte zorlanıyor.",
   currentExperience: "Müşteriler manuel seçimlerde yanlış risk grubu seçebiliyor ve kayıp yaşayabiliyor.",
   frequency: "Haftada birkaç kez",
   affected: "Müşteriler, yatırım danışmanları",
