@@ -1115,7 +1115,8 @@ function render() {
 function handleRouting() {
   const hash = window.location.hash || "#/dashboard";
   
-  if (hash.startsWith("#/manager-dashboard")) {
+  if (hash.startsWith("#/admin-dashboard") || hash.startsWith("#/manager-dashboard") || detectViewMode() === "admin") {
+    state.viewMode = "admin";
     state.page = "managerDashboard";
     const parts = hash.split("/");
     state.managerDashboardTab = parts[2] || "performance";
@@ -1123,8 +1124,11 @@ function handleRouting() {
     const cleanPage = hash.replace("#/", "");
     const viewRedirects = ["challenges", "announcements", "analytics"];
     if (state.viewMode === "admin" && viewRedirects.includes(cleanPage)) {
-      window.location.hash = `#/manager-dashboard/${cleanPage}`;
+      window.location.hash = `#/admin-dashboard/${cleanPage}`;
       return;
+    }
+    if (!state.panelAuthenticated) {
+      state.viewMode = "user";
     }
     state.page = cleanPage || "dashboard";
   }
@@ -1133,7 +1137,7 @@ function handleRouting() {
 
 function navigate(page, tab = null) {
   if (page === "managerDashboard") {
-    window.location.hash = `#/manager-dashboard${tab ? "/" + tab : ""}`;
+    window.location.hash = `#/admin-dashboard${tab ? "/" + tab : ""}`;
   } else {
     window.location.hash = `#/${page}`;
   }
@@ -1300,7 +1304,7 @@ function renderPanelAuth() {
             </div>
           </div>
           <div style="margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px; text-align: center;">
-            <a href="/" style="font-size: 13px; color: var(--ink-soft); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+            <a href="#/dashboard" style="font-size: 13px; color: var(--ink-soft); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
               ${icon("arrow-left", "style='width: 14px; height: 14px;'")} Kullanıcı Paneline Dön
             </a>
           </div>
