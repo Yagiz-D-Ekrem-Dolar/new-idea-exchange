@@ -1031,15 +1031,35 @@ function brandLockup(compact = false) {
 }
 
 function canAccess(item, user = currentUser()) {
+  if (state.viewMode === "admin") {
+    if (!state.panelAuthenticated) return false;
+    if (state.panelAuthRole === "manager") {
+      if (item.id === "adminStorage" || item.id === "admin" || item.adminOnly) return false;
+    }
+    return true; // allow all items in admin mode
+  }
+
   if (item.adminOnly && !user.isAdmin) return false;
   if (item.managerOnly && !user.isManager && !user.isAdmin) return false;
+  // in normal mode, hide managerDashboard (it's only for the separate admin panel)
+  if (item.id === "managerDashboard") return false;
   return true;
 }
 
 function allowedNav() {
   let items = cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(item => item && canAccess(item));
   if (state.viewMode === "admin") {
-    items = items.filter(item => item.managerOnly || item.adminOnly || item.id === "settings");
+    // the user requested a manager dashboard where everything is visible.
+    // we put it at the top.
+    const order = ["managerDashboard"];
+    items.sort((a, b) => {
+      let aOrder = order.indexOf(a.id);
+      let bOrder = order.indexOf(b.id);
+      if (aOrder === -1 && bOrder === -1) return 0;
+      if (aOrder === -1) return 1;
+      if (bOrder === -1) return -1;
+      return aOrder - bOrder;
+    });
   } else {
     items = items.filter(item => !item.managerOnly && !item.adminOnly);
   }
