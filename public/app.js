@@ -1,4 +1,18 @@
+function detectViewMode() {
+  const params = new URLSearchParams(window.location.search);
+  const hostname = window.location.hostname.toLowerCase();
+  
+  if (params.has("admin") || params.has("manager") || params.get("mode") === "admin" || params.get("mode") === "manager" || params.get("panel") === "admin" || params.get("panel") === "manager") {
+    return "admin";
+  }
+  if (hostname.includes("admin") || hostname.includes("manager") || hostname.includes("yetici") || hostname.includes("yonetici")) {
+    return "admin";
+  }
+  return "user";
+}
+
 const state = {
+  viewMode: detectViewMode(),
   visibleIdeasCount: 12,
   visibleBorsaIdeasCount: 12,
   clubs: structuredClone(initialClubs),
@@ -48,47 +62,35 @@ const state = {
     startupName: "",
     ideaTitle: "",
     summary: "",
-    portal: "Sabancı"
+    portal: "BBVA"
   },
   loginView: "default",
   externalSubmitSuccess: false,
-  investmentLedger: [
-    { id: "tx-1", user: "Nazlı Durukan", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, date: "2026-06-10" },
-    { id: "tx-2", user: "Aras Kılınç", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 800, date: "2026-06-11" },
-    { id: "tx-3", user: "Nazlı Durukan", project: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 450, date: "2026-06-12" },
-    { id: "tx-4", user: "Mert Alkan", project: "Akıllı Harcama ve Karbon Nötrleme Kart Entegrasyonu", amount: 1500, date: "2026-06-14" }
-  ],
-  ledgerUserFilter: "Tümü",
-  ledgerProjectFilter: "Tümü",
-  page: "quickFlow",
-  previousPage: "quickFlow",
+  page: detectViewMode() === "admin" ? "managerDashboard" : "quickFlow",
+  previousPage: detectViewMode() === "admin" ? "managerDashboard" : "quickFlow",
   selectedIdeaId: "idea-1",
   ideas: structuredClone(initialIdeas).map((idea, idx) => {
     const equities = [15, 20, 25, 30, 35, 40];
     idea.openEquity = idea.openEquity || equities[idx % equities.length];
     idea.marketTicker = idea.marketTicker || `NIE-${String(idx + 1).padStart(2, "0")}`;
+    idea.upvotes = idea.upvotes || (40 + (idx * 7) % 35);
+    idea.downvotes = idea.downvotes || (5 + (idx * 3) % 8);
     return idea;
   }),
   ideaView: "cards",
   marketBudget: 10000,
-  marketHoldings: {
-    "idea-1": 8,
-    "idea-2": 5
-  },
+  userVotes: {},
   marketCategoryFilter: "Tümü",
   marketSort: "Revaç",
   marketPanel: "home",
   marketSearch: "",
   marketSelectedId: "idea-1",
-  marketRange: "1D",
-  marketIndicator: "MACD",
-  marketOrderSize: 1,
   marketComposerContext: "",
   marketDraft: {
     title: "",
     summary: "",
     category: "Proje",
-    companyId: "is-new",
+    companyId: "bbva-group",
     scope: "Holding geneli",
     files: [],
     country: "TR"
@@ -161,14 +163,10 @@ const state = {
   ledgerUserFilter: "Tümü",
   ledgerProjectFilter: "Tümü",
   investmentLedger: [
-    { userId: "u1", userName: "Ayşe Yılmaz", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, quantity: 10, date: "10.06.2026" },
-    { userId: "u2", userName: "Mehmet Demir", ideaId: "idea-2", ideaTitle: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 800, quantity: 8, date: "11.06.2026" },
-    { userId: "u5", userName: "Merve Aydın", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1440, quantity: 12, date: "12.06.2026" }
+    { userId: "u1", userName: "Ayşe Yılmaz", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 50, action: "upvote", date: "10.06.2026" },
+    { userId: "u2", userName: "Mehmet Demir", ideaId: "idea-2", ideaTitle: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 50, action: "upvote", date: "11.06.2026" },
+    { userId: "u5", userName: "Merve Aydın", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 50, action: "upvote", date: "12.06.2026" }
   ],
-  marketInvestedAmount: {
-    "idea-1": 960,
-    "idea-2": 450
-  },
   selectedChannelId: "ch-ops",
   chatDraft: "",
   affiliationFilter: "all",
@@ -177,10 +175,10 @@ const state = {
     title: "",
     body: "",
     scope: "Holding geneli",
-    companyId: "sabanci-holding",
+    companyId: "bbva-group",
     country: "Türkiye",
     city: "İstanbul",
-    campus: "Sabancı Center",
+    campus: "Ciudad BBVA – La Vela Kulesi",
     department: "Tüm ekipler"
   },
   selectedMessageSpaceId: "msg-holding",
@@ -193,64 +191,64 @@ const state = {
       { userId: "p02", body: "Harika olur Can Bey, dosyaları ve AI asistan raporunu hazırlayıp sunuma getireceğim.", time: "Bugün 09:20" }
     ],
     "p03": [
-      { userId: "p03", body: "Can Bey, Çimsa Mersin fabrikasındaki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
+      { userId: "p03", body: "Can Bey, Garanti BBVA Portföy Levent Ofisi'ndeki sensör verisi paylaşımını tamamladık. Onayınızı bekliyor.", time: "Dün 16:02" },
       { own: true, body: "Eline sağlık Selin, verileri inceledim. Oldukça temiz görünüyor. Hemen onay verdim.", time: "Dün 16:45" },
-      { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir hammadde optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
+      { userId: "p03", body: "Çok teşekkürler! Bu veriyle yeni bir veri optimizasyon projesi geliştirmeye başlayacağız.", time: "Dün 16:50" }
     ],
     "p05": [
       { userId: "p05", body: "Sürdürülebilir finans sprinti için borsa bütçesini kullanabilir miyiz? Sponsor arıyoruz.", time: "Bugün 10:12" },
       { own: true, body: "Evet Ece, bütçe limitleri dahilinde sponsorluğu onaylayabilirim. Detaylı talebi gönderir misin?", time: "Bugün 10:45" }
     ],
     "p06": [
-      { userId: "p06", body: "Hi Can, I've updated the UK wind farm grid connection proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
+      { userId: "p06", body: "Hi Can, I've updated the Madrid credit risk forecasting proposal. We need to reserve 1200 SA tokens to launch it.", time: "Yesterday 09:15" },
       { own: true, body: "Hello John, sounds good. I will check the budget allocation today and let you know if we can fund it directly.", time: "Yesterday 10:00" },
-      { userId: "p06", body: "Thank you. The engineering team is eager to start prototyping.", time: "Yesterday 10:12" }
+      { userId: "p06", body: "Thank you. The research team is eager to start prototyping.", time: "Yesterday 10:12" }
     ],
     "p07": [
-      { userId: "p07", body: "Hi Can, the UK cement logistics portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
-      { own: true, body: "Sure Sarah, I will request SabancıDx AI lead to run a query for UK portal statistics.", time: "Yesterday 11:45" }
+      { userId: "p07", body: "Hi Can, the Madrid insurance portal is showing great active user counts. Can we get extra AI analysis on the traffic?", time: "Yesterday 11:22" },
+      { own: true, body: "Sure Sarah, I will request BBVA Technology AI lead to run a query for Madrid portal statistics.", time: "Yesterday 11:45" }
     ],
     "p10": [
-      { userId: "p10", body: "Hello Can, Austin solar battery testing is going well. We need to align our pricing algorithm with the UK team.", time: "Yesterday 14:10" },
+      { userId: "p10", body: "Hello Can, Mexico City digital savings testing is going well. We need to align our pricing algorithm with the Madrid team.", time: "Yesterday 14:10" },
       { own: true, body: "Hi Michael, good progress. Let's arrange a joint call with John Sterling tomorrow.", time: "Yesterday 14:30" }
     ],
     "p11": [
-      { userId: "p11", body: "Can, we started testing the packing automation in Houston. It has reduced dust emissions significantly.", time: "Yesterday 15:40" },
+      { userId: "p11", body: "Can, we started testing the document automation in Monterrey. It has reduced processing time significantly.", time: "Yesterday 15:40" },
       { own: true, body: "That is fantastic news Emily! Let's submit this as a case study to the sustainability board.", time: "Yesterday 16:00" }
     ],
     "p12": [
-      { userId: "p12", body: "Hello Can, Chattanooga composite tests are finalized. The graphene nylon yarn performance is excellent.", time: "2 days ago" },
-      { own: true, body: "Thanks Robert. I saw the stress reports. We will feature this in the Kordsa global showcase.", time: "2 days ago" }
+      { userId: "p12", body: "Hello Can, Guadalajara customer experience tests are finalized. The new onboarding flow performance is excellent.", time: "2 days ago" },
+      { own: true, body: "Thanks Robert. I saw the metrics. We will feature this in the BBVA México global showcase.", time: "2 days ago" }
     ],
     "p13": [
-      { userId: "p13", body: "Hallo Can, der neue Bulk-Silo-Entwurf für Hamburg Terminal ist fertig. Können wir das Budget freigeben?", time: "Dün 10:12" },
-      { own: true, body: "Hallo Hans, ich werde das Budget prüfen. Wir müssen sicherstellen, dass die EU-Normen eingehalten werden.", time: "Dün 10:45" },
-      { userId: "p13", body: "Perfekt, danke. Die Dokumentation ist bereits im System hinterlegt.", time: "Dün 11:00" }
+      { userId: "p13", body: "Hola Can, el nuevo diseño de logística de almacén para Medellín está listo. ¿Podemos liberar el presupuesto?", time: "Dün 10:12" },
+      { own: true, body: "Hola Hans, voy a revisar el presupuesto. Debemos asegurarnos de cumplir con las normas regionales.", time: "Dün 10:45" },
+      { userId: "p13", body: "Perfecto, gracias. La documentación ya está en el sistema.", time: "Dün 11:00" }
     ],
     "p14": [
-      { userId: "p14", body: "Hallo Can, die Teststrecke für den Wasserstoffbus in München ist betriebsbereit. Die Sensoren laufen.", time: "Dün 13:00" },
-      { own: true, body: "Klasse Dieter! Bitte teile die ersten Telemetriedaten mit der Adana Software-Gruppe.", time: "Dün 13:20" }
+      { userId: "p14", body: "Hola Can, la prueba piloto de financiamiento verde en Lima está operativa. Los indicadores están funcionando.", time: "Dün 13:00" },
+      { own: true, body: "¡Excelente Dieter! Por favor comparte los primeros datos con el equipo de software de Bogotá.", time: "Dün 13:20" }
     ],
     "p15": [
-      { userId: "p15", body: "Hola Can, hemos completado el diseño del microgrid solar para Buñol. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
+      { userId: "p15", body: "Hola Can, hemos completado el diseño del producto de banca corporativa para Bilbao. ¿Podemos subirlo al portal de España?", time: "Bugün 09:30" },
       { own: true, body: "Hola Carlos, excelente. Por favor, súbelo usando el Borsa Composer seleccionando España como país objetivo.", time: "Bugün 09:45" },
       { userId: "p15", body: "Entendido, ya está publicado. Gracias por el soporte.", time: "Bugün 10:00" }
     ],
     "p16": [
-      { userId: "p16", body: "Can, I uploaded the carbon metrics for Çimsa Spain alternative fuels. It's ready for strategic score review.", time: "Dün 15:00" },
+      { userId: "p16", body: "Can, I uploaded the sustainability metrics for BBVA, S.A. Madrid treasury. It's ready for strategic score review.", time: "Dün 15:00" },
       { own: true, body: "Thanks Maria, I will trigger the AI host analysis on it right away.", time: "Dün 15:30" }
     ],
     "u1": [
-      { userId: "u1", body: "Can Bey, Teknosa mağaza içi kiosk projemize 100 SA bütçe ayırdık. Pilot mağaza kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
+      { userId: "u1", body: "Can Bey, BBVA México şube içi kiosk projemize 100 SA bütçe ayırdık. Pilot şube kurulumunu onaylar mısınız?", time: "Bugün 11:00" },
       { own: true, body: "Onayladım Ayşe. Kioskların mobil ödeme entegrasyonu tamamlandı mı?", time: "Bugün 11:15" }
     ],
     "u2": [
-      { userId: "u2", body: "Can Bey, CarrefourSA taze gıda takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
+      { userId: "u2", body: "Can Bey, BBVA Colombia tedarik zinciri takip projesinin pilot aşaması için malzeme listesini hazırladık.", time: "Dün 16:30" },
       { own: true, body: "Eline sağlık Mehmet, lojistik ekibiyle koordine edip bütçe onayını veriyorum.", time: "Dün 17:00" }
     ],
     "u4": [
-      { userId: "u4", body: "Can, Altın Yaka inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
-      { own: true, body: "Çok teşekkürler Kerem Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
+      { userId: "u4", body: "Can, inovasyon ödülleri için bütçe onayını imzaladım. Sistemde duyurulabilir.", time: "Bugün 08:30" },
+      { own: true, body: "Çok teşekkürler Mateo Bey, duyuruyu hemen holding portalında yayınladım.", time: "Bugün 09:00" }
     ]
   },
   messageDraft: "",
@@ -312,7 +310,7 @@ const state = {
       category: "AI Host",
       date: "2026-06-14",
       tags: ["ai", "demo kapsamı", "veri güvenliği"],
-      author: "İş NEW",
+      author: "BBVA Group",
       isAiGenerated: true
     },
     {
@@ -375,7 +373,7 @@ const state = {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: ["team-001"], linkedIdeas: ["idea-1", "idea-3"] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: ["team-003"], linkedIdeas: ["idea-2", "idea-5"] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: ["team-002"], linkedIdeas: ["idea-1"] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "BBVA Mobile, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: ["idea-2", "idea-4"] }
   ],
   predictions: [
     {
@@ -415,7 +413,7 @@ const state = {
       description: "Girişim fikirlerinizi nasıl doğrularsınız, MVP (Minimum Uygulanabilir Ürün) nasıl kurgulanır ve müşteri görüşmeleri nasıl yürütülür sorularına pratik yanıtlar.",
       link: "https://www.youtube.com/watch?v=fEvKo90qBns",
       date: "Her Çarşamba, 14:00",
-      organizer: "Sabancı İnovasyon Ofisi"
+      organizer: "BBVA İnovasyon Ofisi"
     },
     {
       id: "edu-2",
@@ -424,7 +422,7 @@ const state = {
       description: "KVKK, BDDK lisanslama süreçleri, açık bankacılık regülasyonları ve ödeme kuruluşları mevzuatları hakkında bilgilendirici oturum.",
       link: "https://zoom.us/j/demo-fintech",
       date: "24 Haziran 2026, 11:00",
-      organizer: "Akbank Mobil Hukuk & Uyum Departmanı"
+      organizer: "BBVA Mobile Hukuk & Uyum Departmanı"
     },
     {
       id: "edu-3",
@@ -433,36 +431,36 @@ const state = {
       description: "Kullanıcı başına lisanslama, kullanım tabanlı fiyatlandırma modelleri ve kurumsal SaaS satış kanallarını optimize etme üzerine atölye çalışması.",
       link: "https://www.youtube.com/watch?v=0H73Z1tCeeM",
       date: "Kayıttan İzle (1.5 Saat)",
-      organizer: "SabancıDx Bulut Bilişim Grubu"
+      organizer: "BBVA Technology Bulut Bilişim Grubu"
     }
   ],
   mentors: [
     {
       id: "mentor-1",
       name: "Elif Şahin",
-      title: "FinTech & Ürün Yönetimi Müdürü (Akbank)",
+      title: "FinTech & Ürün Yönetimi Müdürü (BBVA)",
       specialties: ["Ürün Yönetimi", "FinTech", "İş Modeli Geliştirme"],
-      bio: "12+ yıllık ürün yönetim deneyimi. Akbank Mobil dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
+      bio: "12+ yıllık ürün yönetim deneyimi. BBVA Mobile dijital bankacılık ürünlerinde ödeme sistemleri ve kullanıcı deneyimi süreçlerini yönetti.",
       avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-      email: "elif.sahin@sabanci.example"
+      email: "elif.sahin@bbva.example"
     },
     {
       id: "mentor-2",
       name: "Emir Arslan",
-      title: "Yapay Zekâ Çözüm Mimarı (SabancıDx)",
+      title: "Yapay Zekâ Çözüm Mimarı (BBVA Technology)",
       specialties: ["Yapay Zekâ", "Makine Öğrenmesi", "Teknik Altyapı"],
       bio: "Büyük dil modelleri (LLM), veri analitiği ve akıllı tahminleme altyapıları üzerine uzmanlaşmıştır. Fikirlerin teknik fizibilitesini değerlendirmede destek sağlar.",
       avatar: "https://randomuser.me/api/portraits/men/41.jpg",
-      email: "emir.arslan@sabanci.example"
+      email: "emir.arslan@bbva.example"
     },
     {
       id: "mentor-3",
       name: "Zeynep Kaya",
-      title: "Sürdürülebilirlik & ESG Koordinatörü (Enerjisa)",
+      title: "Sürdürülebilirlik & ESG Koordinatörü (BBVA Perú)",
       specialties: ["Yeşil Finans", "ESG Uyum", "Karbon Takip"],
       bio: "Girişimlerin yeşil finansman imkanlarına erişimi, ESG raporlama standartları ve karbon nötrleme projelerinin kurgulanması konularında mentörlük sunuyor.",
       avatar: "https://randomuser.me/api/portraits/women/51.jpg",
-      email: "zeynep.kaya@sabanci.example"
+      email: "zeynep.kaya@bbva.example"
     }
   ],
   mentorApplications: [],
@@ -474,16 +472,16 @@ const state = {
       date: "28 Haziran 2026, 14:00 - 17:00",
       description: "İştirak stüdyolarında kuluçkaya alınan en iyi 5 projenin üst yönetim ve jüri karşısında sunum yapacağı, demo ve soru-cevap oturumlarının düzenleneceği büyük final.",
       link: "https://zoom.us/j/demo-day-2026",
-      organizer: "Sabancı İnovasyon Ofisi"
+      organizer: "BBVA İnovasyon Ofisi"
     },
     {
       id: "event-2",
       title: "FinTech & Yapay Zekâ Fikir Maratonu (Hackathon)",
       topic: "Yarışmalar",
       date: "10-12 Temmuz 2026",
-      description: "Sabancı Holding iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
+      description: "BBVA Group iştirak çalışanlarının katılımına açık, 48 saat sürecek yoğun ürün geliştirme ve kodlama yarışması. Toplam ödül 50,000 NIE Kredisi.",
       link: "https://fikirkovani.com/hackathon-kayit",
-      organizer: "SabancıDx"
+      organizer: "BBVA Technology"
     },
     {
       id: "event-3",
@@ -517,9 +515,9 @@ const state = {
     {
       id: "ds-1",
       title: "2026 Yapay Zeka Sektör Raporu",
-      summary: "SabancıDx tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
+      summary: "BBVA Technology tarafından derlenmiş genel bulut verileri, sektörel büyüme oranları ve güvenlik gereksinimleri.",
       sharedBy: "Mert Alkan",
-      companyId: "sabancidx",
+      companyId: "bbva-technology",
       type: "Kurumsal",
       area: "Yapay Zekâ & Derin Teknoloji",
       importanceScore: 5,
@@ -533,10 +531,10 @@ const state = {
     },
     {
       id: "ds-2",
-      title: "Akbank QR ve Biyometrik Ödeme Kullanım Analizi",
+      title: "BBVA QR ve Biyometrik Ödeme Kullanım Analizi",
       summary: "QR ve biyometrik ödeme entegrasyonları için pazar payı, işlem hızları ve müşteri kullanım oranları.",
       sharedBy: "Can Koç",
-      companyId: "akbank",
+      companyId: "garanti-bbva",
       type: "Kurumsal",
       area: "FinTech & Dijital Bankacılık",
       importanceScore: 4,
@@ -548,10 +546,10 @@ const state = {
     },
     {
       id: "ds-3",
-      title: "Texas Grid Peak Hours Pricing Datetime Set",
-      summary: "Historical grid pricing data for Texas solar farm battery storage management.",
+      title: "Mexico City Savings Peak Hours Pricing Datetime Set",
+      summary: "Historical market pricing data for Mexico City digital savings dispatch management.",
       sharedBy: "Michael Vance",
-      companyId: "sabanci-climate-us",
+      companyId: "bbva-mexico",
       type: "Kurumsal",
       area: "Sürdürülebilirlik & Yeşil Enerji",
       importanceScore: 5,
@@ -559,21 +557,21 @@ const state = {
       comments: [],
       likes: 24,
       downloads: 58,
-      country: "US"
+      country: "MX"
     }
   ],
-  
+
   announcements: [
     {
       id: "ann-rec-1",
-      title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
+      title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
       author: "Can Koç",
       authorId: "u3",
-      companyId: "akbank",
+      companyId: "garanti-bbva",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+      body: "Merhabalar! BBVA Mobile AI Yatırım projemiz için prototip ekranlarımızı tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
       date: "2026-06-08",
       comments: [],
       likes: 42,
@@ -584,21 +582,21 @@ const state = {
     },
     {
       id: "ann-rec-2",
-      title: "🚀 Texas Solar Battery Storage System Project (US) - Seeking MLOps Engineer!",
+      title: "🚀 Mexico City Digital Savings System Project (MX) - Seeking MLOps Engineer!",
       author: "Michael Vance",
       authorId: "u10",
-      companyId: "sabanci-climate-us",
+      companyId: "bbva-mexico",
       type: "Topluluk",
       area: "Takım Arkadaşı Aranıyor",
       importanceScore: 5,
-      body: "Hello! We are looking for an MLOps Engineer to deploy predictive grid models at the Texas solar farm project site. Remote/Austin. Apply below!",
+      body: "Hello! We are looking for an MLOps Engineer to deploy predictive savings models at the Mexico City project site. Remote/Mexico City. Apply below!",
       date: "2026-06-10",
       comments: [],
       likes: 20,
       ideaId: "idea-6",
       missingRoles: ["MLOps Engineer"],
       imageUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80",
-      country: "US"
+      country: "MX"
     },
     ...structuredClone(initialAnnouncements)
   ],
@@ -609,8 +607,8 @@ const state = {
       userId: "p02",
       userName: "Mert Alkan",
       userAvatar: "https://randomuser.me/api/portraits/men/12.jpg",
-      userBio: "İnovasyon Lideri · SabancıDx",
-      body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
+      userBio: "İnovasyon Lideri · BBVA Technology",
+      body: "BBVA Mobile AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi ve geri bildirimlerinizi bekliyoruz.",
       date: "2 saat önce",
       likes: 12,
       likedByMe: false,
@@ -624,13 +622,13 @@ const state = {
       userId: "u10",
       userName: "Michael Vance",
       userAvatar: "https://randomuser.me/api/portraits/men/22.jpg",
-      userBio: "Energy Storage Director · Sabancı Climate US",
-      body: "Texas utility battery dispatch optimization dataset is uploaded under Data section. Open for model research.",
+      userBio: "Digital Banking Director · BBVA México",
+      body: "Monterrey industrial energy dispatch optimization dataset is uploaded under Data section. Open for model research.",
       date: "3 hours ago",
       likes: 15,
       likedByMe: false,
       comments: [],
-      country: "US"
+      country: "MX"
     }
   ]
 };
@@ -648,14 +646,15 @@ function currentUser() {
   };
   const config = userConfigs[c] || userConfigs.TR;
 
+  const isManagerMode = state.viewMode === "admin";
   const baseUser = {
     id: config.id,
     name: config.name,
     email: config.email,
     employeeId: "SA-22018",
-    roleKey: "manager",
-    seniority: "Yönetici",
-    isManager: true,
+    roleKey: isManagerMode ? "manager" : "user",
+    seniority: isManagerMode ? "Yönetici" : "Çalışan",
+    isManager: isManagerMode,
     isAdmin: false,
     voteCreditBalance: 24,
     monthlyVoteCredit: 40,
@@ -742,22 +741,7 @@ function esc(value) {
 
 function icon(name, extraAttrs = "") {
   if (name === "coins") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="sa-coin-icon" style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; display: inline-block; filter: drop-shadow(0 2px 4px rgba(241,196,15,0.4));" ${extraAttrs}>
-      <circle cx="50" cy="50" r="45" fill="url(#goldGrad)" stroke="#b8860b" stroke-width="3"/>
-      <circle cx="50" cy="50" r="38" fill="none" stroke="#daa520" stroke-width="1" stroke-dasharray="2 2"/>
-      <g transform="translate(22.22, 34.8) scale(0.6)">
-        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#8b6508"/>
-        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
-        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
-      </g>
-      <defs>
-        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ffe066" />
-          <stop offset="50%" stop-color="#f1c40f" />
-          <stop offset="100%" stop-color="#d4ac0d" />
-        </linearGradient>
-      </defs>
-    </svg>`;
+    return `<span class="sa-coin-icon" ${extraAttrs}><img src="${esc(brandLogoSrc)}" alt="" /></span>`;
   }
   return `<i data-lucide="${name}" aria-hidden="true" ${extraAttrs}></i>`;
 }
@@ -798,7 +782,7 @@ function personById(id) {
       photo: cUser.photo,
       status: "Aktif",
       bio: cUser.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-      cv: cUser.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+      cv: cUser.cv || "Eğitim: Universidad Autónoma de Madrid. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
       email: cUser.email,
       badges: cUser.badges || [],
       country: cUser.country
@@ -810,15 +794,15 @@ function personById(id) {
       return {
         id: du.id,
         name: du.name,
-        companyId: du.companyId || "sabanci-holding",
+        companyId: du.companyId || "bbva-group",
         role: du.role,
         team: du.department,
         city: du.city || "İstanbul",
-        campus: du.location || "Sabancı Center",
+        campus: du.location || "Ciudad BBVA – La Vela Kulesi",
         photo: du.photo || du.avatarUrl || profilePhotos[du.id] || "https://randomuser.me/api/portraits/men/75.jpg",
         status: "Aktif",
         bio: du.bio || "İnovasyon ve verimlilik odaklı çalışıyorum.",
-        cv: du.cv || "Eğitim: Sabancı Üniversitesi. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
+        cv: du.cv || "Eğitim: Universidad Autónoma de Madrid. Deneyim: 8 yıl süreç geliştirme ve operasyon yönetimi.",
         email: du.email,
         badges: du.badges || [],
         country: du.country || "TR"
@@ -866,7 +850,7 @@ function announcementsInScope() {
 
 function spacesInScope() {
   const ids = companyIdsInScope();
-  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "sabanci-holding");
+  return state.messageSpaces.filter(space => ids.includes(space.companyId) || space.companyId === "bbva-group");
 }
 
 function syncAnnouncementDraftCompany(companyId) {
@@ -890,26 +874,23 @@ function renderAvatarStack(ids, max = 4) {
   `;
 }
 
+const UPVOTE_COST = 50;
+
 function marketCompanyForIdea(idea) {
-  return companyById(idea.companyId || "is-new");
+  return companyById(idea.companyId || "bbva-group");
 }
 
-function marketPrice(idea) {
-  // Every idea starts from the same 100 SA base valuation; marketChange (driven by
-  // buy/sell activity and per-idea performance drift) is applied on top so prices
-  // actually move with trading instead of staying frozen at the base forever.
-  const base = Number(idea.marketPrice || 100);
-  const change = Number(idea.marketChange || 0);
-  return Math.max(20, Math.round(base * (1 + change / 100)));
+function netVoteScore(idea) {
+  return Number(idea.upvotes || 0) - Number(idea.downvotes || 0);
 }
 
 function marketTrendScore(idea) {
-  return Math.round((idea.aiScore || 70) * 0.42 + (idea.communityScore || 60) * 0.34 + (idea.supporters || 0) * 1.4 + Math.max(0, Number(idea.marketChange || 0)) * 2);
+  return Math.round((idea.aiScore || 70) * 0.42 + (idea.communityScore || 60) * 0.34 + (idea.supporters || 0) * 1.4 + Math.max(0, netVoteScore(idea)) * 0.5);
 }
 
 function marketVisibleIdeas() {
   const companyIds = companyIdsInScope();
-  let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "is-new"));
+  let ideas = state.ideas.filter(idea => state.affiliationFilter === "all" || companyIds.includes(idea.companyId || "bbva-group"));
   if (state.filters.country === "Aktif Portal") {
     ideas = ideas.filter(idea => idea.country === state.activeCountry);
   } else if (state.filters.country !== "Tüm Ülkeler") {
@@ -931,24 +912,100 @@ function marketVisibleIdeas() {
 
   const sorters = {
     "Revaç": (a, b) => marketTrendScore(b) - marketTrendScore(a),
-    "En çok yükselen": (a, b) => Number(b.marketChange || 0) - Number(a.marketChange || 0),
-    "En çok düşen": (a, b) => Number(a.marketChange || 0) - Number(b.marketChange || 0),
+    "En çok upvote alan": (a, b) => Number(b.upvotes || 0) - Number(a.upvotes || 0),
+    "En çok downvote alan": (a, b) => Number(b.downvotes || 0) - Number(a.downvotes || 0),
     "Hacim": (a, b) => Number(b.marketVolume || 0) - Number(a.marketVolume || 0),
-    "Fiyat": (a, b) => marketPrice(b) - marketPrice(a)
+    "Net oy": (a, b) => netVoteScore(b) - netVoteScore(a)
   };
 
   return ideas.sort(sorters[state.marketSort] || sorters["Revaç"]);
 }
 
-function marketPortfolioValue() {
-  return Object.entries(state.marketHoldings).reduce((sum, [id, quantity]) => {
-    const idea = state.ideas.find(item => item.id === id);
-    return sum + (idea ? marketPrice(idea) * quantity : 0);
-  }, 0);
-}
-
 function marketDeltaClass(value) {
   return Number(value) >= 0 ? "positive" : "negative";
+}
+
+function castVote(ideaId, direction) {
+  const idea = state.ideas.find(item => item.id === ideaId);
+  if (!idea) return false;
+  if (!state.userVotes) state.userVotes = {};
+  if (typeof idea.upvotes !== "number") idea.upvotes = 0;
+  if (typeof idea.downvotes !== "number") idea.downvotes = 0;
+  if (!state.investmentLedger) state.investmentLedger = [];
+
+  const current = state.userVotes[ideaId];
+  const user = currentUser();
+
+  const pushLedger = (action, amount) => {
+    state.investmentLedger.push({
+      userId: user.id,
+      userName: user.name,
+      ideaId,
+      ideaTitle: idea.title,
+      action,
+      amount,
+      date: new Date().toLocaleDateString("tr-TR")
+    });
+  };
+
+  if (direction === "up") {
+    if (current === "up") {
+      // toggle off
+      state.marketBudget += UPVOTE_COST;
+      idea.upvotes -= 1;
+      delete state.userVotes[ideaId];
+      pushLedger("upvote-geri-al", -UPVOTE_COST);
+      return true;
+    }
+    if (current === "down") {
+      idea.downvotes -= 1;
+      if (state.marketBudget < UPVOTE_COST) {
+        alert("Yetersiz bütçe!");
+        idea.downvotes += 1;
+        return false;
+      }
+      state.marketBudget -= UPVOTE_COST;
+      idea.upvotes += 1;
+      state.userVotes[ideaId] = "up";
+      pushLedger("upvote", UPVOTE_COST);
+      return true;
+    }
+    // no current vote
+    if (state.marketBudget < UPVOTE_COST) {
+      alert("Yetersiz bütçe!");
+      return false;
+    }
+    state.marketBudget -= UPVOTE_COST;
+    idea.upvotes += 1;
+    state.userVotes[ideaId] = "up";
+    pushLedger("upvote", UPVOTE_COST);
+    return true;
+  }
+
+  if (direction === "down") {
+    if (current === "down") {
+      // toggle off
+      idea.downvotes -= 1;
+      delete state.userVotes[ideaId];
+      pushLedger("downvote-geri-al", 0);
+      return true;
+    }
+    if (current === "up") {
+      state.marketBudget += UPVOTE_COST;
+      idea.upvotes -= 1;
+      idea.downvotes += 1;
+      state.userVotes[ideaId] = "down";
+      pushLedger("downvote", -UPVOTE_COST);
+      return true;
+    }
+    // no current vote
+    idea.downvotes += 1;
+    state.userVotes[ideaId] = "down";
+    pushLedger("downvote", 0);
+    return true;
+  }
+
+  return false;
 }
 
 function formatCurrency(value) {
@@ -956,30 +1013,12 @@ function formatCurrency(value) {
 }
 
 function formatCurrencyHTML(value, size = "normal") {
-  return `<span class="sa-coin-inline" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600; vertical-align: middle;">${saCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span style="font-weight: 800; font-size: 0.85em; color: var(--primary);">SA</span></span>`;
+  return `<span class="sa-coin-inline">${bbvaCoinIcon(size)} <span>${Math.round(value).toLocaleString("tr-TR")}</span> <span class="sa-coin-code">SA</span></span>`;
 }
 
-function saCoinIcon(size = "normal") {
-  const sizePx = size === "large" ? "20" : size === "small" ? "13" : "16";
-  return `
-    <svg class="sa-coin-svg" width="${sizePx}" height="${sizePx}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; display: inline-block; filter: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.15));">
-      <circle cx="18" cy="18" r="16" fill="url(#goldGrad)" stroke="#B8860B" stroke-width="1.5"/>
-      <circle cx="18" cy="18" r="13" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2 1" opacity="0.6"/>
-      <g transform="translate(7.35, 12.17) scale(0.23)">
-        <path d="M0,25.34A25.34,25.34,0,0,1,49.41,17.4a25.35,25.35,0,1,1,0,15.87A25.34,25.34,0,0,1,0,25.34Z" fill="#5C4033"/>
-        <path d="M41.16,30.15c0-2.63-.53-4.53-1.55-5.67-1.18-1.36-2.74-1.82-6.54-2-2.05-.08-3.57-.12-4-.12H21.86a13.1,13.1,0,0,1-3-.15,1.94,1.94,0,0,1-1.7-2c0-1.4.68-1.94,2.58-2.09,1.18-.07,4.6-.19,7-.19,5.21,0,5.93.31,5.93,2.51H40.1c0-4.37-.84-6.12-3.38-7.07-1.94-.72-3.95-.87-11.36-.87a65.08,65.08,0,0,0-9.5.42c-4.71.6-6.34,2.66-6.34,7.71,0,4,1.06,5.93,3.72,6.84,1.29.45,3.5.64,7.18.64h7a35.85,35.85,0,0,1,3.8.08c1.56.15,2.32.87,2.32,2.16,0,2.25-1,2.47-10,2.47a35,35,0,0,1-4.83-.26c-1.14-.27-1.4-.72-1.48-2.62H9.63c0,.57,0,1.21,0,1.48,0,3.61,1.22,5.43,4.07,6.15,1.86.5,4.44.65,10.18.65a95.44,95.44,0,0,0,10.64-.38C39.34,37.32,41.16,35.24,41.16,30.15Z" fill="url(#goldGrad)"/>
-        <path d="M79,28.21,73.49,18.1l-5.4,10.11ZM92.6,38H84.16l-2.5-4.52H65.32L62.89,38H54.15L68.4,12.67H78.73Z" fill="url(#goldGrad)"/>
-      </g>
-      <defs>
-        <linearGradient id="goldGrad" x1="4" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#FFE07D"/>
-          <stop offset="30%" stop-color="#F1C40F"/>
-          <stop offset="70%" stop-color="#D4AC0D"/>
-          <stop offset="100%" stop-color="#9A7D0A"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  `;
+function bbvaCoinIcon(size = "normal") {
+  const className = size === "large" ? "large" : size === "small" ? "small" : "";
+  return `<span class="sa-coin-icon ${className}"><img src="${esc(brandLogoSrc)}" alt="" /></span>`;
 }
 
 function marketSparkline(points = [], change = 0) {
@@ -1006,7 +1045,7 @@ function resetMarketDraft(context = state.marketComposerContext || "quickFlow") 
     title: "",
     summary: "",
     category: context === "announcements" ? "Araştırma" : "Proje",
-    companyId: state.affiliationFilter === "all" ? "is-new" : state.affiliationFilter,
+    companyId: state.affiliationFilter === "all" ? "bbva-group" : state.affiliationFilter,
     scope: "Holding geneli",
     files: [],
     country: state.activeCountry || "TR"
@@ -1041,8 +1080,8 @@ function avatar(name, size = "", imageUrl = "") {
 
 function brandLockup(compact = false) {
   return `
-    <span class="sabanci-lockup ${compact ? "compact" : ""}" aria-label="Türkiye Sabancı Holding - NEW IDEA EXCHANGE">
-      <img class="sabanci-logo-image" src="${esc(brandLogoSrc)}" alt="Türkiye Sabancı Holding" />
+    <span class="sabanci-lockup ${compact ? "compact" : ""}" aria-label="Sabancı Holding - NEW IDEA EXCHANGE">
+      <img class="sabanci-logo-image" src="${esc(brandLogoSrc)}" alt="Sabancı Holding" />
       <small>${esc(state.brandName)}</small>
     </span>
   `;
@@ -1055,7 +1094,13 @@ function canAccess(item, user = currentUser()) {
 }
 
 function allowedNav() {
-  return cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(item => item && canAccess(item));
+  const allNavs = cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(Boolean);
+  if (state.viewMode === "admin") {
+    const adminNavIds = ["managerDashboard", "manager", "adminStorage", "analytics", "dashboard", "profile", "settings"];
+    return allNavs.filter(item => adminNavIds.includes(item.id) && canAccess(item));
+  } else {
+    return allNavs.filter(item => !item.managerOnly && !item.adminOnly && canAccess(item));
+  }
 }
 
 function pageLabel() {
@@ -1084,10 +1129,10 @@ function pageSubtitle() {
     adminStorage: "Yönetici depolama alanı, dosyaları ve kaynak arşivi",
     studio: "İştirak inovasyon stüdyoları, proje geliştirme ekipleri ve kuluçkadaki ürünler",
     products: "Ürünleşen fikirler ve gelişim seviyeleri",
-    systemDetails: "İş NEW platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
+    systemDetails: "NEW IDEA EXCHANGE platformunun çalışma prensipleri, teknik altyapısı ve kullanım kılavuzu",
     settings: "Marka, görünüm ve bildirim tercihleri",
     detail: "Problem, çözüm, skorlar ve yorumlar",
-    rules: "İş NEW platformunun kullanım ve topluluk kuralları",
+    rules: "NEW IDEA EXCHANGE platformunun kullanım ve topluluk kuralları",
     complaintBox: "Uygulama, teknik sorun veya kullanıcılar hakkında geri bildirim/şikayet",
     teams: "Ekip listesi, üyeler ve proje bağlantıları"
   };
@@ -1129,7 +1174,7 @@ function resetScroll() {
 }
 
 function renderExternalSignup() {
-  const draft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+  const draft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "BBVA" };
   const successMessage = state.externalSubmitSuccess ? `
     <div class="alert alert-success" style="background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.3); color: #2ecc71; padding: 16px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
       ${icon("check-circle-2", "20")}
@@ -1183,8 +1228,8 @@ function renderExternalSignup() {
             <label class="field">
               <span style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display: block;">Başvurulan İnovasyon Kanalı</span>
               <select class="select" data-ext-draft="portal" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface);">
-                <option value="Sabancı" ${draft.portal === "Sabancı" ? "selected" : ""}>Sabancı Holding Inovasyon Portalı</option>
-                <option value="BBVA" ${draft.portal === "BBVA" ? "selected" : ""}>BBVA Group Inovasyon Portalı</option>
+                <option value="BBVA" ${draft.portal === "BBVA" ? "selected" : ""}>BBVA Group İnovasyon Portalı</option>
+                <option value="Sabancı" ${draft.portal === "Sabancı" ? "selected" : ""}>Sabancı Holding İnovasyon Portalı</option>
               </select>
             </label>
 
@@ -1216,7 +1261,7 @@ function renderLogin() {
           </div>
           <div class="apple-login-copy">
             <h1 style="font-family: 'Space Grotesk', sans-serif;">Sabancı Innovation Exchange</h1>
-            <p>Sabancı Holding iç inovasyon alanına giriş için exchange key'ini gir.</p>
+            <p>BBVA Grubu iç inovasyon alanına giriş için exchange key'ini gir.</p>
           </div>
           <label class="field apple-key-field">
             <span>Exchange key</span>
@@ -1229,6 +1274,15 @@ function renderLogin() {
           </div>
           <button class="btn primary block" data-action="validate-key">${icon("unlock-keyhole")} Girişe devam et</button>
           <p class="security-note">Demo key altta görünür. Gerçek ortamda erişim şirket içi kimlikle doğrulanır.</p>
+          
+          <!-- QR Code block -->
+          <div style="margin-top: 16px; border-top: 1px dashed var(--line-soft); padding-top: 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+            <span style="font-size: 13px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 6px;">
+              ${icon("qr-code", "style='width: 16px; height: 16px; color: var(--primary);'")} Siz de deneyin!
+            </span>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(window.location.href)}" alt="QR Code" style="width: 110px; height: 110px; border-radius: 8px; border: 1px solid var(--line-soft); padding: 4px; background: white;" />
+            <a href="${window.location.href}" target="_blank" style="font-size: 11px; color: var(--primary); text-decoration: underline; word-break: break-all; font-weight: 600;">${window.location.href}</a>
+          </div>
           <div style="margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px; text-align: center;">
             <button class="btn secondary block" data-action="toggle-external-signup" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; height: 38px; font-weight: 600;">
               ${icon("user-plus")} Şirket Dışı Girişimci Girişi / Başvurusu
@@ -1583,7 +1637,8 @@ function renderShell() {
                     const isActive = c.code === state.activeCountry;
                     
                     const searchCountry = countryNameTR[c.code] || c.name;
-                    const subCount = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(searchCountry)).length;
+                    const countedSubs = affiliationCompanies.filter(comp => comp.countries && comp.countries.includes(searchCountry)).length;
+                    const subCount = Number(c.portalCount) || countedSubs;
                     
                     return `
                       <button class="portal-dropdown-item ${isActive ? "active" : ""}" data-action="change-active-portal" data-code="${esc(c.code)}">
@@ -1599,8 +1654,9 @@ function renderShell() {
               ` : ""}
             </div>
             <span class="credit-pill" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: rgba(241, 196, 15, 0.1); color: #F1C40F; border: 1px solid rgba(241, 196, 15, 0.2); padding: 6px 12px; border-radius: 99px;">
-              ${saCoinIcon("normal")}
+              ${bbvaCoinIcon("normal")}
               <span>${Math.round(state.marketBudget).toLocaleString("tr-TR")}</span>
+              <span class="sa-coin-code">SA</span>
             </span>
             <button class="icon-button" data-action="toggle-theme" aria-label="Tema değiştir">${icon(state.theme === "dark" ? "sun" : "moon")}</button>
             <button class="icon-button position-relative" data-page="notifications" aria-label="Bildirimler">
@@ -1624,28 +1680,7 @@ function renderShell() {
 }
 
 function renderMobileNav(nav) {
-  const ids = ["dashboard", "quickFlow", "agenda", "studio", "profile"];
-  const mobileLabels = {
-    dashboard: "Genel",
-    announcements: "Duyuru",
-    challenges: "Yarışma",
-    messages: "Mesaj",
-    data: "Veri&Bilgi",
-    agenda: "Gündem",
-    studio: "Stüdyo",
-    social: "Sosyal",
-    quickFlow: "Borsa",
-    profile: "Profil"
-  };
-  return `
-    <nav class="mobile-nav" aria-label="Mobil navigasyon">
-      ${ids.map(id => {
-        const item = nav.find(entry => entry.id === id);
-        if (!item) return "";
-        return `<button class="mobile-tab ${state.page === id ? "active" : ""}" data-page="${esc(id)}">${icon(item.icon)}<span>${esc(mobileLabels[id] || item.label)}</span></button>`;
-      }).join("")}
-    </nav>
-  `;
+  return "";
 }
 
 function renderPage() {
@@ -1724,11 +1759,14 @@ function renderPage() {
 
 function getSubsidiariesByCountry(code) {
   const mapping = {
-    TR: ["Türkiye"],
-    GB: ["Birleşik Krallık", "United Kingdom"],
-    US: ["Amerika Birleşik Devletleri", "United States"],
-    DE: ["Almanya", "Germany"],
-    ES: ["İspanya", "Spain"]
+    ES: ["İspanya", "Spain"],
+    MX: ["Meksika", "México", "Mexico"],
+    TR: ["Türkiye", "Turkey"],
+    CO: ["Kolombiya", "Colombia"],
+    PE: ["Peru", "Perú"],
+    AR: ["Arjantin", "Argentina"],
+    VE: ["Venezuela"],
+    UY: ["Uruguay"]
   };
   const names = mapping[code] || [];
   return affiliationCompanies.filter(comp => {
@@ -1768,7 +1806,7 @@ function renderSubsidiaryBranchingPanel() {
         <div>
           <span class="panel-kicker" style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent);">
             <img src="/assets/flags/${activeC.code.toLowerCase()}.svg" style="width: 18px; height: 12px; object-fit: cover; border-radius: 2px;" alt="" />
-            SABANCI ${activeC.name.toUpperCase()} EKOSİSTEMİ
+            BBVA ${activeC.name.toUpperCase()} EKOSİSTEMİ
           </span>
           <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px; color: var(--ink);">Şubeleşme, İştirakler ve Yerleşke Yapısı</h3>
           <p style="color: var(--muted); font-size: 13px; margin-top: 2px;">Aktif portala bağlı iştiraklerin coğrafi yerleşke, departman ve inovasyon ağacı.</p>
@@ -1797,12 +1835,12 @@ function renderSubsidiaryBranchingPanel() {
         <!-- Left Side: Interactive Branch Tree & Org Map -->
         <div style="display: flex; flex-direction: column; gap: 16px; background: rgba(var(--primary-rgb), 0.015); border: 1px solid var(--line-soft); border-radius: 16px; padding: 24px; min-height: 380px; justify-content: center; position: relative; overflow: hidden;">
           
-          <!-- Root Parent Node: Sabancı Holding -->
+          <!-- Root Parent Node: BBVA Group -->
           <div style="display: flex; justify-content: center; margin-bottom: 28px; position: relative; z-index: 2;">
             <div style="display: flex; align-items: center; gap: 12px; background: var(--surface); border: 2px solid var(--accent); padding: 10px 24px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 93, 170, 0.12); text-align: left;">
               <img src="/assets/company-logos/sabanci-holding.svg" style="height: 22px; width: auto;" alt="" />
               <span>
-                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">H.Ö. Sabancı Holding</strong>
+                <strong style="display: block; font-size: 13.5px; font-weight: 700; color: var(--ink);">BBVA Group</strong>
                 <small style="color: var(--muted); font-size: 11px; font-weight: 500;">Holding Merkez Çatısı</small>
               </span>
             </div>
@@ -1924,7 +1962,7 @@ function renderDashboard() {
   const highlights = [...countryIdeas].sort((a, b) => b.aiScore + b.communityScore - (a.aiScore + a.communityScore)).slice(0, 3);
   const focusIdea = highlights[0] || countryIdeas[0] || state.ideas[0];
   
-  const countMultiplier = state.activeCountry === "TR" ? 12 : state.activeCountry === "US" ? 6 : state.activeCountry === "GB" ? 4 : 2;
+  const countMultiplier = state.activeCountry === "ES" ? 12 : state.activeCountry === "MX" ? 8 : state.activeCountry === "TR" ? 6 : 3;
   const queueCount = countryIdeas.filter(idea => ["new", "review", "pilot"].includes(idea.status)).length;
   const reviewCount = countryIdeas.filter(idea => idea.status === "review").length + countMultiplier * 2;
   const pilotCount = countryIdeas.filter(idea => idea.status === "pilot").length + countMultiplier;
@@ -2193,22 +2231,20 @@ function renderStockTicker() {
 
   // Duplicate list to make scrolling infinite and smooth
   const items = [...list, ...list, ...list];
-  
+
   return `
     <div class="ticker-wrap">
       <div class="ticker">
         <div class="ticker__move">
           ${items.map(idea => {
-            const price = marketPrice(idea);
-            const change = Number(idea.marketChange || 0);
-            const isUp = change >= 0;
+            const net = netVoteScore(idea);
+            const isUp = net >= 0;
             return `
               <span class="ticker__item">
-                <span style="color: var(--muted); margin-right: 4px;">$</span>
                 <strong>${esc(idea.marketTicker)}</strong>
-                <span style="margin-left: 6px; font-weight: 500;">${price} SA</span>
+                <span style="margin-left: 6px; font-weight: 500;">${icon("thumbs-up", "12")} ${Number(idea.upvotes || 0)} · ${icon("thumbs-down", "12")} ${Number(idea.downvotes || 0)}</span>
                 <span class="ticker-change ${isUp ? "up" : "down"}">
-                  ${isUp ? "▲" : "▼"} ${Math.abs(change).toFixed(1)}%
+                  ${isUp ? "▲" : "▼"} ${Math.abs(net)} net oy
                 </span>
               </span>
             `;
@@ -2228,7 +2264,7 @@ function renderQuickFlow() {
   const limit = state.visibleBorsaIdeasCount || 12;
   const sliced = ideas.slice(0, limit);
   const hasMore = ideas.length > limit;
-  const portfolioValue = marketPortfolioValue();
+  const myVoteCount = state.userVotes ? Object.keys(state.userVotes).length : 0;
 
   return `
     <div class="view-stack borsa-page">
@@ -2236,8 +2272,8 @@ function renderQuickFlow() {
         <div>
           <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Fikir Borsası</h2>
-          <p>Proje, fikir ve araştırmalar burada listelenir. Al, sat ve raporları incele.</p>
-          
+          <p>Proje, fikir ve araştırmalar burada listelenir. Upvote/downvote vererek öne çıkar ve raporları incele.</p>
+
           <!-- Prominent Global Search Motor -->
           <div class="hero-global-search-container" style="margin-top: 14px; width: 100%; max-width: 460px;">
             <label class="search-box" style="background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: 99px; display: flex; align-items: center; padding: 8px 16px; width: 100%;">
@@ -2250,7 +2286,7 @@ function renderQuickFlow() {
           <div class="market-wallet" style="text-align: right;">
             <span>Bütçe</span>
             <strong style="display: block; font-size: 22px; color: var(--ink);">${formatCurrencyHTML(state.marketBudget, "large")}</strong>
-            <small style="color: var(--muted);">Portföy ${formatCurrencyHTML(portfolioValue, "small")}</small>
+            <small style="color: var(--muted);">Bu ay verilen oy sayısı: ${myVoteCount}</small>
           </div>
           <button class="btn primary" data-action="open-market-composer" data-context="quickFlow">${icon("plus")} Proje Ekle</button>
         </div>
@@ -2264,12 +2300,12 @@ function renderQuickFlow() {
           ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası
         </div>
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
-          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.</li>
-          <li><strong>Hisse Alım Sınırı:</strong> Bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.</li>
+          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 SA</strong> gereklidir.</li>
+          <li><strong>Upvote Maliyeti:</strong> Bir fikre upvote vermek <strong>${UPVOTE_COST} Coin</strong> tutarındadır; downvote ücretsizdir. Oyunuzu istediğiniz an geri alabilirsiniz.</li>
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
-          <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
-          <li><strong>Girişimci-Yatırımcı Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u yatırımcıları arasında paylaştırılacaktır.</li>
+          <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), verdiğiniz upvote desteğinin coin karşılığının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
+          <li><strong>Girişimci-Destekçi Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u destekçileri arasında paylaştırılacaktır.</li>
         </ul>
       </section>
 
@@ -2309,7 +2345,7 @@ function renderQuickFlow() {
             </select>
  
             <select class="select" data-market-filter="sort" aria-label="Sıralama">
-              ${optionList(["En yeni", "En Pahalılar", "En Yüksek AI Skoru", "En Çok Beğenilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
+              ${optionList(["En yeni", "En çok upvote alan", "En çok downvote alan", "Net oy", "En Yüksek AI Skoru", "En Çok Beğenilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
             </select>
  
             <button class="btn ghost slim-btn" data-action="clear-borsa-filters" style="padding: 6px 12px; font-size: 13px;">
@@ -2342,9 +2378,23 @@ function renderQuickFlow() {
   `;
 }
 
+function renderVoteButtons(idea, size = "normal") {
+  const vote = state.userVotes ? state.userVotes[idea.id] : undefined;
+  return `
+    <span class="vote-buttons vote-buttons-${esc(size)}">
+      <button type="button" class="vote-btn vote-up ${vote === "up" ? "vote-active" : ""}" data-action="upvote-idea" data-id="${esc(idea.id)}" title="Upvote · ${UPVOTE_COST} coin">
+        ${icon("thumbs-up", "14")} <span>${Number(idea.upvotes || 0)}</span>
+      </button>
+      <button type="button" class="vote-btn vote-down ${vote === "down" ? "vote-active" : ""}" data-action="downvote-idea" data-id="${esc(idea.id)}" title="Downvote · ücretsiz">
+        ${icon("thumbs-down", "14")} <span>${Number(idea.downvotes || 0)}</span>
+      </button>
+    </span>
+  `;
+}
+
 function renderMarketLeader(idea, index) {
   const company = marketCompanyForIdea(idea);
-  const change = Number(idea.marketChange || 0);
+  const net = netVoteScore(idea);
   return `
     <article class="market-leader-card rank-${index + 1}">
       <div class="market-leader-top">
@@ -2354,12 +2404,11 @@ function renderMarketLeader(idea, index) {
       <strong>${esc(idea.marketTicker)}</strong>
       <h3>${esc(idea.title)}</h3>
       <div class="market-line">
-        ${marketSparkline(idea.marketSpark, change)}
-        <span class="market-price">${formatCurrencyHTML(marketPrice(idea))}</span>
+        ${renderVoteButtons(idea, "compact")}
       </div>
       <footer>
         <span>${esc(idea.marketCategory || "Fikir")}</span>
-        <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</em>
+        <em class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net} net oy</em>
       </footer>
     </article>
   `;
@@ -2367,8 +2416,7 @@ function renderMarketLeader(idea, index) {
 
 function renderMarketRow(idea, index) {
   const company = marketCompanyForIdea(idea);
-  const change = Number(idea.marketChange || 0);
-  const owned = state.marketHoldings[idea.id] || 0;
+  const net = netVoteScore(idea);
   return `
     <article class="market-row">
       <span class="market-rank muted">#${index + 1}</span>
@@ -2379,15 +2427,9 @@ function renderMarketRow(idea, index) {
           <small>${esc(idea.marketTicker)} · ${esc(company.shortName)} · ${esc(idea.marketCategory || "Fikir")}</small>
         </span>
       </div>
-      ${marketSparkline(idea.marketSpark, change)}
-      <span class="market-price">${formatCurrencyHTML(marketPrice(idea))}</span>
-      <span class="market-change ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</span>
+      <span class="market-change ${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net} net oy</span>
       <span class="market-volume">${Number(idea.marketVolume || 0).toLocaleString("tr-TR")} hacim</span>
-      <span class="market-owned">${owned} lot</span>
-      <span class="market-actions">
-        <button class="btn ghost" data-action="sell-market" data-id="${esc(idea.id)}" ${owned <= 0 ? "disabled" : ""}>Sat</button>
-        <button class="btn primary" data-action="buy-market" data-id="${esc(idea.id)}">Al</button>
-      </span>
+      ${renderVoteButtons(idea)}
     </article>
   `;
 }
@@ -2398,87 +2440,14 @@ function tradingRows() {
 
 function tradingMarketStats(rows) {
   const safeRows = rows.length ? rows : state.ideas.slice(0, 1);
-  const movers = safeRows.filter(item => Number(item.marketChange || 0) >= 0).length;
+  const movers = safeRows.filter(item => netVoteScore(item) >= 0).length;
   const volume = safeRows.reduce((sum, item) => sum + Number(item.marketVolume || 0), 0);
-  const averageChange = safeRows.reduce((sum, item) => sum + Number(item.marketChange || 0), 0) / Math.max(1, safeRows.length);
-  return { movers, volume, averageChange };
+  const averageNetVote = safeRows.reduce((sum, item) => sum + netVoteScore(item), 0) / Math.max(1, safeRows.length);
+  return { movers, volume, averageNetVote };
 }
 
 function tradingCashDelta(rows) {
-  const portfolio = marketPortfolioValue();
-  const weightedChange = rows.reduce((sum, item) => {
-    const quantity = state.marketHoldings[item.id] || 0;
-    return sum + quantity * marketPrice(item) * (Number(item.marketChange || 0) / 100);
-  }, 0);
-  return { portfolio, total: state.marketBudget + portfolio, weightedChange };
-}
-
-function tradingSparkPath(points = []) {
-  const safe = points.length ? points : [46, 48, 45, 55, 58, 61, 59, 68];
-  const width = 420;
-  const height = 156;
-  const min = Math.min(...safe);
-  const max = Math.max(...safe);
-  const range = Math.max(1, max - min);
-  const coords = safe.map((point, index) => {
-    const x = safe.length === 1 ? 0 : (index / (safe.length - 1)) * width;
-    const y = height - ((point - min) / range) * (height - 30) - 15;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  });
-  const area = `0,${height} ${coords.join(" ")} ${width},${height}`;
-  return { line: coords.join(" "), area, width, height };
-}
-
-function renderTradingChart(rows) {
-  const focus = rows[0] || state.ideas[0];
-  const candles = marketCandles(focus, 24);
-  const values = candles.flatMap(candle => [candle.high, candle.low]);
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const range = Math.max(1, max - min);
-  const width = 420;
-  const height = 168;
-  const scaleY = value => height - 14 - ((value - min) / range) * (height - 28);
-  const candleGap = width / Math.max(1, candles.length - 1);
-  const bodyWidth = Math.max(5, Math.min(10, candleGap * 0.45));
-
-  return `
-    <div class="trading-chart-card candle" aria-label="Portföy grafiği">
-      <svg class="trading-chart trading-candle-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
-        <line class="trading-chart-grid" x1="0" y1="${height * 0.72}" x2="${width}" y2="${height * 0.72}" />
-        <line class="trading-chart-grid soft" x1="0" y1="${height * 0.38}" x2="${width}" y2="${height * 0.38}" />
-        ${candles.map((candle, index) => {
-          const x = index * candleGap;
-          const open = scaleY(candle.open);
-          const close = scaleY(candle.close);
-          const high = scaleY(candle.high);
-          const low = scaleY(candle.low);
-          const up = candle.close >= candle.open;
-          const bodyY = Math.min(open, close);
-          const bodyHeight = Math.max(2, Math.abs(close - open));
-          return `
-            <g class="chart-candle ${up ? "up" : "down"}">
-              <line x1="${x.toFixed(1)}" y1="${high.toFixed(1)}" x2="${x.toFixed(1)}" y2="${low.toFixed(1)}"></line>
-              <rect x="${(x - bodyWidth / 2).toFixed(1)}" y="${bodyY.toFixed(1)}" width="${bodyWidth.toFixed(1)}" height="${bodyHeight.toFixed(1)}" rx="1.5"></rect>
-            </g>
-          `;
-        }).join("")}
-      </svg>
-      <div class="trading-chart-axis">
-        <span>09:30</span>
-        <span>12:00</span>
-        <span>15:30</span>
-        <span>17:45</span>
-      </div>
-    </div>
-  `;
-}
-
-function tradingPricePill(idea, mode) {
-  const base = marketPrice(idea);
-  const spread = Math.max(1, Math.round(base * 0.012));
-  const price = mode === "buy" ? base + spread : Math.max(1, base - spread);
-  return formatCurrency(price);
+  return { total: state.marketBudget };
 }
 
 function bundleFileName(file = "") {
@@ -2780,40 +2749,6 @@ function renderGenericFilePreview(file, idea) {
   `;
 }
 
-function renderAssetMiniChart(idea) {
-  const change = Number(idea.marketChange || 0);
-  const up = change >= 0;
-  return `
-    <span class="asset-trend-badge ${up ? "up" : "down"}" aria-label="${esc(idea.marketTicker)} trendi">
-      <span class="trend-badge-icon">
-        ${up ? `
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-          </svg>
-        ` : `
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <polyline points="19 12 12 19 5 12"></polyline>
-          </svg>
-        `}
-      </span>
-      <span class="trend-badge-text">${up ? "Yukarı" : "Aşağı"}</span>
-    </span>
-  `;
-}
-
-function marketQuote(idea) {
-  const last = marketPrice(idea);
-  const spread = Math.max(1, Math.round(last * 0.006));
-  return {
-    last,
-    bid: Math.max(1, last - spread),
-    ask: last + spread,
-    volume: Number(idea.marketVolume || 0)
-  };
-}
-
 function formatMarketVolume(value) {
   const volume = Number(value || 0);
   if (volume >= 1000000) return `${(volume / 1000000).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}M`;
@@ -2821,361 +2756,56 @@ function formatMarketVolume(value) {
   return volume.toLocaleString("tr-TR");
 }
 
-function renderMarketTickerTape(rows, wallet, stats) {
-  const gainers = rows.filter(item => Number(item.marketChange || 0) >= 0).length;
-  const decliners = Math.max(0, rows.length - gainers);
-  const top = rows[0] || state.ideas[0];
-  const topChange = Number(top?.marketChange || 0);
-  const items = [
-    ["NIE100", Math.round(wallet.total / 10).toLocaleString("tr-TR"), stats.averageChange],
-    ["İŞNEW", `${gainers}/${Math.max(1, rows.length)}`, gainers >= decliners ? 1.2 : -0.8],
-    ["ADV/DEC", `${gainers}/${decliners}`, gainers - decliners],
-    ["VOL", `${Math.round(stats.volume / 1000).toLocaleString("tr-TR")}K`, stats.volume > 0 ? 0.7 : 0],
-    [top?.marketTicker || "NIE", formatCurrency(marketPrice(top || state.ideas[0])), topChange]
-  ];
+function marketSelectedIdea(rows = marketVisibleIdeas()) {
+  return rows.find(idea => idea.id === state.marketSelectedId) || rows[0] || state.ideas[0];
+}
 
+function renderMarketTickerTape(rows) {
+  const ranked = [...rows].sort((a, b) => netVoteScore(b) - netVoteScore(a)).slice(0, 8);
+  if (!ranked.length) return "";
   return `
-    <section class="market-ticker-tape" aria-label="Canlı piyasa bandı">
-      ${items.map(([label, value, delta]) => `
-        <article>
-          <span>${esc(label)}</span>
-          <strong>${esc(value)}</strong>
-          <em class="${marketDeltaClass(delta)}">${Number(delta) >= 0 ? "+" : ""}${Number(delta).toFixed(Math.abs(Number(delta)) >= 10 ? 1 : 2)}</em>
-        </article>
-      `).join("")}
+    <section class="market-ticker-tape" aria-label="En çok oy alan fikirler">
+      ${ranked.map(idea => {
+        const company = marketCompanyForIdea(idea);
+        const net = netVoteScore(idea);
+        return `
+          <article>
+            ${companyLogo(company, "tiny")}
+            <span>${esc(idea.marketTicker)}</span>
+            <strong>${esc(idea.title.slice(0, 28))}${idea.title.length > 28 ? "…" : ""}</strong>
+            <em class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net} net oy</em>
+          </article>
+        `;
+      }).join("")}
       <button type="button" data-action="set-market-panel" data-panel="watchlist">${icon("activity")} Tahtayı aç</button>
     </section>
   `;
 }
 
-function renderMarketDesk(rows, wallet, stats) {
-  const selected = marketSelectedIdea(rows);
-  const company = marketCompanyForIdea(selected);
-  const change = Number(selected.marketChange || 0);
-  const owned = state.marketHoldings[selected.id] || 0;
-  const quote = marketQuote(selected);
+function renderVoteBoard(rows) {
+  const ranked = [...rows].sort((a, b) => netVoteScore(b) - netVoteScore(a));
   return `
-    <section class="market-desk">
-      <article class="market-desk-lead">
-        <div class="market-desk-symbol">
-          ${companyLogo(company, "large")}
-          <span>
-            <small>${esc(company.shortName)} · ${esc(selected.marketCategory || "Fikir")}</small>
-            <strong>${esc(selected.marketTicker)}</strong>
-            <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
-          </span>
-        </div>
-        <h3>${esc(selected.title)}</h3>
-        ${selected.status === "rejected" ? `
-          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--negative); font-weight: 600; margin-bottom: 8px;">
-            ${icon("alert-triangle")} BU PROJE ELENDİ / REDDEDİLDİ (Yapay Zeka)
-          </div>
-        ` : ""}
-        <p>${esc(selected.summary || selected.problem || "")}</p>
-        <div class="market-desk-metrics">
-          <span><small>Son</small><strong>${formatCurrencyHTML(quote.last, "large")}</strong></span>
-          <span><small>Hacim</small><strong>${formatMarketVolume(quote.volume)}</strong></span>
-          <span><small>Portföy</small><strong>${owned} lot</strong></span>
-        </div>
-        <div class="market-desk-actions">
-          <button type="button" data-action="sell-market" data-id="${esc(selected.id)}" ${owned <= 0 || selected.status === "rejected" ? "disabled" : ""}>Sat</button>
-          <button type="button" data-action="buy-market" data-id="${esc(selected.id)}" ${selected.status === "rejected" ? "disabled" : ""}>Al</button>
-          <button type="button" data-action="open-idea" data-id="${esc(selected.id)}">${icon("folder-open")} Dosya</button>
-        </div>
-      </article>
-
-      <article class="market-desk-chart">
-        <div class="market-chart-head">
-          <span>Fikir Borsası · 1D</span>
-          <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
-          <em class="${marketDeltaClass(stats.averageChange)}">${stats.averageChange >= 0 ? "+" : ""}${stats.averageChange.toFixed(2)}%</em>
-        </div>
-        ${renderTradingChart([selected])}
-      </article>
-
-      <article class="market-depth-panel">
-        <div class="market-depth-head">
-          <span>Derinlik</span>
-          <strong>Alış / Satış</strong>
-        </div>
-        ${renderMarketDepth(selected)}
-      </article>
-    </section>
-  `;
-}
-
-function renderMarketDepth(idea) {
-  const quote = marketQuote(idea);
-  const baseVolume = Math.max(180, Number(idea.marketVolume || 900) / 12);
-  const rows = Array.from({ length: 5 }, (_, index) => {
-    const bid = quote.bid - index * 3;
-    const ask = quote.ask + index * 3;
-    const bidVol = Math.round(baseVolume * (1 - index * 0.11));
-    const askVol = Math.round(baseVolume * (0.82 - index * 0.08));
-    return { bid, ask, bidVol, askVol };
-  });
-  return `
-    <div class="market-depth-book">
-      ${rows.map(row => `
-        <div>
-          <span class="bid" style="--w:${Math.min(100, row.bidVol / baseVolume * 100)}%">${formatCurrencyHTML(row.bid)}</span>
-          <small>${row.bidVol.toLocaleString("tr-TR")}</small>
-          <small>${row.askVol.toLocaleString("tr-TR")}</small>
-          <span class="ask" style="--w:${Math.min(100, row.askVol / baseVolume * 100)}%">${formatCurrencyHTML(row.ask)}</span>
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-function marketSelectedIdea(rows = marketVisibleIdeas()) {
-  return rows.find(idea => idea.id === state.marketSelectedId) || rows[0] || state.ideas[0];
-}
-
-function marketRangeFactor() {
-  return { "1D": 1, "1W": 1.18, "1M": 1.35, "3M": 1.62, YTD: 1.88, "1Y": 2.15 }[state.marketRange] || 1;
-}
-
-function marketCandles(idea, count = 28) {
-  const spark = idea.marketSpark?.length ? idea.marketSpark : [44, 48, 43, 54, 59, 63, 61, 71];
-  const base = marketPrice(idea);
-  const factor = marketRangeFactor();
-  const change = Number(idea.marketChange || 0) / 100;
-  const candles = [];
-  let previous = base * (1 - change * 0.55);
-  for (let index = 0; index < count; index += 1) {
-    const sparkIndex = (index / Math.max(1, count - 1)) * (spark.length - 1);
-    const left = spark[Math.floor(sparkIndex)] || spark[0];
-    const right = spark[Math.ceil(sparkIndex)] || left;
-    const interpolated = left + (right - left) * (sparkIndex % 1);
-    const wave = Math.sin(index * 1.17 + base / 37) * 0.012 * factor;
-    const drift = ((interpolated - 55) / 100) * 0.06 * factor + change * (index / Math.max(1, count - 1));
-    const close = Math.max(8, base * (1 + drift + wave));
-    const open = index === 0 ? previous : previous;
-    const spread = Math.max(1.2, Math.abs(close - open) * 0.65 + base * 0.006 * factor);
-    const high = Math.max(open, close) + spread * (0.55 + (index % 3) * 0.16);
-    const low = Math.max(1, Math.min(open, close) - spread * (0.48 + (index % 4) * 0.12));
-    const volume = Math.max(18, Math.round((Number(idea.marketVolume || 900) / 120) * (0.65 + (index % 5) * 0.12)));
-    candles.push({ open, close, high, low, volume });
-    previous = close;
-  }
-  return candles;
-}
-
-function renderProfessionalMarketChart(idea) {
-  const candles = marketCandles(idea, 34);
-  const values = candles.flatMap(candle => [candle.high, candle.low]);
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const range = Math.max(1, max - min);
-  const chart = { x: 42, y: 34, w: 670, h: 312 };
-  const rsi = { x: 42, y: 374, w: 670, h: 86 };
-  const macd = { x: 42, y: 490, w: 670, h: 92 };
-  const scaleY = value => chart.y + chart.h - ((value - min) / range) * chart.h;
-  const scaleX = index => chart.x + index * (chart.w / Math.max(1, candles.length - 1));
-  const volumeMax = Math.max(...candles.map(candle => candle.volume));
-  const priceLabels = [max, min + range * 0.75, min + range * 0.5, min + range * 0.25, min];
-  const last = candles[candles.length - 1];
-  const lastY = scaleY(last.close);
-  const rsiPoints = candles.map((candle, index) => {
-    const strength = 42 + ((candle.close - candle.open) / Math.max(1, range)) * 120 + (index % 7) * 2.2;
-    const x = rsi.x + index * (rsi.w / Math.max(1, candles.length - 1));
-    const y = rsi.y + rsi.h - (Math.max(22, Math.min(78, strength)) / 100) * rsi.h;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(" ");
-  const macdLine = candles.map((candle, index) => {
-    const x = macd.x + index * (macd.w / Math.max(1, candles.length - 1));
-    const y = macd.y + macd.h * 0.54 - Math.sin(index * 0.38 + marketPrice(idea) / 70) * 26 - (candle.close - candle.open) * 0.16;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(" ");
-  const signalLine = candles.map((candle, index) => {
-    const x = macd.x + index * (macd.w / Math.max(1, candles.length - 1));
-    const y = macd.y + macd.h * 0.56 - Math.cos(index * 0.32 + marketPrice(idea) / 80) * 19 - (candle.close - candle.open) * 0.1;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(" ");
-
-  return `
-    <figure class="pro-chart-frame" aria-label="${esc(idea.marketTicker)} profesyonel grafik">
-      <svg class="pro-candle-chart" viewBox="0 0 760 620" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="chartDepth-${esc(idea.id)}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#19e568" stop-opacity="0.16" />
-            <stop offset="100%" stop-color="#19e568" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-        <rect x="${chart.x}" y="${chart.y}" width="${chart.w}" height="${chart.h}" class="chart-depth"></rect>
-        ${[0, 0.25, 0.5, 0.75, 1].map(tick => {
-          const y = chart.y + chart.h * tick;
-          return `<line class="chart-grid" x1="${chart.x}" y1="${y.toFixed(1)}" x2="${chart.x + chart.w}" y2="${y.toFixed(1)}"></line>`;
-        }).join("")}
-        ${priceLabels.map((price, index) => {
-          const y = chart.y + chart.h * (index / 4);
-          return `<text class="price-label" x="${chart.x + chart.w + 12}" y="${(y + 4).toFixed(1)}">${Math.round(price)}</text>`;
-        }).join("")}
-        <line class="last-price-line" x1="${chart.x}" y1="${lastY.toFixed(1)}" x2="${chart.x + chart.w}" y2="${lastY.toFixed(1)}"></line>
-        <text class="last-price-tag" x="${chart.x + chart.w - 4}" y="${(lastY - 8).toFixed(1)}">${marketPrice(idea)}</text>
-        ${candles.map((candle, index) => {
-          const x = scaleX(index);
-          const open = scaleY(candle.open);
-          const close = scaleY(candle.close);
-          const high = scaleY(candle.high);
-          const low = scaleY(candle.low);
-          const up = candle.close >= candle.open;
-          const bodyY = Math.min(open, close);
-          const bodyH = Math.max(3, Math.abs(close - open));
-          const bodyW = Math.max(5, Math.min(13, chart.w / candles.length * 0.54));
-          const volH = Math.max(8, (candle.volume / volumeMax) * 52);
-          const volY = chart.y + chart.h - volH;
-          return `
-            <g class="candle ${up ? "up" : "down"}">
-              <line x1="${x.toFixed(1)}" y1="${high.toFixed(1)}" x2="${x.toFixed(1)}" y2="${low.toFixed(1)}"></line>
-              <rect x="${(x - bodyW / 2).toFixed(1)}" y="${bodyY.toFixed(1)}" width="${bodyW.toFixed(1)}" height="${bodyH.toFixed(1)}" rx="2"></rect>
-              <rect class="volume-bar" x="${(x - bodyW / 2).toFixed(1)}" y="${volY.toFixed(1)}" width="${bodyW.toFixed(1)}" height="${volH.toFixed(1)}" rx="1"></rect>
-            </g>
-          `;
-        }).join("")}
-        <line class="indicator-separator" x1="${rsi.x}" y1="${rsi.y}" x2="${rsi.x + rsi.w}" y2="${rsi.y}"></line>
-        <text class="indicator-label" x="${rsi.x}" y="${rsi.y - 10}">RSI 57.04</text>
-        <polyline class="rsi-band-top" points="${rsi.x},${rsi.y + rsi.h * 0.26} ${rsi.x + rsi.w},${rsi.y + rsi.h * 0.26}"></polyline>
-        <polyline class="rsi-band-bottom" points="${rsi.x},${rsi.y + rsi.h * 0.72} ${rsi.x + rsi.w},${rsi.y + rsi.h * 0.72}"></polyline>
-        <polyline class="rsi-line" points="${rsiPoints}"></polyline>
-        <line class="indicator-separator" x1="${macd.x}" y1="${macd.y}" x2="${macd.x + macd.w}" y2="${macd.y}"></line>
-        <text class="indicator-label" x="${macd.x}" y="${macd.y - 10}">MACD 0.03 0.02 0.01</text>
-        ${candles.map((candle, index) => {
-          const x = macd.x + index * (macd.w / Math.max(1, candles.length - 1));
-          const up = candle.close >= candle.open;
-          const h = Math.max(4, Math.abs(candle.close - candle.open) * 0.35 + (index % 6) * 2);
-          const y = macd.y + macd.h * 0.64 - (up ? h : 0);
-          return `<rect class="macd-bar ${up ? "up" : "down"}" x="${(x - 4).toFixed(1)}" y="${y.toFixed(1)}" width="8" height="${h.toFixed(1)}" rx="1"></rect>`;
-        }).join("")}
-        <polyline class="macd-line" points="${macdLine}"></polyline>
-        <polyline class="signal-line" points="${signalLine}"></polyline>
-      </svg>
-    </figure>
-  `;
-}
-
-function marketNewsForRows(rows) {
-  const safeRows = rows.length ? rows : state.ideas.slice(0, 4);
-  return safeRows.slice(0, 4).map((idea, index) => {
-    const company = marketCompanyForIdea(idea);
-    const change = Number(idea.marketChange || 0);
-    const newsTypes = ["AI sentiment", "Hacim alarmı", "Yönetici ilgisi", "Bundle skoru"];
-    const signal = change >= 8 ? "güçlü alım ilgisi" : change < 0 ? "düşüş sonrası takip" : "kademeli toparlanma";
-    return {
-      id: `${idea.id}-news`,
-      type: newsTypes[index % newsTypes.length],
-      title: `${idea.marketTicker} için ${signal}`,
-      body: `${company.shortName} tarafında ${idea.marketCategory || "Fikir"} varlığı ${marketBundleFiles(idea).length} dosyalı bundle ile izleniyor.`,
-      change
-    };
-  });
-}
-
-function renderAINewsFeed(rows) {
-  return `
-    <section class="ai-news-card">
-      <div class="stock-card-head">
-        <span>
-          <small>AI News</small>
-          <strong>Revaçta haberler</strong>
-        </span>
-        <em>${icon("sparkles")} canlı</em>
-      </div>
-      <div class="ai-news-list">
-        ${marketNewsForRows(rows).map(item => `
-          <article>
-            <span>${esc(item.type)}</span>
-            <strong>${esc(item.title)}</strong>
-            <p>${esc(item.body)}</p>
-            <em class="${marketDeltaClass(item.change)}">${item.change >= 0 ? "+" : ""}${item.change.toFixed(2)}%</em>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderLevelWallets(wallet) {
-  return `
-    <section class="level-wallet-card">
-      <div class="stock-card-head">
-        <span>
-          <small>Wallet</small>
-          <strong>Seviye paraları</strong>
-        </span>
-        <em>${formatCurrencyHTML(wallet.total)}</em>
-      </div>
-      <div class="level-wallet-grid">
-        ${levelWallets.map(level => `
-          <article>
-            <small>${esc(level.scope)}</small>
-            <strong>${esc(level.label)}</strong>
-            <span>${formatCurrencyHTML(level.balance)}</span>
-            <em class="${marketDeltaClass(level.delta)}">${level.delta >= 0 ? "+" : ""}${level.delta.toFixed(1)}%</em>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderAssetChartBoard(rows) {
-  const topRows = rows.slice(0, 5);
-  return `
-    <section class="asset-chart-board">
-      <div class="stock-card-head">
-        <span>
-          <small>Chart board</small>
-          <strong>Varlık bazlı grafikler</strong>
-        </span>
-        <em>${topRows.length} tablo</em>
-      </div>
-      <div class="asset-chart-table">
-        ${topRows.map(idea => `
-          <article>
-            <span>
-              <strong>${esc(idea.marketTicker)}</strong>
-              <small>${esc(idea.title)}</small>
-            </span>
-            ${renderAssetMiniChart(idea)}
-            <em class="${marketDeltaClass(idea.marketChange)}">${Number(idea.marketChange || 0) >= 0 ? "+" : ""}${Number(idea.marketChange || 0).toFixed(2)}%</em>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderAssetTradingBoard(rows) {
-  const topRows = rows.slice(0, 6);
-  return `
-    <section class="asset-chart-board market-board-terminal" aria-label="Canlı varlık tahtası">
+    <section class="market-board-terminal" aria-label="Oylama tahtası">
       <div class="market-board-head">
         <span>
-          <small>Market tape</small>
-          <strong>Canlı varlık tahtası</strong>
+          <small>Vote board</small>
+          <strong>Net oya göre sıralı fikirler</strong>
         </span>
-        <em>${topRows.length} en aktif varlık</em>
+        <em>${ranked.length} fikir</em>
       </div>
       <div class="market-board-grid">
         <div class="market-board-labels" aria-hidden="true">
           <span>Sembol</span>
           <span>Başlık</span>
-          <span>Son</span>
-          <span>Alış / Satış</span>
-          <span>Hacim</span>
-          <span>Grafik</span>
-          <span>%</span>
-          <span>İşlem</span>
+          <span>Şirket</span>
+          <span>Net Oy</span>
+          <span>Oy ver</span>
         </div>
-        ${topRows.map(idea => {
+        ${ranked.map(idea => {
           const company = marketCompanyForIdea(idea);
-          const quote = marketQuote(idea);
-          const change = Number(idea.marketChange || 0);
-          const owned = state.marketHoldings[idea.id] || 0;
+          const net = netVoteScore(idea);
           return `
-            <article class="market-board-row ${change >= 0 ? "up" : "down"}">
+            <article class="market-board-row ${net >= 0 ? "up" : "down"}">
               <button class="market-board-symbol" type="button" data-action="open-idea" data-id="${esc(idea.id)}">
                 ${companyLogo(company, "tiny")}
                 <span>
@@ -3184,18 +2814,9 @@ function renderAssetTradingBoard(rows) {
                 </span>
               </button>
               <span class="market-board-title">${esc(idea.title)}</span>
-              <strong class="market-board-last">${formatCurrencyHTML(quote.last, "large")}</strong>
-              <span class="market-board-spread">
-                <em>${formatCurrencyHTML(quote.bid)}</em>
-                <em>${formatCurrencyHTML(quote.ask)}</em>
-              </span>
-              <span class="market-board-volume">${formatMarketVolume(quote.volume)}</span>
-              ${renderAssetMiniChart(idea)}
-              <em class="market-board-change ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
-              <span class="market-board-actions">
-                <button type="button" data-action="sell-market" data-id="${esc(idea.id)}" ${owned <= 0 ? "disabled" : ""}>Sat</button>
-                <button type="button" data-action="buy-market" data-id="${esc(idea.id)}">Al</button>
-              </span>
+              <span class="market-board-volume">${esc(company.shortName)}</span>
+              <em class="market-board-change ${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net}</em>
+              ${renderVoteButtons(idea)}
             </article>
           `;
         }).join("")}
@@ -3204,115 +2825,12 @@ function renderAssetTradingBoard(rows) {
   `;
 }
 
-function renderTradingTabPanel(rows, wallet, stats, holdings) {
-  const active = state.marketPanel || "home";
-  const panelTitles = {
-    home: ["Ana Sayfa", "Piyasa özeti ve AI haberleri"],
-    watchlist: ["Takip Listesi", "Filtrelenen varlıklar ve paket tabloları"],
-    portfolio: ["Yatırımlarım", "Desteklenen projeler ve performans"],
-    discover: ["Keşfet", "AI Haberleri, revaçtaki olaylar ve fırsatlar"],
-    wallet: ["Cüzdan", "Seviye paraları ve katkı ödülleri"]
-  };
-  const [title, subtitle] = panelTitles[active] || panelTitles.home;
-  return `
-    <section class="trading-functional-panel" data-market-panel="${esc(active)}">
-      <div class="stock-card-head">
-        <span>
-          <small>Fikir Borsası</small>
-          <strong>${esc(title)}</strong>
-        </span>
-        <em>${esc(subtitle)}</em>
-      </div>
-      ${active === "portfolio" ? `
-        <div class="portfolio-detail-grid">
-          <article><small>Yatırımlarım</small><strong>${formatCurrencyHTML(wallet.portfolio)}</strong><span>${holdings.length || 0} aktif destek</span></article>
-          <article><small>Günlük P/L</small><strong class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))}</strong><span>Fiyat değişimi anlık</span></article>
-          <article><small>Hacim</small><strong>${Math.round(stats.volume / 1000)}K</strong><span>bugünkü işlem</span></article>
-        </div>
-      ` : ""}
-      ${active === "wallet" ? `
-        ${renderLevelWallets(wallet)}
-        <div class="reward-strip">
-          ${marketCategories.map(category => `<span><strong>${esc(category)}</strong>${formatCurrency(marketRewardByCategory[category] || 500)} katkı değeri</span>`).join("")}
-        </div>
-      ` : ""}
-      ${active === "discover" || active === "home" ? renderAINewsFeed(rows) : ""}
-      ${active === "watchlist" || active === "home" || active === "discover" ? renderAssetTradingBoard(rows) : ""}
-      ${active === "portfolio" ? `
-        <div class="trading-holdings expanded">
-          ${holdings.join("") || `<div class="trading-empty">Henüz pozisyon yok. Watchlist üzerinden alım yap.</div>`}
-        </div>
-      ` : ""}
-    </section>
-  `;
-}
-
-function renderTradingMover(idea, index) {
-  const change = Number(idea.marketChange || 0);
-  const height = Math.max(34, Math.min(112, 48 + Math.abs(change) * 14 + index * 4));
-  const company = marketCompanyForIdea(idea);
-  return `
-    <article class="trading-mover ${change >= 0 ? "up" : "down"}">
-      <strong>${change >= 0 ? "+" : ""}${change.toFixed(2)}%</strong>
-      <span class="trading-mover-bar" style="height:${height}px"></span>
-      ${companyLogo(company, "mini")}
-      <small>${esc(idea.marketTicker)}</small>
-    </article>
-  `;
-}
-
-function renderTradingWatchRow(idea, index) {
-  const company = marketCompanyForIdea(idea);
-  const change = Number(idea.marketChange || 0);
-  const owned = state.marketHoldings[idea.id] || 0;
-  return `
-    <article class="stock-watch-row">
-      <button class="stock-symbol-cell" data-action="open-idea" data-id="${esc(idea.id)}">
-        ${companyLogo(company, "mini")}
-        <span>
-          <strong>${esc(idea.marketTicker)} ${idea.status === "rejected" ? '<span style="font-size: 8px; background: var(--negative); color: #fff; padding: 1px 4px; border-radius: 4px; margin-left: 4px;">RED</span>' : ''}</strong>
-          <small>${esc(company.shortName)} · ${esc(idea.marketCategory || "Fikir")}</small>
-        </span>
-      </button>
-      <span class="stock-title-cell">
-        <strong>${esc(idea.title)}</strong>
-        <small>${owned} birim · ${Number(idea.marketVolume || 0).toLocaleString("tr-TR")} hacim</small>
-        ${renderBundleChips(idea, true)}
-      </span>
-      ${renderAssetMiniChart(idea)}
-      <span class="stock-change-cell ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</span>
-      <button class="stock-price-pill short" data-action="sell-market" data-id="${esc(idea.id)}" ${owned <= 0 || idea.status === "rejected" ? "disabled" : ""}>
-        ${idea.status === "rejected" ? '<span style="font-size: 10px; color: var(--muted);">Red</span>' : tradingPricePill(idea, "short")}
-      </button>
-      <button class="stock-price-pill buy" data-action="buy-market" data-id="${esc(idea.id)}" ${idea.status === "rejected" ? "disabled" : ""}>
-        ${idea.status === "rejected" ? '<span style="font-size: 10px; color: var(--muted);">Red</span>' : tradingPricePill(idea, "buy")}
-      </button>
-    </article>
-  `;
-}
-
-function renderTradingHolding(idea) {
-  const quantity = state.marketHoldings[idea.id] || 0;
-  if (!quantity) return "";
-  const change = Number(idea.marketChange || 0);
-  return `
-    <article class="trading-holding-row">
-      <span>
-        <strong>${esc(idea.marketTicker)}</strong>
-        <small>${quantity} lot · maliyet ${formatCurrencyHTML(quantity * marketPrice(idea))}</small>
-      </span>
-      <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
-    </article>
-  `;
-}
-
 function renderTradingBottomTabs(active = "home") {
   const tabs = [
     ["home", "Ana Sayfa", "house"],
     ["watchlist", "Takip Listesi", "list-filter"],
-    ["portfolio", "Portföyüm", "pie-chart"],
-    ["discover", "Keşfet", "search"],
-    ["wallet", "Cüzdan", "wallet"]
+    ["portfolio", "Oylarım", "thumbs-up"],
+    ["discover", "Keşfet", "search"]
   ];
   return `
     <nav class="trading-bottom-tabs" aria-label="Borsa alt menü">
@@ -3328,11 +2846,9 @@ function renderTradingBottomTabs(active = "home") {
 
 function renderTradingExchange() {
   const rows = tradingRows();
-  const leaders = rows.slice(0, 5);
-  const holdings = state.ideas.map(renderTradingHolding).filter(Boolean);
-  const stats = tradingMarketStats(rows);
-  const wallet = tradingCashDelta(rows);
-  const selectedCompany = state.affiliationFilter === "all" ? null : companyById(state.affiliationFilter);
+  const allRows = marketVisibleIdeas();
+  const votedIdeas = state.ideas.filter(idea => state.userVotes && state.userVotes[idea.id]);
+  const myVoteCount = state.userVotes ? Object.keys(state.userVotes).length : 0;
 
   return `
     <div class="view-stack market-page stock-terminal-page">
@@ -3340,7 +2856,7 @@ function renderTradingExchange() {
         <div>
           <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Fikir Borsası</h2>
-          <p>Kurum içi piyasa açık. Hacim, destek, dosya bundle'ı ve AI sinyali fiyatı hareket ettiriyor.</p>
+          <p>Coin ile upvote/downvote vererek fikirleri öne çıkarın. Topluluk desteği ve AI sinyali sıralamayı belirler.</p>
         </div>
         <div style="display: flex; gap: 12px; align-items: center;">
           <div class="segmented" style="width: auto; margin-right: 8px;">
@@ -3352,426 +2868,46 @@ function renderTradingExchange() {
       </section>
 
       ${renderStockTicker()}
-      ${renderMarketTickerTape(rows, wallet, stats)}
+      ${renderMarketTickerTape(allRows)}
 
-      <!-- AI & Yatırım Politikası Bilgi Bandı -->
-      <section class="premium-policy-section" style="margin: 16px 0; background: linear-gradient(135deg, rgba(7, 33, 70, 0.03) 0%, rgba(20, 84, 156, 0.05) 100%); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-soft);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
-          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">
-            ${icon("gavel", "style='width:16px;height:16px;color:var(--primary);'")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
-          </div>
-          <span style="font-size: 11px; background: var(--primary-soft); color: var(--primary); padding: 4px 10px; border-radius: 99px; font-weight: 600;">Aktif Tüzük v2.4</span>
-        </div>
-        <div class="policy-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-          <!-- Card 1 -->
-          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
-                ${icon("chart-candlestick", "style='width:18px;height:18px;'")}
-              </span>
-              <strong style="color: var(--ink); font-size: 13px;">Fiyatlama Algoritması</strong>
-            </div>
-            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
-              Fikirlerin borsa fiyatları; AI değerlendirme skoru (<strong>%40</strong>), lot hacmi (<strong>%30</strong>), çalışan oyları (<strong>%20</strong>) ve dosya/kod bütünlüğü (<strong>%10</strong>) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.
-            </p>
-          </div>
-          <!-- Card 2 -->
-          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="background: rgba(20, 84, 156, 0.08); color: #14549c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
-                ${icon("gavel", "style='width:18px;height:18px;'")}
-              </span>
-              <strong style="color: var(--ink); font-size: 13px;">Karar Kurulu</strong>
-            </div>
-            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
-              Projenizi doğrudan Karar Kurulu'na taşımanız için <strong>10.000 Altın (Coin)</strong> gereklidir. Bu bakiye karşılığında projeniz resmi kurul onay listesine alınır.
-            </p>
-          </div>
-          <!-- Card 3 -->
-          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="background: rgba(192, 57, 43, 0.08); color: #c0392b; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
-                ${icon("shield-alert", "style='width:18px;height:18px;'")}
-              </span>
-              <strong style="color: var(--ink); font-size: 13px;">Hisse Alım Sınırı</strong>
-            </div>
-            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
-              Fikirlerin adil dağıtımı için bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.
-            </p>
-          </div>
-          <!-- Card 4 -->
-          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
-                ${icon("coins", "style='width:18px;height:18px;'")}
-              </span>
-              <strong style="color: var(--ink); font-size: 13px;">Girişimci Telifi (%5)</strong>
-            </div>
-            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
-              Projelerin borsa üzerinden aldığı her yatırımın (hisse satınalımının) <strong>%5'i doğrudan girişimcinin hesabına</strong> telif ödülü olarak anında eklenir.
-            </p>
-          </div>
-        </div>
+      <section class="stock-balance-card">
+        <span>Bakiye ve Oylarım</span>
+        <strong>${formatCurrencyHTML(state.marketBudget, "large")}</strong>
+        <small>Bu ay verilen oy sayısı: ${myVoteCount}</small>
       </section>
 
-      ${renderMarketDesk(rows, wallet, stats)}
+      ${renderVoteBoard(rows)}
 
-      <section class="trading-phone-grid">
-        <article class="stock-phone-panel stock-home-panel">
-          <header class="stock-topbar" style="display: flex; justify-content: center; align-items: center;">
-            <button class="stock-cash-bonus" data-action="open-market-composer" data-context="quickFlow">+${marketRewardByCategory.Proje} kayıt ödülü</button>
-          </header>
+      ${renderTradingBottomTabs(state.marketPanel)}
 
-          <section class="stock-balance-card">
-            <span>Bakiye ve Varlıklar</span>
-            <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
-            <small class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))} bugün · Nakit ${formatCurrencyHTML(state.marketBudget, "large")}</small>
-          </section>
+      ${state.marketPanel === "portfolio" ? `
+        <section class="trading-functional-panel" data-market-panel="portfolio">
+          <div class="stock-card-head">
+            <span>
+              <small>Fikir Borsası</small>
+              <strong>Oylarım</strong>
+            </span>
+            <em>Oy verdiğiniz fikirler</em>
+          </div>
+          <div class="trading-holdings expanded">
+            ${votedIdeas.length ? votedIdeas.map(idea => `
+              <article class="trading-holding-row">
+                <span>
+                  <strong>${esc(idea.marketTicker)}</strong>
+                  <small>${esc(idea.title)} · ${state.userVotes[idea.id] === "up" ? "Upvote" : "Downvote"}</small>
+                </span>
+                <em class="${state.userVotes[idea.id] === "up" ? "positive" : "negative"}">${state.userVotes[idea.id] === "up" ? "▲ Upvote" : "▼ Downvote"}</em>
+              </article>
+            `).join("") : `<div class="trading-empty">Henüz oy vermediniz. Tahtadan fikirlere oy verebilirsiniz.</div>`}
+          </div>
+        </section>
+      ` : ""}
 
-          ${renderTradingChart(rows)}
-
-          <section class="stock-mover-card">
-            <div class="stock-card-head">
-              <span>
-                <small>Big Movers</small>
-                <strong>Revaçta olanlar</strong>
-              </span>
-              <span class="stock-mini-actions">${icon("arrow-up-down")} ${icon("more-vertical")}</span>
-            </div>
-            <div class="trading-movers">
-              ${leaders.map((idea, index) => renderTradingMover(idea, index)).join("")}
-            </div>
-          </section>
-
-          <section class="stock-index-strip">
-            <article><small>NIE100</small><strong>${Math.round(wallet.total / 10)}</strong><em class="${marketDeltaClass(stats.averageChange)}">${stats.averageChange >= 0 ? "+" : ""}${stats.averageChange.toFixed(2)}%</em></article>
-            <article><small>İŞNEW</small><strong>${stats.movers}/${Math.max(1, rows.length)}</strong><em class="positive">open</em></article>
-            <article><small>Volume</small><strong>${Math.round(stats.volume / 1000)}K</strong><em class="positive">aktif</em></article>
-          </section>
-
-          ${renderLevelWallets(wallet)}
-
-          <section class="stock-holdings-card">
-            <div class="stock-card-head">
-              <span>
-                <small>Portfolio</small>
-                <strong>Elindeki varlıklar</strong>
-              </span>
-              <em>${formatCurrencyHTML(wallet.portfolio)}</em>
-            </div>
-            <div class="trading-holdings">
-              ${holdings.join("") || `<div class="trading-empty">Henüz varlık yok. Watchlist üzerinden alım yap.</div>`}
-            </div>
-          </section>
-
-          ${renderTradingBottomTabs(state.marketPanel)}
-        </article>
-
-        <article class="stock-phone-panel stock-watchlist-panel">
-          <header class="stock-searchbar" style="display: flex; gap: 10px; align-items: center; padding: 0 16px;">
-            <label style="flex: 1;">
-              ${icon("search")}
-              <input type="search" value="${esc(state.marketSearch)}" placeholder="Ara..." aria-label="Borsa arama" data-market-search />
-            </label>
-          </header>
-
-          <section class="stock-watchlist-head">
-            <div>
-              <span class="panel-kicker">Piyasa Açık</span>
-              <h3>Takip Listem</h3>
-              <p>${selectedCompany ? esc(selectedCompany.name) : "Tüm iştirakler"} · ${rows.length} varlık</p>
-            </div>
-            <span class="stock-watch-actions">${icon("sliders-horizontal")} ${icon("more-vertical")}</span>
-          </section>
-
-          <section class="stock-market-controls">
-            <div class="stock-segments">
-              ${["Tümü", ...marketCategories].map(category => `
-                <button data-action="set-market-category" data-category="${esc(category)}" class="${state.marketCategoryFilter === category ? "active" : ""}">
-                  ${esc(category === "Tümü" ? "Market" : category)}
-                </button>
-              `).join("")}
-            </div>
-            <label class="stock-sort-select">
-              <span>Sırala</span>
-              <select data-market-sort>
-                ${optionList(["Revaç", "En çok yükselen", "En çok düşen", "Hacim", "Fiyat"], state.marketSort)}
-              </select>
-            </label>
-          </section>
-
-          <section class="stock-affiliate-dock">
-            <div class="stock-affiliate-head">
-              <span>İştirak filtresi</span>
-              <select data-affiliation-filter>
-                ${companyFilterOptions(state.affiliationFilter)}
-              </select>
-            </div>
-            <div class="stock-affiliate-rail">
-              <button class="${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">Tümü</button>
-              ${affiliationCompanies.slice(0, 8).map(company => `
-                <button class="${state.affiliationFilter === company.id ? "active" : ""}" data-action="set-affiliation" data-id="${esc(company.id)}">
-                  ${companyLogo(company, "tiny")}
-                  <span>${esc(company.shortName)}</span>
-                </button>
-              `).join("")}
-            </div>
-          </section>
-
-          <section class="stock-watch-table">
-            <div class="stock-watch-header">
-              <span>Varlıklar</span>
-              <span>Paket</span>
-              <span>Grafik</span>
-              <span>Değişim</span>
-              <span>Açığa Sat</span>
-              <span>Satın Al</span>
-            </div>
-            <div class="stock-watch-list">
-              ${rows.map((idea, index) => renderTradingWatchRow(idea, index)).join("") || `<div class="trading-empty">Bu filtrede varlık yok.</div>`}
-            </div>
-          </section>
-
-          <button class="stock-fab" data-action="open-market-composer" data-context="quickFlow" aria-label="Varlık ekle">${icon("plus")}</button>
-        </article>
-      </section>
-
-      ${renderTradingTabPanel(rows, wallet, stats, holdings)}
+      ${state.marketPanel === "watchlist" ? renderVoteBoard(allRows) : ""}
 
       ${state.marketComposerContext === "quickFlow" ? renderMarketComposer("quickFlow") : ""}
       ${state.quickFlowFeedback ? `<div class="quick-feedback market-feedback stock-feedback">${esc(state.quickFlowFeedback)}</div>` : ""}
     </div>
-  `;
-}
-
-function renderProIdeaExchange() {
-  const rows = tradingRows();
-  const selected = marketSelectedIdea(rows);
-  const company = marketCompanyForIdea(selected);
-  const change = Number(selected.marketChange || 0);
-  const wallet = tradingCashDelta(rows);
-  const holdings = state.ideas.map(renderTradingHolding).filter(Boolean);
-  const selectedOwned = state.marketHoldings[selected.id] || 0;
-  const selectedCompany = state.affiliationFilter === "all" ? null : companyById(state.affiliationFilter);
-
-  return `
-    <div class="view-stack market-page stock-terminal-page pro-terminal-page">
-      <section class="terminal-header">
-        <div class="terminal-title-block">
-          <span>NEW IDEA EXCHANGE</span>
-          <h2>Fikir Borsası</h2>
-          <p>Proje, fikir, araştırma ve şikayetler işlem gören kurum içi varlıklara dönüşür.</p>
-        </div>
-        <div class="terminal-actions">
-          <label class="terminal-search">
-            ${icon("search")}
-            <input type="search" value="${esc(state.marketSearch)}" placeholder="Ticker, iştirak, dosya ara" data-market-search />
-          </label>
-          <button class="terminal-icon-btn" data-action="set-market-panel" data-panel="discover" title="AI News">${icon("bell")}</button>
-          <button class="terminal-primary-btn" data-action="open-market-composer" data-context="quickFlow">${icon("plus")} Varlık ekle</button>
-        </div>
-      </section>
-
-      <section class="terminal-market-layout">
-        <aside class="terminal-left-rail">
-          <div class="terminal-segment-line">
-            ${["Tümü", ...marketCategories].map(category => `
-              <button data-action="set-market-category" data-category="${esc(category)}" class="${state.marketCategoryFilter === category ? "active" : ""}">
-                ${esc(category === "Tümü" ? "Market" : category)}
-              </button>
-            `).join("")}
-          </div>
-          <div class="terminal-affiliate-line">
-            <button class="${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">Tümü</button>
-            ${affiliationCompanies.slice(0, 7).map(item => `
-              <button class="${state.affiliationFilter === item.id ? "active" : ""}" data-action="set-affiliation" data-id="${esc(item.id)}">
-                ${companyLogo(item, "tiny")}
-                <span>${esc(item.shortName)}</span>
-              </button>
-            `).join("")}
-          </div>
-          <label class="terminal-sort-line">
-            <span>${selectedCompany ? esc(selectedCompany.shortName) : "Tüm iştirakler"}</span>
-            <select data-market-sort>
-              ${optionList(["Revaç", "En çok yükselen", "En çok düşen", "Hacim", "Fiyat"], state.marketSort)}
-            </select>
-          </label>
-          <div class="terminal-asset-list">
-            ${rows.map((idea, index) => renderProAssetRow(idea, index)).join("") || `<div class="terminal-empty-line">Bu filtrede varlık yok.</div>`}
-          </div>
-        </aside>
-
-        <main class="terminal-chart-stage">
-          <header class="terminal-chart-head">
-            <button class="terminal-back-btn" data-page="dashboard" title="Geri">${icon("chevron-left")}</button>
-            <div class="terminal-selected-logo">
-              ${companyLogo(company, "large")}
-            </div>
-            <div class="terminal-selected-copy">
-              <span>${esc(company.shortName)} · ${esc(selected.marketCategory || "Fikir")}</span>
-              <h3>${esc(selected.marketTicker)}</h3>
-              <strong>${formatCurrencyHTML(marketPrice(selected), "large")}</strong>
-              <em class="${marketDeltaClass(change)}">${change >= 0 ? "▲" : "▼"} ${Math.abs(change).toFixed(2)}% bugün</em>
-            </div>
-            <div class="terminal-head-tools">
-              <button data-action="set-market-panel" data-panel="watchlist" title="Watchlist">${icon("copy")}</button>
-              <button data-action="set-market-panel" data-panel="wallet" title="Wallet">${icon("wallet")}</button>
-              <button data-action="open-idea" data-id="${esc(selected.id)}" title="Detay">${icon("external-link")}</button>
-            </div>
-          </header>
-
-          <div class="indicator-switch">
-            ${["VP", "IC", "MACD"].map(indicator => `
-              <button class="${state.marketIndicator === indicator ? "active" : ""}" data-action="set-market-indicator" data-indicator="${esc(indicator)}">
-                <i></i>${esc(indicator === "VP" ? "VP (Auto)" : indicator === "IC" ? "IC (9,26)" : "MACD (12,26,9)")}
-              </button>
-            `).join("")}
-          </div>
-
-          ${renderProfessionalMarketChart(selected)}
-
-          <footer class="terminal-chart-footer">
-            <div class="range-switch">
-              ${["1D", "1W", "1M", "3M", "YTD", "1Y"].map(range => `
-                <button class="${state.marketRange === range ? "active" : ""}" data-action="set-market-range" data-range="${esc(range)}">${esc(range)}</button>
-              `).join("")}
-            </div>
-            <div class="order-strip">
-              <button class="order-btn buy" data-action="buy-market" data-id="${esc(selected.id)}" data-quantity="${state.marketOrderSize}" ${selected.status === "rejected" ? "disabled" : ""}>Buy MKT</button>
-              <div class="share-stepper">
-                <button data-action="adjust-order-size" data-delta="-1" ${selected.status === "rejected" ? "disabled" : ""}>${icon("minus")}</button>
-                <strong>${state.marketOrderSize} share</strong>
-                <button data-action="adjust-order-size" data-delta="1" ${selected.status === "rejected" ? "disabled" : ""}>${icon("plus")}</button>
-              </div>
-              <button class="order-btn sell" data-action="sell-market" data-id="${esc(selected.id)}" data-quantity="${state.marketOrderSize}" ${selectedOwned <= 0 || selected.status === "rejected" ? "disabled" : ""}>Sell MKT</button>
-            </div>
-          </footer>
-        </main>
-
-        <aside class="terminal-right-rail">
-          <section class="terminal-side-module compact">
-            <span>Portfolio</span>
-            <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
-            <small>${selectedOwned} ${esc(selected.marketTicker)} lot · Nakit ${formatCurrencyHTML(state.marketBudget, "large")}</small>
-          </section>
-          <section class="terminal-side-module">
-            <div class="terminal-module-head">
-              <span>AI News</span>
-              <button data-action="set-market-panel" data-panel="discover">${icon("sparkles")}</button>
-            </div>
-            <div class="terminal-news-flow">
-              ${marketNewsForRows(rows).map(item => `
-                <button data-action="set-market-panel" data-panel="discover">
-                  <em class="${marketDeltaClass(item.change)}">${item.change >= 0 ? "+" : ""}${item.change.toFixed(2)}%</em>
-                  <strong>${esc(item.title)}</strong>
-                  <small>${esc(item.type)}</small>
-                </button>
-              `).join("")}
-            </div>
-          </section>
-          <section class="terminal-side-module">
-            <div class="terminal-module-head">
-              <span>Bundle</span>
-              <button data-action="open-idea" data-id="${esc(selected.id)}">${icon("folder-open")}</button>
-            </div>
-            ${renderBundleChips(selected)}
-          </section>
-          <section class="terminal-side-module level-flow">
-            <div class="terminal-module-head">
-              <span>Seviye Paraları</span>
-              <button data-action="set-market-panel" data-panel="wallet">${icon("wallet")}</button>
-            </div>
-            ${levelWallets.slice(0, 4).map(level => `
-              <button data-action="set-market-panel" data-panel="wallet">
-                <span>${esc(level.label)}</span>
-                <strong>${formatCurrencyHTML(level.balance)}</strong>
-                <em class="${marketDeltaClass(level.delta)}">${level.delta >= 0 ? "+" : ""}${level.delta.toFixed(1)}%</em>
-              </button>
-            `).join("")}
-          </section>
-        </aside>
-      </section>
-
-      ${renderTerminalPanel(rows, wallet, holdings)}
-      ${state.marketComposerContext === "quickFlow" ? renderMarketComposer("quickFlow") : ""}
-      ${state.quickFlowFeedback ? `<div class="quick-feedback market-feedback stock-feedback">${esc(state.quickFlowFeedback)}</div>` : ""}
-    </div>
-  `;
-}
-
-function renderProAssetRow(idea, index) {
-  const company = marketCompanyForIdea(idea);
-  const change = Number(idea.marketChange || 0);
-  const owned = state.marketHoldings[idea.id] || 0;
-  const active = marketSelectedIdea([idea])?.id === state.marketSelectedId;
-  return `
-    <article class="terminal-asset-row ${active ? "active" : ""}">
-      <button class="terminal-asset-select" data-action="select-market-asset" data-id="${esc(idea.id)}">
-        ${companyLogo(company, "mini")}
-        <span>
-          <strong>${esc(idea.marketTicker)}</strong>
-          <small>${esc(company.shortName)} · ${owned} lot</small>
-        </span>
-      </button>
-      ${renderAssetMiniChart(idea)}
-      <span class="terminal-price-cell">
-        <strong>${formatCurrency(marketPrice(idea))}</strong>
-        <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
-      </span>
-    </article>
-  `;
-}
-
-function renderTerminalPanel(rows, wallet, holdings) {
-  const active = state.marketPanel || "home";
-  if (active === "home") return "";
-  const selected = marketSelectedIdea(rows);
-  return `
-    <section class="terminal-bottom-drawer" data-market-panel="${esc(active)}">
-      <div class="terminal-drawer-head">
-        <strong>${esc(active === "watchlist" ? "Watchlist" : active === "portfolio" ? "Portfolio" : active === "discover" ? "AI News" : "Wallet")}</strong>
-        <button data-action="set-market-panel" data-panel="home">${icon("x")}</button>
-      </div>
-      ${active === "watchlist" ? `
-        <div class="drawer-chart-grid">
-          ${rows.slice(0, 6).map(idea => `
-            <button data-action="select-market-asset" data-id="${esc(idea.id)}">
-              <span>${esc(idea.marketTicker)}</span>
-              ${renderAssetMiniChart(idea)}
-              <em class="${marketDeltaClass(idea.marketChange)}">${Number(idea.marketChange || 0) >= 0 ? "+" : ""}${Number(idea.marketChange || 0).toFixed(2)}%</em>
-            </button>
-          `).join("")}
-        </div>
-      ` : ""}
-      ${active === "portfolio" ? `
-        <div class="drawer-metric-grid">
-          <article><span>Toplam</span><strong>${formatCurrencyHTML(wallet.total, "large")}</strong></article>
-          <article><span>Portföy</span><strong>${formatCurrencyHTML(wallet.portfolio)}</strong></article>
-          <article><span>P/L</span><strong class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))}</strong></article>
-        </div>
-        <div class="trading-holdings expanded">${holdings.join("") || `<div class="trading-empty">Henüz pozisyon yok.</div>`}</div>
-      ` : ""}
-      ${active === "discover" ? `
-        <div class="drawer-news-grid">
-          ${marketNewsForRows(rows).map(item => `
-            <article>
-              <span>${esc(item.type)}</span>
-              <strong>${esc(item.title)}</strong>
-              <p>${esc(item.body)}</p>
-            </article>
-          `).join("")}
-        </div>
-      ` : ""}
-      ${active === "wallet" ? `
-        <div class="drawer-metric-grid">
-          ${levelWallets.map(level => `<article><span>${esc(level.scope)}</span><strong>${formatCurrencyHTML(level.balance)}</strong><em>${esc(level.label)}</em></article>`).join("")}
-        </div>
-        <div class="reward-strip">
-          ${marketCategories.map(category => `<span><strong>${esc(category)}</strong>${formatCurrency(marketRewardByCategory[category] || 500)} katkı değeri</span>`).join("")}
-        </div>
-      ` : ""}
-      ${active !== "home" ? `<p class="drawer-note">${esc(selected.marketTicker)} seçili. İşlem emirleri ana grafikteki Buy/Sell barından verilir.</p>` : ""}
-    </section>
   `;
 }
 
@@ -3929,6 +3065,7 @@ function renderIdeaCard(idea, compact = false) {
           <span>${idea.supporters} destek</span>
           <span>AI ${idea.aiScore}</span>
         </div>
+        
         <div class="idea-footer">
           <button class="btn ghost" data-action="open-idea" data-id="${esc(idea.id)}">${icon("arrow-up-right")} Aç</button>
           ${(() => {
@@ -3998,7 +3135,7 @@ function renderNewIdea() {
     <div class="view-stack apple-page">
       <section class="apple-page-head" style="margin-bottom: 24px;">
         <div>
-          <span class="panel-kicker">İş NEW</span>
+          <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Yeni Başvuru / Proje Girişi</h2>
           <p>Fikir borsasında listelenecek projenizi, fikrinizi veya araştırmanızı detaylandırarak yayınlayın.</p>
         </div>
@@ -4421,6 +3558,7 @@ function renderIdeaDetail() {
               ${analysisCard("Geliştirme önerileri", analysis.improvements)}
               ${analysisCard("Pilot önerisi", analysis.pilot)}
             </div>
+            ${renderAiSuggestionPanel(idea, "detail")}
           </article>
 
           <article class="content-panel">
@@ -4544,6 +3682,171 @@ function buildStaticAnalysis(idea) {
   };
 }
 
+function commentBody(comment) {
+  return String(comment?.body || comment?.text || comment?.message || "").trim();
+}
+
+function commentUser(comment) {
+  return comment?.user || comment?.userName || comment?.author || "Katılımcı";
+}
+
+function textTokens(value) {
+  return String(value || "")
+    .toLocaleLowerCase("tr-TR")
+    .split(/[^a-zçğıöşü0-9]+/i)
+    .filter(token => token.length > 3);
+}
+
+function relatedDatasetsForIdea(idea, limit = 2) {
+  const ideaTokens = new Set(textTokens([
+    idea.title,
+    idea.summary,
+    idea.problem,
+    idea.solution,
+    idea.area,
+    ...(idea.tags || [])
+  ].join(" ")));
+
+  return [...(state.dataSets || [])]
+    .map(dataset => {
+      const datasetText = [
+        dataset.title,
+        dataset.summary,
+        dataset.area,
+        dataset.type,
+        dataset.country
+      ].join(" ");
+      const datasetTokens = textTokens(datasetText);
+      const tokenScore = datasetTokens.reduce((score, token) => score + (ideaTokens.has(token) ? 1 : 0), 0);
+      let score = tokenScore;
+      if (dataset.companyId && idea.companyId && dataset.companyId === idea.companyId) score += 6;
+      if (dataset.area && idea.area && dataset.area === idea.area) score += 5;
+      if (dataset.country && idea.country && dataset.country === idea.country) score += 4;
+      score += Number(dataset.importanceScore || 0) / 2;
+      return { dataset, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.dataset);
+}
+
+function relatedIdeasForDataset(dataset, limit = 2) {
+  return [...(state.ideas || [])]
+    .map(idea => {
+      let score = 0;
+      if (dataset.companyId && idea.companyId && dataset.companyId === idea.companyId) score += 6;
+      if (dataset.area && idea.area && dataset.area === idea.area) score += 5;
+      if (dataset.country && idea.country && dataset.country === idea.country) score += 4;
+      score += Number(idea.aiScore || 0) / 25;
+      return { idea, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.idea);
+}
+
+function buildAiSuggestionForIdea(idea) {
+  const comments = (idea.comments || []).filter(comment => commentBody(comment));
+  const latestComment = comments[comments.length - 1];
+  const relatedDatasets = relatedDatasetsForIdea(idea, 2);
+  const primaryDataset = relatedDatasets[0];
+  const area = idea.area || idea.type || "proje alanı";
+  const metric = "seçilen pilot başarı metriği";
+  const datasetOwner = primaryDataset?.companyId
+    ? (companyById(primaryDataset.companyId)?.shortName || "ilgili iştirak")
+    : "ilgili iştirak";
+  const datasetArea = primaryDataset?.area || area;
+  const datasetLine = primaryDataset
+    ? `${datasetOwner} tarafından paylaşılan ${datasetArea} veri setiyle sinyalleri takip et.`
+    : "Veri&Bilgi havuzunda bu proje için küçük bir pilot ölçüm seti oluştur.";
+  const conversationLine = latestComment
+    ? `${commentUser(latestComment)} yazışmasındaki geri bildirimi Türkçe aksiyon listesine çevir; önce veri sahibi, kullanıcı etkisi ve karar eşiğini netleştir.`
+    : "Henüz yazışma yok; ilk tartışmayı hedef kullanıcı, veri sahibi ve karar eşiği üzerinden başlat.";
+
+  return {
+    recommendation: `${area} odağında önerim: çözümü tek bir pilot akışa indir, veri setiyle ölç ve yazışmadan çıkan geri bildirimi haftalık görev listesine bağla. Kararı ${metric} üzerinden takip et.`,
+    datasetLine,
+    conversationLine,
+    steps: [
+      "Pilot kapsamını tek kullanıcı grubu, tek kanal ve tek veri sahibiyle başlat.",
+      "Haftalık karar panosunda veri sinyali, yazışma geri bildirimi ve SA desteğini birlikte izle.",
+      `4 haftalık pilot sonunda ${metric} için net bir devam/durdur eşiği belirle.`
+    ]
+  };
+}
+
+function buildAiSuggestionForDataset(dataset) {
+  const comments = (dataset.comments || []).filter(comment => commentBody(comment));
+  const latestComment = comments[comments.length - 1];
+  const relatedIdeas = relatedIdeasForDataset(dataset, 2);
+  const primaryIdea = relatedIdeas[0];
+  const area = dataset.area || "veri alanı";
+  const projectOwner = primaryIdea?.companyId
+    ? (companyById(primaryIdea.companyId)?.shortName || "ilgili ekip")
+    : "ilgili ekip";
+  const projectArea = primaryIdea?.area || area;
+
+  return {
+    recommendation: `${area} verisini proje kararına çevirmek için önce en güçlü kullanım senaryosunu seç, sonra ölçüm metriğini ve veri sahibini netleştir. AI önerisi Türkçe kalır ve yalnızca platform içi kayıtları temel alır.`,
+    projectLine: primaryIdea
+      ? `${projectOwner} içindeki ${projectArea} projesiyle eşleştir; pilotta etki, maliyet ve kullanıcı geri bildirimini birlikte ölç.`
+      : "Bu veri setinden yeni bir proje fikri çıkar ve ilk pilot sorusunu görünür hale getir.",
+    conversationLine: latestComment
+      ? `${commentUser(latestComment)} yorumunu Türkçe görev olarak ele al; veri kalitesi, erişim izni ve kullanım amacını netleştir.`
+      : "Henüz yazışma yok; veri kalitesi, gizlilik ve kullanım amacı için ilk soruyu aç."
+  };
+}
+
+function renderAiSuggestionPanel(idea, variant = "card") {
+  const suggestion = buildAiSuggestionForIdea(idea);
+  const isCompact = variant === "compact" || variant === "list";
+  const steps = isCompact ? suggestion.steps.slice(0, 2) : suggestion.steps;
+
+  return `
+    <div class="ai-suggestion-panel ${isCompact ? "compact" : ""}" data-ai-suggestion-for="${esc(idea.id)}">
+      <div class="ai-suggestion-head">
+        <span class="ai-suggestion-icon">${icon("sparkles", "style='width:14px;height:14px;'")}</span>
+        <span>
+          <strong>AI Önerisi</strong>
+          <small>Türkçe karar desteği</small>
+        </span>
+        <em>TR</em>
+      </div>
+      <p>${esc(suggestion.recommendation)}</p>
+      ${isCompact ? "" : `
+        <div class="ai-suggestion-context">
+          <span>${icon("database", "style='width:13px;height:13px;'")} ${esc(suggestion.datasetLine)}</span>
+          <span>${icon("message-square", "style='width:13px;height:13px;'")} ${esc(suggestion.conversationLine)}</span>
+        </div>
+      `}
+      <ul>
+        ${steps.map(step => `<li>${esc(step)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+function renderDatasetAiSuggestionPanel(dataset) {
+  const suggestion = buildAiSuggestionForDataset(dataset);
+  return `
+    <div class="ai-suggestion-panel dataset compact" data-ai-suggestion-for="${esc(dataset.id)}">
+      <div class="ai-suggestion-head">
+        <span class="ai-suggestion-icon">${icon("sparkles", "style='width:14px;height:14px;'")}</span>
+        <span>
+          <strong>AI Önerisi</strong>
+          <small>Veri setinden proje aksiyonu</small>
+        </span>
+        <em>TR</em>
+      </div>
+      <p>${esc(suggestion.recommendation)}</p>
+      <ul>
+        <li>${esc(suggestion.projectLine)}</li>
+        <li>${esc(suggestion.conversationLine)}</li>
+      </ul>
+    </div>
+  `;
+}
+
 function renderComment(comment) {
   return `
     <div class="comment">
@@ -4573,7 +3876,7 @@ function renderAffiliationFilter() {
     <section class="corp-filter-panel">
       <div class="corp-filter-head">
         <div>
-          <span class="panel-kicker">SABANCI HOLDİNG VE İŞTİRAK FİLTRESİ</span>
+          <span class="panel-kicker">BBVA GRUBU VE İŞTİRAK FİLTRESİ</span>
           <h3>Kurumsal kapsam</h3>
         </div>
         <label class="field compact-field">
@@ -4585,7 +3888,7 @@ function renderAffiliationFilter() {
       </div>
       <div class="affiliate-strip" aria-label="İştirakler">
         <button class="affiliate-chip ${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">
-          ${companyLogo(companyById("sabanci-holding"), "mini")}
+          ${companyLogo(companyById("bbva-group"), "mini")}
           <span>Tümü</span>
         </button>
         ${countryCompanies.map(company => `
@@ -4763,7 +4066,7 @@ function renderMessages() {
   const messages = selectedPerson
     ? (state.directThreads[selectedPerson.id] || [])
     : (selectedSpace?.messages || []);
-  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "sabanci-holding");
+  const headerCompany = selectedPerson ? companyById(selectedPerson.companyId) : companyById(selectedSpace?.companyId || "bbva-group");
 
   return `
     <div class="view-stack corp-page">
@@ -5072,11 +4375,11 @@ const teamRoleTemplates = [
 function managerVoteEvents() {
   const base = state.investmentLedger || [];
   const seeded = [
-    { userId: "p02", userName: "Mert Alkan", ideaId: "idea-5", ideaTitle: state.ideas.find(i => i.id === "idea-5")?.title || "AI kredi skoru", amount: 1840, quantity: 14, date: "13.06.2026" },
-    { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: 1620, quantity: 12, date: "14.06.2026" },
-    { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: 1380, quantity: 9, date: "14.06.2026" },
-    { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
-    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
+    { userId: "p02", userName: "Mert Alkan", ideaId: "idea-5", ideaTitle: state.ideas.find(i => i.id === "idea-5")?.title || "AI kredi skoru", amount: UPVOTE_COST, action: "upvote", date: "13.06.2026" },
+    { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: UPVOTE_COST, action: "upvote", date: "14.06.2026" },
+    { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: UPVOTE_COST, action: "upvote", date: "14.06.2026" },
+    { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 0, action: "downvote", date: "15.06.2026" },
+    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: UPVOTE_COST, action: "upvote", date: "15.06.2026" }
   ];
   return [...base, ...seeded].filter(tx => {
     const idea = state.ideas.find(i => i.id === tx.ideaId);
@@ -5084,14 +4387,21 @@ function managerVoteEvents() {
   });
 }
 
+function ledgerActionLabel(action) {
+  if (action === "upvote") return "Upvote";
+  if (action === "downvote") return "Downvote";
+  if (action === "upvote-geri-al" || action === "downvote-geri-al") return "Geri Alındı";
+  return action || "—";
+}
+
 function renderManagerDashboard() {
   if (!currentUser().isManager && !currentUser().isAdmin) return renderNoAccess();
   const votes = managerVoteEvents();
-  const totalVotes = votes.reduce((sum, row) => sum + Number(row.quantity || 0), 0);
+  const totalVotes = votes.length;
   const totalAmount = votes.reduce((sum, row) => sum + Number(row.amount || 0), 0);
   const byIdea = votes.reduce((acc, row) => {
     acc[row.ideaId] = acc[row.ideaId] || { ideaId: row.ideaId, title: row.ideaTitle, votes: 0, amount: 0, users: new Set() };
-    acc[row.ideaId].votes += Number(row.quantity || 0);
+    acc[row.ideaId].votes += 1;
     acc[row.ideaId].amount += Number(row.amount || 0);
     acc[row.ideaId].users.add(row.userName);
     return acc;
@@ -5099,7 +4409,7 @@ function renderManagerDashboard() {
   const topIdeas = Object.values(byIdea).sort((a, b) => b.votes - a.votes).slice(0, 5);
   const byUser = votes.reduce((acc, row) => {
     acc[row.userName] = acc[row.userName] || { userName: row.userName, votes: 0, amount: 0, count: 0 };
-    acc[row.userName].votes += Number(row.quantity || 0);
+    acc[row.userName].votes += 1;
     acc[row.userName].amount += Number(row.amount || 0);
     acc[row.userName].count += 1;
     return acc;
@@ -5120,7 +4430,7 @@ function renderManagerDashboard() {
       </section>
 
       <section class="manager-metric-grid">
-        ${managerMetricCard("coins", "Toplam oy/lot", totalVotes.toLocaleString("tr-TR"), "Kullanıcıların fikir borsasındaki toplam oy hareketi.")}
+        ${managerMetricCard("coins", "Toplam oy", totalVotes.toLocaleString("tr-TR"), "Kullanıcıların fikir borsasındaki toplam oy hareketi.")}
         ${managerMetricCard("badge-dollar-sign", "Toplam değer", formatCurrency(totalAmount), "Oyların demo parasal karşılığı.")}
         ${managerMetricCard("trophy", "En güçlü fikir", topIdeas[0]?.title?.slice(0, 34) || "-", `${topIdeas[0]?.votes || 0} oy ile lider.`)}
         ${managerMetricCard("users-round", "Aktif kullanıcı", userRows.length, "Oy geçmişinde görünen benzersiz kullanıcı.")}
@@ -5158,7 +4468,7 @@ function renderManagerDashboard() {
         <div class="manager-panel-head" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line-soft); padding-bottom: 12px; margin-bottom: 16px;">
           <div>
             <span class="panel-kicker">Karar Analitiği</span>
-            <strong>Detaylı Yatırım Defteri</strong>
+            <strong>Oylama Defteri</strong>
           </div>
           <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <label style="font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
@@ -5179,13 +4489,13 @@ function renderManagerDashboard() {
           </div>
         </div>
 
-        <div class="manager-history-table" style="display: grid; grid-template-columns: 1.5fr 3fr 1fr 1.5fr 1.5fr; gap: 8px; background: var(--surface); border-radius: 12px; overflow: hidden;">
+        <div class="manager-history-table" style="display: grid; grid-template-columns: 1.5fr 3fr 1.2fr 1.3fr 1.5fr; gap: 8px; background: var(--surface); border-radius: 12px; overflow: hidden;">
           <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Kullanıcı</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Proje Yatırımı</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Birim</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Yatırım Tutarı</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">İşlem Tarihi</div>
-          
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Fikir</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">İşlem</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Coin</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Tarih</div>
+
           ${(function() {
             let filteredVotes = [...votes];
             if (state.ledgerUserFilter && state.ledgerUserFilter !== "Tümü") {
@@ -5197,12 +4507,12 @@ function renderManagerDashboard() {
             return filteredVotes.length > 0 ? filteredVotes.map(row => `
               <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft);">${esc(row.userName)}</div>
               <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); font-weight: 500; color: var(--ink);">${esc(row.ideaTitle)}</div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right;">${Number(row.quantity || 0)}</div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--primary); font-weight: 600;">${formatCurrency(row.amount || 0)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right;">${esc(ledgerActionLabel(row.action))}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--primary); font-weight: 600;">${Number(row.amount || 0) < 0 ? `+${Math.abs(Number(row.amount))} iade` : Number(row.amount || 0)}</div>
               <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--muted);">${esc(row.date)}</div>
             `).join("") : `
               <div style="grid-column: span 5; text-align: center; padding: 30px; color: var(--muted); font-size: 13.5px;">
-                ${icon("alert-circle", "style='display:block; margin: 0 auto 8px; opacity:0.5;'")} Filtrelere uygun yatırım kaydı bulunamadı.
+                ${icon("alert-circle", "style='display:block; margin: 0 auto 8px; opacity:0.5;'")} Filtrelere uygun oylama kaydı bulunamadı.
               </div>
             `;
           })()}
@@ -5705,7 +5015,7 @@ function renderCreateClub() {
         <div class="create-step-body" style="display: flex; flex-direction: column; gap: 16px;">
           <label class="field">
             <span>Kulüp Adı *</span>
-            <input class="input" placeholder="Örn: Akbank Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
+            <input class="input" placeholder="Örn: BBVA Fotoğrafçılık Kulübü" data-club-draft-name value="${esc(draft.name)}" />
           </label>
           <label class="field">
             <span>Kulüp Açıklaması / Amacı *</span>
@@ -5944,7 +5254,7 @@ function renderEducationPage() {
             </label>
             <label class="field">
               <span>Düzenleyen Birim</span>
-              <input class="input" id="edu-composer-organizer" placeholder="Örn: Akbank Mobil İnovasyon Ekibi" />
+              <input class="input" id="edu-composer-organizer" placeholder="Örn: BBVA Mobile İnovasyon Ekibi" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, YouTube vb.)</span>
@@ -6008,7 +5318,7 @@ function renderEducationPage() {
               </label>
               <label class="field">
                 <span>Unvan / Şirket</span>
-                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (Akbank)" />
+                <input class="input" id="mentor-composer-title" placeholder="Örn: FinTech & Ürün Yönetimi Müdürü (BBVA)" />
               </label>
               <label class="field" style="grid-column: 1 / -1;">
                 <span>Uzmanlık Alanları (Virgülle ayırın)</span>
@@ -6016,7 +5326,7 @@ function renderEducationPage() {
               </label>
               <label class="field">
                 <span>E-posta</span>
-                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@sabanci.example')}" placeholder="E-posta adresiniz" />
+                <input class="input" id="mentor-composer-email" value="\${esc(user.email || 'mentor@bbva.example')}" placeholder="E-posta adresiniz" />
               </label>
               <label class="field full" style="grid-column: 1 / -1;">
                 <span>Hakkımda / Mentörlük Kapsamı</span>
@@ -6159,7 +5469,7 @@ function renderEventsPage() {
             </label>
             <label class="field">
               <span>Düzenleyen / Organizatör</span>
-              <input class="input" id="evt-organizer" placeholder="Örn: SabancıDx" />
+              <input class="input" id="evt-organizer" placeholder="Örn: BBVA Technology" />
             </label>
             <label class="field full" style="grid-column: 1 / -1;">
               <span>Katılım veya Yayın Linki (Zoom, Teams, Kayıt formu vb.)</span>
@@ -7002,7 +6312,7 @@ function renderProductCard(idea) {
   const company = companyById(idea.companyId);
   const author = personById(idea.authorId) || peopleDirectory[0];
   const filledMembers = team ? team.roles.filter(r => r.filled).map(r => r.userId).filter(Boolean) : [];
-  const change = Number(idea.marketChange || 0);
+  const net = netVoteScore(idea);
 
   return `
     <article class="product-card">
@@ -7013,7 +6323,7 @@ function renderProductCard(idea) {
         </div>
         <div class="product-card-ticker">
           <strong>${esc(idea.marketTicker)}</strong>
-          <span class="${change >= 0 ? "positive" : "negative"}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</span>
+          <span class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net}</span>
         </div>
       </div>
 
@@ -7595,13 +6905,11 @@ function renderProfileBundleShelf(myIdeas = []) {
 function renderProfileV2() {
   const user = currentUser();
   const myIdeas = state.ideas.filter(idea => idea.authorId === user.id);
-  const portfolioValue = marketPortfolioValue();
-  const holdings = Object.entries(state.marketHoldings)
-    .filter(([, qty]) => qty > 0)
-    .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
+  const votedIdeas = Object.entries(state.userVotes || {})
+    .map(([id, direction]) => ({ idea: state.ideas.find(item => item.id === id), direction }))
     .filter(item => item.idea);
   const directoryMatch = peopleDirectory.find(person => person.name.split(" ")[0] === user.name.split(" ")[0]) || peopleDirectory[0];
-  const company = companyById(directoryMatch.companyId || "is-new");
+  const company = companyById(directoryMatch.companyId || "bbva-group");
 
   return `
     <div class="view-stack profile-detail-page">
@@ -7618,7 +6926,7 @@ function renderProfileV2() {
         <div class="profile-wallet">
           <span>Borsa bütçesi</span>
           <strong>${formatCurrencyHTML(state.marketBudget, "large")}</strong>
-          <small>Portföy ${formatCurrencyHTML(portfolioValue, "small")}</small>
+          <small>Oylarım ${votedIdeas.length}</small>
         </div>
       </section>
 
@@ -7632,15 +6940,15 @@ function renderProfileV2() {
 
       <section class="metrics-grid">
         ${metricCard("briefcase-business", "Kayıt", `${Math.max(myIdeas.length, 3)}`, "Yayınladığın fikir/proje/araştırma.", "+1", "navy")}
-        ${metricCard("chart-candlestick", "Portföy", `${holdings.length}`, "Elindeki borsa varlığı.", "+2", "green")}
-        ${metricCard("coins", "Bütçe", `${Math.round(state.marketBudget / 1000)}K`, "Al/sat için kalan demo para.", "+850", "purple")}
+        ${metricCard("thumbs-up", "Oylarım", `${votedIdeas.length}`, "Oy verdiğin fikirler.", "+2", "green")}
+        ${metricCard("coins", "Bütçe", `${Math.round(state.marketBudget / 1000)}K`, "Oylama için kalan demo para.", "+850", "purple")}
         ${metricCard("message-circle", "Yorum", "28", "Tartışmalara yaptığın katkılar.", "+4", "amber")}
         ${metricCard("badge-check", "Uygulama", `${myIdeas.filter(idea => idea.status === "done").length + 1}`, "Somut etki.", "+1", "green")}
       </section>
 
       <section class="profile-detail-grid">
         <article class="analytics-card">
-          <div class="section-title"><div><h3>Aylık aktivite</h3><p>Katkı, alım ve yorum yoğunluğu.</p></div></div>
+          <div class="section-title"><div><h3>Aylık aktivite</h3><p>Katkı, oylama ve yorum yoğunluğu.</p></div></div>
           <div class="bar-list">
             ${["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran"].map((month, index) => `
               <div class="bar-row">
@@ -7652,14 +6960,14 @@ function renderProfileV2() {
           </div>
         </article>
         <article class="analytics-card">
-          <div class="section-title"><div><h3>Portföy detayları</h3><p>Elindeki fikir hisseleri.</p></div></div>
+          <div class="section-title"><div><h3>Oylarım</h3><p>Oy verdiğin fikirler.</p></div></div>
           <div class="portfolio-list">
-            ${holdings.map(({ idea, qty }) => `
+            ${votedIdeas.map(({ idea, direction }) => `
               <div class="portfolio-row">
                 <span><strong>${esc(idea.marketTicker)}</strong><small>${esc(idea.title)}</small></span>
-                <em>${qty} lot · ${formatCurrency(qty * marketPrice(idea))}</em>
+                <em class="${direction === "up" ? "positive" : "negative"}">${direction === "up" ? "▲ Upvote" : "▼ Downvote"}</em>
               </div>
-            `).join("") || `<div class="portfolio-row empty">Henüz varlık yok.</div>`}
+            `).join("") || `<div class="portfolio-row empty">Henüz oy vermedin.</div>`}
           </div>
         </article>
         <article class="analytics-card">
@@ -7945,7 +7253,7 @@ function renderManagerV2() {
             <span><strong>${esc(focusIdea.estimatedImpact)}</strong> etki</span>
             <span><strong>${esc(focusIdea.estimatedCost)}</strong> maliyet</span>
             <span><strong>${esc(focusIdea.implementationTime)}</strong> süre</span>
-            <span><strong>${formatCurrencyHTML(focusIdea.marketPrice || marketPrice(focusIdea), "large")}</strong> hisse fiyatı</span>
+            <span><strong class="${marketDeltaClass(netVoteScore(focusIdea))}">${netVoteScore(focusIdea) >= 0 ? "+" : ""}${netVoteScore(focusIdea)}</strong> net oy</span>
             <span><strong>${Math.round((focusIdea.credits || 100) / 10)}</strong> destekçi</span>
           </div>
           <div class="manager-actions">
@@ -8130,7 +7438,7 @@ function managerDecisionCardV2(idea) {
       <div class="decision-card-meta" style="flex-wrap: wrap; gap: 4px;">
         <span>${esc(idea.estimatedImpact)}</span>
         <span>${esc(idea.implementationTime)}</span>
-        <span>Fiyat: ${formatCurrencyHTML(marketPrice(idea))}</span>
+        <span>Net Oy: ${netVoteScore(idea) >= 0 ? "+" : ""}${netVoteScore(idea)}</span>
         <span>Destek: ${Math.round((idea.credits || 100) / 10)} Oy</span>
       </div>
       <div class="decision-card-meta" style="margin-top: 4px; font-size: 11px; color: #8b94a7;">
@@ -8250,7 +7558,7 @@ function renderAdminContent() {
       <div class="section-title"><div><h2>Denetim Kayıtları</h2><p>Admin işlemleri ve kritik güvenlik olayları.</p></div></div>
       <div class="mini-list">
         ${[
-          ["Kerem Yıldız", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
+          ["Mateo Aguirre", "AI moderasyon eşiğini güncelledi", "Bugün 10:18"],
           ["Sistem", "Anonim fikir denetim kaydı oluşturdu", "Dün 17:42"],
           ["Can Koç", "Fikri pilot seçti", "Dün 15:11"],
           ["Merve Aydın", "Yarışma duyurusu yayınladı", "31 Mayıs"]
@@ -8400,13 +7708,13 @@ function createIdeaFromWizard() {
     comments,
     tags: [w.department, w.ideaType, w.impact, w.cost],
     createdAt: new Date().toISOString().slice(0, 10),
-    companyId: state.marketDraft.companyId || "is-new",
+    companyId: state.marketDraft.companyId || "bbva-group",
     marketCategory: "Fikir",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-    marketPrice: 100,
     marketChange: status === "rejected" ? 0 : 6.4,
     marketVolume: status === "rejected" ? 0 : 980,
-    marketShares: 1400,
+    upvotes: 0,
+    downvotes: 0,
     marketSpark: status === "rejected" ? [34, 34, 34, 34, 34, 34, 34, 34] : [34, 42, 48, 56, 62, 68, 74, 82],
     files: w.files?.length ? w.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, "Fikir")
   };
@@ -8448,13 +7756,13 @@ function createComplaintFromEntry() {
     ],
     tags: [c.category, c.department, c.impact, "Şikayet", "Verimsizlik"],
     createdAt: new Date().toISOString().slice(0, 10),
-    companyId: "is-new",
+    companyId: "bbva-group",
     marketCategory: "Şikayet",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-    marketPrice: 100,
     marketChange: 3.8,
     marketVolume: 740,
-    marketShares: 1100,
+    upvotes: 0,
+    downvotes: 0,
     marketSpark: [28, 34, 42, 46, 58, 61, 66, 72],
     files: c.files?.length ? c.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, "Şikayet")
   };
@@ -8462,7 +7770,7 @@ function createComplaintFromEntry() {
 
 function createMarketListing(context) {
   const draft = state.marketDraft;
-  const company = companyById(draft.companyId || "is-new");
+  const company = companyById(draft.companyId || "bbva-group");
   const id = `market-${Date.now()}`;
   const baseScore = draft.category === "Proje" ? 86 : draft.category === "Araştırma" ? 79 : draft.category === "Şikayet" ? 76 : 74;
   return {
@@ -8499,10 +7807,10 @@ function createMarketListing(context) {
     createdAt: new Date().toISOString().slice(0, 10),
     marketCategory: draft.category,
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-    marketPrice: 100,
     marketChange: draft.category === "Proje" ? 9.2 : draft.category === "Şikayet" ? 4.1 : 5.4,
     marketVolume: 640,
-    marketShares: 1000,
+    upvotes: 0,
+    downvotes: 0,
     marketSpark: [26, 34, 39, 48, 55, 62, 68, 78],
     files: draft.files?.length ? draft.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, draft.category),
     sourceContext: context,
@@ -9070,7 +8378,7 @@ document.addEventListener("click", event => {
     const title = document.getElementById("mentor-composer-title")?.value.trim();
     const specialtiesStr = document.getElementById("mentor-composer-specialties")?.value.trim();
     const bio = document.getElementById("mentor-composer-bio")?.value.trim();
-    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@sabanci.example";
+    const email = document.getElementById("mentor-composer-email")?.value.trim() || "mentor@bbva.example";
     
     if (!name || !title || !specialtiesStr || !bio) {
       alert("Lütfen tüm alanları doldurun.");
@@ -9199,7 +8507,7 @@ document.addEventListener("click", event => {
       },
       {
         title: "Borsa Simülasyonu Hacim Rekoru Kırdı",
-        body: "İş NEW platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
+        body: "NEW IDEA EXCHANGE platformundaki günlük sanal işlem hacmi 150,000 NIE Kredisini aşarak rekor tazeledi. En çok hacim oluşturan projeler dinamik vardiya planlaması ve müşteri şikayet analiz sistemleri oldu.",
         category: "Operasyon",
         tags: ["Borsa", "Hacim", "Hype"]
       }
@@ -9351,7 +8659,7 @@ document.addEventListener("click", event => {
       type: marketCategoryVal,
       company: companyVal,
       department: departmentVal,
-      location: user.location || "Sabancı Center",
+      location: user.location || "Ciudad BBVA – La Vela Kulesi",
       city: user.city || "İstanbul",
       authorId: user.id,
       authorLabel: anonymityVal === "İsmimle paylaş" ? user.name : anonymityVal === "Tam anonim" ? "Anonim Çalışan" : `Anonim ${user.role || 'Çalışan'}`,
@@ -9371,13 +8679,13 @@ document.addEventListener("click", event => {
       comments: [],
       tags: [departmentVal || "İnovasyon", marketCategoryVal, impactVal + " Etki", costVal + " Maliyet"],
       createdAt: new Date().toISOString().slice(0, 10),
-      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "sabanci-holding"),
+      companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "bbva-group"),
       marketCategory: marketCategoryVal,
       marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
-      marketPrice: 100,
       marketChange: 0.0,
       marketVolume: 0,
-      marketShares: 1000,
+      upvotes: 0,
+      downvotes: 0,
       marketSpark: [mockAiScore, mockAiScore, mockAiScore, mockAiScore],
       files: defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, marketCategoryVal),
       applications: [],
@@ -9415,85 +8723,6 @@ document.addEventListener("click", event => {
   if (action === "close-report-modal") {
     state.selectedIdeaReportId = null;
     render();
-    return;
-  }
-
-  if (action === "buy-market-qty" || action === "sell-market-qty") {
-    const ideaId = actionButton.dataset.id;
-    const qtyInput = document.querySelector(`[data-trade-qty="${ideaId}"]`);
-    const quantity = qtyInput ? Math.max(1, parseInt(qtyInput.value) || 1) : 1;
-    const idea = state.ideas.find(item => item.id === ideaId);
-    if (idea) {
-      if (idea.status === "rejected") { alert("Bu proje elendiği için işlem yapılamaz!"); return; }
-      const price = marketPrice(idea);
-      const totalPrice = price * quantity;
-      if (action === "buy-market-qty") {
-        const currentOwned = state.marketHoldings[idea.id] || 0;
-        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
-        if (currentOwned + quantity > maxLimit) {
-          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
-          return;
-        }
-
-        if (state.marketBudget >= totalPrice) {
-          state.marketBudget -= totalPrice;
-          state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
-          idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
-          idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
-          state.marketSelectedId = idea.id;
-          
-          if (!state.investmentLedger) state.investmentLedger = [];
-          state.investmentLedger.push({
-            userId: currentUser().id,
-            userName: currentUser().name,
-            ideaId: idea.id,
-            ideaTitle: idea.title,
-            amount: totalPrice,
-            quantity: quantity,
-            date: new Date().toLocaleDateString("tr-TR")
-          });
-          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
-          state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
-
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
-          
-          const royalty = Math.round(totalPrice * 0.05);
-          if (royalty > 0) {
-            if (idea.authorId === currentUser().id) {
-              state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
-            } else {
-              const authorUser = demoUsers.find(u => u.id === idea.authorId);
-              if (authorUser) {
-                authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
-              }
-            }
-          }
-        } else {
-          alert("Yetersiz bütçe!");
-        }
-      } else {
-        const owned = state.marketHoldings[idea.id] || 0;
-        if (owned >= quantity) {
-          const ownedBefore = owned;
-          state.marketHoldings[idea.id] -= quantity;
-          state.marketBudget += price * quantity;
-          idea.marketChange = Number(idea.marketChange || 0) - 0.3 * quantity;
-          idea.marketVolume = Number(idea.marketVolume || 0) + 80 * quantity;
-          state.marketSelectedId = idea.id;
-
-          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
-          const fraction = quantity / (ownedBefore || 1);
-          state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
-
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
-        } else {
-          alert("Yetersiz destek birimi!");
-        }
-      }
-      render();
-    }
     return;
   }
 
@@ -10217,14 +9446,14 @@ if (action === "login") {
       startupName: draft.startupName.trim(),
       ideaTitle: draft.ideaTitle.trim(),
       summary: draft.summary.trim(),
-      portal: draft.portal || "Sabancı",
+      portal: draft.portal || "BBVA",
       status: "new",
       date: new Date().toLocaleDateString("tr-TR")
     };
 
     state.externalApplications = state.externalApplications || [];
     state.externalApplications.push(newApp);
-    state.externalDraft = { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+    state.externalDraft = { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "BBVA" };
     state.externalSubmitSuccess = true;
     state.loginError = "";
     render();
@@ -10270,10 +9499,10 @@ if (action === "login") {
         companyId: app.portal === "Sabancı" ? "sabanci-holding" : "bbva-group",
         marketCategory: "Girişimci Fikri",
         marketTicker: `EXT-${String(state.ideas.length + 1).padStart(2, "0")}`,
-        marketPrice: 100,
         marketChange: 0.0,
         marketVolume: 0,
-        marketShares: 1000,
+        upvotes: 0,
+        downvotes: 0,
         marketSpark: [80, 81, 82, 82],
         files: [],
         applications: [],
@@ -10307,12 +9536,18 @@ if (action === "login") {
   }
 
   if (action === "toggle-theme") {
-    state.theme = "light";
+    state.theme = state.theme === "dark" ? "light" : "dark";
     render();
   }
 
   if (action === "set-view") {
     state.ideaView = actionButton.dataset.view;
+    render();
+  }
+
+  if (action === "reset-ledger-filters") {
+    state.ledgerUserFilter = "Tümü";
+    state.ledgerProjectFilter = "Tümü";
     render();
   }
 
@@ -10334,26 +9569,6 @@ if (action === "login") {
     state.marketSelectedId = actionButton.dataset.id || state.marketSelectedId;
     state.marketPanel = "home";
     state.quickFlowFeedback = `${state.ideas.find(item => item.id === state.marketSelectedId)?.marketTicker || "Varlık"} grafiği açıldı.`;
-    render();
-    return;
-  }
-
-  if (action === "set-market-range") {
-    state.marketRange = actionButton.dataset.range || "1D";
-    state.quickFlowFeedback = `${state.marketRange} zaman aralığına geçildi.`;
-    render();
-    return;
-  }
-
-  if (action === "set-market-indicator") {
-    state.marketIndicator = actionButton.dataset.indicator || "MACD";
-    state.quickFlowFeedback = `${state.marketIndicator} indikatörü aktif.`;
-    render();
-    return;
-  }
-
-  if (action === "adjust-order-size") {
-    state.marketOrderSize = Math.max(1, Math.min(25, state.marketOrderSize + Number(actionButton.dataset.delta || 0)));
     render();
     return;
   }
@@ -10401,79 +9616,6 @@ if (action === "login") {
     return;
   }
 
-  if (action === "buy-market" || action === "sell-market") {
-    const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
-    if (idea) {
-      if (idea.status === "rejected") { alert("Bu proje elendiği için işlem yapılamaz!"); return; }
-      const price = marketPrice(idea);
-      const quantity = Math.max(1, Number(actionButton.dataset.quantity || 1));
-      const totalPrice = price * quantity;
-      if (action === "buy-market") {
-        const currentOwned = state.marketHoldings[idea.id] || 0;
-        const maxLimit = Math.round((idea.marketShares || 1000) * 0.10); // 10% = 100 Lots
-        if (currentOwned + quantity > maxLimit) {
-          alert(`Bir hisse senedinin maksimum %10'una (%10 = ${maxLimit} Birim) sahip olabilirsiniz! (Şu anki varlığınız: ${currentOwned} Birim, Almak istediğiniz: ${quantity} Birim)`);
-          return;
-        }
-
-        if (state.marketBudget >= totalPrice) {
-          state.marketBudget -= totalPrice;
-          state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
-          idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
-          idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
-          state.marketSelectedId = idea.id;
-          
-          if (!state.investmentLedger) state.investmentLedger = [];
-          state.investmentLedger.push({
-            userId: currentUser().id,
-            userName: currentUser().name,
-            ideaId: idea.id,
-            ideaTitle: idea.title,
-            amount: totalPrice,
-            quantity: quantity,
-            date: new Date().toLocaleDateString("tr-TR")
-          });
-          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
-          state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
-
-          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
-          
-          const royalty = Math.round(totalPrice * 0.05);
-          if (royalty > 0) {
-            if (idea.authorId === currentUser().id) {
-              state.marketBudget += royalty;
-              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} SA) cüzdanınıza eklendi!`;
-            } else {
-              const authorUser = demoUsers.find(u => u.id === idea.authorId);
-              if (authorUser) {
-                authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
-                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} SA) telif ödendi.`;
-              }
-            }
-          }
-        } else {
-          alert("Yetersiz bütçe!");
-        }
-      }
-      if (action === "sell-market" && (state.marketHoldings[idea.id] || 0) > 0) {
-        const sellQuantity = Math.min(quantity, state.marketHoldings[idea.id] || 0);
-        const ownedBefore = state.marketHoldings[idea.id] || 0;
-        state.marketHoldings[idea.id] -= sellQuantity;
-        state.marketBudget += price * sellQuantity;
-        idea.marketChange = Number(idea.marketChange || 0) - 0.3 * sellQuantity;
-        idea.marketVolume = Number(idea.marketVolume || 0) + 80 * sellQuantity;
-        state.marketSelectedId = idea.id;
-
-        if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
-        const fraction = sellQuantity / (ownedBefore || 1);
-        state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
-
-        state.quickFlowFeedback = `${sellQuantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
-      }
-      render();
-    }
-    return;
-  }
 
   if (action === "reset-filters") {
     Object.assign(state.filters, {
@@ -10786,6 +9928,18 @@ if (action === "login") {
     render();
   }
 
+  if (action === "upvote-idea") {
+    castVote(actionButton.dataset.id, "up");
+    render();
+    return;
+  }
+
+  if (action === "downvote-idea") {
+    castVote(actionButton.dataset.id, "down");
+    render();
+    return;
+  }
+
   if (action === "escalate-to-board") {
     const ESCALATION_COST = 10000;
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
@@ -10806,7 +9960,7 @@ if (action === "login") {
   }
 
   if (action === "quick-like") {
-    supportIdea(actionButton.dataset.id);
+    castVote(actionButton.dataset.id, "up");
     moveQuickFlow(1, "Destek kredisi verildi. Sıradaki fikir açıldı.");
     render();
   }
@@ -11011,13 +10165,14 @@ if (action === "login") {
 
       if (idea.status === "done") {
         idea.communityScore = Math.min(100, idea.communityScore + 4);
-        const investedAmount = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
+        const investedAmount = (state.investmentLedger || [])
+          .filter(tx => tx.ideaId === idea.id && tx.userId === currentUser().id && tx.action === "upvote")
+          .reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
         if (investedAmount > 0) {
           const reward = investedAmount * 10;
           state.marketBudget += reward;
-          state.marketInvestedAmount[idea.id] = 0;
           setTimeout(() => {
-            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 10 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!\n\nYatırım Politikası Gereği: Girişimci ödülünün %10'u da yatırımcılar arasında paylaştırılmıştır.`);
+            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki oy desteğinin 10 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!\n\nYatırım Politikası Gereği: Girişimci ödülünün %10'u da destekçiler arasında paylaştırılmıştır.`);
           }, 100);
         }
         // Auto-push AI agenda post for completion
@@ -11025,7 +10180,7 @@ if (action === "login") {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Başarıyla Hayata Geçirildi!`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
+          body: `NEW IDEA EXCHANGE Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi pilot aşamasını başarıyla tamamlayıp hayata geçirildi. Yatırımcılara 10 katı kadar oylama kredisi dağıtıldı. Girişimciye verilen ödülün %10'u yatırımcıları arasında paylaştırıldı.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-analizi", "ürünleşme", idea.marketTicker.toLowerCase()],
@@ -11037,7 +10192,7 @@ if (action === "login") {
         state.agendaItems.unshift({
           id: "ag-ai-" + Date.now(),
           title: `AI Analizi: "${idea.title}" Reddedildi`,
-          body: `İş NEW Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
+          body: `NEW IDEA EXCHANGE Yapay Zeka Denetçisi Bildirimi: ${idea.marketTicker} projesi yapılan detaylı denetim sonrasında tüzüğe aykırılık veya 70 puan altı AI barajı nedeniyle reddedilmiştir.`,
           category: "AI Host",
           date: new Date().toISOString().slice(0, 10),
           tags: ["ai-denetimi", "red", idea.marketTicker.toLowerCase()],
@@ -11067,7 +10222,7 @@ if (action === "login") {
 document.addEventListener("input", event => {
   if (event.target.matches("[data-ext-draft]")) {
     const field = event.target.dataset.extDraft;
-    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "BBVA" };
     state.externalDraft[field] = event.target.value;
     return;
   }
@@ -11335,7 +10490,7 @@ document.addEventListener("pointerup", event => {
     }
 
     if (deltaX > 0) {
-      supportIdea(ideaId);
+      castVote(ideaId, "up");
       moveQuickFlow(1, "Sağa kaydırıldı: destek kredisi verildi.");
     } else {
       moveQuickFlow(1, "Sola kaydırıldı: fikir pas geçildi.");
@@ -11461,7 +10616,7 @@ document.addEventListener("keydown", event => {
 
   const currentIdea = quickFlowIdeas()[state.quickFlowIndex];
   if (event.key === "ArrowRight" && currentIdea) {
-    supportIdea(currentIdea.id);
+    castVote(currentIdea.id, "up");
     moveQuickFlow(1, "Sağ ok: destek kredisi verildi.");
     render();
   }
@@ -11474,7 +10629,7 @@ document.addEventListener("keydown", event => {
 document.addEventListener("change", event => {
   if (event.target.matches("[data-ext-draft]")) {
     const field = event.target.dataset.extDraft;
-    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "Sabancı" };
+    state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "BBVA" };
     state.externalDraft[field] = event.target.value;
     return;
   }
@@ -11890,7 +11045,9 @@ function handleQuickEvalSwipe(ideaId, action) {
   if (!state.quickEvalLikes) state.quickEvalLikes = {};
   state.quickEvalLikes[ideaId] = action;
   if (action === "like") {
-    supportIdea(ideaId);
+    castVote(ideaId, "up");
+  } else if (action === "dislike") {
+    castVote(ideaId, "down");
   }
   state.quickEvalCommentDraft = "";
   render();
@@ -11932,9 +11089,8 @@ function renderQuickEval() {
 
   const idea = swipableIdeas[0];
   const company = marketCompanyForIdea(idea);
-  const price = marketPrice(idea);
-  const change = Number(idea.marketChange || 0);
-  const up = change >= 0;
+  const net = netVoteScore(idea);
+  const up = net >= 0;
   const comments = idea.comments || [];
   const remainingCount = swipableIdeas.length;
 
@@ -11948,7 +11104,7 @@ function renderQuickEval() {
         <div class="speedy-badge-row">
           <span class="speedy-count-badge">${remainingCount} fikir kaldı</span>
         </div>
-        <p class="speedy-subtitle">Sağa Kaydır: Al · Sola Kaydır: Alma</p>
+        <p class="speedy-subtitle">Sağa Kaydır: Upvote · Sola Kaydır: Downvote</p>
       </div>
 
       <div class="speedy-main">
@@ -11995,12 +11151,12 @@ function renderQuickEval() {
               </div>
             </div>
 
-            <!-- Price and Trend Section at bottom of card -->
+            <!-- Vote Section at bottom of card -->
             <footer class="card-eval-footer">
               <div class="card-price-section">
-                <span class="price-label">FİKİR HİSSE FİYATI</span>
+                <span class="price-label">NET OY</span>
                 <div class="price-row">
-                  <strong class="price-val">${formatCurrency(price)}</strong>
+                  <strong class="price-val">${net >= 0 ? "+" : ""}${net}</strong>
                   <span class="card-trend-badge ${up ? "up" : "down"}">
                     ${up ? `
                       <svg class="trend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
@@ -12013,7 +11169,7 @@ function renderQuickEval() {
                         <polyline points="17 7 17 17 7 17"></polyline>
                       </svg>
                     `}
-                    <span>${up ? "+" : ""}${change.toFixed(2)}%</span>
+                    <span>${icon("thumbs-up", "12")} ${Number(idea.upvotes || 0)} · ${icon("thumbs-down", "12")} ${Number(idea.downvotes || 0)}</span>
                   </span>
                 </div>
               </div>
@@ -12024,8 +11180,8 @@ function renderQuickEval() {
             </footer>
 
             <!-- Swiping Indicators Overlay -->
-            <div class="swipe-overlay like-overlay" style="color: #10b981; border-color: #10b981;">AL</div>
-            <div class="swipe-overlay pass-overlay" style="color: #ef4444; border-color: #ef4444;">ALMA</div>
+            <div class="swipe-overlay like-overlay" style="color: #10b981; border-color: #10b981;">UPVOTE</div>
+            <div class="swipe-overlay pass-overlay" style="color: #ef4444; border-color: #ef4444;">DOWNVOTE</div>
           </article>
         </div>
 
@@ -12150,8 +11306,12 @@ function filteredBorsaIdeas() {
     list.sort((a, b) => (b.supporters || 0) - (a.supporters || 0));
   } else if (sortType === "En çok yorumlanan") {
     list.sort((a, b) => ((b.comments || []).length) - ((a.comments || []).length));
-  } else if (sortType === "En Pahalılar" || sortType === "Fiyat") {
-    list.sort((a, b) => marketPrice(b) - marketPrice(a));
+  } else if (sortType === "En çok upvote alan") {
+    list.sort((a, b) => Number(b.upvotes || 0) - Number(a.upvotes || 0));
+  } else if (sortType === "En çok downvote alan") {
+    list.sort((a, b) => Number(b.downvotes || 0) - Number(a.downvotes || 0));
+  } else if (sortType === "Net oy") {
+    list.sort((a, b) => netVoteScore(b) - netVoteScore(a));
   } else if (sortType === "En Yüksek AI Skoru") {
     list.sort((a, b) => (b.aiScore || 0) - (a.aiScore || 0));
   } else if (sortType === "En Çok Beğenilenler") {
@@ -12166,11 +11326,9 @@ function renderBorsaCard(idea) {
   const author = personById(idea.authorId) || peopleDirectory[0];
   const comments = idea.comments || [];
   const isExpanded = state.expandedComments && state.expandedComments[idea.id];
-  const price = marketPrice(idea);
-  const change = Number(idea.marketChange || 0);
-  const up = change >= 0;
-  const owned = state.marketHoldings[idea.id] || 0;
-  
+  const net = netVoteScore(idea);
+  const myVote = state.userVotes ? state.userVotes[idea.id] : undefined;
+
   return `
     <article class="borsa-card" style="display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; position: relative; gap: 12px; transition: transform 0.2s, box-shadow 0.2s;">
       <div class="borsa-card-header" style="display: flex; justify-content: space-between; align-items: start; gap: 12px;">
@@ -12201,6 +11359,7 @@ function renderBorsaCard(idea) {
             <span style="font-size: 11px; background: var(--bg); color: var(--muted); padding: 3px 8px; border-radius: 6px;">#${esc(tag)}</span>
           `).join("")}
         </div>
+        
       </div>
 
       <!-- Author -->
@@ -12236,33 +11395,31 @@ function renderBorsaCard(idea) {
         </button>
       `}
 
-      <!-- Lot Buy/Sell Trading Panel veya Red Bildirimi -->
+      <!-- Upvote / Downvote Paneli veya Red Bildirimi -->
       ${idea.status === "rejected" ? `
         <div style="background: var(--bg); padding: 10px; border-radius: 10px; text-align: center; font-size: 12px; color: var(--muted); border: 1px dashed var(--line-soft); margin-top: 4px;">
-          Tüzük ihlali veya düşük AI skoru (&lt;70) nedeniyle işlem tahtasına kapatılmıştır.
+          Tüzük ihlali veya düşük AI skoru (&lt;70) nedeniyle oylama tahtasına kapatılmıştır.
         </div>
       ` : `
         <div class="borsa-trading-panel" style="background: var(--bg); border-radius: 10px; padding: 12px; border: 1px solid var(--line-soft); margin-top: 4px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <div>
-              <span style="font-size: 11px; color: var(--muted); display: block;">Destek Değeri / Değişim</span>
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <strong style="font-size: 15px; color: var(--ink);">${formatCurrency(price)}</strong>
-                <span class="trend-badge ${up ? 'up' : 'down'}" style="font-size: 11px; font-weight: 600; color: ${up ? 'var(--positive)' : 'var(--negative)'}; display: flex; align-items: center; gap: 2px;">
-                  ${up ? icon("trending-up", "12") : icon("trending-down", "12")} ${up ? "+" : ""}${change.toFixed(1)}%
-                </span>
-              </div>
+              <span style="font-size: 11px; color: var(--muted); display: block;">Net Oy</span>
+              <strong style="font-size: 15px; color: var(--ink);" class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net}</strong>
             </div>
             <div style="text-align: right;">
-              <span style="font-size: 11px; color: var(--muted); display: block;">Yatırımım</span>
-              <strong style="font-size: 13px; color: var(--ink);">${owned} Birim</strong>
+              <span style="font-size: 11px; color: var(--muted); display: block;">Oyum</span>
+              <strong style="font-size: 13px; color: var(--ink);">${myVote === "up" ? "Upvote" : myVote === "down" ? "Downvote" : "—"}</strong>
             </div>
           </div>
 
           <div style="display: flex; gap: 6px; align-items: center;">
-            <input type="number" class="input slim-input" value="1" min="1" max="100" data-trade-qty="${idea.id}" style="width: 55px; text-align: center; padding: 6px; font-size: 13px;" />
-            <button class="btn btn-sm success" data-action="buy-market-qty" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--positive); color: #fff; border: none; border-radius: 6px; cursor: pointer;">Al</button>
-            <button class="btn btn-sm danger" data-action="sell-market-qty" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--negative); color: #fff; border: none; border-radius: 6px; cursor: pointer;">Sat</button>
+            <button type="button" class="btn btn-sm success vote-btn vote-up ${myVote === "up" ? "vote-active" : ""}" data-action="upvote-idea" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--positive); color: #fff; border: none; border-radius: 6px; cursor: pointer;">
+              ${icon("thumbs-up", "14")} Upvote (${Number(idea.upvotes || 0)}) · ${UPVOTE_COST} coin
+            </button>
+            <button type="button" class="btn btn-sm danger vote-btn vote-down ${myVote === "down" ? "vote-active" : ""}" data-action="downvote-idea" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--negative); color: #fff; border: none; border-radius: 6px; cursor: pointer;">
+              ${icon("thumbs-down", "14")} Downvote (${Number(idea.downvotes || 0)}) · ücretsiz
+            </button>
           </div>
         </div>
       `}
@@ -12371,7 +11528,7 @@ function renderReportModal() {
         </div>
         <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
           <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 5 · Borsa Özeti</strong>
-          <span>${esc(idea.marketTicker || "NIE")} · ${formatCurrencyHTML(marketPrice(idea))} · ${idea.supporters || 0} destekçi · AI ${idea.aiScore || 70}/100</span>
+          <span>${esc(idea.marketTicker || "NIE")} · Net oy: ${netVoteScore(idea) >= 0 ? "+" : ""}${netVoteScore(idea)} · ${idea.supporters || 0} destekçi · AI ${idea.aiScore || 70}/100</span>
         </div>
       </div>
     </div>
@@ -12525,20 +11682,20 @@ function renderSuggestionsSection() {
   state.suggestionsPool = state.suggestionsPool || [
     {
       id: "sug-1",
-      title: "Akbank Mobil Ödeme API Dokümantasyonu Güncellemesi",
+      title: "BBVA Mobile Ödeme API Dokümantasyonu Güncellemesi",
       category: "Veri Seti İsteği",
-      description: "Akbank Mobil API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
-      companyId: "akbank",
+      description: "BBVA Mobile API'lerinin güncel test ortamı verileri eksik. Entegrasyon geliştirmesi yapabilmemiz için güncel sandbox logları gerekiyor.",
+      companyId: "garanti-bbva",
       author: "Can Koç",
       date: "2026-06-08",
       status: "İnceleniyor"
     },
     {
       id: "sug-2",
-      title: "SabancıDx Portalında Mobil Giriş Hatası",
+      title: "BBVA Technology Portalında Mobil Giriş Hatası",
       category: "Uygulama Hataları",
-      description: "iOS 16+ sürümlerinde SabancıDx iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
-      companyId: "sabancidx",
+      description: "iOS 16+ sürümlerinde BBVA Technology Portalı iç portalına giriş yaparken şifre doğrulama ekranı donuyor.",
+      companyId: "bbva-technology",
       author: "Defne Arman",
       date: "2026-06-06",
       status: "İletildi"
@@ -12547,8 +11704,8 @@ function renderSuggestionsSection() {
       id: "sug-3",
       title: "Karbon Ayak İzi Hesaplama Formülü Standartlaşması",
       category: "Genel Öneri",
-      description: "Çimsa ve Enerjisa karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
-      companyId: "cimsa",
+      description: "Garanti BBVA Portföy ve BBVA Perú karbon emisyon verilerini toplarken standart bir formül kullanılmalı, veriler karşılaştırılabilir olmalı.",
+      companyId: "garanti-bbva-portfoy",
       author: "Selin Eryılmaz",
       date: "2026-06-05",
       status: "Çözüldü"
@@ -12558,7 +11715,7 @@ function renderSuggestionsSection() {
       title: "Leasing Ödeme Planı Simülasyon Veri Seti Talebi",
       category: "Veri Seti İsteği",
       description: "Tarım ve inşaat sektöründeki müşteriler için geliştirilecek esnek ödeme planı (balon ödemeli, sezonluk ödemeli vb.) algoritmalarını test etmek için anonimleştirilmiş geçmiş ödeme performansı veri setine ihtiyacımız var.",
-      companyId: "aklease",
+      companyId: "garanti-bbva-leasing",
       author: "Nazlı Durukan",
       date: "2026-06-09",
       status: "İnceleniyor"
@@ -12567,8 +11724,8 @@ function renderSuggestionsSection() {
       id: "sug-leasing-2",
       title: "İkinci El İş Makinesi Değerleme Entegrasyonu",
       category: "Genel Öneri",
-      description: "Aklease portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
-      companyId: "aklease",
+      description: "Garanti BBVA Leasing portalı üzerinden ikinci el iş makinesi işlemlerinde, piyasa fiyatı analizini otomatik yapabilmek için makine model ve çalışma saati bazlı API entegrasyonu öneriyoruz.",
+      companyId: "garanti-bbva-leasing",
       author: "Mert Alkan",
       date: "2026-06-08",
       status: "İletildi"
@@ -12578,7 +11735,7 @@ function renderSuggestionsSection() {
       title: "Leasing Sözleşmesi E-İmza Sürecindeki Gecikmeler",
       category: "Uygulama Hataları",
       description: "Mobil imza doğrulama adımlarında bazen SMS şifrelerinin gelmemesi veya gecikmesi nedeniyle sözleşme onay süreleri uzuyor. Servis sağlayıcı entegrasyonunun kontrol edilmeli.",
-      companyId: "aklease",
+      companyId: "garanti-bbva-leasing",
       author: "Nazlı Durukan",
       date: "2026-06-07",
       status: "Çözüldü"
@@ -12768,6 +11925,7 @@ function renderDataCard(dataset) {
       
       <h3 style="margin: 12px 0 6px 0; font-size: 17px; font-weight: 600; color: var(--ink);">${esc(dataset.title)}</h3>
       <p style="font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 12px;">${esc(dataset.summary)}</p>
+      ${renderDatasetAiSuggestionPanel(dataset)}
       
       <footer style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line-soft); padding-top: 10px; font-size: 12px; color: var(--muted);">
         <span style="font-weight: 500;">Paylaşan: ${esc(dataset.sharedBy)}</span>
@@ -13406,7 +12564,7 @@ function renderSocialLeaderboard() {
   const mode = state.socialLeaderboardMode || "total";
   const modes = [
     { id: "idea", label: "Girişimci", icon: "lightbulb" },
-    { id: "trade", label: "Borsacı", icon: "trending-up" },
+    { id: "trade", label: "Aktif Oy Veren", icon: "thumbs-up" },
     { id: "total", label: "Tümü", icon: "trophy" }
   ];
   const rows = socialLeaderboardRows()
@@ -13445,7 +12603,7 @@ function renderSocialLeaderboard() {
             </span>
             <div>
               <strong>${formatCurrency(leaderboardValue(row, mode))}</strong>
-              <small>Girişimci ${formatCurrency(row.ideaMoney)} · Borsacı ${formatCurrency(row.tradeMoney)}</small>
+              <small>Girişimci ${formatCurrency(row.ideaMoney)} · Verilen Oy Sayısı ${formatCurrency(row.tradeMoney)}</small>
             </div>
           </div>
         `).join("")}
@@ -13466,7 +12624,7 @@ function socialLeaderboardRows() {
   ];
   return rows.map(row => {
     const person = personById(row.userId) || {};
-    const company = companyById(person.companyId || "sabanci-holding");
+    const company = companyById(person.companyId || "bbva-group");
     return {
       ...row,
       name: person.name || "NEW IDEA EXCHANGE Üyesi",
@@ -13560,7 +12718,7 @@ function createRichSocialPost(kind, bodyText, photoFile = null) {
     base.link = {
       title: "Fikir doğrulama notları",
       description: "Kısa problem tanımı, veri ihtiyacı ve beklenen etki özeti.",
-      url: "https://www.sabanci.com/"
+      url: "https://www.bbva.com/"
     };
   }
   return base;
@@ -13600,9 +12758,9 @@ function createRichMessage(kind) {
       ...message,
       body: "Kaynak linki burada, yorumlarınızı bekliyorum.",
       link: {
-        title: "Sabancı dijital kanallar notu",
+        title: "BBVA dijital kanallar notu",
         description: "Süreç iyileştirme için referans bağlantı.",
-        url: "https://www.sabanci.com/"
+        url: "https://www.bbva.com/"
       }
     };
   }
@@ -13665,7 +12823,7 @@ function renderProfileV2() {
               ${icon("building", "14")} ${company ? esc(company.name) : "Bağımsız / Topluluk"}
             </span>
             <span style="font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px;">
-              ${icon("mail", "14")} ${esc(user.email || (user.name.toLowerCase().replace(/\s+/g, '') + "@is-new.com"))}
+              ${icon("mail", "14")} ${esc(user.email || (user.name.toLowerCase().replace(/\s+/g, '') + "@bbva.com"))}
             </span>
           </div>
           
@@ -13727,7 +12885,7 @@ function renderProfileV2() {
               Sabitli Fikirler (${(state.pinnedIdeaIds || []).length})
             </button>
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'portfolio' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'portfolio' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="portfolio">
-              Portföyüm (${Object.values(state.marketHoldings || {}).filter(q => q > 0).length})
+              Oylarım (${Object.keys(state.userVotes || {}).length})
             </button>
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'applications' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'applications' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="applications">
               Başvurularım (${state.ideas.filter(i => i.applications && i.applications.some(a => a.userId === user.id)).length})
@@ -13905,36 +13063,27 @@ function renderProfileTabContent(user, tab) {
   }
 
   if (tab === "portfolio") {
-    const holdings = Object.entries(state.marketHoldings || {})
-      .filter(([, qty]) => qty > 0)
-      .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
+    const votes = Object.entries(state.userVotes || {})
+      .map(([id, direction]) => ({ idea: state.ideas.find(item => item.id === id), direction }))
       .filter(item => item.idea);
-    if (holdings.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz portföyünüzde hisse bulunmamaktadır. Borsa sekmesinden projelere yatırım yapabilirsiniz.</p>`;
-    
+    if (votes.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz oy vermediniz. Borsa sekmesinden fikirlere upvote/downvote verebilirsiniz.</p>`;
+
     return `
       <div style="overflow-x: auto; background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; min-width: 700px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; min-width: 500px;">
           <thead>
             <tr style="border-bottom: 2px solid rgba(255,255,255,0.08); color: var(--muted); font-weight: 600;">
               <th style="padding: 12px 8px;">Proje / Kod</th>
-              <th style="padding: 12px 8px; text-align: right;">Miktar (Lot)</th>
-              <th style="padding: 12px 8px; text-align: right;">Ort. Maliyet</th>
-              <th style="padding: 12px 8px; text-align: right;">Güncel Fiyat</th>
-              <th style="padding: 12px 8px; text-align: right;">Yatırım</th>
-              <th style="padding: 12px 8px; text-align: right;">Güncel Değer</th>
-              <th style="padding: 12px 8px; text-align: right;">Kâr / Zarar</th>
+              <th style="padding: 12px 8px; text-align: right;">Oyum</th>
+              <th style="padding: 12px 8px; text-align: right;">Tarih</th>
             </tr>
           </thead>
           <tbody>
-            ${holdings.map(({ idea, qty }) => {
-              const currentPrice = marketPrice(idea);
-              const totalValue = qty * currentPrice;
-              const invested = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
-              const avgCost = qty > 0 ? (invested / qty) : 0;
-              const profitLoss = totalValue - invested;
-              const profitLossPercent = invested > 0 ? (profitLoss / invested) * 100 : 0;
-              const isProfit = profitLoss >= 0;
-              
+            ${votes.map(({ idea, direction }) => {
+              const isUp = direction === "up";
+              const lastEntry = [...(state.investmentLedger || [])]
+                .reverse()
+                .find(tx => tx.ideaId === idea.id && tx.userId === currentUser().id && (tx.action === "upvote" || tx.action === "downvote"));
               return `
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;" data-action="open-idea" data-id="${idea.id}" class="table-hover-row">
                   <td style="padding: 12px 8px; display: flex; align-items: center; gap: 8px;">
@@ -13944,16 +13093,12 @@ function renderProfileTabContent(user, tab) {
                       <span style="font-size: 11px; color: var(--muted);">${esc(idea.department)}</span>
                     </div>
                   </td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${qty}</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)} SA</td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isProfit ? '#2ecc71' : '#e74c3c'};">
-                    <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isProfit ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
-                      ${isProfit ? '▲ +' : '▼ '}${formatCurrency(profitLoss)} (${isProfit ? '+' : ''}${profitLossPercent.toFixed(1)}%)
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isUp ? '#2ecc71' : '#e74c3c'};">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isUp ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
+                      ${isUp ? '▲ Upvote' : '▼ Downvote'}
                     </span>
                   </td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${esc(lastEntry?.date || "—")}</td>
                 </tr>
               `;
             }).join("")}
@@ -13978,7 +13123,7 @@ function renderSystemDetails() {
           ${icon("help-circle")} 1. İnovasyon Hunisi Nedir?
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          İş NEW platformu, iştirak ve departmanlarımızdan gelen tüm yenilikçi fikirleri ve süreç iyileştirmelerini objektif bir şekilde değerlendirmek, geliştirmek ve hayata geçirmek için tasarlanmış uçtan uca bir inovasyon hunisidir.
+          NEW IDEA EXCHANGE platformu, iştirak ve departmanlarımızdan gelen tüm yenilikçi fikirleri ve süreç iyileştirmelerini objektif bir şekilde değerlendirmek, geliştirmek ve hayata geçirmek için tasarlanmış uçtan uca bir inovasyon hunisidir.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 8px;">
           <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 16px; border-radius: 12px;">
@@ -14029,7 +13174,7 @@ function renderSystemDetails() {
           ${icon("cpu")} 1. Teknik Mimari
         </h3>
         <p style="color: var(--ink-soft); line-height: 1.6; margin: 0;">
-          İş NEW, yüksek performanslı ve akıcı bir kullanıcı deneyimi sunabilmek için modern **Single Page Application (SPA)** mimarisiyle inşa edilmiştir. Tüm sayfalar, grafikler ve portföy durumları sayfa yenilenmeden anlık olarak güncellenir.
+          NEW IDEA EXCHANGE, yüksek performanslı ve akıcı bir kullanıcı deneyimi sunabilmek için modern **Single Page Application (SPA)** mimarisiyle inşa edilmiştir. Tüm sayfalar, grafikler ve portföy durumları sayfa yenilenmeden anlık olarak güncellenir.
         </p>
         <div style="background: rgba(59, 130, 246, 0.04); border: 1px solid var(--line-soft); padding: 16px; border-radius: 12px;">
           <strong style="color: var(--ink); display: block; margin-bottom: 6px;">Client-Side State Engine</strong>
@@ -14194,7 +13339,7 @@ function renderSystemDetails() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft);">
         <span class="panel-kicker">PLATFORM KILAVUZU & TEKNİK REHBER</span>
         <h2>Sistem Detayları</h2>
-        <p>İş NEW platformunun çalışma mekanizması, arkasındaki teknoloji ve kullanım rehberi.</p>
+        <p>NEW IDEA EXCHANGE platformunun çalışma mekanizması, arkasındaki teknoloji ve kullanım rehberi.</p>
       </section>
 
       <div class="admin-layout" style="display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; align-items: start;">
@@ -14422,8 +13567,8 @@ function renderAIAssistantWidget() {
 
       <!-- Quick Prompt Suggestions -->
       <div style="padding: 8px 12px; display: flex; gap: 6px; overflow-x: auto; background: var(--surface); border-top: 1px solid var(--line-soft); white-space: nowrap;">
-        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Yeni bir FinTech fikir öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">FinTech Fikri Öner</button>
-        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Çimsa karbon emisyonu azaltım fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Çimsa Önerisi Al</button>
+        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Yeni bir sürdürülebilirlik fikir öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Sürdürülebilirlik Fikri Öner</button>
+        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Sabancı Holding dijitalleşme fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Sabancı Holding Önerisi Al</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Borsadaki en önemli projeleri listele" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Borsayı Özetle</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Kurumsal veri setlerini özetle" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Veri&Bilgi Listele</button>
       </div>
@@ -14457,11 +13602,11 @@ function handleAIChatResponse(msgText) {
     const topAgenda = (state.agendaItems || [])[0];
     replyText = `**Platform içi hype / trend yönelimi:**
     
-    ${topIdeas.map(i => `- **${i.title}**: ${i.marketCategory || "Fikir"} liginde ${Number(i.marketVolume || 0).toLocaleString("tr-TR")} hacim, ${formatCurrency(marketPrice(i))} fiyat.`).join("\n")}
+    ${topIdeas.map(i => `- **${i.title}**: ${i.marketCategory || "Fikir"} liginde ${Number(i.marketVolume || 0).toLocaleString("tr-TR")} hacim, net oy ${netVoteScore(i) >= 0 ? "+" : ""}${netVoteScore(i)}.`).join("\n")}
     
     ${topAgenda ? `Gündem tarafında öne çıkan başlık: **${topAgenda.title}**.` : ""}
     
-    Bu sinyal sadece İş NEW içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
+    Bu sinyal sadece NEW IDEA EXCHANGE içindeki borsa, gündem ve ürün kayıtlarından hesaplanan demo yorumudur.`;
   } else if (query.includes("ürün") || query.includes("urun") || query.includes("geliştirilmiş") || query.includes("gelistirilmis")) {
     const products = [...(state.ideas || [])].sort((a, b) => productProgress(b) - productProgress(a)).slice(0, 4);
     replyText = `**Ürünler görünümü:**
@@ -14476,13 +13621,13 @@ function handleAIChatResponse(msgText) {
     ${resources.map(item => `- **${item.title}** (${item.category}): ${item.description}`).join("\n")}
     
     Bu kayıtlar adminlerin demo içindeki Yönetici Depolama alanına eklediği kaynaklardan gelir.`;
-  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("aklease")) {
-    replyText = `**Yapay Zekâ Fikir Önerisi (Aklease):**
+  } else if (query.includes("leasing") || query.includes("kiralama") || query.includes("garanti bbva leasing")) {
+    replyText = `**Yapay Zekâ Fikir Önerisi (Garanti BBVA Leasing):**
 
     *Öneri:* **Güneş Enerjisi Santralleri (GES) için Dijital Leasing Paketi**
     *Açıklama:* KOBİ'lerin çatı tipi GES ve yeşil enerji yatırımlarını hızlandırmak için, fizibilite verilerinden otomatik teminat oranı ve vade yapısı çıkaran, tamamen kağıtsız bir başvuru/onay modülü.
 
-    Bunu Ak Finansal Kiralama (Aklease) bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
+    Bunu Garanti BBVA Leasing bünyesinde borsa projesi olarak yayınlamak için **Borsa** sekmesini ziyaret edebilir ve fikirleri inceleyebilirsin.`;
   } else if (query.includes("fintech") || query.includes("ödeme") || query.includes("bankacılık") || query.includes("fikir")) {
     replyText = `**Yapay Zekâ Fikir Önerisi (FinTech):**
     
@@ -14494,9 +13639,9 @@ function handleAIChatResponse(msgText) {
     const list = state.ideas.slice(0, 3);
     replyText = `**Fikir Borsası Popüler Projeler Özeti:**
     
-    ${list.map(i => `- **${i.title}** (${i.marketCategory || 'Fikir'}, Hisse: ${formatCurrency(marketPrice(i))})`).join("\n")}
-    
-    Daha fazla projeyi incelemek ve lot alım satımı yapmak için sol menüden **Borsa** sekmesine geçebilirsiniz.`;
+    ${list.map(i => `- **${i.title}** (${i.marketCategory || 'Fikir'}, Net oy: ${netVoteScore(i) >= 0 ? "+" : ""}${netVoteScore(i)})`).join("\n")}
+
+    Daha fazla projeyi incelemek ve upvote/downvote vermek için sol menüden **Borsa** sekmesine geçebilirsiniz.`;
   } else if (query.includes("veri") || query.includes("hammadde") || query.includes("dataset") || query.includes("bilgi")) {
     const list = (state.dataSets || []).slice(0, 2);
     replyText = `**Platformdaki Bazı Veri Setleri:**
@@ -14531,7 +13676,7 @@ function renderRulesPage() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); margin-bottom: 20px;">
         <span class="panel-kicker">KURALLAR & REHBER</span>
         <h2>Topluluk Kuralları</h2>
-        <p>İş NEW İnovasyon Platformu'nda daha yapıcı ve verimli çalışabilmek için uymamız gereken kurallar.</p>
+        <p>NEW IDEA EXCHANGE İnovasyon Platformu'nda daha yapıcı ve verimli çalışabilmek için uymamız gereken kurallar.</p>
       </section>
 
       <section class="content-panel" style="padding: 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 20px; line-height: 1.6; color: var(--ink-soft);">
@@ -14553,7 +13698,7 @@ function renderRulesPage() {
           <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; margin-top: 0;">
             ${icon("eye-off")} 3. Bilgi Güvenliği ve Gizlilik
           </h3>
-          <p>Sabancı Holding iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
+          <p>BBVA Grubu iştiraklerine ait ticari sırlar, müşteri verileri ve kişisel veriler kesinlikle açık şekilde paylaşılmamalıdır. Veri paylaşırken maskelenmiş veya anonimleştirilmiş veri setleri tercih edilmelidir.</p>
         </div>
 
         <div style="border-top: 1px solid var(--line-soft); padding-top: 16px;">
@@ -14575,7 +13720,7 @@ function renderRulesPage() {
             ${icon("gavel")} 6. Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
           </h3>
           <p>
-            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.<br/>
+            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 SA</strong> gereklidir.<br/>
             • <strong>Hisse Alım Sınırı:</strong> Fikirlerin adil dağıtılması için, tek bir projeden en fazla <strong>10 adet (hisse/lot)</strong> satın alabilirsiniz.<br/>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
@@ -14594,7 +13739,7 @@ function renderComplaintBoxPage() {
       <section class="apple-hero" style="padding: 24px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line-soft); margin-bottom: 20px;">
         <span class="panel-kicker">GERİ BİLDİRİM & ŞİKAYET</span>
         <h2>Şikayet Kutusu</h2>
-        <p>İş NEW platformu, içerikler, teknik hatalar veya diğer kullanıcılar hakkında geri bildirim veya şikayet gönderin.</p>
+        <p>NEW IDEA EXCHANGE platformu, içerikler, teknik hatalar veya diğer kullanıcılar hakkında geri bildirim veya şikayet gönderin.</p>
       </section>
 
       ${state.complaintBoxFeedback ? `
@@ -14750,7 +13895,7 @@ function ensureSocialEnhancements() {
     dataPost.link = {
       title: "Yeşil finans veri notu",
       description: "ESG veri alanları, örnek KPI seti ve proje kullanım senaryoları.",
-      url: "https://www.sabanci.com/"
+      url: "https://www.bbva.com/"
     };
   }
 
@@ -14775,11 +13920,11 @@ function ensureSocialEnhancements() {
         ]
       }
     }),
-    createSeedSocialPost("sp-rich-3", "p15", "Akbank Mobil API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
+    createSeedSocialPost("sp-rich-3", "p15", "BBVA Mobile API dokümantasyon akışı için kısa referans linki bırakıyorum. Ürün ve operasyon ekibi aynı sayfadan ilerlesin.", "Bugün", 16, {
       link: {
         title: "API akış kontrol listesi",
         description: "Onay, test, hata izleme ve canlıya geçiş adımları.",
-        url: "https://www.sabanci.com/"
+        url: "https://www.bbva.com/"
       }
     })
   ];
@@ -14813,7 +13958,7 @@ function ensureSocialEnhancements() {
         link: {
           title: "Haftalık karar notu",
           description: "Fikir üretimi, al/sat hareketi ve bekleyen pilotlar.",
-          url: "https://www.sabanci.com/"
+          url: "https://www.bbva.com/"
         }
       },
       {
@@ -14835,14 +13980,14 @@ function ensureSocialEnhancements() {
       body: "Yeni onboarding kontrol ekranından görüntü paylaşıyorum.",
       time: "13:18",
       imageUrl: remoteImages.ideaVisuals[1],
-      imageCaption: "Akbank Mobil onboarding kontrol akışı"
+      imageCaption: "BBVA Mobile onboarding kontrol akışı"
     });
   }
 }
 
 function createSeedSocialPost(id, userId, body, date, likes, extras = {}) {
   const person = personById(userId) || {};
-  const company = companyById(person.companyId || "sabanci-holding");
+  const company = companyById(person.companyId || "bbva-group");
   return {
     id,
     userId,
@@ -14870,7 +14015,7 @@ function getActiveLanguage() {
 function getTranslatedText(item, field) {
   if (!item) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = item.country === "TR" ? "tr" : (item.country === "DE" ? "de" : (item.country === "ES" ? "es" : "en"));
+  const originalLang = item.country === "TR" ? "tr" : "es";
   
   if (activeLang === originalLang) {
     return item[field] || "";
@@ -14890,7 +14035,7 @@ function getTranslatedText(item, field) {
 function renderTranslationButton(idea) {
   if (!idea) return "";
   const activeLang = state.globalTranslateAll ? "tr" : getActiveLanguage();
-  const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+  const originalLang = idea.country === "TR" ? "tr" : "es";
   
   if (activeLang === originalLang) return "";
   
@@ -14925,7 +14070,7 @@ function translateAllInState() {
       idea.originalProblem = idea.problem || "";
       idea.originalSolution = idea.solution || "";
     }
-    const originalLang = idea.country === "TR" ? "tr" : (idea.country === "DE" ? "de" : (idea.country === "ES" ? "es" : "en"));
+    const originalLang = idea.country === "TR" ? "tr" : "es";
     const showOriginal = !!(state.translatedIdeaIds && state.translatedIdeaIds[idea.id]);
     
     if (showOriginal || activeLang === originalLang) {
@@ -14950,7 +14095,7 @@ function translateAllInState() {
       ann.originalTitle = ann.title || "";
       ann.originalBody = ann.body || "";
     }
-    const originalLang = ann.country === "TR" ? "tr" : (ann.country === "DE" ? "de" : (ann.country === "ES" ? "es" : "en"));
+    const originalLang = ann.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       ann.title = ann.originalTitle;
       ann.body = ann.originalBody;
@@ -14968,7 +14113,7 @@ function translateAllInState() {
     if (post.originalBody === undefined) {
       post.originalBody = post.body || "";
     }
-    const originalLang = post.country === "TR" ? "tr" : (post.country === "DE" ? "de" : (post.country === "ES" ? "es" : "en"));
+    const originalLang = post.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       post.body = post.originalBody;
     } else {
@@ -14997,7 +14142,7 @@ function translateAllInState() {
 
   // 4. Translate Chat Messages
   state.messageSpaces.forEach(space => {
-    const originalLang = space.country === "TR" ? "tr" : (space.country === "DE" ? "de" : (space.country === "ES" ? "es" : "en"));
+    const originalLang = space.country === "TR" ? "tr" : "es";
     if (space.messages) {
       space.messages.forEach(msg => {
         if (msg.originalBody === undefined) {
@@ -15021,7 +14166,7 @@ function translateAllInState() {
       ds.originalTitle = ds.title || "";
       ds.originalSummary = ds.summary || "";
     }
-    const originalLang = ds.country === "TR" ? "tr" : (ds.country === "DE" ? "de" : (ds.country === "ES" ? "es" : "en"));
+    const originalLang = ds.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       ds.title = ds.originalTitle;
       ds.summary = ds.originalSummary;
@@ -15040,7 +14185,7 @@ function translateAllInState() {
       ch.originalTitle = ch.title || "";
       ch.originalBrief = ch.brief || "";
     }
-    const originalLang = ch.country === "TR" ? "tr" : (ch.country === "DE" ? "de" : (ch.country === "ES" ? "es" : "en"));
+    const originalLang = ch.country === "TR" ? "tr" : "es";
     if (activeLang === originalLang) {
       ch.title = ch.originalTitle;
       ch.brief = ch.originalBrief;
@@ -15121,184 +14266,28 @@ function scaleMockDataset() {
   // 1. Add new iştirakler (subsidiaries) dynamically
   const newSubs = [
     {
-      id: "ak-yatirim",
-      name: "Ak Yatırım Menkul Değerler A.Ş.",
-      shortName: "Ak Yatırım",
-      logo: "./assets/company-logos/ak-yatirim.svg",
-      domain: "akyatirim.com.tr",
-      type: "Yatırım & Finans",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Ankara", "İzmir"],
-      campuses: ["Ak Yatırım Genel Müdürlük", "Akatlar Ofis"],
-      departments: ["Araştırma", "Portföy Yönetimi", "Kurumsal Finansman", "Hisse Senedi Piyasaları"]
-    },
-    {
-      id: "ak-portfoy",
-      name: "Ak Portföy Yönetimi A.Ş.",
-      shortName: "Ak Portföy",
-      logo: "./assets/company-logos/ak-portfoy.svg",
-      domain: "akportfoy.com.tr",
-      type: "Varlık Yönetimi",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Ak Portföy HQ"],
-      departments: ["Yatırım Komitesi", "Risk Yönetimi", "Fon Yönetimi"]
-    },
-    {
-      id: "akcansa",
-      name: "Akçansa Çimento Sanayi ve Ticaret A.Ş.",
-      shortName: "Akçansa",
-      logo: "./assets/company-logos/akcansa.svg",
-      domain: "akcansa.com.tr",
-      type: "Yapı Malzemeleri",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Çanakkale", "Samsun"],
-      campuses: ["Çanakkale Fabrika", "Büyükçekmece Fabrika", "Ambarlı Liman Terminali"],
-      departments: ["Sürdürülebilirlik", "Üretim", "Lojistik", "Ar-Ge"]
-    },
-    {
-      id: "aklease",
-      name: "Ak Finansal Kiralama A.Ş.",
-      shortName: "Aklease",
-      logo: "./assets/company-logos/aklease.svg",
-      domain: "aklease.com",
-      type: "Finansal Kiralama",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Aklease HQ"],
-      departments: ["Kredi Tahsis", "Satış", "Finans"]
-    },
-    {
-      id: "enerjisa-uretim",
-      name: "Enerjisa Üretim Santralleri A.Ş.",
-      shortName: "Enerjisa Üretim",
-      logo: "./assets/company-logos/enerjisa-uretim.svg",
-      domain: "enerjisauretim.com.tr",
-      type: "Enerji Üretimi",
-      countries: ["Türkiye"],
-      cities: ["Adana", "Çanakkale", "Aydın", "Balıkesir"],
-      campuses: ["Tufanbeyli Termik Santrali", "Bandırma Doğalgaz Santrali", "Çanakkale Rüzgar Santrali"],
-      departments: ["Yeşil Enerji Operasyonları", "Santral Yönetimi", "Ar-Ge"]
-    },
-    {
-      id: "sabanci-univ",
-      name: "Sabancı Üniversitesi",
-      shortName: "Sabancı Üni.",
-      logo: "./assets/company-logos/sabanci-univ.svg",
-      domain: "sabanciuniv.edu",
+      id: "fundacion-bbva",
+      name: "Fundación BBVA",
+      shortName: "Fundación BBVA",
+      logo: "./assets/company-logos/fundacion-bbva.svg",
+      domain: "fundacionbbva.es",
       type: "Eğitim & Akademi",
-      countries: ["Türkiye"],
-      cities: ["İstanbul"],
-      campuses: ["Tuzla Kampüsü", "Karaköy İletişim Merkezi"],
-      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme (TÜMER)"]
-    },
-    {
-      id: "sabanci-vakfi",
-      name: "Hacı Ömer Sabancı Vakfı",
-      shortName: "Sabancı Vakfı",
-      logo: "./assets/company-logos/sabanci-vakfi.svg",
-      domain: "sabancivakfi.org",
-      type: "Sosyal Sorumluluk",
-      countries: ["Türkiye"],
-      cities: ["İstanbul", "Ankara"],
-      campuses: ["Sabancı Vakfı Merkez"],
-      departments: ["Sosyal Programlar", "Hibe Programları", "Ortaklıklar"]
-    },
-    {
-      id: "akbank-uk",
-      name: "Akbank AG London Branch",
-      shortName: "Akbank UK",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.co.uk",
-      type: "Banka",
-      countries: ["Birleşik Krallık"],
-      cities: ["Londra"],
-      campuses: ["London City Office"],
-      departments: ["International Trade Finance", "Treasury", "Compliance"]
-    },
-    {
-      id: "akcansa-uk",
-      name: "Akcansa UK Cement Trading Ltd.",
-      shortName: "Akçansa UK",
-      logo: "./assets/company-logos/akcansa.svg",
-      domain: "akcansa.co.uk",
-      type: "Yapı Malzemeleri",
-      countries: ["Birleşik Krallık"],
-      cities: ["Londra", "Bristol"],
-      campuses: ["Bristol Port Terminal"],
-      departments: ["Logistics", "Wholesale Sales"]
-    },
-    {
-      id: "akbank-us",
-      name: "Akbank US Representative Office",
-      shortName: "Akbank US",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.com",
-      type: "Banka",
-      countries: ["Amerika Birleşik Devletleri"],
-      cities: ["New York"],
-      campuses: ["Manhattan Office"],
-      departments: ["Investor Relations", "Corporate Banking Linkage"]
-    },
-    {
-      id: "temsa-us",
-      name: "Temsa North America Inc.",
-      shortName: "Temsa US",
-      logo: "./assets/company-logos/temsa.svg",
-      domain: "temsa.com",
-      type: "Otomotiv",
-      countries: ["Amerika Birleşik Devletleri"],
-      cities: ["Orlando", "Houston"],
-      campuses: ["Orlando Distribution Center"],
-      departments: ["Electric Bus Sales", "Spare Parts Logistics", "Customer Support"]
-    },
-    {
-      id: "akbank-de",
-      name: "Akbank AG (Frankfurt)",
-      shortName: "Akbank DE",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.de",
-      type: "Banka",
-      countries: ["Almanya"],
-      cities: ["Frankfurt", "Münih"],
-      campuses: ["Frankfurt HQ"],
-      departments: ["Retail Banking", "Risk Management", "Operations"]
-    },
-    {
-      id: "kordsa-de",
-      name: "Kordsa Germany GmbH",
-      shortName: "Kordsa DE",
-      logo: "./assets/company-logos/kordsa.svg",
-      domain: "kordsa.com",
-      type: "Sanayi",
-      countries: ["Almanya"],
-      cities: ["Münih"],
-      campuses: ["Munich Composite Research Lab"],
-      departments: ["Composite Engineering", "Quality Control"]
-    },
-    {
-      id: "akbank-es",
-      name: "Akbank Representative Office Spain",
-      shortName: "Akbank ES",
-      logo: "./assets/company-logos/akbank.svg",
-      domain: "akbank.com",
-      type: "Banka",
       countries: ["İspanya"],
       cities: ["Madrid"],
-      campuses: ["Madrid Financial District Office"],
-      departments: ["Corporate Relations", "Compliance"]
+      campuses: ["Fundación BBVA Madrid Kampüsü"],
+      departments: ["Mühendislik ve Doğa Bilimleri", "Yönetim Bilimleri", "Araştırma ve Geliştirme"]
     },
     {
-      id: "temsa-es",
-      name: "Temsa España S.L.",
-      shortName: "Temsa ES",
-      logo: "./assets/company-logos/temsa.svg",
-      domain: "temsa.es",
-      type: "Otomotiv",
-      countries: ["İspanya"],
-      cities: ["Madrid", "Barcelona"],
-      campuses: ["Madrid Hub"],
-      departments: ["Mobility Sales", "Technical Service Operations"]
+      id: "fundacion-microfinanzas-bbva",
+      name: "Fundación Microfinanzas BBVA",
+      shortName: "Fundación Microfinanzas BBVA",
+      logo: "./assets/company-logos/fundacion-microfinanzas-bbva.png",
+      domain: "fundacionmicrofinanzasbbva.org",
+      type: "Sosyal Sorumluluk",
+      countries: ["Kolombiya", "Peru"],
+      cities: ["Bogotá", "Lima"],
+      campuses: ["Fundación Microfinanzas BBVA Merkez"],
+      departments: ["Sosyal Programlar", "Hibe Programları", "Ortaklıklar"]
     }
   ];
 
@@ -15322,7 +14311,7 @@ function scaleMockDataset() {
     const fullName = `${fn} ${ln}`;
     const randCompany = companyList[i % companyList.length];
     const randCountry = randCompany.countries[0] || "Türkiye";
-    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Birleşik Krallık" || randCountry === "United Kingdom" ? "GB" : (randCountry === "Amerika Birleşik Devletleri" || randCountry === "United States" ? "US" : (randCountry === "Almanya" || randCountry === "Germany" ? "DE" : "ES")));
+    const countryCode = randCountry === "Türkiye" ? "TR" : (randCountry === "Meksika" || randCountry === "Mexico" ? "MX" : (randCountry === "Kolombiya" || randCountry === "Colombia" ? "CO" : (randCountry === "Peru" ? "PE" : "ES")));
     
     const userRole = randCompany.type === "Banka" ? "Müşteri İlişkileri Yöneticisi" : (randCompany.type === "Sanayi" ? "Mühendis" : "Uzman");
     const dept = randCompany.departments[i % randCompany.departments.length];
@@ -15332,7 +14321,7 @@ function scaleMockDataset() {
       id: `u-${i}`,
       name: fullName,
       email: `${fn.toLowerCase()}.${ln.toLowerCase()}@${randCompany.domain}`,
-      employeeId: `SA-${15000 + i}`,
+      employeeId: `BBVA-${15000 + i}`,
       company: randCompany.name,
       companyId: randCompany.id,
       department: dept,
@@ -15360,7 +14349,7 @@ function scaleMockDataset() {
   demoUsers.forEach((u, index) => {
     if (u.id === "u3") {
       u.name = "Can Koç";
-      u.email = "can.koc@sabanci.example";
+      u.email = "can.koc@bbva.example";
       u.photo = "https://randomuser.me/api/portraits/men/75.jpg";
       u.avatarUrl = "https://randomuser.me/api/portraits/men/75.jpg";
       return;
@@ -15394,50 +14383,50 @@ function scaleMockDataset() {
         title: "Açık Bankacılık ile KOBİ Alacak Sigortası",
         summary: "KOBİ bankacılığı işlemlerinde açık bankacılık verileriyle alacak riskini saniyeler içinde hesaplayıp poliçe kesen modül.",
         problem: "KOBİ'ler ticari alacak risklerini sigortalamak için çok fazla evrak ve uzun bekleme süreleriyle karşılaşıyor.",
-        solution: "Akbank API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
+        solution: "BBVA API'leri üzerinden KOBİ finansal verilerini analiz ederek anında kredi ve alacak sigortası sunan sistem."
       },
       en: {
         title: "SME Receivables Insurance with Open Banking",
         summary: "A module that calculates receivables risk in seconds using open banking data in SME banking transactions and issues policies.",
         problem: "SMEs face a lot of paperwork and long waiting times to insure commercial receivables risk.",
-        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through Akbank APIs."
+        solution: "A system that offers instant credit and receivables insurance by analyzing SME financial data through BBVA APIs."
       },
       de: {
         title: "KMU-Forderungsversicherung mit Open Banking",
         summary: "Ein Modul, das das Forderungsrisiko im KMU-Geschäft mithilfe von Open-Banking-Daten in Sekundenschnelle berechnet und Policen ausstellt.",
         problem: "KMU sind mit viel Papierkram und langen Wartezeiten konfrontiert, um das gewerbliche Forderungsrisiko abzusichern.",
-        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über Akbank-APIs sofortige Kredite und Forderungsversicherungen anbietet."
+        solution: "Ein System, das durch Analyse der KMU-Finanzdaten über BBVA-APIs sofortige Kredite und Forderungsversicherungen anbietet."
       },
       es: {
         title: "Seguro de Cuentas por Cobrar para Pymes con Banca Abierta",
         summary: "Un módulo que calcula el riesgo de cuentas por cobrar en segundos utilizando datos de banca abierta en transacciones de pymes.",
         problem: "Las pymes enfrentan mucho papeleo y largos tiempos de espera para asegurar el riesgo de cuentas por cobrar comerciales.",
-        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de Akbank."
+        solution: "Un sistema que ofrece crédito y seguro de cuentas por cobrar al instante analizando datos financieros de pymes a través de APIs de BBVA."
       }
     },
     {
       area: "Sürdürülebilirlik & Yeşil Enerji",
       tr: {
         title: "Fabrika Bacaları İçin Akıllı Karbon İzleme Ağı",
-        summary: "Çimsa ve Kordsa üretim tesislerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
+        summary: "Garanti BBVA Portföy ve Garanti BBVA Yatırım veri merkezlerindeki karbon emisyonunu anlık IoT sensörleriyle ölçüp bulutta raporlayan yeşil teknoloji.",
         problem: "Karbon salınımı beyanları periyodik ve manuel yapıldığı için hata payı yüksek ve optimizasyon gecikiyor.",
         solution: "Fabrika bacalarına takılan IoT sensörleriyle emisyonu saniyelik kaydeden ve sınır aşımında uyaran akıllı yazılım."
       },
       en: {
         title: "Smart Carbon Monitoring Network for Factory Chimneys",
-        summary: "Green technology that measures carbon emissions in Cimsa and Kordsa production facilities with instant IoT sensors and reports to the cloud.",
+        summary: "Green technology that measures carbon emissions in Garanti BBVA Portföy and Garanti BBVA Yatırım data centers with instant IoT sensors and reports to the cloud.",
         problem: "Since carbon emission statements are periodic and manual, the margin of error is high and optimization is delayed.",
         solution: "Smart software that records emissions in seconds with IoT sensors attached to factory chimneys and warns in case of limit violations."
       },
       de: {
         title: "Intelligentes Kohlenstoff-Überwachungsnetzwerk für Schornsteine",
-        summary: "Grüne Technologie, die Kohlenstoffemissionen in Cimsa- und Kordsa-Produktionsstätten mit IoT-Sensoren misst und in der Cloud meldet.",
+        summary: "Grüne Technologie, die Kohlenstoffemissionen in den Rechenzentren von Garanti BBVA Portföy und Garanti BBVA Yatırım mit IoT-Sensoren misst und in der Cloud meldet.",
         problem: "Da CO2-Meldungen periodisch und manuell erfolgen, ist die Fehlerquote hoch und die Optimierung verzögert sich.",
         solution: "Intelligente Software, die Emissionen im Sekundentakt mit an Schornsteinen angebrachten IoT-Sensoren erfasst und bei Überschreitungen warnt."
       },
       es: {
         title: "Red de Monitoreo de Carbono Inteligente para Chimeneas",
-        summary: "Tecnología verde que mide las emisiones de carbono en las plantas de Cimsa y Kordsa con sensores IoT instantáneos y reporta a la nube.",
+        summary: "Tecnología verde que mide las emisiones de carbono en los centros de datos de Garanti BBVA Portföy y Garanti BBVA Yatırım con sensores IoT instantáneos y reporta a la nube.",
         problem: "Dado que las declaraciones de emisión de carbono son periódicas and manuales, el margen de error es alto y la optimización se retrasa.",
         solution: "Software inteligente que registra las emisiones en segundos con sensores IoT conectados a las chimeneas y advierte en caso de infracciones."
       }
@@ -15446,25 +14435,25 @@ function scaleMockDataset() {
       area: "Yapay Zekâ & Derin Teknoloji",
       tr: {
         title: "AI Destekli Lojistik Rota Optimizasyonu",
-        summary: "CarrefourSA sevkiyat kamyonları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
+        summary: "BBVA Colombia sevkiyat araçları için trafik, hava durumu ve sipariş yoğunluğunu işleyen dinamik rota planlama algoritması.",
         problem: "Statik rotalar nedeniyle teslimat süreleri uzuyor ve yakıt tüketimi artıyor.",
         solution: "Her sabah siparişleri ve yol durumunu analiz ederek en verimli teslimat haritasını çıkaran yapay zeka motoru."
       },
       en: {
         title: "AI-Powered Logistics Route Optimization",
-        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for CarrefourSA delivery trucks.",
+        summary: "Dynamic route planning algorithm processing traffic, weather, and order density for BBVA Colombia delivery vehicles.",
         problem: "Delivery times are prolonged and fuel consumption increases due to static routes.",
         solution: "An AI engine that analyzes orders and road conditions every morning to create the most efficient delivery map."
       },
       de: {
         title: "KI-gestützte Logistik-Routenoptimierung",
-        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für CarrefourSA-Lieferwagen verarbeitet.",
+        summary: "Dynamischer Routenplanungsalgorithmus, der Verkehr, Wetter und Auftragsdichte für BBVA-Colombia-Lieferfahrzeuge verarbeitet.",
         problem: "Statische Routen verlängern die Lieferzeiten und erhöhen den Kraftstoffverbrauch.",
         solution: "Eine KI-Engine, die jeden Morgen Bestellungen und Straßenverhältnisse analysiert, um die effizienteste Lieferkarte zu erstellen."
       },
       es: {
         title: "Optimización de Rutas Logísticas con IA",
-        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para camiones de CarrefourSA.",
+        summary: "Algoritmo dinámico de planificación de rutas que procesa el tráfico, el clima y la densidad de pedidos para vehículos de BBVA Colombia.",
         problem: "Los tiempos de entrega se prolongan y el consumo de combustible aumenta debido a rutas estáticas.",
         solution: "Un motor de IA que analiza los pedidos y las condiciones de la carretera cada mañana para generar el mapa de entrega más eficiente."
       }
@@ -15473,25 +14462,25 @@ function scaleMockDataset() {
       area: "PropTech & Akıllı Şehirler",
       tr: {
         title: "Akıllı Binalar İçin Dinamik HVAC Kontrolü",
-        summary: "Sabancı Center ve iştirak plazalarında sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
+        summary: "Ciudad BBVA ve iştirak ofislerinde sensör verileriyle ısıtma ve soğutmayı otomatik ayarlayan derin öğrenme modeli.",
         problem: "Binalar boş olduğunda bile HVAC sistemleri çalışıyor ve yüksek enerji israfına yol açıyor.",
         solution: "Kat doluluk oranları ve dış ortam sıcaklık tahminlerini işleyerek iklimlendirmeyi optimize eden AI entegrasyonu."
       },
       en: {
         title: "Dynamic HVAC Control for Smart Buildings",
-        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Sabanci Center and affiliate plazas.",
+        summary: "Deep learning model that automatically adjusts heating and cooling with sensor data in Ciudad BBVA and affiliate offices.",
         problem: "HVAC systems run even when buildings are empty, leading to high energy waste.",
         solution: "AI integration that optimizes climatization by processing floor occupancy rates and outdoor temperature forecasts."
       },
       de: {
         title: "Dynamische HVAC-Steuerung für intelligente Gebäude",
-        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Sabanci Center und in Partner-Plazas mit Sensordaten automatisch anpasst.",
+        summary: "Deep-Learning-Modell, das die Heizung und Kühlung im Ciudad BBVA und in Partner-Büros mit Sensordaten automatisch anpasst.",
         problem: "Klimaanlagen laufen auch bei leeren Gebäuden, was zu einer hohen Energieverschwendung führt.",
         solution: "KI-Integration, die die Klimatisierung durch Verarbeitung der Belegungsraten und Außentemperaturprognosen optimiert."
       },
       es: {
         title: "Control Dinámico de HVAC para Edificios Inteligentes",
-        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Sabanci Center.",
+        summary: "Modelo de aprendizaje profundo que ajusta automáticamente la calefacción y refrigeración con datos de sensores en Ciudad BBVA.",
         problem: "Los sistemas de HVAC funcionan incluso cuando los edificios están vacíos, lo que genera un gran desperdicio de energía.",
         solution: "Integración de IA que optimiza la climatización procesando las tasas de ocupación de pisos y los pronósticos de temperatura exterior."
       }
@@ -15500,7 +14489,7 @@ function scaleMockDataset() {
 
   const currentIdeaCount = initialIdeas.length;
   const targetIdeaCount = 800;
-  const countryCycle = ["TR", "US", "GB", "DE", "ES"];
+  const countryCycle = ["TR", "MX", "ES", "CO", "PE", "AR", "VE", "UY"];
   const companiesByCountryCode = {};
   countryCycle.forEach(code => {
     companiesByCountryCode[code] = companyList.filter(c => c.countries && c.countries.includes(countryNameTR[code]));
@@ -15516,8 +14505,8 @@ function scaleMockDataset() {
     const randomUser = countryUserPool.length ? countryUserPool[Math.floor(Math.random() * countryUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
     const id = `idea-gen-${i}`;
     const ticker = `NIE-${100 + i}`;
-    
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+
+    const originalLang = countryCode === "TR" ? "tr" : "es";
     const title = trend[originalLang].title + ` (${randCompany.shortName})`;
     const summary = trend[originalLang].summary;
     const problem = trend[originalLang].problem;
@@ -15564,9 +14553,10 @@ function scaleMockDataset() {
       tags: [trend.area.split(" ")[0], randCompany.shortName],
       createdAt: `2026-06-${10 + (i % 8)}`,
       marketTicker: ticker,
-      marketShares: 1000,
       marketVolume: 1200 + (i * 15),
       marketChange: (i % 2 === 0 ? 1 : -1) * (1.5 + (i % 12)),
+      upvotes: Math.round((1200 + (i * 15)) / 15 + (72 + (i % 23)) / 2),
+      downvotes: Math.round(((1200 + (i * 15)) / 15 + (72 + (i % 23)) / 2) * 0.15),
       translations: translations
     });
   }
@@ -15578,7 +14568,7 @@ function scaleMockDataset() {
     const randCompany = companyList[i % companyList.length];
     const randIdea = initialIdeas[i % initialIdeas.length];
     const teamCountry = randCompany.countries[0] || "Türkiye";
-    const teamCountryCode = teamCountry === "Türkiye" ? "TR" : (teamCountry === "Birleşik Krallık" || teamCountry === "United Kingdom" ? "GB" : (teamCountry === "Amerika Birleşik Devletleri" || teamCountry === "United States" ? "US" : (teamCountry === "Almanya" || teamCountry === "Germany" ? "DE" : "ES")));
+    const teamCountryCode = teamCountry === "Türkiye" ? "TR" : (teamCountry === "Meksika" || teamCountry === "Mexico" ? "MX" : (teamCountry === "Kolombiya" || teamCountry === "Colombia" ? "CO" : (teamCountry === "Peru" ? "PE" : "ES")));
     const teamUserPool = demoUsers.filter(u => u.country === teamCountryCode);
     const creatorUser = teamUserPool.length ? teamUserPool[Math.floor(Math.random() * teamUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
 
@@ -15624,7 +14614,7 @@ function scaleMockDataset() {
     const randCompany = countryCompanyPool.length ? countryCompanyPool[Math.floor(Math.random() * countryCompanyPool.length)] : companyList[i % companyList.length];
     const annUserPool = demoUsers.filter(u => u.country === countryCode);
     const randomUser = annUserPool.length ? annUserPool[Math.floor(Math.random() * annUserPool.length)] : demoUsers[Math.floor(Math.random() * demoUsers.length)];
-    const originalLang = countryCode === "TR" ? "tr" : (countryCode === "DE" ? "de" : (countryCode === "ES" ? "es" : "en"));
+    const originalLang = countryCode === "TR" ? "tr" : "es";
     const projectNum = i + 10;
 
     state.announcements.push({
@@ -15681,14 +14671,14 @@ function scaleMockDataset() {
     { id: "studio-ops", name: "Operasyon Çözüm Stüdyosu", category: "Operasyon", status: "Aktif", popularity: 94, createdAt: "2026-06-01", description: "Şube, onay ve çağrı merkezi problemlerini hızlı pilotlara çeviren çalışma alanı.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-ai", name: "AI Deney Laboratuvarı", category: "Yapay Zekâ", status: "Aktif", popularity: 88, createdAt: "2026-05-18", description: "Platform içi veriyle analiz, özetleme ve karar destek prototipleri geliştiren stüdyo.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-green", name: "Yeşil Finans Stüdyosu", category: "Sürdürülebilirlik", status: "Kuruluyor", popularity: 76, createdAt: "2026-06-05", description: "ESG, karbon takip ve yeşil finans ürünlerini iş birliğiyle olgunlaştırır.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "Akbank Mobil, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-industry", name: "Sanayi & Malzeme İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Kordsa ve Çimsa bünyesindeki kompozit malzeme ve çimento Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-energy", name: "Enerji Teknolojileri Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "Enerjisa Üretim yenilenebilir enerji, rüzgar ve hidrojen depolama teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-mobility", name: "Mobilite & Otomotiv Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Temsa elektrikli ve otonom otobüs yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "Teknosa ve CarrefourSA müşteri deneyimi, akıllı raf ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-digital", name: "Dijital Ürün Stüdyosu", category: "FinTech", status: "Aktif", popularity: 81, createdAt: "2026-05-28", description: "BBVA Mobile, ödeme ve dijital onboarding akışlarını ürünleştiren ekip alanı.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-industry", name: "Yatırım & Portföy İnovasyon Stüdyosu", category: "Sanayi", status: "Aktif", popularity: 85, createdAt: "2026-05-20", description: "Garanti BBVA Yatırım ve Garanti BBVA Portföy bünyesindeki yeni nesil yatırım ürünleri Ar-Ge projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-energy", name: "Sürdürülebilir Finans Stüdyosu", category: "Yeşil Enerji", status: "Aktif", popularity: 90, createdAt: "2026-06-02", description: "BBVA Perú yenilenebilir enerji finansmanı ve yeşil kredi teknolojileri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-mobility", name: "Mobilite & Leasing Stüdyosu", category: "Mobilite", status: "Aktif", popularity: 83, createdAt: "2026-05-15", description: "Garanti BBVA Leasing elektrikli ve otonom filo yazılım/donanım entegrasyonu stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-retail", name: "Perakende & E-Ticaret Stüdyosu", category: "Perakende", status: "Aktif", popularity: 79, createdAt: "2026-06-03", description: "BBVA México ve BBVA Colombia müşteri deneyimi, akıllı kaynak ve lojistik projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-sme", name: "KOBİ Destek ve Çözüm Stüdyosu", category: "KOBİ", status: "Kuruluyor", popularity: 72, createdAt: "2026-06-04", description: "KOBİ bankacılığı, sigortacılık ve finansman çözümleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-proptech", name: "Akıllı Şehirler & PropTech Stüdyosu", category: "PropTech", status: "Aktif", popularity: 80, createdAt: "2026-05-22", description: "Akıllı bina yönetim sistemleri, HVAC ve plaza iklimlendirme projeleri stüdyosu.", linkedTeams: [], linkedIdeas: [] },
-    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Agesa ve Aksigorta müşteri edinimi, poliçe pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
+    { id: "studio-marketing", name: "Müşteri Deneyimi & Pazarlama Stüdyosu", category: "Pazarlama", status: "Aktif", popularity: 86, createdAt: "2026-05-25", description: "Garanti BBVA Emeklilik ve BBVA Seguros müşteri edinimi, poliçe pazarlama ve UX tasarım stüdyosu.", linkedTeams: [], linkedIdeas: [] },
     { id: "studio-cloud", name: "Derin Teknoloji & Bulut Girişim Stüdyosu", category: "Derin Teknoloji", status: "Aktif", popularity: 89, createdAt: "2026-05-30", description: "Büyük veri analitiği, siber güvenlik ve kurumsal bulut çözümleri Ar-Ge stüdyosu.", linkedTeams: [], linkedIdeas: [] }
   ];
 
@@ -15728,17 +14718,17 @@ function scaleMockDataset() {
   const datasetTrends = [
     {
       area: "FinTech & Dijital Bankacılık",
-      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "Akbank API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
-      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of Akbank API transition times, load tests, and monthly call logs." },
-      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von Akbank-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
-      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de Akbank, pruebas de carga y registros de llamadas mensuales." }
+      tr: { title: "Açık Bankacılık API Kullanım Metrikleri", summary: "BBVA API geçiş süreleri, yük testleri ve aylık çağrı loglarının istatistiksel dağılımı." },
+      en: { title: "Open Banking API Usage Metrics", summary: "Statistical distribution of BBVA API transition times, load tests, and monthly call logs." },
+      de: { title: "Open Banking API-Nutzungsmetriken", summary: "Statistische Verteilung von BBVA-API-Übergangszeiten, Lasttests und monatlichen Anrufprotokollen." },
+      es: { title: "Métricas de Uso de API de Banca Abierta", summary: "Distribución estadística de los tiempos de transición de la API de BBVA, pruebas de carga y registros de llamadas mensuales." }
     },
     {
       area: "Sürdürülebilirlik & Yeşil Enerji",
-      tr: { title: "Rüzgar Enerjisi Üretim Verimliliği Raporu", summary: "Enerjisa Üretim Çanakkale santralinin rüzgar hızı ve anlık megavat üretim ilişkisi ham verisi." },
-      en: { title: "Wind Energy Generation Efficiency Report", summary: "Raw data of wind speed and instantaneous megawatt generation relationship of Enerjisa Uretim Canakkale power plant." },
-      de: { title: "Effizienzbericht für Windkraftanlagen", summary: "Rohdaten zum Verhältnis von Windgeschwindigkeit und momentaner Megawatt-Erzeugung des Kraftwerks Enerjisa Uretim Canakkale." },
-      es: { title: "Informe de Eficiencia de Generación de Energía Eólica", summary: "Datos brutos de la velocidad del viento y la relación de generación de megavatios instantáneos de la planta de energía Enerjisa Uretim Canakkale." }
+      tr: { title: "Yeşil Finansman Portföy Verimliliği Raporu", summary: "BBVA Perú yeşil finansman portföyünün rüzgar enerjisi projeleri finansman hacmi ve anlık geri ödeme ilişkisi ham verisi." },
+      en: { title: "Green Financing Portfolio Efficiency Report", summary: "Raw data of green financing volume and instantaneous repayment relationship of BBVA Perú's wind energy project portfolio." },
+      de: { title: "Effizienzbericht für das Portfolio grüner Finanzierungen", summary: "Rohdaten zum Verhältnis von Finanzierungsvolumen und momentaner Rückzahlung im Windenergie-Portfolio von BBVA Perú." },
+      es: { title: "Informe de Eficiencia de la Cartera de Financiamiento Verde", summary: "Datos brutos del volumen de financiamiento y la relación de pago instantáneo de la cartera de proyectos eólicos de BBVA Perú." }
     },
     {
       area: "Yapay Zekâ & Derin Teknoloji",
@@ -15749,17 +14739,17 @@ function scaleMockDataset() {
     },
     {
       area: "PropTech & Akıllı Şehirler",
-      tr: { title: "Sabancı Center Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
-      en: { title: "Sabanci Center Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
-      de: { title: "Sabanci Center Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
-      es: { title: "Serie Temporal de Ocupación de Sabanci Center", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
+      tr: { title: "Ciudad BBVA Doluluk Oranları Zaman Serisi", summary: "Kat doluluk sensörlerinin 6 aylık periyotta çalışma saatleri ve hafta sonu bazında ürettiği doluluk ham verileri." },
+      en: { title: "Ciudad BBVA Occupancy Time Series", summary: "Raw occupancy data generated by floor occupancy sensors over a 6-month period on working hours and weekends." },
+      de: { title: "Ciudad BBVA Belegungs-Zeitreihen", summary: "Rohdaten zur Belegung, die von Etagensensoren über einen Zeitraum von 6 Monaten während der Arbeitszeit und an Wochenenden erfasst wurden." },
+      es: { title: "Serie Temporal de Ocupación de Ciudad BBVA", summary: "Datos brutos de ocupación generados por sensores de ocupación de piso durante un período de 6 meses en horas laborables y fines de semana." }
     },
     {
       area: "Akıllı Lojistik & Dağıtım",
-      tr: { title: "CarrefourSA Gebze Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
-      en: { title: "CarrefourSA Gebze Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
-      de: { title: "CarrefourSA Gebze Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
-      es: { title: "Conjunto de Tiempos de Despacho de Almacén CarrefourSA Gebze", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
+      tr: { title: "BBVA Colombia Medellín Depo Çıkış Zamanlama Seti", summary: "Sipariş hazırlama süreleri, sevkiyat kuyruk uzunluğu ve dağıtım araçlarının yükleme optimizasyon parametreleri." },
+      en: { title: "BBVA Colombia Medellín Warehouse Dispatch Timing Set", summary: "Order preparation times, dispatch queue length, and loading optimization parameters of distribution vehicles." },
+      de: { title: "BBVA Colombia Medellín Lager-Versandzeitplan", summary: "Auftragsbereitstellungszeiten, Warteschlangenlänge im Versand und Parameter zur Ladeoptimierung der Verteilerfahrzeuge." },
+      es: { title: "Conjunto de Tiempos de Despacho de Almacén BBVA Colombia Medellín", summary: "Tiempos de preparación de pedidos, longitud de la cola de despacho y parámetros de optimización de carga de vehículos de distribución." }
     },
     {
       area: "Operasyon",
@@ -15770,24 +14760,24 @@ function scaleMockDataset() {
     },
     {
       area: "Borsa",
-      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Borsa İstanbul'da işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
-      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on Borsa Istanbul for the last 1 year." },
-      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Borsa Istanbul gehandelten Gruppenunternehmen für das letzte Jahr." },
-      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en Borsa Istanbul durante el último año." }
+      tr: { title: "İştirak Hisse Dalgalanması ve Hacim Geçmişi", summary: "Bolsa de Madrid'de işlem gören grup şirketlerinin son 1 yıllık hacim, volatility ve hareketli ortalama veri tabanı." },
+      en: { title: "Affiliate Share Volatility and Volume History", summary: "Volume, volatility, and moving average database of group companies traded on Bolsa de Madrid for the last 1 year." },
+      de: { title: "Volatilität und Volumenhistorie von Beteiligungen", summary: "Volumen-, Volatilitäts- und gleitende Durchschnittsdatenbank der an der Bolsa de Madrid gehandelten Gruppenunternehmen für das letzte Jahr." },
+      es: { title: "Historial de Volatilidad y Volumen de Acciones de Afiliadas", summary: "Base de datos de volumen, volatilidad y promedio móvil de las empresas del grupo que cotizan en la Bolsa de Madrid durante el último año." }
     },
     {
       area: "Diğer",
       tr: { title: "Grup İçi İnovasyon Yarışması Başvuru İstatistikleri", summary: "Yıllara göre sunulan fikir sayıları, iştirak bazlı katılım yüzdeleri ve ödül alan projelerin kategorik dağılımı." },
       en: { title: "In-Group Innovation Challenge Application Statistics", summary: "Number of ideas submitted by year, participation percentages based on affiliates, and categorical distribution of award-winning projects." },
       de: { title: "Bewerbungsstatistiken für den konzerneigenen Innovationspreis", summary: "Anzahl der eingereichten Ideen nach Jahren, Beteiligungsquoten nach Tochtergesellschaften und Verteilung der prämierten Projekte." },
-      es: { title: "Estadísticas de Solicitud de Desafío de Innovación Interno del Grupo", summary: "Número de ideas enviadas por año, porcentajes de participación según afiliadas y distribución categórica de proyectos galardonados." }
+      es: { title: "Estadísticas de Solicitud de Desafío de Innovación Interno del Grupo", summary: "Número de ideas enviadas por año, porcentajes de participación según afiliadas y distribución categórica de proyectos galarodados." }
     }
   ];
 
-  const countries = ["TR", "US", "GB", "DE", "ES"];
+  const countries = ["TR", "MX", "ES", "CO", "PE", "AR", "VE", "UY"];
   let datasetIdCount = 0;
   countries.forEach(country => {
-    const lang = country === "TR" ? "tr" : (country === "DE" ? "de" : (country === "ES" ? "es" : "en"));
+    const lang = country === "TR" ? "tr" : "es";
     const dsCompanyPool = companiesByCountryCode[country];
     for (let i = 0; i < 12; i++) {
       const trend = datasetTrends[i % datasetTrends.length];
@@ -15825,30 +14815,30 @@ function scaleMockDataset() {
   const socialTemplates = {
     TR: [
       {
-        body: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+        body: "BBVA Mobile AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
         translations: {
-          tr: "Akbank Mobil AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
-          en: "Our Akbank Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
-          de: "Unser Akbank Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
-          es: "¡Nuestro proyecto de inversión de IA móvil de Akbank está listado en la bolsa de ideas! Esperamos su apoyo."
+          tr: "BBVA Mobile AI Yatırım projemiz Fikir Borsasında listelendi! Desteklerinizi bekliyoruz.",
+          en: "Our BBVA Mobile AI Investment project is listed on the Idea Exchange! We look forward to your support.",
+          de: "Unser BBVA Mobile AI Investment-Projekt ist an der Ideen-Börse gelistet! Wir freuen uns auf Ihre Unterstützung.",
+          es: "¡Nuestro proyecto de inversión de IA móvil de BBVA está listado en la bolsa de ideas! Esperamos su apoyo."
         }
       },
       {
-        body: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+        body: "BBVA Technology olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
         translations: {
-          tr: "SabancıDx olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
-          en: "The multi-language supported artificial intelligence infrastructure we developed as SabancıDx is live.",
-          de: "Die von uns als SabancıDx entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
-          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como SabancıDx está en vivo."
+          tr: "BBVA Technology olarak geliştirdiğimiz çoklu dil destekli yapay zeka altyapısı yayında.",
+          en: "The multi-language supported artificial intelligence infrastructure we developed as BBVA Technology is live.",
+          de: "Die von uns als BBVA Technology entwickelte mehrsprachig unterstützte KI-Infrastruktur ist online.",
+          es: "La infraestructura de inteligencia artificial con soporte multilingüe que desarrollamos como BBVA Technology está en vivo."
         }
       },
       {
-        body: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+        body: "BBVA México şubelerinde otonom işlem kiosku pilotu müşteri memnuniyetini %18 artırdı.",
         translations: {
-          tr: "Teknosa mağazalarında otonom ödeme kiosku pilotu müşteri memnuniyetini %18 artırdı.",
-          en: "The autonomous payment kiosk pilot in Teknosa stores increased customer satisfaction by 18%.",
-          de: "Das Pilotprojekt für autonome Zahlungskioske in Teknosa-Filialen steigerte die Kundenzufriedenheit um 18%.",
-          es: "El piloto de quioscos de pago autónomos en las tiendas Teknosa aumentó la satisfacción del cliente en un 18%."
+          tr: "BBVA México şubelerinde otonom işlem kiosku pilotu müşteri memnuniyetini %18 artırdı.",
+          en: "The autonomous transaction kiosk pilot in BBVA México branches increased customer satisfaction by 18%.",
+          de: "Das Pilotprojekt für autonome Transaktionskioske in BBVA-México-Filialen steigerte die Kundenzufriedenheit um 18%.",
+          es: "El piloto de quioscos de transacciones autónomas en las sucursales de BBVA México aumentó la satisfacción del cliente en un 18%."
         }
       }
     ],
@@ -15872,81 +14862,81 @@ function scaleMockDataset() {
         }
       },
       {
-        body: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
+        body: "BBVA México closed a new digital savings agreement with a major retailer this week.",
         translations: {
-          tr: "Sabancı Climate Texas bu hafta büyük bir elektrik dağıtım şirketiyle yeni bir şebeke hizmetleri anlaşması imzaladı.",
-          en: "Sabancı Climate Texas closed a new grid services agreement with a major utility this week.",
-          de: "Sabancı Climate Texas hat diese Woche eine neue Vereinbarung über Netzdienstleistungen mit einem großen Energieversorger abgeschlossen.",
-          es: "Sabancı Climate Texas firmó esta semana un nuevo acuerdo de servicios de red con una importante empresa de servicios públicos."
+          tr: "BBVA México bu hafta büyük bir perakende şirketiyle yeni bir dijital tasarruf anlaşması imzaladı.",
+          en: "BBVA México closed a new digital savings agreement with a major retailer this week.",
+          de: "BBVA México hat diese Woche eine neue Vereinbarung über digitale Sparprodukte mit einem großen Einzelhändler abgeschlossen.",
+          es: "BBVA México firmó esta semana un nuevo acuerdo de ahorro digital con una importante empresa minorista."
         }
       }
     ],
     GB: [
       {
-        body: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
+        body: "BBVA Research Madrid office is hosting a demo day for fintech startups this Friday.",
         translations: {
-          tr: "Sabancı Ventures Londra ofisi bu Cuma yeşil enerji girişimleri için bir demo günü düzenliyor.",
-          en: "Sabancı Ventures London office is hosting a demo day for green energy startups this Friday.",
-          de: "Das Londoner Büro von Sabancı Ventures veranstaltet diesen Freitag einen Demo-Tag für Start-ups im Bereich grüne Energie.",
-          es: "La oficina de Sabancı Ventures en Londres organizará una jornada de demostración para startups de energía verde este viernes."
+          tr: "BBVA Research Madrid ofisi bu Cuma fintech girişimleri için bir demo günü düzenliyor.",
+          en: "BBVA Research Madrid office is hosting a demo day for fintech startups this Friday.",
+          de: "Das Madrider Büro von BBVA Research veranstaltet diesen Freitag einen Demo-Tag für Fintech-Start-ups.",
+          es: "La oficina de BBVA Research en Madrid organizará una jornada de demostración para startups fintech este viernes."
         }
       },
       {
-        body: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
+        body: "BBVA UK's new corporate banking portal processed its first 100 orders within 48 hours of launch.",
         translations: {
-          tr: "Çimsa UK'nin yeni B2B satış portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
-          en: "Çimsa UK's new B2B sales portal processed its first 100 orders within 48 hours of launch.",
-          de: "Das neue B2B-Verkaufsportal von Çimsa UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
-          es: "El nuevo portal de ventas B2B de Çimsa UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
+          tr: "BBVA UK'nin yeni kurumsal bankacılık portalı, lansmandan sonraki 48 saat içinde ilk 100 siparişi işledi.",
+          en: "BBVA UK's new corporate banking portal processed its first 100 orders within 48 hours of launch.",
+          de: "Das neue Firmenkunden-Portal von BBVA UK hat innerhalb von 48 Stunden nach dem Start die ersten 100 Bestellungen bearbeitet.",
+          es: "El nuevo portal de banca corporativa de BBVA UK procesó sus primeros 100 pedidos en las 48 horas posteriores al lanzamiento."
         }
       },
       {
-        body: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
+        body: "Garanti BBVA Yatırım Levent Ofisi begins institutional-grade trading algorithm trials with a new fintech partner.",
         translations: {
-          tr: "Kordsa Londra Teknoloji Merkezi, yeni bir havacılık ortağıyla havacılık sınıfı prepreg denemelerine başlıyor.",
-          en: "Kordsa London Tech Center begins aerospace-grade prepreg trials with a new aviation partner.",
-          de: "Das Kordsa London Tech Center beginnt mit Prepreg-Tests in Luftfahrtqualität mit einem neuen Luftfahrtpartner.",
-          es: "El Centro Tecnológico de Kordsa en Londres inicia ensayos de preimpregnados de grado aeroespacial con un nuevo socio de aviación."
+          tr: "Garanti BBVA Yatırım Levent Ofisi, yeni bir fintech ortağıyla kurumsal sınıf algoritmik işlem denemelerine başlıyor.",
+          en: "Garanti BBVA Yatırım Levent Ofisi begins institutional-grade trading algorithm trials with a new fintech partner.",
+          de: "Das Garanti BBVA Yatırım Levent-Büro beginnt mit institutionellen Handelsalgorithmus-Tests mit einem neuen Fintech-Partner.",
+          es: "La oficina de Garanti BBVA Yatırım en Levent inicia ensayos de algoritmos de trading de grado institucional con un nuevo socio fintech."
         }
       }
     ],
     DE: [
       {
-        body: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
+        body: "Wir testen die neuen Risikobewertungsmodelle für die Garanti-BBVA-Leasing-Flottenfinanzierung in Lima.",
         translations: {
-          tr: "Münih'teki Temsa elektrikli otobüsleri için yeni lityum iyon hücrelerini test ediyoruz.",
-          en: "We are testing the new lithium-ion cells for Temsa electric buses in Munich.",
-          de: "Wir testen die neuen Lithium-Ionen-Zellen für die Temsa-Elektrobusse in München.",
-          es: "Estamos probando nuevas celdas de iones de litio para los autobuses eléctricos Temsa en Múnich."
+          tr: "Lima'daki Garanti BBVA Leasing filo finansmanı için yeni risk değerlendirme modellerini test ediyoruz.",
+          en: "We are testing the new risk assessment models for Garanti BBVA Leasing fleet financing in Lima.",
+          de: "Wir testen die neuen Risikobewertungsmodelle für die Garanti-BBVA-Leasing-Flottenfinanzierung in Lima.",
+          es: "Estamos probando nuevos modelos de evaluación de riesgo para el financiamiento de flotas de Garanti BBVA Leasing en Lima."
         }
       },
       {
-        body: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
+        body: "Die Effizienz in der BBVA-Niederlassung Frankfurt wurde durch neue automatisierte Risikoanalyse-Software gesteigert.",
         translations: {
-          tr: "Çimsa Hamburg terminalinde yeni otomatik lojistik yazılımı sayesinde verimlilik artırıldı.",
-          en: "Efficiency at the Çimsa Hamburg terminal has been increased with new automated logistics software.",
-          de: "Die Effizienz im Çimsa-Terminal Hamburg wurde durch neue automatisierte Logistiksoftware gesteigert.",
-          es: "La eficiencia en la terminal de Çimsa en Hamburgo se ha incrementado con el nuevo software de logística automatizado."
+          tr: "BBVA Frankfurt şubesinde yeni otomatik risk analizi yazılımı sayesinde verimlilik artırıldı.",
+          en: "Efficiency at the BBVA Frankfurt branch has been increased with new automated risk analysis software.",
+          de: "Die Effizienz in der BBVA-Niederlassung Frankfurt wurde durch neue automatisierte Risikoanalyse-Software gesteigert.",
+          es: "La eficiencia en la sucursal de BBVA en Frankfurt se ha incrementado con el nuevo software de análisis de riesgos automatizado."
         }
       },
       {
-        body: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
+        body: "Garanti BBVA Leasing Lima Labor hat die erste Testphase des Risikomodell-Prototyps erfolgreich abgeschlossen.",
         translations: {
-          tr: "Temsa Münih Laboratuvarı, hidrojenli otobüs prototipinin ilk test sürüşünü başarıyla tamamladı.",
-          en: "Temsa Munich Lab has successfully completed the first test drive of the hydrogen bus prototype.",
-          de: "Temsa München Labor hat die erste Testfahrt des Wasserstoffbus-Prototyps erfolgreich abgeschlossen.",
-          es: "El laboratorio de Temsa en Múnich completó con éxito la primera prueba de conducción del prototipo de autobús de hidrógeno."
+          tr: "Garanti BBVA Leasing Lima Laboratuvarı, risk modeli prototipinin ilk test aşamasını başarıyla tamamladı.",
+          en: "Garanti BBVA Leasing Lima Lab has successfully completed the first test phase of the risk model prototype.",
+          de: "Garanti BBVA Leasing Lima Labor hat die erste Testphase des Risikomodell-Prototyps erfolgreich abgeschlossen.",
+          es: "El laboratorio de Garanti BBVA Leasing en Lima completó con éxito la primera fase de prueba del prototipo de modelo de riesgo."
         }
       }
     ],
     ES: [
       {
-        body: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%.",
+        body: "Excelente avance en el proyecto de sostenibilidad de BBVA en Madrid. Hemos reducido el consumo de energía un 12%.",
         translations: {
-          tr: "Çimsa Buñol tesisinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
-          en: "Excellent progress at the Çimsa plant in Buñol. We have reduced energy consumption by 12%.",
-          de: "Hervorragende Fortschritte im Çimsa-Werk in Buñol. Wir haben den Energieverbrauch um 12% gesenkt.",
-          es: "Excelente avance en la planta de Çimsa en Buñol. Hemos reducido el consumo de energía un 12%."
+          tr: "BBVA Madrid sürdürülebilirlik projesinde mükemmel ilerleme. Enerji tüketimini %12 azalttık.",
+          en: "Excellent progress in the BBVA Madrid sustainability project. We have reduced energy consumption by 12%.",
+          de: "Hervorragende Fortschritte beim Nachhaltigkeitsprojekt von BBVA in Madrid. Wir haben den Energieverbrauch um 12% gesenkt.",
+          es: "Excelente avance en el proyecto de sostenibilidad de BBVA en Madrid. Hemos reducido el consumo de energía un 12%."
         }
       },
       {
@@ -16026,23 +15016,23 @@ function scaleMockDataset() {
   const announcementTemplates = {
     TR: [
       {
-        title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-        body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
+        title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
+        body: "Merhabalar! BBVA Mobile AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!",
         translations: {
           tr: {
-            title: "🚀 Akbank Mobil AI Yatırım Projesine UX Designer Arıyoruz!",
-            body: "Merhabalar! Akbank Mobil AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
+            title: "🚀 BBVA Mobile AI Yatırım Projesine UX Designer Arıyoruz!",
+            body: "Merhabalar! BBVA Mobile AI Yatırım projemiz için prototip ekranlarimizi tasarlayacak ve bizimle ortak bütçeden pay alacak bir UX Designer takım arkadaşı arıyoruz. Katılmak için aşağıdaki 'Başvur' butonunu kullanarak başvurunuzu iletebilirsiniz!"
           },
           en: {
-            title: "🚀 Seeking UX Designer for Akbank Mobile AI Investment Project!",
-            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the Akbank Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
+            title: "🚀 Seeking UX Designer for BBVA Mobile AI Investment Project!",
+            body: "Hello! We are looking for a UX Designer team member who will design our prototype screens for the BBVA Mobile AI Investment project and share a budget with us. Apply using the 'Apply' button below!"
           },
           de: {
-            title: "🚀 UX Designer für Akbank Mobile AI Investment Projekt gesucht!",
-            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das Akbank Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
+            title: "🚀 UX Designer für BBVA Mobile AI Investment Projekt gesucht!",
+            body: "Hallo! Wir suchen ein UX Designer-Teammitglied, das unsere Prototyp-Bildschirme für das BBVA Mobile AI Investment-Projekt entwirft und ein gemeinsames Budget mit uns teilt. Bewerben Sie sich unten!"
           },
           es: {
-            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de Akbank!",
+            title: "🚀 ¡Buscamos un Diseñador de UX para el proyecto de inversión móvil de BBVA!",
             body: "¡Hola! Buscamos un diseñador UX para diseñar pantallas de prototipos para nuestro proyecto de IA y compartir presupuesto con nosotros. ¡Postula usando el botón de abajo!"
           }
         }
@@ -16075,71 +15065,71 @@ function scaleMockDataset() {
     GB: [
       {
         title: "🚀 Strategic Investment Program for Green Startups",
-        body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK.",
+        body: "BBVA México launches a new strategic investment track focusing on fintech and digital banking startups in Mexico.",
         translations: {
           tr: {
             title: "🚀 Yeşil Girişimler için Stratejik Yatırım Programı",
-            body: "Sabancı Ventures UK, Birleşik Krallık'taki yenilenebilir enerji ve iklim teknolojisi girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
+            body: "BBVA México, Meksika'daki fintech ve dijital bankacılık girişimlerine odaklanan yeni bir stratejik yatırım yolunu başlatıyor."
           },
           en: {
             title: "🚀 Strategic Investment Program for Green Startups",
-            body: "Sabancı Ventures UK launches a new strategic investment track focusing on renewable energy and climate tech startups in the UK."
+            body: "BBVA México launches a new strategic investment track focusing on fintech and digital banking startups in Mexico."
           },
           de: {
             title: "🚀 Strategisches Investitionsprogramm für grüne Start-ups",
-            body: "Sabancı Ventures UK startet ein neues strategisches Investitionsprogramm mit Fokus auf erneuerbare Energien und Climate-Tech-Start-ups in Großbritannien."
+            body: "BBVA México startet ein neues strategisches Investitionsprogramm mit Fokus auf Fintech- und Digital-Banking-Start-ups in Mexiko."
           },
           es: {
             title: "🚀 Programa de Inversión Estratégica para Startups Ecológicas",
-            body: "Sabancı Ventures UK lanza una nueva vía de inversión estratégica centrada en startups de energía renovable y tecnología climática en el Reino Unido."
+            body: "BBVA México lanza una nueva vía de inversión estratégica centrada en startups fintech y de banca digital en México."
           }
         }
       }
     ],
     DE: [
       {
-        title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
-        body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland.",
+        title: "🚀 Garanti BBVA Leasing Lima - MLOps-Ingenieur gesucht!",
+        body: "Hallo! Garanti BBVA Leasing Lima sucht einen MLOps-Ingenieur zur Überwachung der Risiko- und Zahlungsmodelle für das neue Finanzierungsprodukt in Peru.",
         translations: {
           tr: {
-            title: "🚀 Temsa Münih - MLOps Mühendisi Aranıyor!",
-            body: "Merhaba! Temsa Münih, Almanya'daki yeni elektrikli araç modeli için telemetri ve pil deşarj modellerini izleyecek bir MLOps mühendisi arıyor."
+            title: "🚀 Garanti BBVA Leasing Lima - MLOps Mühendisi Aranıyor!",
+            body: "Merhaba! Garanti BBVA Leasing Lima, Peru'daki yeni finansman ürünü için risk ve ödeme modellerini izleyecek bir MLOps mühendisi arıyor."
           },
           en: {
-            title: "🚀 Temsa Munich - MLOps Engineer Wanted!",
-            body: "Hello! Temsa Munich is looking for an MLOps Engineer to monitor telemetry and battery discharge models for the new EV model in Germany."
+            title: "🚀 Garanti BBVA Leasing Lima - MLOps Engineer Wanted!",
+            body: "Hello! Garanti BBVA Leasing Lima is looking for an MLOps Engineer to monitor risk and repayment models for the new financing product in Peru."
           },
           de: {
-            title: "🚀 Temsa München - MLOps-Ingenieur gesucht!",
-            body: "Hallo! Temsa München sucht einen MLOps-Ingenieur zur Überwachung der Telemetrie- und Batterie-Entladungs-Modelle für das neue EV-Modell in Deutschland."
+            title: "🚀 Garanti BBVA Leasing Lima - MLOps-Ingenieur gesucht!",
+            body: "Hallo! Garanti BBVA Leasing Lima sucht einen MLOps-Ingenieur zur Überwachung der Risiko- und Zahlungsmodelle für das neue Finanzierungsprodukt in Peru."
           },
           es: {
-            title: "🚀 Temsa Múnich - ¡Se busca Ingeniero MLOps!",
-            body: "¡Hola! Temsa Múnich busca un ingeniero MLOps para monitorear la telemetría y los modelos de descarga de baterías para el nuevo modelo eléctrico en Alemania."
+            title: "🚀 Garanti BBVA Leasing Lima - ¡Se busca Ingeniero MLOps!",
+            body: "¡Hola! Garanti BBVA Leasing Lima busca un ingeniero MLOps para monitorear los modelos de riesgo y pago para el nuevo producto de financiamiento en Perú."
           }
         }
       }
     ],
     ES: [
       {
-        title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
-        body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol.",
+        title: "🚀 ¡Buscamos un Analista de Ciberseguridad para la sede de Madrid!",
+        body: "Hola! BBVA España busca un analista de ciberseguridad para supervisar los protocolos de seguridad y protección de datos en nuestra sede de Madrid.",
         translations: {
           tr: {
-            title: "🚀 Buñol Tesisi için Kimya Mühendisi Arıyoruz!",
-            body: "Merhaba! Çimsa İspanya, Buñol tesisimizdeki alternatif yakma ve geri dönüşüm denemelerini denetlemek üzere bir kimya mühendisi arıyor."
+            title: "🚀 Madrid Genel Merkezi için Siber Güvenlik Analisti Arıyoruz!",
+            body: "Merhaba! BBVA İspanya, Madrid genel merkezimizdeki güvenlik protokollerini ve veri koruma süreçlerini denetlemek üzere bir siber güvenlik analisti arıyor."
           },
           en: {
-            title: "🚀 Seeking Chemical Engineer for Buñol Plant!",
-            body: "Hello! Çimsa Spain is looking for a chemical engineer to supervise alternative combustion and recycling trials at our Buñol plant."
+            title: "🚀 Seeking Cybersecurity Analyst for Madrid HQ!",
+            body: "Hello! BBVA Spain is looking for a cybersecurity analyst to supervise security protocols and data protection processes at our Madrid HQ."
           },
           de: {
-            title: "🚀 Chemieingenieur für das Werk Buñol gesucht!",
-            body: "Hallo! Çimsa Spanien sucht einen Chemieingenieur zur Überwachung der alternativen Verbrennungs- und Recyclingversuche im Werk Buñol."
+            title: "🚀 Cybersicherheitsanalyst für die Zentrale in Madrid gesucht!",
+            body: "Hallo! BBVA Spanien sucht einen Cybersicherheitsanalysten zur Überwachung der Sicherheitsprotokolle und Datenschutzprozesse in unserer Zentrale in Madrid."
           },
           es: {
-            title: "🚀 ¡Buscamos un Ingeniero Químico para la planta de Buñol!",
-            body: "Hola! Çimsa España busca un ingeniero químico para supervisar los ensayos de combustión alternativa y reciclaje en nuestra planta de Buñol."
+            title: "🚀 ¡Buscamos un Analista de Ciberseguridad para la sede de Madrid!",
+            body: "Hola! BBVA España busca un analista de ciberseguridad para supervisar los protocolos de seguridad y protección de datos en nuestra sede de Madrid."
           }
         }
       }
@@ -16159,7 +15149,7 @@ function scaleMockDataset() {
         title: t.title,
         author: user.name,
         authorId: user.id,
-        companyId: user.companyId || "sabanci-holding",
+        companyId: user.companyId || "bbva-group",
         type: "Topluluk",
         area: "Takım Arkadaşı Aranıyor",
         importanceScore: 5,
@@ -16176,27 +15166,27 @@ function scaleMockDataset() {
 
   // Add curated, localized per-country message spaces on top of the holding-wide
   // channels already loaded from initialMessageSpaces (do NOT reset - several other
-  // channels like msg-holding/msg-akbank are referenced elsewhere by id).
+  // channels like msg-holding/msg-tr-1 are referenced elsewhere by id).
   const spaceTemplates = {
     TR: [
-      { id: "msg-tr-1", name: "Akbank FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "akbank" },
-      { id: "msg-tr-2", name: "SabancıDx Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "sabancidx" }
+      { id: "msg-tr-1", name: "BBVA FinTech", desc: "Açık bankacılık ve yenilikçi finans teknolojileri odası.", companyId: "garanti-bbva" },
+      { id: "msg-tr-2", name: "BBVA Technology Hub", desc: "Çoklu dil ve bulut entegrasyonu yazılım grubu.", companyId: "bbva-technology" }
     ],
-    US: [
-      { id: "msg-us-1", name: "Sabancı Climate Solar", desc: "Texas utility battery dispatch optimization discussion.", companyId: "sabanci-climate-us" },
-      { id: "msg-us-2", name: "Kordsa Chattanooga R&D", desc: "Graphene-infused composite material trials.", companyId: "kordsa-usa" }
+    MX: [
+      { id: "msg-mx-1", name: "BBVA México Digital Savings", desc: "Mexico City digital savings dispatch optimization discussion.", companyId: "bbva-mexico" },
+      { id: "msg-mx-2", name: "BBVA México Monterrey R&D", desc: "Document automation and process trials.", companyId: "bbva-mexico" }
     ],
-    GB: [
-      { id: "msg-gb-1", name: "Sabancı Ventures UK", desc: "Renewable energy and green tech investment pipelines.", companyId: "sabanci-renewables-uk" },
-      { id: "msg-gb-2", name: "Çimsa UK Sales", desc: "White cement B2B distribution and client accounts.", companyId: "cimsa-uk" }
+    CO: [
+      { id: "msg-co-1", name: "BBVA Colombia Bogotá", desc: "Credit risk and digital banking investment pipelines.", companyId: "bbva-colombia" },
+      { id: "msg-co-2", name: "BBVA Colombia Medellín Sales", desc: "Retail banking distribution and client accounts.", companyId: "bbva-colombia" }
     ],
-    DE: [
-      { id: "msg-de-1", name: "Temsa Mobility DE", desc: "Telemetrie- und Batterie-Entladungs-Modelle für EV Busse.", companyId: "temsa-germany" },
-      { id: "msg-de-2", name: "Çimsa Hamburg Logistik", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "cimsa-germany" }
+    PE: [
+      { id: "msg-pe-1", name: "BBVA Perú Green Finance", desc: "Telemetría y modelos de financiamiento verde.", companyId: "bbva-peru" },
+      { id: "msg-pe-2", name: "BBVA Perú Lima Operaciones", desc: "Terminalbetrieb und automatisierte Versandprozesse.", companyId: "bbva-peru" }
     ],
     ES: [
-      { id: "msg-es-1", name: "Çimsa Buñol", desc: "Discusión sobre combustibles alternativos y reducción de CO2.", companyId: "cimsa-spain" },
-      { id: "msg-es-2", name: "Çimsa Buñol Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "cimsa-spain" }
+      { id: "msg-es-1", name: "BBVA Research Madrid", desc: "Discusión sobre modelos macroeconómicos y riesgo.", companyId: "bbva-research" },
+      { id: "msg-es-2", name: "BBVA Seguros Madrid Sostenibilidad", desc: "Certificación ESG y reducción de huella de carbono.", companyId: "bbva-seguros" }
     ]
   };
 
@@ -16205,21 +15195,21 @@ function scaleMockDataset() {
       { body: "KOBİ'ler için yeşil finansman API'leri test ortamında stabil çalışıyor.", tr: "KOBİ'ler için yeşil finansman API'leri test ortamında stabil çalışıyor.", en: "Green financing APIs for SMEs are working stably in the test environment.", de: "Grüne Finanzierungs-APIs für KMU laufen stabil in der Testumgebung.", es: "Las APIs de financiamiento verde para pymes funcionan de manera estable en el entorno de prueba." },
       { body: "Mükemmel, entegrasyon dokümanını paylaşıyorum.", tr: "Mükemmel, entegrasyon dokümanını paylaşıyorum.", en: "Excellent, sharing the integration document.", de: "Ausgezeichnet, ich teile das Integrationsdokument.", es: "Excelente, comparto el documento de integración." }
     ],
-    US: [
-      { body: "Please check the new solar dataset parameters in the shared workspace.", tr: "Lütfen paylaşılan çalışma alanındaki yeni güneş enerjisi veri kümesi parametrelerini kontrol edin.", en: "Please check the new solar dataset parameters in the shared workspace.", de: "Bitte überprüfen Sie die Parameter des neuen Solardatensatzes im gemeinsamen Arbeitsbereich.", es: "Verifique los parámetros del nuevo conjunto de datos solar en el espacio de trabajo compartido." },
+    MX: [
+      { body: "Please check the new digital savings dataset parameters in the shared workspace.", tr: "Lütfen paylaşılan çalışma alanındaki yeni dijital tasarruf veri kümesi parametrelerini kontrol edin.", en: "Please check the new digital savings dataset parameters in the shared workspace.", de: "Bitte überprüfen Sie die Parameter des neuen Sparkassen-Datensatzes im gemeinsamen Arbeitsbereich.", es: "Verifique los parámetros del nuevo conjunto de datos de ahorro en el espacio de trabajo compartido." },
       { body: "Acknowledged, checking the volume history now.", tr: "Anlaşıldı, hacim geçmişini şimdi kontrol ediyorum.", en: "Acknowledged, checking the volume history now.", de: "Bestätigt, ich überprüfe jetzt den Volumenverlauf.", es: "Entendido, comprobando el historial de volumen ahora." }
     ],
-    GB: [
-      { body: "We are reviewing three new startups from Manchester today.", tr: "Bugün Manchester'dan üç yeni girişimi inceliyoruz.", en: "We are reviewing three new startups from Manchester today.", de: "Wir prüfen heute drei neue Start-ups aus Manchester.", es: "Hoy estamos revisando tres nuevas startups de Manchester." },
+    CO: [
+      { body: "We are reviewing three new fintech startups from Bogotá today.", tr: "Bugün Bogotá'dan üç yeni fintech girişimini inceliyoruz.", en: "We are reviewing three new fintech startups from Bogotá today.", de: "Wir prüfen heute drei neue Fintech-Start-ups aus Bogotá.", es: "Hoy estamos revisando tres nuevas startups fintech de Bogotá." },
       { body: "Send over their slide decks, please.", tr: "Sunum dosyalarını gönderin lütfen.", en: "Send over their slide decks, please.", de: "Bitte senden Sie uns deren Präsentationen.", es: "Por favor, envíe sus presentaciones." }
     ],
-    DE: [
-      { body: "Der Prototyp des Wasserstoffbusses ist jetzt bereit für die ersten Straßentests.", tr: "Hidrojenli otobüs prototipi ilk yol testlerine hazır.", en: "The prototype of the hydrogen bus is now ready for the first road tests.", de: "Der Prototyp des Wasserstoffbusses ist jetzt bereit für die ersten Straßentests.", es: "El prototipo del autobús de hidrógeno ya está listo para las primeras pruebas en carretera." },
-      { body: "Sehr gut, ich werde die Telemetriedaten überwachen.", tr: "Çok iyi, telemetri verilerini izleyeceğim.", en: "Very good, I will monitor the telemetry data.", de: "Sehr gut, ich werde die Telemetriedaten überwachen.", es: "Muy bien, vigilaré los datos de telemetría." }
+    PE: [
+      { body: "El piloto de financiamiento verde ya está listo para las primeras pruebas en Lima.", tr: "Yeşil finansman pilotu Lima'daki ilk testlere hazır.", en: "The green financing pilot is now ready for the first tests in Lima.", de: "Das Pilotprojekt für grüne Finanzierung ist jetzt bereit für die ersten Tests in Lima.", es: "El piloto de financiamiento verde ya está listo para las primeras pruebas en Lima." },
+      { body: "Muy bien, vigilaré los indicadores de seguimiento.", tr: "Çok iyi, takip göstergelerini izleyeceğim.", en: "Very good, I will monitor the tracking indicators.", de: "Sehr gut, ich werde die Verfolgungsindikatoren überwachen.", es: "Muy bien, vigilaré los indicadores de seguimiento." }
     ],
     ES: [
-      { body: "Los ingenieros ya terminaron la calibración de los sensores térmicos en el horno.", tr: "Mühendisler fırındaki termal sensörlerin kalibrasyonunu tamamladı.", en: "Engineers have finished calibrating the thermal sensors in the kiln.", de: "Die Ingenieure haben die Kalibrierung der Thermosensoren im Ofen abgeschlossen.", es: "Los ingenieros ya terminaron la calibración de los sensores térmicos en el horno." },
-      { body: "Excelente, iniciemos el precalentamiento del sistema.", tr: "Mükemmel, sistemin ön ısıtmasını başlatalım.", en: "Excellent, let's start the system preheating.", de: "Ausgezeichnet, starten wir die Systemvorheizung.", es: "Excelente, iniciemos el precalentamiento del sistema." }
+      { body: "Los analistas ya terminaron la calibración de los modelos de riesgo macroeconómico.", tr: "Analistler makroekonomik risk modellerinin kalibrasyonunu tamamladı.", en: "Analysts have finished calibrating the macroeconomic risk models.", de: "Die Analysten haben die Kalibrierung der makroökonomischen Risikomodelle abgeschlossen.", es: "Los analistas ya terminaron la calibración de los modelos de riesgo macroeconómico." },
+      { body: "Excelente, iniciemos la revisión del sistema.", tr: "Mükemmel, sistemin incelemesini başlatalım.", en: "Excellent, let's start the system review.", de: "Ausgezeichnet, starten wir die Systemüberprüfung.", es: "Excelente, iniciemos la revisión del sistema." }
     ]
   };
 
@@ -16249,7 +15239,7 @@ function scaleMockDataset() {
         id: s.id,
         name: s.name,
         description: s.desc,
-        companyId: s.companyId || "sabanci-holding",
+        companyId: s.companyId || "bbva-group",
         scope: "İştirak",
         members: countryUsers.slice(0, 5).map(u => u.id),
         messages: chatMessages,
@@ -16258,7 +15248,7 @@ function scaleMockDataset() {
     });
   });
 
-  // Scale demo user credits to SA Coins scale
+  // Scale demo user credits to BBVA Coins scale
   demoUsers.forEach(u => {
     if (u.voteCreditBalance < 100) u.voteCreditBalance = (u.voteCreditBalance || 0) * 100;
     if (u.monthlyVoteCredit < 100) u.monthlyVoteCredit = (u.monthlyVoteCredit || 0) * 100;
@@ -16284,22 +15274,22 @@ function buildAiSuggestionForChallenge(challenge) {
   if (sector === "FinTech" || title.includes("Açık Bankacılık") || title.includes("FinTech")) {
     recommendation = "Bu FinTech yarışmasında başarı şansını artırmak için, API gecikme sürelerini ve veri gizliliği (KVKK/BDDK) gereksinimlerini hesaba katan bir prototip geliştirin.";
     steps = [
-      "Akbank Open API'lerini entegre edin.",
+      "BBVA Open Platform API'lerini entegre edin.",
       "Kullanıcı işlem geçmişini anlık olarak puanlayan hafif bir model tasarlayın.",
-      "Akbank mobil uygulamasıyla entegrasyon senaryosunu hazırlayın."
+      "Garanti BBVA mobil uygulamasıyla entegrasyon senaryosunu hazırlayın."
     ];
   } else if (sector === "Sürdürülebilirlik" || title.includes("Sürdürülebilirlik") || title.includes("Yeşil")) {
     recommendation = "Sürdürülebilirlik odaklı bu yarışmada, karbon ayak izi hesaplamasını ve iştirakler arası enerji optimizasyonunu ön plana çıkarın.";
     steps = [
-      "Tüm Sabancı Holding binalarının ve şubelerinin akıllı sayaç verilerini modelleyin.",
-      "Çalışanlar için yeşil davranışları teşvik eden ödül mekanizması (SA Coin) entegre edin.",
+      "Tüm BBVA binalarının ve şubelerinin akıllı sayaç verilerini modelleyin.",
+      "Çalışanlar için yeşil davranışları teşvik eden ödül mekanizması (BBVA Coin) entegre edin.",
       "Yıllık CapEx/OpEx tasarrufunu ve karbon azaltım oranını netleştirin."
     ];
   } else {
     recommendation = `Bu ${sector} yarışması için şirket içi uzmanları bir araya getiren modüler bir ekip kurun ve fikrinizi gerçek zamanlı pilot verilerle destekleyin.`;
     steps = [
       "Fikir havuzundaki ilgili veri setlerini (Veri&Bilgi) inceleyin.",
-      "Sabancı Holding iştiraklerinin (Akbank, Çimsa, Teknosa vb.) bu projeyi nasıl ölçeklendirebileceğini tasarlayın.",
+      "BBVA iştiraklerinin (Portföy, Yatırım vb.) bu projeyi nasıl ölçeklendirebileceğini tasarlayın.",
       "Karar verici kurul için 5 dakikalık bir demo video / pitch deck hazırlayın."
     ];
   }
