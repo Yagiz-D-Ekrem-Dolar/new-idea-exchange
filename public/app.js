@@ -1157,7 +1157,8 @@ function render() {
 function handleRouting() {
   const hash = window.location.hash || "#/dashboard";
   
-  if (hash.startsWith("#/manager-dashboard")) {
+  if (hash.startsWith("#/admin-dashboard") || hash.startsWith("#/manager-dashboard") || detectViewMode() === "admin") {
+    state.viewMode = "admin";
     state.page = "managerDashboard";
     const parts = hash.split("/");
     state.managerDashboardTab = parts[2] || "performance";
@@ -1165,8 +1166,11 @@ function handleRouting() {
     const cleanPage = hash.replace("#/", "");
     const viewRedirects = ["challenges", "announcements", "analytics"];
     if (state.viewMode === "admin" && viewRedirects.includes(cleanPage)) {
-      window.location.hash = `#/manager-dashboard/${cleanPage}`;
+      window.location.hash = `#/admin-dashboard/${cleanPage}`;
       return;
+    }
+    if (!state.panelAuthenticated) {
+      state.viewMode = "user";
     }
     state.page = cleanPage || "dashboard";
   }
@@ -1175,7 +1179,7 @@ function handleRouting() {
 
 function navigate(page, tab = null) {
   if (page === "managerDashboard") {
-    window.location.hash = `#/manager-dashboard${tab ? "/" + tab : ""}`;
+    window.location.hash = `#/admin-dashboard${tab ? "/" + tab : ""}`;
   } else {
     window.location.hash = `#/${page}`;
   }
@@ -1284,13 +1288,18 @@ function renderPanelAuth() {
             <h2 style="font-weight: 700; color: var(--ink); margin-bottom: 8px;">Yönetici Girişi</h2>
             <p style="color: var(--ink-soft); font-size: 14px;">Lütfen devam etmek için rolünüzü seçin.</p>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
             <button class="btn primary" data-action="select-auth-role" data-role="manager" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: 600;">
               ${icon("shield")} Yönetici / Müdür (Manager)
             </button>
             <button class="btn secondary" data-action="select-auth-role" data-role="admin" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: 600;">
               ${icon("shield-alert")} Üst Yönetici (Admin)
             </button>
+          </div>
+          <div style="text-align: center; margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px;">
+            <a href="#/dashboard" style="font-size: 13px; color: var(--ink-soft); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+              ${icon("arrow-left", "style='width: 14px; height: 14px;'")} Kullanıcı Paneline Dön
+            </a>
           </div>
         ` : `
           <div class="apple-login-copy" style="text-align: center; margin-bottom: 24px;">
