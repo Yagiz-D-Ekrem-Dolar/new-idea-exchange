@@ -739,7 +739,7 @@ const initialAnnouncements = [
   {
     id: "ann-44",
     title: "BBVA İnovasyon Ödülleri Açıklandı",
-    body: "Bu yılki Altın Yaka inovasyon kategorilerinde dereceye giren fikir sahiplerine toplamda 500.000 COIN ödül dağıtılacaktır.",
+    body: "Bu yılki Altın Yaka inovasyon kategorilerinde dereceye giren fikir sahiplerine toplamda 500.000 B-Token ödül dağıtılacaktır.",
     scope: "Holding geneli",
     companyId: "bbva-group",
     country: "TR",
@@ -1416,6 +1416,8 @@ const initialIdeas = [
     credits: 250,
     supporters: 45,
     marketChange: 5.2,
+    upvotes: 80,
+    downvotes: 12,
     country: "TR",
     comments: [
       { user: "Mateo Aguirre", body: "Çok değerli bir çalışma, BBVA Innovation Lab ekibiyle test etmeye başlayalım.", manager: true },
@@ -1478,6 +1480,8 @@ const initialIdeas = [
     credits: 110,
     supporters: 28,
     marketChange: 3.8,
+    upvotes: 76,
+    downvotes: 11,
     country: "TR",
     comments: [
       { user: "Can Koç", body: "Gebze deposundaki otomasyon sistemleri ile entegre edilirse harika olur.", manager: true }
@@ -1539,6 +1543,8 @@ const initialIdeas = [
     credits: 135,
     supporters: 31,
     marketChange: -1.4,
+    upvotes: 79,
+    downvotes: 12,
     country: "TR",
     comments: [],
     tags: ["Sanayi", "IoT", "Elektrikli Araç", "Garanti BBVA"],
@@ -1600,6 +1606,8 @@ const initialIdeas = [
     credits: 180,
     supporters: 42,
     marketChange: 8.1,
+    upvotes: 79,
+    downvotes: 12,
     country: "ES",
     comments: [
       { user: "Oliver Watson", body: "Excellent model. Fits our risk management roadmap in Spain.", manager: true }
@@ -1661,6 +1669,8 @@ const initialIdeas = [
     credits: 145,
     supporters: 35,
     marketChange: 2.6,
+    upvotes: 77,
+    downvotes: 12,
     country: "ES",
     comments: [],
     tags: ["Insurance", "Automation", "Madrid", "OCR"],
@@ -1722,6 +1732,8 @@ const initialIdeas = [
     credits: 310,
     supporters: 55,
     marketChange: -2.9,
+    upvotes: 80,
+    downvotes: 12,
     country: "MX",
     comments: [
       { user: "Jessica Taylor", body: "This will solidify BBVA México position in digital savings.", manager: true }
@@ -1783,6 +1795,8 @@ const initialIdeas = [
     credits: 95,
     supporters: 22,
     marketChange: 6.3,
+    upvotes: 74,
+    downvotes: 11,
     country: "MX",
     comments: [],
     tags: ["Banking", "Monterrey", "Automation", "Logistics"],
@@ -1844,6 +1858,8 @@ const initialIdeas = [
     credits: 120,
     supporters: 29,
     marketChange: 1.1,
+    upvotes: 76,
+    downvotes: 11,
     country: "CO",
     comments: [
       { user: "Dieter Schmidt", body: "Excellent layout. Can serve as a template for other Latin American cities.", manager: true }
@@ -1907,6 +1923,8 @@ const initialIdeas = [
     credits: 280,
     supporters: 48,
     marketChange: 4.7,
+    upvotes: 81,
+    downvotes: 12,
     country: "PE",
     comments: [
       { user: "Maria Ortega", body: "This will make BBVA Perú the leading green financing bank in the region.", manager: false }
@@ -1952,7 +1970,7 @@ const challenges = [
     brief: "Kullanıcıların günlük harcamalarını analiz ederek tasarruf önerileri sunan fintech çözümleri.",
     date: "1 Haz - 30 Haz",
     deadline: "12 gün kaldı",
-    reward: "75.000 COIN + Hızlı Inovasyon Bütçesi",
+    reward: "75.000 B-Token + Hızlı Inovasyon Bütçesi",
     rewardType: "Terfi + Para",
     sponsor: "BBVA İnovasyon Lab",
     status: "Aktif",
@@ -1977,7 +1995,7 @@ const challenges = [
     brief: "Online siparişlerin mağaza stoklarıyla anlık eşlenip teslimat süresini yarıya indiren lojistik akışları.",
     date: "5 Haz - 5 Tem",
     deadline: "18 gün kaldı",
-    reward: "50.000 COIN + Gebze Lojistik Pilotu",
+    reward: "50.000 B-Token + Gebze Lojistik Pilotu",
     rewardType: "Teknoloji Hediye",
     sponsor: "BBVA México Tedarik Zinciri",
     status: "Aktif",
@@ -2003,7 +2021,7 @@ const challenges = [
     brief: "Algorithms to optimize allocation/reallocation schedules of Mexico City customer savings based on peak market prices.",
     date: "10 Jun - 15 Jul",
     deadline: "27 days left",
-    reward: "100.000 COIN + Mexico City lab pilot project",
+    reward: "100.000 B-Token + Mexico City lab pilot project",
     rewardType: "Para",
     sponsor: "BBVA México",
     status: "Aktif",
@@ -2029,7 +2047,7 @@ const challenges = [
     brief: "AI algorithms to predict next-quarter credit demand and risk outputs in Bogotá branch connections.",
     date: "15 Jun - 25 Jul",
     deadline: "35 days left",
-    reward: "60.000 COIN + Bogotá tech team support",
+    reward: "60.000 B-Token + Bogotá tech team support",
     rewardType: "Para + Sertifika",
     sponsor: "BBVA Colombia",
     status: "Aktif",
@@ -2055,7 +2073,7 @@ const challenges = [
     brief: "Algoritmos para predecir y extender el alcance de financiamiento verde bajo condiciones reales de mercado en Lima.",
     date: "12 Jun - 20 Jul",
     deadline: "30 days left",
-    reward: "80.000 COIN + Lima Pilot-Flotte",
+    reward: "80.000 B-Token + Lima Pilot-Flotte",
     rewardType: "Para + Sertifika",
     sponsor: "BBVA Perú Sürdürülebilirlik",
     status: "Aktif",
@@ -2081,7 +2099,7 @@ const challenges = [
     brief: "Innovative methods to channel carbon-neutral financing and ESG scoring inside BBVA Research's Madrid models.",
     date: "20 Jun - 20 Aug",
     deadline: "60 days left",
-    reward: "150.000 COIN + Green Finance Pilot",
+    reward: "150.000 B-Token + Green Finance Pilot",
     rewardType: "Para",
     sponsor: "BBVA Research",
     status: "Yakında",
