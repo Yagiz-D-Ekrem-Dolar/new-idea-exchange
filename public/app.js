@@ -1084,6 +1084,13 @@ function pageSubtitle() {
 
 function render() {
   document.body.dataset.theme = state.theme;
+
+  if (state.viewMode === "admin" && !state.panelAuthenticated) {
+    app.innerHTML = renderPanelAuth();
+    if (window.lucide) window.lucide.createIcons();
+    return;
+  }
+
   // "products" stays merged into the Studio hub. Normalize state.page here (before
   // header/title/body all read it) so the header doesn't show a stale/wrong label
   // while the body shows Studio content. "teams" is its own standalone page.
@@ -1092,11 +1099,7 @@ function render() {
     state.studioTab = "products";
   }
   translateAllInState();
-  if (state.viewMode === "admin" && !state.panelAuthenticated) {
-    app.innerHTML = renderPanelAuth();
-  } else {
-    app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
-  }
+  app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
   if (window.lucide) window.lucide.createIcons();
 
   // Auto-scroll AI Assistant chat
@@ -1108,6 +1111,36 @@ function render() {
   // Make AI Assistant bubble draggable
   initAIBubbleDraggability();
 }
+
+function handleRouting() {
+  const hash = window.location.hash || "#/dashboard";
+  
+  if (hash.startsWith("#/manager-dashboard")) {
+    state.page = "managerDashboard";
+    const parts = hash.split("/");
+    state.managerDashboardTab = parts[2] || "performance";
+  } else {
+    const cleanPage = hash.replace("#/", "");
+    const viewRedirects = ["challenges", "announcements", "analytics"];
+    if (state.viewMode === "admin" && viewRedirects.includes(cleanPage)) {
+      window.location.hash = `#/manager-dashboard/${cleanPage}`;
+      return;
+    }
+    state.page = cleanPage || "dashboard";
+  }
+  render();
+}
+
+function navigate(page, tab = null) {
+  if (page === "managerDashboard") {
+    window.location.hash = `#/manager-dashboard${tab ? "/" + tab : ""}`;
+  } else {
+    window.location.hash = `#/${page}`;
+  }
+}
+
+window.addEventListener("hashchange", handleRouting);
+window.addEventListener("load", handleRouting);
 
 function resetScroll() {
   const jump = () => {
@@ -9054,8 +9087,8 @@ document.addEventListener("click", event => {
 
   const setManagerTab = event.target.closest("[data-action='set-manager-tab']");
   if (setManagerTab) {
-    state.managerDashboardTab = setManagerTab.dataset.tab;
-    render();
+    const tabId = setManagerTab.dataset.tab;
+    window.location.hash = `#/manager-dashboard/${tabId}`;
     return;
   }
 
@@ -9084,14 +9117,11 @@ document.addEventListener("click", event => {
     }
     const item = navItems.find(entry => entry.id === targetPage);
     if (!item || canAccess(item)) {
-      state.previousPage = state.page;
-      state.page = targetPage;
       state.mobileOpen = false;
       state.complaintBoxFeedback = "";
       state.suggestionsFeedback = "";
       state.suggestionsFeedbackError = "";
-      render();
-      resetScroll();
+      navigate(targetPage);
     }
     return;
   }
@@ -16638,7 +16668,11 @@ function scaleMockDataset() {
 
 scaleMockDataset();
 ensureSocialEnhancements();
-render();
+if (!window.location.hash) {
+  window.location.hash = "#/dashboard";
+} else {
+  handleRouting();
+}
 
 
 
