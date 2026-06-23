@@ -1,13 +1,7 @@
 function detectViewMode() {
   const params = new URLSearchParams(window.location.search);
-  const hostname = window.location.hostname.toLowerCase();
-  
-  if (params.has("admin") || params.has("manager") || params.get("mode") === "admin" || params.get("mode") === "manager" || params.get("panel") === "admin" || params.get("panel") === "manager") {
-    return "admin";
-  }
-  if (hostname.includes("admin") || hostname.includes("manager") || hostname.includes("yetici") || hostname.includes("yonetici")) {
-    return "admin";
-  }
+  const panel = params.get("panel");
+  if (panel === "admin" || panel === "manager") return "admin";
   return "user";
 }
 
@@ -66,6 +60,14 @@ const state = {
   },
   loginView: "default",
   externalSubmitSuccess: false,
+  investmentLedger: [
+    { id: "tx-1", user: "Nazlı Durukan", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, date: "2026-06-10" },
+    { id: "tx-2", user: "Aras Kılınç", project: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 800, date: "2026-06-11" },
+    { id: "tx-3", user: "Nazlı Durukan", project: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 450, date: "2026-06-12" },
+    { id: "tx-4", user: "Mert Alkan", project: "Akıllı Harcama ve Karbon Nötrleme Kart Entegrasyonu", amount: 1500, date: "2026-06-14" }
+  ],
+  ledgerUserFilter: "Tümü",
+  ledgerProjectFilter: "Tümü",
   page: detectViewMode() === "admin" ? "managerDashboard" : "quickFlow",
   previousPage: detectViewMode() === "admin" ? "managerDashboard" : "quickFlow",
   selectedIdeaId: "idea-1",
@@ -77,12 +79,18 @@ const state = {
   }),
   ideaView: "cards",
   marketBudget: 10000,
-  userVotes: {},
+  marketHoldings: {
+    "idea-1": 8,
+    "idea-2": 5
+  },
   marketCategoryFilter: "Tümü",
   marketSort: "Revaç",
   marketPanel: "home",
   marketSearch: "",
   marketSelectedId: "idea-1",
+  marketRange: "1D",
+  marketIndicator: "MACD",
+  marketOrderSize: 1,
   marketComposerContext: "",
   marketDraft: {
     title: "",
@@ -161,10 +169,14 @@ const state = {
   ledgerUserFilter: "Tümü",
   ledgerProjectFilter: "Tümü",
   investmentLedger: [
-    { userId: "u1", userName: "Ayşe Yılmaz", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 50, action: "upvote", date: "10.06.2026" },
-    { userId: "u2", userName: "Mehmet Demir", ideaId: "idea-2", ideaTitle: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 50, action: "upvote", date: "11.06.2026" },
-    { userId: "u5", userName: "Merve Aydın", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 50, action: "upvote", date: "12.06.2026" }
+    { userId: "u1", userName: "Ayşe Yılmaz", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1200, quantity: 10, date: "10.06.2026" },
+    { userId: "u2", userName: "Mehmet Demir", ideaId: "idea-2", ideaTitle: "Yeni başlayan çalışanlar için AI destekli kurum içi rehber", amount: 800, quantity: 8, date: "11.06.2026" },
+    { userId: "u5", userName: "Merve Aydın", ideaId: "idea-1", ideaTitle: "Yoğun saatlerde kasa bekleme süresini azaltacak dinamik vardiya sistemi", amount: 1440, quantity: 12, date: "12.06.2026" }
   ],
+  marketInvestedAmount: {
+    "idea-1": 960,
+    "idea-2": 450
+  },
   selectedChannelId: "ch-ops",
   chatDraft: "",
   affiliationFilter: "all",
@@ -871,18 +883,21 @@ function renderAvatarStack(ids, max = 4) {
   `;
 }
 
-const UPVOTE_COST = 50;
-
 function marketCompanyForIdea(idea) {
   return companyById(idea.companyId || "bbva-group");
 }
 
-function netVoteScore(idea) {
-  return Number(idea.upvotes || 0) - Number(idea.downvotes || 0);
+function marketPrice(idea) {
+  // Every idea starts from the same 100 B-Token base valuation; marketChange (driven by
+  // buy/sell activity and per-idea performance drift) is applied on top so prices
+  // actually move with trading instead of staying frozen at the base forever.
+  const base = Number(idea.marketPrice || 100);
+  const change = Number(idea.marketChange || 0);
+  return Math.max(20, Math.round(base * (1 + change / 100)));
 }
 
 function marketTrendScore(idea) {
-  return Math.round((idea.aiScore || 70) * 0.42 + (idea.communityScore || 60) * 0.34 + (idea.supporters || 0) * 1.4 + Math.max(0, netVoteScore(idea)) * 0.5);
+  return Math.round((idea.aiScore || 70) * 0.42 + (idea.communityScore || 60) * 0.34 + (idea.supporters || 0) * 1.4 + Math.max(0, Number(idea.marketChange || 0)) * 2);
 }
 
 function marketVisibleIdeas() {
@@ -909,100 +924,24 @@ function marketVisibleIdeas() {
 
   const sorters = {
     "Revaç": (a, b) => marketTrendScore(b) - marketTrendScore(a),
-    "En çok upvote alan": (a, b) => Number(b.upvotes || 0) - Number(a.upvotes || 0),
-    "En çok downvote alan": (a, b) => Number(b.downvotes || 0) - Number(a.downvotes || 0),
+    "En çok yükselen": (a, b) => Number(b.marketChange || 0) - Number(a.marketChange || 0),
+    "En çok düşen": (a, b) => Number(a.marketChange || 0) - Number(b.marketChange || 0),
     "Hacim": (a, b) => Number(b.marketVolume || 0) - Number(a.marketVolume || 0),
-    "Net oy": (a, b) => netVoteScore(b) - netVoteScore(a)
+    "Fiyat": (a, b) => marketPrice(b) - marketPrice(a)
   };
 
   return ideas.sort(sorters[state.marketSort] || sorters["Revaç"]);
 }
 
-function marketDeltaClass(value) {
-  return Number(value) >= 0 ? "positive" : "negative";
+function marketPortfolioValue() {
+  return Object.entries(state.marketHoldings).reduce((sum, [id, quantity]) => {
+    const idea = state.ideas.find(item => item.id === id);
+    return sum + (idea ? marketPrice(idea) * quantity : 0);
+  }, 0);
 }
 
-function castVote(ideaId, direction) {
-  const idea = state.ideas.find(item => item.id === ideaId);
-  if (!idea) return false;
-  if (!state.userVotes) state.userVotes = {};
-  if (typeof idea.upvotes !== "number") idea.upvotes = 0;
-  if (typeof idea.downvotes !== "number") idea.downvotes = 0;
-  if (!state.investmentLedger) state.investmentLedger = [];
-
-  const current = state.userVotes[ideaId];
-  const user = currentUser();
-
-  const pushLedger = (action, amount) => {
-    state.investmentLedger.push({
-      userId: user.id,
-      userName: user.name,
-      ideaId,
-      ideaTitle: idea.title,
-      action,
-      amount,
-      date: new Date().toLocaleDateString("tr-TR")
-    });
-  };
-
-  if (direction === "up") {
-    if (current === "up") {
-      // toggle off
-      state.marketBudget += UPVOTE_COST;
-      idea.upvotes -= 1;
-      delete state.userVotes[ideaId];
-      pushLedger("upvote-geri-al", -UPVOTE_COST);
-      return true;
-    }
-    if (current === "down") {
-      idea.downvotes -= 1;
-      if (state.marketBudget < UPVOTE_COST) {
-        alert("Yetersiz bütçe!");
-        idea.downvotes += 1;
-        return false;
-      }
-      state.marketBudget -= UPVOTE_COST;
-      idea.upvotes += 1;
-      state.userVotes[ideaId] = "up";
-      pushLedger("upvote", UPVOTE_COST);
-      return true;
-    }
-    // no current vote
-    if (state.marketBudget < UPVOTE_COST) {
-      alert("Yetersiz bütçe!");
-      return false;
-    }
-    state.marketBudget -= UPVOTE_COST;
-    idea.upvotes += 1;
-    state.userVotes[ideaId] = "up";
-    pushLedger("upvote", UPVOTE_COST);
-    return true;
-  }
-
-  if (direction === "down") {
-    if (current === "down") {
-      // toggle off
-      idea.downvotes -= 1;
-      delete state.userVotes[ideaId];
-      pushLedger("downvote-geri-al", 0);
-      return true;
-    }
-    if (current === "up") {
-      state.marketBudget += UPVOTE_COST;
-      idea.upvotes -= 1;
-      idea.downvotes += 1;
-      state.userVotes[ideaId] = "down";
-      pushLedger("downvote", -UPVOTE_COST);
-      return true;
-    }
-    // no current vote
-    idea.downvotes += 1;
-    state.userVotes[ideaId] = "down";
-    pushLedger("downvote", 0);
-    return true;
-  }
-
-  return false;
+function marketDeltaClass(value) {
+  return Number(value) >= 0 ? "positive" : "negative";
 }
 
 function formatCurrency(value) {
@@ -1091,13 +1030,7 @@ function canAccess(item, user = currentUser()) {
 }
 
 function allowedNav() {
-  const allNavs = cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(Boolean);
-  if (state.viewMode === "admin") {
-    const adminNavIds = ["managerDashboard", "manager", "adminStorage", "analytics", "dashboard", "profile", "settings"];
-    return allNavs.filter(item => adminNavIds.includes(item.id) && canAccess(item));
-  } else {
-    return allNavs.filter(item => !item.managerOnly && !item.adminOnly && canAccess(item));
-  }
+  return cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(item => item && canAccess(item));
 }
 
 function pageLabel() {
@@ -1273,14 +1206,14 @@ function renderLogin() {
           <button class="btn primary block" data-action="validate-key">${icon("unlock-keyhole")} Girişe devam et</button>
           <p class="security-note">Demo key altta görünür. Gerçek ortamda erişim şirket içi kimlikle doğrulanır.</p>
           
-          <!-- QR Code block -->
-          <div style="margin-top: 16px; border-top: 1px dashed var(--line-soft); padding-top: 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
-            <span style="font-size: 13px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 6px;">
-              ${icon("qr-code", "style='width: 16px; height: 16px; color: var(--primary);'")} Siz de deneyin!
-            </span>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(window.location.href)}" alt="QR Code" style="width: 110px; height: 110px; border-radius: 8px; border: 1px solid var(--line-soft); padding: 4px; background: white;" />
-            <a href="${window.location.href}" target="_blank" style="font-size: 11px; color: var(--primary); text-decoration: underline; word-break: break-all; font-weight: 600;">${window.location.href}</a>
+          <div class="login-qr-section" style="margin-top: 16px; border-top: 1px dashed var(--line-soft); padding-top: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Siz de Deneyin!</div>
+            <div style="background: white; padding: 8px; border-radius: 8px; border: 1px solid var(--line-soft); box-shadow: var(--shadow-flat); display: inline-block; width: 126px; height: 126px;">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(window.location.href)}" alt="QR Code" style="width: 110px; height: 110px;" />
+            </div>
+            <a href="${esc(window.location.href)}" style="font-size: 11px; color: var(--primary); text-decoration: none; word-break: break-all; max-width: 240px; display: inline-block; font-weight: 600;" target="_blank">${esc(window.location.href)}</a>
           </div>
+
           <div style="margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px; text-align: center;">
             <button class="btn secondary block" data-action="toggle-external-signup" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; height: 38px; font-weight: 600;">
               ${icon("user-plus")} Şirket Dışı Girişimci Girişi / Başvurusu
@@ -2232,20 +2165,22 @@ function renderStockTicker() {
 
   // Duplicate list to make scrolling infinite and smooth
   const items = [...list, ...list, ...list];
-
+  
   return `
     <div class="ticker-wrap">
       <div class="ticker">
         <div class="ticker__move">
           ${items.map(idea => {
-            const net = netVoteScore(idea);
-            const isUp = net >= 0;
+            const price = marketPrice(idea);
+            const change = Number(idea.marketChange || 0);
+            const isUp = change >= 0;
             return `
               <span class="ticker__item">
+                <span style="color: var(--muted); margin-right: 4px;">$</span>
                 <strong>${esc(idea.marketTicker)}</strong>
-                <span style="margin-left: 6px; font-weight: 500;">${icon("thumbs-up", "12")} ${Number(idea.upvotes || 0)} · ${icon("thumbs-down", "12")} ${Number(idea.downvotes || 0)}</span>
+                <span style="margin-left: 6px; font-weight: 500;">${price} B-Token</span>
                 <span class="ticker-change ${isUp ? "up" : "down"}">
-                  ${isUp ? "▲" : "▼"} ${Math.abs(net)} net oy
+                  ${isUp ? "▲" : "▼"} ${Math.abs(change).toFixed(1)}%
                 </span>
               </span>
             `;
@@ -2265,7 +2200,7 @@ function renderQuickFlow() {
   const limit = state.visibleBorsaIdeasCount || 12;
   const sliced = ideas.slice(0, limit);
   const hasMore = ideas.length > limit;
-  const myVoteCount = state.userVotes ? Object.keys(state.userVotes).length : 0;
+  const portfolioValue = marketPortfolioValue();
 
   return `
     <div class="view-stack borsa-page">
@@ -2273,8 +2208,8 @@ function renderQuickFlow() {
         <div>
           <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Fikir Borsası</h2>
-          <p>Proje, fikir ve araştırmalar burada listelenir. Upvote/downvote vererek öne çıkar ve raporları incele.</p>
-
+          <p>Proje, fikir ve araştırmalar burada listelenir. Al, sat ve raporları incele.</p>
+          
           <!-- Prominent Global Search Motor -->
           <div class="hero-global-search-container" style="margin-top: 14px; width: 100%; max-width: 460px;">
             <label class="search-box" style="background: var(--bg-soft); border: 1px solid var(--line-soft); border-radius: 99px; display: flex; align-items: center; padding: 8px 16px; width: 100%;">
@@ -2287,7 +2222,7 @@ function renderQuickFlow() {
           <div class="market-wallet" style="text-align: right;">
             <span>Bütçe</span>
             <strong style="display: block; font-size: 22px; color: var(--ink);">${formatCurrencyHTML(state.marketBudget, "large")}</strong>
-            <small style="color: var(--muted);">Bu ay verilen oy sayısı: ${myVoteCount}</small>
+            <small style="color: var(--muted);">Portföy ${formatCurrencyHTML(portfolioValue, "small")}</small>
           </div>
           <button class="btn primary" data-action="open-market-composer" data-context="quickFlow">${icon("plus")} Proje Ekle</button>
         </div>
@@ -2301,12 +2236,12 @@ function renderQuickFlow() {
           ${icon("info")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası
         </div>
         <ul style="margin: 0; padding-left: 20px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px;">
-          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 B-Token</strong> gereklidir.</li>
-          <li><strong>Upvote Maliyeti:</strong> Bir fikre upvote vermek <strong>${UPVOTE_COST} Coin</strong> tutarındadır; downvote ücretsizdir. Oyunuzu istediğiniz an geri alabilirsiniz.</li>
+          <li><strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.</li>
+          <li><strong>Hisse Alım Sınırı:</strong> Bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.</li>
           <li><strong>Yapay Zeka Barajı:</strong> AI değerlendirme skoru <strong>70'in altında</strong> kalan projeler doğrudan reddedilir.</li>
           <li><strong>Tüzük Uyumluluğu:</strong> Yapay zeka analizi sonucunda tüzüğe veya kurum politikalarına aykırı bulunan fikirler sistem tarafından otomatik olarak elenir.</li>
-          <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), verdiğiniz upvote desteğinin coin karşılığının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
-          <li><strong>Girişimci-Destekçi Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u destekçileri arasında paylaştırılacaktır.</li>
+          <li><strong>Hayata Geçirilme Ödülü (10 Kat Kredi):</strong> Desteklediğiniz proje başarıyla hayata geçirildiğinde (Done / pivotlaşma sonrası destek), projeye yaptığınız yatırım miktarının <strong>10 katı</strong> kadar kredi hesabınıza ödül olarak anında tanımlanır.</li>
+          <li><strong>Girişimci-Yatırımcı Paylaşımı:</strong> Bir fikir/proje hayata geçirildiğinde, girişimciye verilen ödülün %10’u yatırımcıları arasında paylaştırılacaktır.</li>
         </ul>
       </section>
 
@@ -2346,7 +2281,7 @@ function renderQuickFlow() {
             </select>
  
             <select class="select" data-market-filter="sort" aria-label="Sıralama">
-              ${optionList(["En yeni", "En çok upvote alan", "En çok downvote alan", "Net oy", "En Yüksek AI Skoru", "En Çok Beğenilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
+              ${optionList(["En yeni", "En Pahalılar", "En Yüksek AI Skoru", "En Çok Beğenilenler", "En çok etkileşim alan", "En çok yorumlanan"], state.marketSort)}
             </select>
  
             <button class="btn ghost slim-btn" data-action="clear-borsa-filters" style="padding: 6px 12px; font-size: 13px;">
@@ -2379,23 +2314,9 @@ function renderQuickFlow() {
   `;
 }
 
-function renderVoteButtons(idea, size = "normal") {
-  const vote = state.userVotes ? state.userVotes[idea.id] : undefined;
-  return `
-    <span class="vote-buttons vote-buttons-${esc(size)}">
-      <button type="button" class="vote-btn vote-up ${vote === "up" ? "vote-active" : ""}" data-action="upvote-idea" data-id="${esc(idea.id)}" title="Upvote · ${UPVOTE_COST} coin">
-        ${icon("thumbs-up", "14")} <span>${Number(idea.upvotes || 0)}</span>
-      </button>
-      <button type="button" class="vote-btn vote-down ${vote === "down" ? "vote-active" : ""}" data-action="downvote-idea" data-id="${esc(idea.id)}" title="Downvote · ücretsiz">
-        ${icon("thumbs-down", "14")} <span>${Number(idea.downvotes || 0)}</span>
-      </button>
-    </span>
-  `;
-}
-
 function renderMarketLeader(idea, index) {
   const company = marketCompanyForIdea(idea);
-  const net = netVoteScore(idea);
+  const change = Number(idea.marketChange || 0);
   return `
     <article class="market-leader-card rank-${index + 1}">
       <div class="market-leader-top">
@@ -2405,11 +2326,12 @@ function renderMarketLeader(idea, index) {
       <strong>${esc(idea.marketTicker)}</strong>
       <h3>${esc(idea.title)}</h3>
       <div class="market-line">
-        ${renderVoteButtons(idea, "compact")}
+        ${marketSparkline(idea.marketSpark, change)}
+        <span class="market-price">${formatCurrencyHTML(marketPrice(idea))}</span>
       </div>
       <footer>
         <span>${esc(idea.marketCategory || "Fikir")}</span>
-        <em class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net} net oy</em>
+        <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</em>
       </footer>
     </article>
   `;
@@ -2417,7 +2339,8 @@ function renderMarketLeader(idea, index) {
 
 function renderMarketRow(idea, index) {
   const company = marketCompanyForIdea(idea);
-  const net = netVoteScore(idea);
+  const change = Number(idea.marketChange || 0);
+  const owned = state.marketHoldings[idea.id] || 0;
   return `
     <article class="market-row">
       <span class="market-rank muted">#${index + 1}</span>
@@ -2428,9 +2351,15 @@ function renderMarketRow(idea, index) {
           <small>${esc(idea.marketTicker)} · ${esc(company.shortName)} · ${esc(idea.marketCategory || "Fikir")}</small>
         </span>
       </div>
-      <span class="market-change ${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net} net oy</span>
+      ${marketSparkline(idea.marketSpark, change)}
+      <span class="market-price">${formatCurrencyHTML(marketPrice(idea))}</span>
+      <span class="market-change ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</span>
       <span class="market-volume">${Number(idea.marketVolume || 0).toLocaleString("tr-TR")} hacim</span>
-      ${renderVoteButtons(idea)}
+      <span class="market-owned">${owned} lot</span>
+      <span class="market-actions">
+        <button class="btn ghost" data-action="sell-market" data-id="${esc(idea.id)}" ${owned <= 0 ? "disabled" : ""}>Sat</button>
+        <button class="btn primary" data-action="buy-market" data-id="${esc(idea.id)}">Al</button>
+      </span>
     </article>
   `;
 }
@@ -2441,14 +2370,87 @@ function tradingRows() {
 
 function tradingMarketStats(rows) {
   const safeRows = rows.length ? rows : state.ideas.slice(0, 1);
-  const movers = safeRows.filter(item => netVoteScore(item) >= 0).length;
+  const movers = safeRows.filter(item => Number(item.marketChange || 0) >= 0).length;
   const volume = safeRows.reduce((sum, item) => sum + Number(item.marketVolume || 0), 0);
-  const averageNetVote = safeRows.reduce((sum, item) => sum + netVoteScore(item), 0) / Math.max(1, safeRows.length);
-  return { movers, volume, averageNetVote };
+  const averageChange = safeRows.reduce((sum, item) => sum + Number(item.marketChange || 0), 0) / Math.max(1, safeRows.length);
+  return { movers, volume, averageChange };
 }
 
 function tradingCashDelta(rows) {
-  return { total: state.marketBudget };
+  const portfolio = marketPortfolioValue();
+  const weightedChange = rows.reduce((sum, item) => {
+    const quantity = state.marketHoldings[item.id] || 0;
+    return sum + quantity * marketPrice(item) * (Number(item.marketChange || 0) / 100);
+  }, 0);
+  return { portfolio, total: state.marketBudget + portfolio, weightedChange };
+}
+
+function tradingSparkPath(points = []) {
+  const safe = points.length ? points : [46, 48, 45, 55, 58, 61, 59, 68];
+  const width = 420;
+  const height = 156;
+  const min = Math.min(...safe);
+  const max = Math.max(...safe);
+  const range = Math.max(1, max - min);
+  const coords = safe.map((point, index) => {
+    const x = safe.length === 1 ? 0 : (index / (safe.length - 1)) * width;
+    const y = height - ((point - min) / range) * (height - 30) - 15;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const area = `0,${height} ${coords.join(" ")} ${width},${height}`;
+  return { line: coords.join(" "), area, width, height };
+}
+
+function renderTradingChart(rows) {
+  const focus = rows[0] || state.ideas[0];
+  const candles = marketCandles(focus, 24);
+  const values = candles.flatMap(candle => [candle.high, candle.low]);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = Math.max(1, max - min);
+  const width = 420;
+  const height = 168;
+  const scaleY = value => height - 14 - ((value - min) / range) * (height - 28);
+  const candleGap = width / Math.max(1, candles.length - 1);
+  const bodyWidth = Math.max(5, Math.min(10, candleGap * 0.45));
+
+  return `
+    <div class="trading-chart-card candle" aria-label="Portföy grafiği">
+      <svg class="trading-chart trading-candle-chart" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+        <line class="trading-chart-grid" x1="0" y1="${height * 0.72}" x2="${width}" y2="${height * 0.72}" />
+        <line class="trading-chart-grid soft" x1="0" y1="${height * 0.38}" x2="${width}" y2="${height * 0.38}" />
+        ${candles.map((candle, index) => {
+          const x = index * candleGap;
+          const open = scaleY(candle.open);
+          const close = scaleY(candle.close);
+          const high = scaleY(candle.high);
+          const low = scaleY(candle.low);
+          const up = candle.close >= candle.open;
+          const bodyY = Math.min(open, close);
+          const bodyHeight = Math.max(2, Math.abs(close - open));
+          return `
+            <g class="chart-candle ${up ? "up" : "down"}">
+              <line x1="${x.toFixed(1)}" y1="${high.toFixed(1)}" x2="${x.toFixed(1)}" y2="${low.toFixed(1)}"></line>
+              <rect x="${(x - bodyWidth / 2).toFixed(1)}" y="${bodyY.toFixed(1)}" width="${bodyWidth.toFixed(1)}" height="${bodyHeight.toFixed(1)}" rx="1.5"></rect>
+            </g>
+          `;
+        }).join("")}
+      </svg>
+      <div class="trading-chart-axis">
+        <span>09:30</span>
+        <span>12:00</span>
+        <span>15:30</span>
+        <span>17:45</span>
+      </div>
+    </div>
+  `;
+}
+
+function tradingPricePill(idea, mode) {
+  const base = marketPrice(idea);
+  const spread = Math.max(1, Math.round(base * 0.012));
+  const price = mode === "buy" ? base + spread : Math.max(1, base - spread);
+  return formatCurrency(price);
 }
 
 function bundleFileName(file = "") {
@@ -2750,6 +2752,40 @@ function renderGenericFilePreview(file, idea) {
   `;
 }
 
+function renderAssetMiniChart(idea) {
+  const change = Number(idea.marketChange || 0);
+  const up = change >= 0;
+  return `
+    <span class="asset-trend-badge ${up ? "up" : "down"}" aria-label="${esc(idea.marketTicker)} trendi">
+      <span class="trend-badge-icon">
+        ${up ? `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        ` : `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+        `}
+      </span>
+      <span class="trend-badge-text">${up ? "Yukarı" : "Aşağı"}</span>
+    </span>
+  `;
+}
+
+function marketQuote(idea) {
+  const last = marketPrice(idea);
+  const spread = Math.max(1, Math.round(last * 0.006));
+  return {
+    last,
+    bid: Math.max(1, last - spread),
+    ask: last + spread,
+    volume: Number(idea.marketVolume || 0)
+  };
+}
+
 function formatMarketVolume(value) {
   const volume = Number(value || 0);
   if (volume >= 1000000) return `${(volume / 1000000).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}M`;
@@ -2757,56 +2793,361 @@ function formatMarketVolume(value) {
   return volume.toLocaleString("tr-TR");
 }
 
-function marketSelectedIdea(rows = marketVisibleIdeas()) {
-  return rows.find(idea => idea.id === state.marketSelectedId) || rows[0] || state.ideas[0];
-}
+function renderMarketTickerTape(rows, wallet, stats) {
+  const gainers = rows.filter(item => Number(item.marketChange || 0) >= 0).length;
+  const decliners = Math.max(0, rows.length - gainers);
+  const top = rows[0] || state.ideas[0];
+  const topChange = Number(top?.marketChange || 0);
+  const items = [
+    ["NIE100", Math.round(wallet.total / 10).toLocaleString("tr-TR"), stats.averageChange],
+    ["İŞNEW", `${gainers}/${Math.max(1, rows.length)}`, gainers >= decliners ? 1.2 : -0.8],
+    ["ADV/DEC", `${gainers}/${decliners}`, gainers - decliners],
+    ["VOL", `${Math.round(stats.volume / 1000).toLocaleString("tr-TR")}K`, stats.volume > 0 ? 0.7 : 0],
+    [top?.marketTicker || "NIE", formatCurrency(marketPrice(top || state.ideas[0])), topChange]
+  ];
 
-function renderMarketTickerTape(rows) {
-  const ranked = [...rows].sort((a, b) => netVoteScore(b) - netVoteScore(a)).slice(0, 8);
-  if (!ranked.length) return "";
   return `
-    <section class="market-ticker-tape" aria-label="En çok oy alan fikirler">
-      ${ranked.map(idea => {
-        const company = marketCompanyForIdea(idea);
-        const net = netVoteScore(idea);
-        return `
-          <article>
-            ${companyLogo(company, "tiny")}
-            <span>${esc(idea.marketTicker)}</span>
-            <strong>${esc(idea.title.slice(0, 28))}${idea.title.length > 28 ? "…" : ""}</strong>
-            <em class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net} net oy</em>
-          </article>
-        `;
-      }).join("")}
+    <section class="market-ticker-tape" aria-label="Canlı piyasa bandı">
+      ${items.map(([label, value, delta]) => `
+        <article>
+          <span>${esc(label)}</span>
+          <strong>${esc(value)}</strong>
+          <em class="${marketDeltaClass(delta)}">${Number(delta) >= 0 ? "+" : ""}${Number(delta).toFixed(Math.abs(Number(delta)) >= 10 ? 1 : 2)}</em>
+        </article>
+      `).join("")}
       <button type="button" data-action="set-market-panel" data-panel="watchlist">${icon("activity")} Tahtayı aç</button>
     </section>
   `;
 }
 
-function renderVoteBoard(rows) {
-  const ranked = [...rows].sort((a, b) => netVoteScore(b) - netVoteScore(a));
+function renderMarketDesk(rows, wallet, stats) {
+  const selected = marketSelectedIdea(rows);
+  const company = marketCompanyForIdea(selected);
+  const change = Number(selected.marketChange || 0);
+  const owned = state.marketHoldings[selected.id] || 0;
+  const quote = marketQuote(selected);
   return `
-    <section class="market-board-terminal" aria-label="Oylama tahtası">
+    <section class="market-desk">
+      <article class="market-desk-lead">
+        <div class="market-desk-symbol">
+          ${companyLogo(company, "large")}
+          <span>
+            <small>${esc(company.shortName)} · ${esc(selected.marketCategory || "Fikir")}</small>
+            <strong>${esc(selected.marketTicker)}</strong>
+            <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
+          </span>
+        </div>
+        <h3>${esc(selected.title)}</h3>
+        ${selected.status === "rejected" ? `
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--negative); font-weight: 600; margin-bottom: 8px;">
+            ${icon("alert-triangle")} BU PROJE ELENDİ / REDDEDİLDİ (Yapay Zeka)
+          </div>
+        ` : ""}
+        <p>${esc(selected.summary || selected.problem || "")}</p>
+        <div class="market-desk-metrics">
+          <span><small>Son</small><strong>${formatCurrencyHTML(quote.last, "large")}</strong></span>
+          <span><small>Hacim</small><strong>${formatMarketVolume(quote.volume)}</strong></span>
+          <span><small>Portföy</small><strong>${owned} lot</strong></span>
+        </div>
+        <div class="market-desk-actions">
+          <button type="button" data-action="sell-market" data-id="${esc(selected.id)}" ${owned <= 0 || selected.status === "rejected" ? "disabled" : ""}>Sat</button>
+          <button type="button" data-action="buy-market" data-id="${esc(selected.id)}" ${selected.status === "rejected" ? "disabled" : ""}>Al</button>
+          <button type="button" data-action="open-idea" data-id="${esc(selected.id)}">${icon("folder-open")} Dosya</button>
+        </div>
+      </article>
+
+      <article class="market-desk-chart">
+        <div class="market-chart-head">
+          <span>Fikir Borsası · 1D</span>
+          <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
+          <em class="${marketDeltaClass(stats.averageChange)}">${stats.averageChange >= 0 ? "+" : ""}${stats.averageChange.toFixed(2)}%</em>
+        </div>
+        ${renderTradingChart([selected])}
+      </article>
+
+      <article class="market-depth-panel">
+        <div class="market-depth-head">
+          <span>Derinlik</span>
+          <strong>Alış / Satış</strong>
+        </div>
+        ${renderMarketDepth(selected)}
+      </article>
+    </section>
+  `;
+}
+
+function renderMarketDepth(idea) {
+  const quote = marketQuote(idea);
+  const baseVolume = Math.max(180, Number(idea.marketVolume || 900) / 12);
+  const rows = Array.from({ length: 5 }, (_, index) => {
+    const bid = quote.bid - index * 3;
+    const ask = quote.ask + index * 3;
+    const bidVol = Math.round(baseVolume * (1 - index * 0.11));
+    const askVol = Math.round(baseVolume * (0.82 - index * 0.08));
+    return { bid, ask, bidVol, askVol };
+  });
+  return `
+    <div class="market-depth-book">
+      ${rows.map(row => `
+        <div>
+          <span class="bid" style="--w:${Math.min(100, row.bidVol / baseVolume * 100)}%">${formatCurrencyHTML(row.bid)}</span>
+          <small>${row.bidVol.toLocaleString("tr-TR")}</small>
+          <small>${row.askVol.toLocaleString("tr-TR")}</small>
+          <span class="ask" style="--w:${Math.min(100, row.askVol / baseVolume * 100)}%">${formatCurrencyHTML(row.ask)}</span>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function marketSelectedIdea(rows = marketVisibleIdeas()) {
+  return rows.find(idea => idea.id === state.marketSelectedId) || rows[0] || state.ideas[0];
+}
+
+function marketRangeFactor() {
+  return { "1D": 1, "1W": 1.18, "1M": 1.35, "3M": 1.62, YTD: 1.88, "1Y": 2.15 }[state.marketRange] || 1;
+}
+
+function marketCandles(idea, count = 28) {
+  const spark = idea.marketSpark?.length ? idea.marketSpark : [44, 48, 43, 54, 59, 63, 61, 71];
+  const base = marketPrice(idea);
+  const factor = marketRangeFactor();
+  const change = Number(idea.marketChange || 0) / 100;
+  const candles = [];
+  let previous = base * (1 - change * 0.55);
+  for (let index = 0; index < count; index += 1) {
+    const sparkIndex = (index / Math.max(1, count - 1)) * (spark.length - 1);
+    const left = spark[Math.floor(sparkIndex)] || spark[0];
+    const right = spark[Math.ceil(sparkIndex)] || left;
+    const interpolated = left + (right - left) * (sparkIndex % 1);
+    const wave = Math.sin(index * 1.17 + base / 37) * 0.012 * factor;
+    const drift = ((interpolated - 55) / 100) * 0.06 * factor + change * (index / Math.max(1, count - 1));
+    const close = Math.max(8, base * (1 + drift + wave));
+    const open = index === 0 ? previous : previous;
+    const spread = Math.max(1.2, Math.abs(close - open) * 0.65 + base * 0.006 * factor);
+    const high = Math.max(open, close) + spread * (0.55 + (index % 3) * 0.16);
+    const low = Math.max(1, Math.min(open, close) - spread * (0.48 + (index % 4) * 0.12));
+    const volume = Math.max(18, Math.round((Number(idea.marketVolume || 900) / 120) * (0.65 + (index % 5) * 0.12)));
+    candles.push({ open, close, high, low, volume });
+    previous = close;
+  }
+  return candles;
+}
+
+function renderProfessionalMarketChart(idea) {
+  const candles = marketCandles(idea, 34);
+  const values = candles.flatMap(candle => [candle.high, candle.low]);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = Math.max(1, max - min);
+  const chart = { x: 42, y: 34, w: 670, h: 312 };
+  const rsi = { x: 42, y: 374, w: 670, h: 86 };
+  const macd = { x: 42, y: 490, w: 670, h: 92 };
+  const scaleY = value => chart.y + chart.h - ((value - min) / range) * chart.h;
+  const scaleX = index => chart.x + index * (chart.w / Math.max(1, candles.length - 1));
+  const volumeMax = Math.max(...candles.map(candle => candle.volume));
+  const priceLabels = [max, min + range * 0.75, min + range * 0.5, min + range * 0.25, min];
+  const last = candles[candles.length - 1];
+  const lastY = scaleY(last.close);
+  const rsiPoints = candles.map((candle, index) => {
+    const strength = 42 + ((candle.close - candle.open) / Math.max(1, range)) * 120 + (index % 7) * 2.2;
+    const x = rsi.x + index * (rsi.w / Math.max(1, candles.length - 1));
+    const y = rsi.y + rsi.h - (Math.max(22, Math.min(78, strength)) / 100) * rsi.h;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const macdLine = candles.map((candle, index) => {
+    const x = macd.x + index * (macd.w / Math.max(1, candles.length - 1));
+    const y = macd.y + macd.h * 0.54 - Math.sin(index * 0.38 + marketPrice(idea) / 70) * 26 - (candle.close - candle.open) * 0.16;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const signalLine = candles.map((candle, index) => {
+    const x = macd.x + index * (macd.w / Math.max(1, candles.length - 1));
+    const y = macd.y + macd.h * 0.56 - Math.cos(index * 0.32 + marketPrice(idea) / 80) * 19 - (candle.close - candle.open) * 0.1;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+
+  return `
+    <figure class="pro-chart-frame" aria-label="${esc(idea.marketTicker)} profesyonel grafik">
+      <svg class="pro-candle-chart" viewBox="0 0 760 620" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="chartDepth-${esc(idea.id)}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#19e568" stop-opacity="0.16" />
+            <stop offset="100%" stop-color="#19e568" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <rect x="${chart.x}" y="${chart.y}" width="${chart.w}" height="${chart.h}" class="chart-depth"></rect>
+        ${[0, 0.25, 0.5, 0.75, 1].map(tick => {
+          const y = chart.y + chart.h * tick;
+          return `<line class="chart-grid" x1="${chart.x}" y1="${y.toFixed(1)}" x2="${chart.x + chart.w}" y2="${y.toFixed(1)}"></line>`;
+        }).join("")}
+        ${priceLabels.map((price, index) => {
+          const y = chart.y + chart.h * (index / 4);
+          return `<text class="price-label" x="${chart.x + chart.w + 12}" y="${(y + 4).toFixed(1)}">${Math.round(price)}</text>`;
+        }).join("")}
+        <line class="last-price-line" x1="${chart.x}" y1="${lastY.toFixed(1)}" x2="${chart.x + chart.w}" y2="${lastY.toFixed(1)}"></line>
+        <text class="last-price-tag" x="${chart.x + chart.w - 4}" y="${(lastY - 8).toFixed(1)}">${marketPrice(idea)}</text>
+        ${candles.map((candle, index) => {
+          const x = scaleX(index);
+          const open = scaleY(candle.open);
+          const close = scaleY(candle.close);
+          const high = scaleY(candle.high);
+          const low = scaleY(candle.low);
+          const up = candle.close >= candle.open;
+          const bodyY = Math.min(open, close);
+          const bodyH = Math.max(3, Math.abs(close - open));
+          const bodyW = Math.max(5, Math.min(13, chart.w / candles.length * 0.54));
+          const volH = Math.max(8, (candle.volume / volumeMax) * 52);
+          const volY = chart.y + chart.h - volH;
+          return `
+            <g class="candle ${up ? "up" : "down"}">
+              <line x1="${x.toFixed(1)}" y1="${high.toFixed(1)}" x2="${x.toFixed(1)}" y2="${low.toFixed(1)}"></line>
+              <rect x="${(x - bodyW / 2).toFixed(1)}" y="${bodyY.toFixed(1)}" width="${bodyW.toFixed(1)}" height="${bodyH.toFixed(1)}" rx="2"></rect>
+              <rect class="volume-bar" x="${(x - bodyW / 2).toFixed(1)}" y="${volY.toFixed(1)}" width="${bodyW.toFixed(1)}" height="${volH.toFixed(1)}" rx="1"></rect>
+            </g>
+          `;
+        }).join("")}
+        <line class="indicator-separator" x1="${rsi.x}" y1="${rsi.y}" x2="${rsi.x + rsi.w}" y2="${rsi.y}"></line>
+        <text class="indicator-label" x="${rsi.x}" y="${rsi.y - 10}">RSI 57.04</text>
+        <polyline class="rsi-band-top" points="${rsi.x},${rsi.y + rsi.h * 0.26} ${rsi.x + rsi.w},${rsi.y + rsi.h * 0.26}"></polyline>
+        <polyline class="rsi-band-bottom" points="${rsi.x},${rsi.y + rsi.h * 0.72} ${rsi.x + rsi.w},${rsi.y + rsi.h * 0.72}"></polyline>
+        <polyline class="rsi-line" points="${rsiPoints}"></polyline>
+        <line class="indicator-separator" x1="${macd.x}" y1="${macd.y}" x2="${macd.x + macd.w}" y2="${macd.y}"></line>
+        <text class="indicator-label" x="${macd.x}" y="${macd.y - 10}">MACD 0.03 0.02 0.01</text>
+        ${candles.map((candle, index) => {
+          const x = macd.x + index * (macd.w / Math.max(1, candles.length - 1));
+          const up = candle.close >= candle.open;
+          const h = Math.max(4, Math.abs(candle.close - candle.open) * 0.35 + (index % 6) * 2);
+          const y = macd.y + macd.h * 0.64 - (up ? h : 0);
+          return `<rect class="macd-bar ${up ? "up" : "down"}" x="${(x - 4).toFixed(1)}" y="${y.toFixed(1)}" width="8" height="${h.toFixed(1)}" rx="1"></rect>`;
+        }).join("")}
+        <polyline class="macd-line" points="${macdLine}"></polyline>
+        <polyline class="signal-line" points="${signalLine}"></polyline>
+      </svg>
+    </figure>
+  `;
+}
+
+function marketNewsForRows(rows) {
+  const safeRows = rows.length ? rows : state.ideas.slice(0, 4);
+  return safeRows.slice(0, 4).map((idea, index) => {
+    const company = marketCompanyForIdea(idea);
+    const change = Number(idea.marketChange || 0);
+    const newsTypes = ["AI sentiment", "Hacim alarmı", "Yönetici ilgisi", "Bundle skoru"];
+    const signal = change >= 8 ? "güçlü alım ilgisi" : change < 0 ? "düşüş sonrası takip" : "kademeli toparlanma";
+    return {
+      id: `${idea.id}-news`,
+      type: newsTypes[index % newsTypes.length],
+      title: `${idea.marketTicker} için ${signal}`,
+      body: `${company.shortName} tarafında ${idea.marketCategory || "Fikir"} varlığı ${marketBundleFiles(idea).length} dosyalı bundle ile izleniyor.`,
+      change
+    };
+  });
+}
+
+function renderAINewsFeed(rows) {
+  return `
+    <section class="ai-news-card">
+      <div class="stock-card-head">
+        <span>
+          <small>AI News</small>
+          <strong>Revaçta haberler</strong>
+        </span>
+        <em>${icon("sparkles")} canlı</em>
+      </div>
+      <div class="ai-news-list">
+        ${marketNewsForRows(rows).map(item => `
+          <article>
+            <span>${esc(item.type)}</span>
+            <strong>${esc(item.title)}</strong>
+            <p>${esc(item.body)}</p>
+            <em class="${marketDeltaClass(item.change)}">${item.change >= 0 ? "+" : ""}${item.change.toFixed(2)}%</em>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderLevelWallets(wallet) {
+  return `
+    <section class="level-wallet-card">
+      <div class="stock-card-head">
+        <span>
+          <small>Wallet</small>
+          <strong>Seviye paraları</strong>
+        </span>
+        <em>${formatCurrencyHTML(wallet.total)}</em>
+      </div>
+      <div class="level-wallet-grid">
+        ${levelWallets.map(level => `
+          <article>
+            <small>${esc(level.scope)}</small>
+            <strong>${esc(level.label)}</strong>
+            <span>${formatCurrencyHTML(level.balance)}</span>
+            <em class="${marketDeltaClass(level.delta)}">${level.delta >= 0 ? "+" : ""}${level.delta.toFixed(1)}%</em>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderAssetChartBoard(rows) {
+  const topRows = rows.slice(0, 5);
+  return `
+    <section class="asset-chart-board">
+      <div class="stock-card-head">
+        <span>
+          <small>Chart board</small>
+          <strong>Varlık bazlı grafikler</strong>
+        </span>
+        <em>${topRows.length} tablo</em>
+      </div>
+      <div class="asset-chart-table">
+        ${topRows.map(idea => `
+          <article>
+            <span>
+              <strong>${esc(idea.marketTicker)}</strong>
+              <small>${esc(idea.title)}</small>
+            </span>
+            ${renderAssetMiniChart(idea)}
+            <em class="${marketDeltaClass(idea.marketChange)}">${Number(idea.marketChange || 0) >= 0 ? "+" : ""}${Number(idea.marketChange || 0).toFixed(2)}%</em>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderAssetTradingBoard(rows) {
+  const topRows = rows.slice(0, 6);
+  return `
+    <section class="asset-chart-board market-board-terminal" aria-label="Canlı varlık tahtası">
       <div class="market-board-head">
         <span>
-          <small>Vote board</small>
-          <strong>Net oya göre sıralı fikirler</strong>
+          <small>Market tape</small>
+          <strong>Canlı varlık tahtası</strong>
         </span>
-        <em>${ranked.length} fikir</em>
+        <em>${topRows.length} en aktif varlık</em>
       </div>
       <div class="market-board-grid">
         <div class="market-board-labels" aria-hidden="true">
           <span>Sembol</span>
           <span>Başlık</span>
-          <span>Şirket</span>
-          <span>Net Oy</span>
-          <span>Oy ver</span>
+          <span>Son</span>
+          <span>Alış / Satış</span>
+          <span>Hacim</span>
+          <span>Grafik</span>
+          <span>%</span>
+          <span>İşlem</span>
         </div>
-        ${ranked.map(idea => {
+        ${topRows.map(idea => {
           const company = marketCompanyForIdea(idea);
-          const net = netVoteScore(idea);
+          const quote = marketQuote(idea);
+          const change = Number(idea.marketChange || 0);
+          const owned = state.marketHoldings[idea.id] || 0;
           return `
-            <article class="market-board-row ${net >= 0 ? "up" : "down"}">
+            <article class="market-board-row ${change >= 0 ? "up" : "down"}">
               <button class="market-board-symbol" type="button" data-action="open-idea" data-id="${esc(idea.id)}">
                 ${companyLogo(company, "tiny")}
                 <span>
@@ -2815,9 +3156,18 @@ function renderVoteBoard(rows) {
                 </span>
               </button>
               <span class="market-board-title">${esc(idea.title)}</span>
-              <span class="market-board-volume">${esc(company.shortName)}</span>
-              <em class="market-board-change ${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net}</em>
-              ${renderVoteButtons(idea)}
+              <strong class="market-board-last">${formatCurrencyHTML(quote.last, "large")}</strong>
+              <span class="market-board-spread">
+                <em>${formatCurrencyHTML(quote.bid)}</em>
+                <em>${formatCurrencyHTML(quote.ask)}</em>
+              </span>
+              <span class="market-board-volume">${formatMarketVolume(quote.volume)}</span>
+              ${renderAssetMiniChart(idea)}
+              <em class="market-board-change ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
+              <span class="market-board-actions">
+                <button type="button" data-action="sell-market" data-id="${esc(idea.id)}" ${owned <= 0 ? "disabled" : ""}>Sat</button>
+                <button type="button" data-action="buy-market" data-id="${esc(idea.id)}">Al</button>
+              </span>
             </article>
           `;
         }).join("")}
@@ -2826,12 +3176,115 @@ function renderVoteBoard(rows) {
   `;
 }
 
+function renderTradingTabPanel(rows, wallet, stats, holdings) {
+  const active = state.marketPanel || "home";
+  const panelTitles = {
+    home: ["Ana Sayfa", "Piyasa özeti ve AI haberleri"],
+    watchlist: ["Takip Listesi", "Filtrelenen varlıklar ve paket tabloları"],
+    portfolio: ["Yatırımlarım", "Desteklenen projeler ve performans"],
+    discover: ["Keşfet", "AI Haberleri, revaçtaki olaylar ve fırsatlar"],
+    wallet: ["Cüzdan", "Seviye paraları ve katkı ödülleri"]
+  };
+  const [title, subtitle] = panelTitles[active] || panelTitles.home;
+  return `
+    <section class="trading-functional-panel" data-market-panel="${esc(active)}">
+      <div class="stock-card-head">
+        <span>
+          <small>Fikir Borsası</small>
+          <strong>${esc(title)}</strong>
+        </span>
+        <em>${esc(subtitle)}</em>
+      </div>
+      ${active === "portfolio" ? `
+        <div class="portfolio-detail-grid">
+          <article><small>Yatırımlarım</small><strong>${formatCurrencyHTML(wallet.portfolio)}</strong><span>${holdings.length || 0} aktif destek</span></article>
+          <article><small>Günlük P/L</small><strong class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))}</strong><span>Fiyat değişimi anlık</span></article>
+          <article><small>Hacim</small><strong>${Math.round(stats.volume / 1000)}K</strong><span>bugünkü işlem</span></article>
+        </div>
+      ` : ""}
+      ${active === "wallet" ? `
+        ${renderLevelWallets(wallet)}
+        <div class="reward-strip">
+          ${marketCategories.map(category => `<span><strong>${esc(category)}</strong>${formatCurrency(marketRewardByCategory[category] || 500)} katkı değeri</span>`).join("")}
+        </div>
+      ` : ""}
+      ${active === "discover" || active === "home" ? renderAINewsFeed(rows) : ""}
+      ${active === "watchlist" || active === "home" || active === "discover" ? renderAssetTradingBoard(rows) : ""}
+      ${active === "portfolio" ? `
+        <div class="trading-holdings expanded">
+          ${holdings.join("") || `<div class="trading-empty">Henüz pozisyon yok. Watchlist üzerinden alım yap.</div>`}
+        </div>
+      ` : ""}
+    </section>
+  `;
+}
+
+function renderTradingMover(idea, index) {
+  const change = Number(idea.marketChange || 0);
+  const height = Math.max(34, Math.min(112, 48 + Math.abs(change) * 14 + index * 4));
+  const company = marketCompanyForIdea(idea);
+  return `
+    <article class="trading-mover ${change >= 0 ? "up" : "down"}">
+      <strong>${change >= 0 ? "+" : ""}${change.toFixed(2)}%</strong>
+      <span class="trading-mover-bar" style="height:${height}px"></span>
+      ${companyLogo(company, "mini")}
+      <small>${esc(idea.marketTicker)}</small>
+    </article>
+  `;
+}
+
+function renderTradingWatchRow(idea, index) {
+  const company = marketCompanyForIdea(idea);
+  const change = Number(idea.marketChange || 0);
+  const owned = state.marketHoldings[idea.id] || 0;
+  return `
+    <article class="stock-watch-row">
+      <button class="stock-symbol-cell" data-action="open-idea" data-id="${esc(idea.id)}">
+        ${companyLogo(company, "mini")}
+        <span>
+          <strong>${esc(idea.marketTicker)} ${idea.status === "rejected" ? '<span style="font-size: 8px; background: var(--negative); color: #fff; padding: 1px 4px; border-radius: 4px; margin-left: 4px;">RED</span>' : ''}</strong>
+          <small>${esc(company.shortName)} · ${esc(idea.marketCategory || "Fikir")}</small>
+        </span>
+      </button>
+      <span class="stock-title-cell">
+        <strong>${esc(idea.title)}</strong>
+        <small>${owned} birim · ${Number(idea.marketVolume || 0).toLocaleString("tr-TR")} hacim</small>
+        ${renderBundleChips(idea, true)}
+      </span>
+      ${renderAssetMiniChart(idea)}
+      <span class="stock-change-cell ${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</span>
+      <button class="stock-price-pill short" data-action="sell-market" data-id="${esc(idea.id)}" ${owned <= 0 || idea.status === "rejected" ? "disabled" : ""}>
+        ${idea.status === "rejected" ? '<span style="font-size: 10px; color: var(--muted);">Red</span>' : tradingPricePill(idea, "short")}
+      </button>
+      <button class="stock-price-pill buy" data-action="buy-market" data-id="${esc(idea.id)}" ${idea.status === "rejected" ? "disabled" : ""}>
+        ${idea.status === "rejected" ? '<span style="font-size: 10px; color: var(--muted);">Red</span>' : tradingPricePill(idea, "buy")}
+      </button>
+    </article>
+  `;
+}
+
+function renderTradingHolding(idea) {
+  const quantity = state.marketHoldings[idea.id] || 0;
+  if (!quantity) return "";
+  const change = Number(idea.marketChange || 0);
+  return `
+    <article class="trading-holding-row">
+      <span>
+        <strong>${esc(idea.marketTicker)}</strong>
+        <small>${quantity} lot · maliyet ${formatCurrencyHTML(quantity * marketPrice(idea))}</small>
+      </span>
+      <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
+    </article>
+  `;
+}
+
 function renderTradingBottomTabs(active = "home") {
   const tabs = [
     ["home", "Ana Sayfa", "house"],
     ["watchlist", "Takip Listesi", "list-filter"],
-    ["portfolio", "Oylarım", "thumbs-up"],
-    ["discover", "Keşfet", "search"]
+    ["portfolio", "Portföyüm", "pie-chart"],
+    ["discover", "Keşfet", "search"],
+    ["wallet", "Cüzdan", "wallet"]
   ];
   return `
     <nav class="trading-bottom-tabs" aria-label="Borsa alt menü">
@@ -2847,9 +3300,11 @@ function renderTradingBottomTabs(active = "home") {
 
 function renderTradingExchange() {
   const rows = tradingRows();
-  const allRows = marketVisibleIdeas();
-  const votedIdeas = state.ideas.filter(idea => state.userVotes && state.userVotes[idea.id]);
-  const myVoteCount = state.userVotes ? Object.keys(state.userVotes).length : 0;
+  const leaders = rows.slice(0, 5);
+  const holdings = state.ideas.map(renderTradingHolding).filter(Boolean);
+  const stats = tradingMarketStats(rows);
+  const wallet = tradingCashDelta(rows);
+  const selectedCompany = state.affiliationFilter === "all" ? null : companyById(state.affiliationFilter);
 
   return `
     <div class="view-stack market-page stock-terminal-page">
@@ -2857,7 +3312,7 @@ function renderTradingExchange() {
         <div>
           <span class="panel-kicker">NEW IDEA EXCHANGE</span>
           <h2>Fikir Borsası</h2>
-          <p>Coin ile upvote/downvote vererek fikirleri öne çıkarın. Topluluk desteği ve AI sinyali sıralamayı belirler.</p>
+          <p>Kurum içi piyasa açık. Hacim, destek, dosya bundle'ı ve AI sinyali fiyatı hareket ettiriyor.</p>
         </div>
         <div style="display: flex; gap: 12px; align-items: center;">
           <div class="segmented" style="width: auto; margin-right: 8px;">
@@ -2869,46 +3324,438 @@ function renderTradingExchange() {
       </section>
 
       ${renderStockTicker()}
-      ${renderMarketTickerTape(allRows)}
+      ${renderMarketTickerTape(rows, wallet, stats)}
 
-      <section class="stock-balance-card">
-        <span>Bakiye ve Oylarım</span>
-        <strong>${formatCurrencyHTML(state.marketBudget, "large")}</strong>
-        <small>Bu ay verilen oy sayısı: ${myVoteCount}</small>
+      <!-- AI & Yatırım Politikası Bilgi Bandı -->
+      <section class="premium-policy-section" style="margin: 16px 0; background: linear-gradient(135deg, rgba(7, 33, 70, 0.03) 0%, rgba(20, 84, 156, 0.05) 100%); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-soft);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">
+            ${icon("gavel", "style='width:16px;height:16px;color:var(--primary);'")} Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
+          </div>
+          <span style="font-size: 11px; background: var(--primary-soft); color: var(--primary); padding: 4px 10px; border-radius: 99px; font-weight: 600;">Aktif Tüzük v2.4</span>
+        </div>
+        <div class="policy-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          <!-- Card 1 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("chart-candlestick", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Fiyatlama Algoritması</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin borsa fiyatları; AI değerlendirme skoru (<strong>%40</strong>), lot hacmi (<strong>%30</strong>), çalışan oyları (<strong>%20</strong>) ve dosya/kod bütünlüğü (<strong>%10</strong>) formülüyle anlık hesaplanır. Al/Sat işlemleri fiyatı dinamik olarak etkiler.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(20, 84, 156, 0.08); color: #14549c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("gavel", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Karar Kurulu</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projenizi doğrudan Karar Kurulu'na taşımanız için <strong>10.000 Altın (Coin)</strong> gereklidir. Bu bakiye karşılığında projeniz resmi kurul onay listesine alınır.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(192, 57, 43, 0.08); color: #c0392b; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("shield-alert", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Hisse Alım Sınırı</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Fikirlerin adil dağıtımı için bir projeden en fazla <strong>10 adet (hisse/lot)</strong> alabilirsiniz. Limit aşımına izin verilmez.
+            </p>
+          </div>
+          <!-- Card 4 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(18, 128, 92, 0.08); color: #12805c; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("coins", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Girişimci Telifi (%5)</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Projelerin borsa üzerinden aldığı her yatırımın (hisse satınalımının) <strong>%5'i doğrudan girişimcinin hesabına</strong> telif ödülü olarak anında eklenir.
+            </p>
+          </div>
+          <!-- Card 5 -->
+          <div class="policy-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 16px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="background: rgba(212, 172, 13, 0.08); color: #d4ac0d; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px;">
+                ${icon("rocket", "style='width:18px;height:18px;'")}
+              </span>
+              <strong style="color: var(--ink); font-size: 13px;">Teşvik & Ödüller</strong>
+            </div>
+            <p style="color: var(--ink-soft); font-size: 12px; line-height: 1.4; margin: 0;">
+              Proje hayata geçtiğinde, hissedarlara yatırımlarının <strong>10 katı</strong> oylama kredisi verilir. Girişimci ödülünün %10'u yatırımcılara dağıtılır. AI skoru 70'in altındaki fikirler ise elenir.
+            </p>
+          </div>
+        </div>
       </section>
 
-      ${renderVoteBoard(rows)}
+      ${renderMarketDesk(rows, wallet, stats)}
 
-      ${renderTradingBottomTabs(state.marketPanel)}
+      <section class="trading-phone-grid">
+        <article class="stock-phone-panel stock-home-panel">
+          <header class="stock-topbar" style="display: flex; justify-content: center; align-items: center;">
+            <button class="stock-cash-bonus" data-action="open-market-composer" data-context="quickFlow">+${marketRewardByCategory.Proje} kayıt ödülü</button>
+          </header>
 
-      ${state.marketPanel === "portfolio" ? `
-        <section class="trading-functional-panel" data-market-panel="portfolio">
-          <div class="stock-card-head">
-            <span>
-              <small>Fikir Borsası</small>
-              <strong>Oylarım</strong>
-            </span>
-            <em>Oy verdiğiniz fikirler</em>
-          </div>
-          <div class="trading-holdings expanded">
-            ${votedIdeas.length ? votedIdeas.map(idea => `
-              <article class="trading-holding-row">
-                <span>
-                  <strong>${esc(idea.marketTicker)}</strong>
-                  <small>${esc(idea.title)} · ${state.userVotes[idea.id] === "up" ? "Upvote" : "Downvote"}</small>
-                </span>
-                <em class="${state.userVotes[idea.id] === "up" ? "positive" : "negative"}">${state.userVotes[idea.id] === "up" ? "▲ Upvote" : "▼ Downvote"}</em>
-              </article>
-            `).join("") : `<div class="trading-empty">Henüz oy vermediniz. Tahtadan fikirlere oy verebilirsiniz.</div>`}
-          </div>
-        </section>
-      ` : ""}
+          <section class="stock-balance-card">
+            <span>Bakiye ve Varlıklar</span>
+            <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
+            <small class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))} bugün · Nakit ${formatCurrencyHTML(state.marketBudget, "large")}</small>
+          </section>
 
-      ${state.marketPanel === "watchlist" ? renderVoteBoard(allRows) : ""}
+          ${renderTradingChart(rows)}
+
+          <section class="stock-mover-card">
+            <div class="stock-card-head">
+              <span>
+                <small>Big Movers</small>
+                <strong>Revaçta olanlar</strong>
+              </span>
+              <span class="stock-mini-actions">${icon("arrow-up-down")} ${icon("more-vertical")}</span>
+            </div>
+            <div class="trading-movers">
+              ${leaders.map((idea, index) => renderTradingMover(idea, index)).join("")}
+            </div>
+          </section>
+
+          <section class="stock-index-strip">
+            <article><small>NIE100</small><strong>${Math.round(wallet.total / 10)}</strong><em class="${marketDeltaClass(stats.averageChange)}">${stats.averageChange >= 0 ? "+" : ""}${stats.averageChange.toFixed(2)}%</em></article>
+            <article><small>İŞNEW</small><strong>${stats.movers}/${Math.max(1, rows.length)}</strong><em class="positive">open</em></article>
+            <article><small>Volume</small><strong>${Math.round(stats.volume / 1000)}K</strong><em class="positive">aktif</em></article>
+          </section>
+
+          ${renderLevelWallets(wallet)}
+
+          <section class="stock-holdings-card">
+            <div class="stock-card-head">
+              <span>
+                <small>Portfolio</small>
+                <strong>Elindeki varlıklar</strong>
+              </span>
+              <em>${formatCurrencyHTML(wallet.portfolio)}</em>
+            </div>
+            <div class="trading-holdings">
+              ${holdings.join("") || `<div class="trading-empty">Henüz varlık yok. Watchlist üzerinden alım yap.</div>`}
+            </div>
+          </section>
+
+          ${renderTradingBottomTabs(state.marketPanel)}
+        </article>
+
+        <article class="stock-phone-panel stock-watchlist-panel">
+          <header class="stock-searchbar" style="display: flex; gap: 10px; align-items: center; padding: 0 16px;">
+            <label style="flex: 1;">
+              ${icon("search")}
+              <input type="search" value="${esc(state.marketSearch)}" placeholder="Ara..." aria-label="Borsa arama" data-market-search />
+            </label>
+          </header>
+
+          <section class="stock-watchlist-head">
+            <div>
+              <span class="panel-kicker">Piyasa Açık</span>
+              <h3>Takip Listem</h3>
+              <p>${selectedCompany ? esc(selectedCompany.name) : "Tüm iştirakler"} · ${rows.length} varlık</p>
+            </div>
+            <span class="stock-watch-actions">${icon("sliders-horizontal")} ${icon("more-vertical")}</span>
+          </section>
+
+          <section class="stock-market-controls">
+            <div class="stock-segments">
+              ${["Tümü", ...marketCategories].map(category => `
+                <button data-action="set-market-category" data-category="${esc(category)}" class="${state.marketCategoryFilter === category ? "active" : ""}">
+                  ${esc(category === "Tümü" ? "Market" : category)}
+                </button>
+              `).join("")}
+            </div>
+            <label class="stock-sort-select">
+              <span>Sırala</span>
+              <select data-market-sort>
+                ${optionList(["Revaç", "En çok yükselen", "En çok düşen", "Hacim", "Fiyat"], state.marketSort)}
+              </select>
+            </label>
+          </section>
+
+          <section class="stock-affiliate-dock">
+            <div class="stock-affiliate-head">
+              <span>İştirak filtresi</span>
+              <select data-affiliation-filter>
+                ${companyFilterOptions(state.affiliationFilter)}
+              </select>
+            </div>
+            <div class="stock-affiliate-rail">
+              <button class="${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">Tümü</button>
+              ${affiliationCompanies.slice(0, 8).map(company => `
+                <button class="${state.affiliationFilter === company.id ? "active" : ""}" data-action="set-affiliation" data-id="${esc(company.id)}">
+                  ${companyLogo(company, "tiny")}
+                  <span>${esc(company.shortName)}</span>
+                </button>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="stock-watch-table">
+            <div class="stock-watch-header">
+              <span>Varlıklar</span>
+              <span>Paket</span>
+              <span>Grafik</span>
+              <span>Değişim</span>
+              <span>Açığa Sat</span>
+              <span>Satın Al</span>
+            </div>
+            <div class="stock-watch-list">
+              ${rows.map((idea, index) => renderTradingWatchRow(idea, index)).join("") || `<div class="trading-empty">Bu filtrede varlık yok.</div>`}
+            </div>
+          </section>
+
+          <button class="stock-fab" data-action="open-market-composer" data-context="quickFlow" aria-label="Varlık ekle">${icon("plus")}</button>
+        </article>
+      </section>
+
+      ${renderTradingTabPanel(rows, wallet, stats, holdings)}
 
       ${state.marketComposerContext === "quickFlow" ? renderMarketComposer("quickFlow") : ""}
       ${state.quickFlowFeedback ? `<div class="quick-feedback market-feedback stock-feedback">${esc(state.quickFlowFeedback)}</div>` : ""}
     </div>
+  `;
+}
+
+function renderProIdeaExchange() {
+  const rows = tradingRows();
+  const selected = marketSelectedIdea(rows);
+  const company = marketCompanyForIdea(selected);
+  const change = Number(selected.marketChange || 0);
+  const wallet = tradingCashDelta(rows);
+  const holdings = state.ideas.map(renderTradingHolding).filter(Boolean);
+  const selectedOwned = state.marketHoldings[selected.id] || 0;
+  const selectedCompany = state.affiliationFilter === "all" ? null : companyById(state.affiliationFilter);
+
+  return `
+    <div class="view-stack market-page stock-terminal-page pro-terminal-page">
+      <section class="terminal-header">
+        <div class="terminal-title-block">
+          <span>NEW IDEA EXCHANGE</span>
+          <h2>Fikir Borsası</h2>
+          <p>Proje, fikir, araştırma ve şikayetler işlem gören kurum içi varlıklara dönüşür.</p>
+        </div>
+        <div class="terminal-actions">
+          <label class="terminal-search">
+            ${icon("search")}
+            <input type="search" value="${esc(state.marketSearch)}" placeholder="Ticker, iştirak, dosya ara" data-market-search />
+          </label>
+          <button class="terminal-icon-btn" data-action="set-market-panel" data-panel="discover" title="AI News">${icon("bell")}</button>
+          <button class="terminal-primary-btn" data-action="open-market-composer" data-context="quickFlow">${icon("plus")} Varlık ekle</button>
+        </div>
+      </section>
+
+      <section class="terminal-market-layout">
+        <aside class="terminal-left-rail">
+          <div class="terminal-segment-line">
+            ${["Tümü", ...marketCategories].map(category => `
+              <button data-action="set-market-category" data-category="${esc(category)}" class="${state.marketCategoryFilter === category ? "active" : ""}">
+                ${esc(category === "Tümü" ? "Market" : category)}
+              </button>
+            `).join("")}
+          </div>
+          <div class="terminal-affiliate-line">
+            <button class="${state.affiliationFilter === "all" ? "active" : ""}" data-action="set-affiliation" data-id="all">Tümü</button>
+            ${affiliationCompanies.slice(0, 7).map(item => `
+              <button class="${state.affiliationFilter === item.id ? "active" : ""}" data-action="set-affiliation" data-id="${esc(item.id)}">
+                ${companyLogo(item, "tiny")}
+                <span>${esc(item.shortName)}</span>
+              </button>
+            `).join("")}
+          </div>
+          <label class="terminal-sort-line">
+            <span>${selectedCompany ? esc(selectedCompany.shortName) : "Tüm iştirakler"}</span>
+            <select data-market-sort>
+              ${optionList(["Revaç", "En çok yükselen", "En çok düşen", "Hacim", "Fiyat"], state.marketSort)}
+            </select>
+          </label>
+          <div class="terminal-asset-list">
+            ${rows.map((idea, index) => renderProAssetRow(idea, index)).join("") || `<div class="terminal-empty-line">Bu filtrede varlık yok.</div>`}
+          </div>
+        </aside>
+
+        <main class="terminal-chart-stage">
+          <header class="terminal-chart-head">
+            <button class="terminal-back-btn" data-page="dashboard" title="Geri">${icon("chevron-left")}</button>
+            <div class="terminal-selected-logo">
+              ${companyLogo(company, "large")}
+            </div>
+            <div class="terminal-selected-copy">
+              <span>${esc(company.shortName)} · ${esc(selected.marketCategory || "Fikir")}</span>
+              <h3>${esc(selected.marketTicker)}</h3>
+              <strong>${formatCurrencyHTML(marketPrice(selected), "large")}</strong>
+              <em class="${marketDeltaClass(change)}">${change >= 0 ? "▲" : "▼"} ${Math.abs(change).toFixed(2)}% bugün</em>
+            </div>
+            <div class="terminal-head-tools">
+              <button data-action="set-market-panel" data-panel="watchlist" title="Watchlist">${icon("copy")}</button>
+              <button data-action="set-market-panel" data-panel="wallet" title="Wallet">${icon("wallet")}</button>
+              <button data-action="open-idea" data-id="${esc(selected.id)}" title="Detay">${icon("external-link")}</button>
+            </div>
+          </header>
+
+          <div class="indicator-switch">
+            ${["VP", "IC", "MACD"].map(indicator => `
+              <button class="${state.marketIndicator === indicator ? "active" : ""}" data-action="set-market-indicator" data-indicator="${esc(indicator)}">
+                <i></i>${esc(indicator === "VP" ? "VP (Auto)" : indicator === "IC" ? "IC (9,26)" : "MACD (12,26,9)")}
+              </button>
+            `).join("")}
+          </div>
+
+          ${renderProfessionalMarketChart(selected)}
+
+          <footer class="terminal-chart-footer">
+            <div class="range-switch">
+              ${["1D", "1W", "1M", "3M", "YTD", "1Y"].map(range => `
+                <button class="${state.marketRange === range ? "active" : ""}" data-action="set-market-range" data-range="${esc(range)}">${esc(range)}</button>
+              `).join("")}
+            </div>
+            <div class="order-strip">
+              <button class="order-btn buy" data-action="buy-market" data-id="${esc(selected.id)}" data-quantity="${state.marketOrderSize}" ${selected.status === "rejected" ? "disabled" : ""}>Buy MKT</button>
+              <div class="share-stepper">
+                <button data-action="adjust-order-size" data-delta="-1" ${selected.status === "rejected" ? "disabled" : ""}>${icon("minus")}</button>
+                <strong>${state.marketOrderSize} share</strong>
+                <button data-action="adjust-order-size" data-delta="1" ${selected.status === "rejected" ? "disabled" : ""}>${icon("plus")}</button>
+              </div>
+              <button class="order-btn sell" data-action="sell-market" data-id="${esc(selected.id)}" data-quantity="${state.marketOrderSize}" ${selectedOwned <= 0 || selected.status === "rejected" ? "disabled" : ""}>Sell MKT</button>
+            </div>
+          </footer>
+        </main>
+
+        <aside class="terminal-right-rail">
+          <section class="terminal-side-module compact">
+            <span>Portfolio</span>
+            <strong>${formatCurrencyHTML(wallet.total, "large")}</strong>
+            <small>${selectedOwned} ${esc(selected.marketTicker)} lot · Nakit ${formatCurrencyHTML(state.marketBudget, "large")}</small>
+          </section>
+          <section class="terminal-side-module">
+            <div class="terminal-module-head">
+              <span>AI News</span>
+              <button data-action="set-market-panel" data-panel="discover">${icon("sparkles")}</button>
+            </div>
+            <div class="terminal-news-flow">
+              ${marketNewsForRows(rows).map(item => `
+                <button data-action="set-market-panel" data-panel="discover">
+                  <em class="${marketDeltaClass(item.change)}">${item.change >= 0 ? "+" : ""}${item.change.toFixed(2)}%</em>
+                  <strong>${esc(item.title)}</strong>
+                  <small>${esc(item.type)}</small>
+                </button>
+              `).join("")}
+            </div>
+          </section>
+          <section class="terminal-side-module">
+            <div class="terminal-module-head">
+              <span>Bundle</span>
+              <button data-action="open-idea" data-id="${esc(selected.id)}">${icon("folder-open")}</button>
+            </div>
+            ${renderBundleChips(selected)}
+          </section>
+          <section class="terminal-side-module level-flow">
+            <div class="terminal-module-head">
+              <span>Seviye Paraları</span>
+              <button data-action="set-market-panel" data-panel="wallet">${icon("wallet")}</button>
+            </div>
+            ${levelWallets.slice(0, 4).map(level => `
+              <button data-action="set-market-panel" data-panel="wallet">
+                <span>${esc(level.label)}</span>
+                <strong>${formatCurrencyHTML(level.balance)}</strong>
+                <em class="${marketDeltaClass(level.delta)}">${level.delta >= 0 ? "+" : ""}${level.delta.toFixed(1)}%</em>
+              </button>
+            `).join("")}
+          </section>
+        </aside>
+      </section>
+
+      ${renderTerminalPanel(rows, wallet, holdings)}
+      ${state.marketComposerContext === "quickFlow" ? renderMarketComposer("quickFlow") : ""}
+      ${state.quickFlowFeedback ? `<div class="quick-feedback market-feedback stock-feedback">${esc(state.quickFlowFeedback)}</div>` : ""}
+    </div>
+  `;
+}
+
+function renderProAssetRow(idea, index) {
+  const company = marketCompanyForIdea(idea);
+  const change = Number(idea.marketChange || 0);
+  const owned = state.marketHoldings[idea.id] || 0;
+  const active = marketSelectedIdea([idea])?.id === state.marketSelectedId;
+  return `
+    <article class="terminal-asset-row ${active ? "active" : ""}">
+      <button class="terminal-asset-select" data-action="select-market-asset" data-id="${esc(idea.id)}">
+        ${companyLogo(company, "mini")}
+        <span>
+          <strong>${esc(idea.marketTicker)}</strong>
+          <small>${esc(company.shortName)} · ${owned} lot</small>
+        </span>
+      </button>
+      ${renderAssetMiniChart(idea)}
+      <span class="terminal-price-cell">
+        <strong>${formatCurrency(marketPrice(idea))}</strong>
+        <em class="${marketDeltaClass(change)}">${change >= 0 ? "+" : ""}${change.toFixed(2)}%</em>
+      </span>
+    </article>
+  `;
+}
+
+function renderTerminalPanel(rows, wallet, holdings) {
+  const active = state.marketPanel || "home";
+  if (active === "home") return "";
+  const selected = marketSelectedIdea(rows);
+  return `
+    <section class="terminal-bottom-drawer" data-market-panel="${esc(active)}">
+      <div class="terminal-drawer-head">
+        <strong>${esc(active === "watchlist" ? "Watchlist" : active === "portfolio" ? "Portfolio" : active === "discover" ? "AI News" : "Wallet")}</strong>
+        <button data-action="set-market-panel" data-panel="home">${icon("x")}</button>
+      </div>
+      ${active === "watchlist" ? `
+        <div class="drawer-chart-grid">
+          ${rows.slice(0, 6).map(idea => `
+            <button data-action="select-market-asset" data-id="${esc(idea.id)}">
+              <span>${esc(idea.marketTicker)}</span>
+              ${renderAssetMiniChart(idea)}
+              <em class="${marketDeltaClass(idea.marketChange)}">${Number(idea.marketChange || 0) >= 0 ? "+" : ""}${Number(idea.marketChange || 0).toFixed(2)}%</em>
+            </button>
+          `).join("")}
+        </div>
+      ` : ""}
+      ${active === "portfolio" ? `
+        <div class="drawer-metric-grid">
+          <article><span>Toplam</span><strong>${formatCurrencyHTML(wallet.total, "large")}</strong></article>
+          <article><span>Portföy</span><strong>${formatCurrencyHTML(wallet.portfolio)}</strong></article>
+          <article><span>P/L</span><strong class="${marketDeltaClass(wallet.weightedChange)}">${wallet.weightedChange >= 0 ? "+" : ""}${formatCurrency(Math.abs(wallet.weightedChange))}</strong></article>
+        </div>
+        <div class="trading-holdings expanded">${holdings.join("") || `<div class="trading-empty">Henüz pozisyon yok.</div>`}</div>
+      ` : ""}
+      ${active === "discover" ? `
+        <div class="drawer-news-grid">
+          ${marketNewsForRows(rows).map(item => `
+            <article>
+              <span>${esc(item.type)}</span>
+              <strong>${esc(item.title)}</strong>
+              <p>${esc(item.body)}</p>
+            </article>
+          `).join("")}
+        </div>
+      ` : ""}
+      ${active === "wallet" ? `
+        <div class="drawer-metric-grid">
+          ${levelWallets.map(level => `<article><span>${esc(level.scope)}</span><strong>${formatCurrencyHTML(level.balance)}</strong><em>${esc(level.label)}</em></article>`).join("")}
+        </div>
+        <div class="reward-strip">
+          ${marketCategories.map(category => `<span><strong>${esc(category)}</strong>${formatCurrency(marketRewardByCategory[category] || 500)} katkı değeri</span>`).join("")}
+        </div>
+      ` : ""}
+      ${active !== "home" ? `<p class="drawer-note">${esc(selected.marketTicker)} seçili. İşlem emirleri ana grafikteki Buy/Sell barından verilir.</p>` : ""}
+    </section>
   `;
 }
 
@@ -4376,11 +5223,11 @@ const teamRoleTemplates = [
 function managerVoteEvents() {
   const base = state.investmentLedger || [];
   const seeded = [
-    { userId: "p02", userName: "Mert Alkan", ideaId: "idea-5", ideaTitle: state.ideas.find(i => i.id === "idea-5")?.title || "AI kredi skoru", amount: UPVOTE_COST, action: "upvote", date: "13.06.2026" },
-    { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: UPVOTE_COST, action: "upvote", date: "14.06.2026" },
-    { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: UPVOTE_COST, action: "upvote", date: "14.06.2026" },
-    { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 0, action: "downvote", date: "15.06.2026" },
-    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: UPVOTE_COST, action: "upvote", date: "15.06.2026" }
+    { userId: "p02", userName: "Mert Alkan", ideaId: "idea-5", ideaTitle: state.ideas.find(i => i.id === "idea-5")?.title || "AI kredi skoru", amount: 1840, quantity: 14, date: "13.06.2026" },
+    { userId: "p05", userName: "Ece Uslu", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Yeşil finans", amount: 1620, quantity: 12, date: "14.06.2026" },
+    { userId: "p15", userName: "Aslı Ergin", ideaId: "idea-2", ideaTitle: state.ideas.find(i => i.id === "idea-2")?.title || "Onboarding", amount: 1380, quantity: 9, date: "14.06.2026" },
+    { userId: "p03", userName: "Selin Eryılmaz", ideaId: "idea-3", ideaTitle: state.ideas.find(i => i.id === "idea-3")?.title || "Akıllı bina", amount: 980, quantity: 7, date: "15.06.2026" },
+    { userId: "u3", userName: "Can Koç", ideaId: "idea-1", ideaTitle: state.ideas.find(i => i.id === "idea-1")?.title || "Operasyon", amount: 2200, quantity: 16, date: "15.06.2026" }
   ];
   return [...base, ...seeded].filter(tx => {
     const idea = state.ideas.find(i => i.id === tx.ideaId);
@@ -4388,21 +5235,14 @@ function managerVoteEvents() {
   });
 }
 
-function ledgerActionLabel(action) {
-  if (action === "upvote") return "Upvote";
-  if (action === "downvote") return "Downvote";
-  if (action === "upvote-geri-al" || action === "downvote-geri-al") return "Geri Alındı";
-  return action || "—";
-}
-
 function renderManagerDashboard() {
   if (!currentUser().isManager && !currentUser().isAdmin) return renderNoAccess();
   const votes = managerVoteEvents();
-  const totalVotes = votes.length;
+  const totalVotes = votes.reduce((sum, row) => sum + Number(row.quantity || 0), 0);
   const totalAmount = votes.reduce((sum, row) => sum + Number(row.amount || 0), 0);
   const byIdea = votes.reduce((acc, row) => {
     acc[row.ideaId] = acc[row.ideaId] || { ideaId: row.ideaId, title: row.ideaTitle, votes: 0, amount: 0, users: new Set() };
-    acc[row.ideaId].votes += 1;
+    acc[row.ideaId].votes += Number(row.quantity || 0);
     acc[row.ideaId].amount += Number(row.amount || 0);
     acc[row.ideaId].users.add(row.userName);
     return acc;
@@ -4410,7 +5250,7 @@ function renderManagerDashboard() {
   const topIdeas = Object.values(byIdea).sort((a, b) => b.votes - a.votes).slice(0, 5);
   const byUser = votes.reduce((acc, row) => {
     acc[row.userName] = acc[row.userName] || { userName: row.userName, votes: 0, amount: 0, count: 0 };
-    acc[row.userName].votes += 1;
+    acc[row.userName].votes += Number(row.quantity || 0);
     acc[row.userName].amount += Number(row.amount || 0);
     acc[row.userName].count += 1;
     return acc;
@@ -4431,7 +5271,7 @@ function renderManagerDashboard() {
       </section>
 
       <section class="manager-metric-grid">
-        ${managerMetricCard("coins", "Toplam oy", totalVotes.toLocaleString("tr-TR"), "Kullanıcıların fikir borsasındaki toplam oy hareketi.")}
+        ${managerMetricCard("coins", "Toplam oy/lot", totalVotes.toLocaleString("tr-TR"), "Kullanıcıların fikir borsasındaki toplam oy hareketi.")}
         ${managerMetricCard("badge-dollar-sign", "Toplam değer", formatCurrency(totalAmount), "Oyların demo parasal karşılığı.")}
         ${managerMetricCard("trophy", "En güçlü fikir", topIdeas[0]?.title?.slice(0, 34) || "-", `${topIdeas[0]?.votes || 0} oy ile lider.`)}
         ${managerMetricCard("users-round", "Aktif kullanıcı", userRows.length, "Oy geçmişinde görünen benzersiz kullanıcı.")}
@@ -4469,7 +5309,7 @@ function renderManagerDashboard() {
         <div class="manager-panel-head" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line-soft); padding-bottom: 12px; margin-bottom: 16px;">
           <div>
             <span class="panel-kicker">Karar Analitiği</span>
-            <strong>Oylama Defteri</strong>
+            <strong>Detaylı Yatırım Defteri</strong>
           </div>
           <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <label style="font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
@@ -4490,13 +5330,13 @@ function renderManagerDashboard() {
           </div>
         </div>
 
-        <div class="manager-history-table" style="display: grid; grid-template-columns: 1.5fr 3fr 1.2fr 1.3fr 1.5fr; gap: 8px; background: var(--surface); border-radius: 12px; overflow: hidden;">
+        <div class="manager-history-table" style="display: grid; grid-template-columns: 1.5fr 3fr 1fr 1.5fr 1.5fr; gap: 8px; background: var(--surface); border-radius: 12px; overflow: hidden;">
           <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Kullanıcı</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Fikir</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">İşlem</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Coin</div>
-          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Tarih</div>
-
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px;">Proje Yatırımı</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Birim</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">Yatırım Tutarı</div>
+          <div class="head" style="font-weight: 700; color: var(--ink); background: var(--bg-soft); padding: 10px 12px; text-align: right;">İşlem Tarihi</div>
+          
           ${(function() {
             let filteredVotes = [...votes];
             if (state.ledgerUserFilter && state.ledgerUserFilter !== "Tümü") {
@@ -4508,12 +5348,12 @@ function renderManagerDashboard() {
             return filteredVotes.length > 0 ? filteredVotes.map(row => `
               <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft);">${esc(row.userName)}</div>
               <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); font-weight: 500; color: var(--ink);">${esc(row.ideaTitle)}</div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right;">${esc(ledgerActionLabel(row.action))}</div>
-              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--primary); font-weight: 600;">${Number(row.amount || 0) < 0 ? `+${Math.abs(Number(row.amount))} iade` : Number(row.amount || 0)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right;">${Number(row.quantity || 0)}</div>
+              <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--primary); font-weight: 600;">${formatCurrency(row.amount || 0)}</div>
               <div style="padding: 10px 12px; border-bottom: 1px solid var(--line-soft); text-align: right; color: var(--muted);">${esc(row.date)}</div>
             `).join("") : `
               <div style="grid-column: span 5; text-align: center; padding: 30px; color: var(--muted); font-size: 13.5px;">
-                ${icon("alert-circle", "style='display:block; margin: 0 auto 8px; opacity:0.5;'")} Filtrelere uygun oylama kaydı bulunamadı.
+                ${icon("alert-circle", "style='display:block; margin: 0 auto 8px; opacity:0.5;'")} Filtrelere uygun yatırım kaydı bulunamadı.
               </div>
             `;
           })()}
@@ -6313,7 +7153,7 @@ function renderProductCard(idea) {
   const company = companyById(idea.companyId);
   const author = personById(idea.authorId) || peopleDirectory[0];
   const filledMembers = team ? team.roles.filter(r => r.filled).map(r => r.userId).filter(Boolean) : [];
-  const net = netVoteScore(idea);
+  const change = Number(idea.marketChange || 0);
 
   return `
     <article class="product-card">
@@ -6324,7 +7164,7 @@ function renderProductCard(idea) {
         </div>
         <div class="product-card-ticker">
           <strong>${esc(idea.marketTicker)}</strong>
-          <span class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net}</span>
+          <span class="${change >= 0 ? "positive" : "negative"}">${change >= 0 ? "+" : ""}${change.toFixed(1)}%</span>
         </div>
       </div>
 
@@ -6906,8 +7746,10 @@ function renderProfileBundleShelf(myIdeas = []) {
 function renderProfileV2() {
   const user = currentUser();
   const myIdeas = state.ideas.filter(idea => idea.authorId === user.id);
-  const votedIdeas = Object.entries(state.userVotes || {})
-    .map(([id, direction]) => ({ idea: state.ideas.find(item => item.id === id), direction }))
+  const portfolioValue = marketPortfolioValue();
+  const holdings = Object.entries(state.marketHoldings)
+    .filter(([, qty]) => qty > 0)
+    .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
     .filter(item => item.idea);
   const directoryMatch = peopleDirectory.find(person => person.name.split(" ")[0] === user.name.split(" ")[0]) || peopleDirectory[0];
   const company = companyById(directoryMatch.companyId || "bbva-group");
@@ -6927,7 +7769,7 @@ function renderProfileV2() {
         <div class="profile-wallet">
           <span>Borsa bütçesi</span>
           <strong>${formatCurrencyHTML(state.marketBudget, "large")}</strong>
-          <small>Oylarım ${votedIdeas.length}</small>
+          <small>Portföy ${formatCurrencyHTML(portfolioValue, "small")}</small>
         </div>
       </section>
 
@@ -6941,15 +7783,15 @@ function renderProfileV2() {
 
       <section class="metrics-grid">
         ${metricCard("briefcase-business", "Kayıt", `${Math.max(myIdeas.length, 3)}`, "Yayınladığın fikir/proje/araştırma.", "+1", "navy")}
-        ${metricCard("thumbs-up", "Oylarım", `${votedIdeas.length}`, "Oy verdiğin fikirler.", "+2", "green")}
-        ${metricCard("coins", "Bütçe", `${Math.round(state.marketBudget / 1000)}K`, "Oylama için kalan demo para.", "+850", "purple")}
+        ${metricCard("chart-candlestick", "Portföy", `${holdings.length}`, "Elindeki borsa varlığı.", "+2", "green")}
+        ${metricCard("coins", "Bütçe", `${Math.round(state.marketBudget / 1000)}K`, "Al/sat için kalan demo para.", "+850", "purple")}
         ${metricCard("message-circle", "Yorum", "28", "Tartışmalara yaptığın katkılar.", "+4", "amber")}
         ${metricCard("badge-check", "Uygulama", `${myIdeas.filter(idea => idea.status === "done").length + 1}`, "Somut etki.", "+1", "green")}
       </section>
 
       <section class="profile-detail-grid">
         <article class="analytics-card">
-          <div class="section-title"><div><h3>Aylık aktivite</h3><p>Katkı, oylama ve yorum yoğunluğu.</p></div></div>
+          <div class="section-title"><div><h3>Aylık aktivite</h3><p>Katkı, alım ve yorum yoğunluğu.</p></div></div>
           <div class="bar-list">
             ${["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran"].map((month, index) => `
               <div class="bar-row">
@@ -6961,14 +7803,14 @@ function renderProfileV2() {
           </div>
         </article>
         <article class="analytics-card">
-          <div class="section-title"><div><h3>Oylarım</h3><p>Oy verdiğin fikirler.</p></div></div>
+          <div class="section-title"><div><h3>Portföy detayları</h3><p>Elindeki fikir hisseleri.</p></div></div>
           <div class="portfolio-list">
-            ${votedIdeas.map(({ idea, direction }) => `
+            ${holdings.map(({ idea, qty }) => `
               <div class="portfolio-row">
                 <span><strong>${esc(idea.marketTicker)}</strong><small>${esc(idea.title)}</small></span>
-                <em class="${direction === "up" ? "positive" : "negative"}">${direction === "up" ? "▲ Upvote" : "▼ Downvote"}</em>
+                <em>${qty} lot · ${formatCurrency(qty * marketPrice(idea))}</em>
               </div>
-            `).join("") || `<div class="portfolio-row empty">Henüz oy vermedin.</div>`}
+            `).join("") || `<div class="portfolio-row empty">Henüz varlık yok.</div>`}
           </div>
         </article>
         <article class="analytics-card">
@@ -7254,7 +8096,7 @@ function renderManagerV2() {
             <span><strong>${esc(focusIdea.estimatedImpact)}</strong> etki</span>
             <span><strong>${esc(focusIdea.estimatedCost)}</strong> maliyet</span>
             <span><strong>${esc(focusIdea.implementationTime)}</strong> süre</span>
-            <span><strong class="${marketDeltaClass(netVoteScore(focusIdea))}">${netVoteScore(focusIdea) >= 0 ? "+" : ""}${netVoteScore(focusIdea)}</strong> net oy</span>
+            <span><strong>${formatCurrencyHTML(focusIdea.marketPrice || marketPrice(focusIdea), "large")}</strong> hisse fiyatı</span>
             <span><strong>${Math.round((focusIdea.credits || 100) / 10)}</strong> destekçi</span>
           </div>
           <div class="manager-actions">
@@ -7439,7 +8281,7 @@ function managerDecisionCardV2(idea) {
       <div class="decision-card-meta" style="flex-wrap: wrap; gap: 4px;">
         <span>${esc(idea.estimatedImpact)}</span>
         <span>${esc(idea.implementationTime)}</span>
-        <span>Net Oy: ${netVoteScore(idea) >= 0 ? "+" : ""}${netVoteScore(idea)}</span>
+        <span>Fiyat: ${formatCurrencyHTML(marketPrice(idea))}</span>
         <span>Destek: ${Math.round((idea.credits || 100) / 10)} Oy</span>
       </div>
       <div class="decision-card-meta" style="margin-top: 4px; font-size: 11px; color: #8b94a7;">
@@ -7712,10 +8554,10 @@ function createIdeaFromWizard() {
     companyId: state.marketDraft.companyId || "bbva-group",
     marketCategory: "Fikir",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
+    marketPrice: 100,
     marketChange: status === "rejected" ? 0 : 6.4,
     marketVolume: status === "rejected" ? 0 : 980,
-    upvotes: 0,
-    downvotes: 0,
+    marketShares: 1400,
     marketSpark: status === "rejected" ? [34, 34, 34, 34, 34, 34, 34, 34] : [34, 42, 48, 56, 62, 68, 74, 82],
     files: w.files?.length ? w.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, "Fikir")
   };
@@ -7760,10 +8602,10 @@ function createComplaintFromEntry() {
     companyId: "bbva-group",
     marketCategory: "Şikayet",
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
+    marketPrice: 100,
     marketChange: 3.8,
     marketVolume: 740,
-    upvotes: 0,
-    downvotes: 0,
+    marketShares: 1100,
     marketSpark: [28, 34, 42, 46, 58, 61, 66, 72],
     files: c.files?.length ? c.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, "Şikayet")
   };
@@ -7808,10 +8650,10 @@ function createMarketListing(context) {
     createdAt: new Date().toISOString().slice(0, 10),
     marketCategory: draft.category,
     marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
+    marketPrice: 100,
     marketChange: draft.category === "Proje" ? 9.2 : draft.category === "Şikayet" ? 4.1 : 5.4,
     marketVolume: 640,
-    upvotes: 0,
-    downvotes: 0,
+    marketShares: 1000,
     marketSpark: [26, 34, 39, 48, 55, 62, 68, 78],
     files: draft.files?.length ? draft.files : defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, draft.category),
     sourceContext: context,
@@ -8683,10 +9525,10 @@ document.addEventListener("click", event => {
       companyId: companyVal === "Bağımsız" ? "independent" : (affiliationCompanies.find(c => c.name === companyVal)?.id || "bbva-group"),
       marketCategory: marketCategoryVal,
       marketTicker: `NIE-${String(state.ideas.length + 1).padStart(2, "0")}`,
+      marketPrice: 100,
       marketChange: 0.0,
       marketVolume: 0,
-      upvotes: 0,
-      downvotes: 0,
+      marketShares: 1000,
       marketSpark: [mockAiScore, mockAiScore, mockAiScore, mockAiScore],
       files: defaultBundleFiles(`NIE-${String(state.ideas.length + 1).padStart(2, "0")}`, marketCategoryVal),
       applications: [],
@@ -8724,6 +9566,85 @@ document.addEventListener("click", event => {
   if (action === "close-report-modal") {
     state.selectedIdeaReportId = null;
     render();
+    return;
+  }
+
+  if (action === "buy-market-qty" || action === "sell-market-qty") {
+    const ideaId = actionButton.dataset.id;
+    const qtyInput = document.querySelector(`[data-trade-qty="${ideaId}"]`);
+    const quantity = qtyInput ? Math.max(1, parseInt(qtyInput.value) || 1) : 1;
+    const idea = state.ideas.find(item => item.id === ideaId);
+    if (idea) {
+      if (idea.status === "rejected") { alert("Bu proje elendiği için işlem yapılamaz!"); return; }
+      const price = marketPrice(idea);
+      const totalPrice = price * quantity;
+      if (action === "buy-market-qty") {
+        const currentOwned = state.marketHoldings[idea.id] || 0;
+        const maxLimit = 10; // Max 10 Lots
+        if (currentOwned + quantity > maxLimit) {
+          alert(`Bir projeden en fazla 10 lot (hisse) satın alabilirsiniz! (Şu anki varlığınız: ${currentOwned} Lot, Almak istediğiniz: ${quantity} Lot)`);
+          return;
+        }
+
+        if (state.marketBudget >= totalPrice) {
+          state.marketBudget -= totalPrice;
+          state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
+          idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
+          idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
+          state.marketSelectedId = idea.id;
+          
+          if (!state.investmentLedger) state.investmentLedger = [];
+          state.investmentLedger.push({
+            userId: currentUser().id,
+            userName: currentUser().name,
+            ideaId: idea.id,
+            ideaTitle: idea.title,
+            amount: totalPrice,
+            quantity: quantity,
+            date: new Date().toLocaleDateString("tr-TR")
+          });
+          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
+          state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
+
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+          
+          const royalty = Math.round(totalPrice * 0.05);
+          if (royalty > 0) {
+            if (idea.authorId === currentUser().id) {
+              state.marketBudget += royalty;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} B-Token) cüzdanınıza eklendi!`;
+            } else {
+              const authorUser = demoUsers.find(u => u.id === idea.authorId);
+              if (authorUser) {
+                authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} B-Token) telif ödendi.`;
+              }
+            }
+          }
+        } else {
+          alert("Yetersiz bütçe!");
+        }
+      } else {
+        const owned = state.marketHoldings[idea.id] || 0;
+        if (owned >= quantity) {
+          const ownedBefore = owned;
+          state.marketHoldings[idea.id] -= quantity;
+          state.marketBudget += price * quantity;
+          idea.marketChange = Number(idea.marketChange || 0) - 0.3 * quantity;
+          idea.marketVolume = Number(idea.marketVolume || 0) + 80 * quantity;
+          state.marketSelectedId = idea.id;
+
+          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
+          const fraction = quantity / (ownedBefore || 1);
+          state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
+
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+        } else {
+          alert("Yetersiz destek birimi!");
+        }
+      }
+      render();
+    }
     return;
   }
 
@@ -9500,10 +10421,10 @@ if (action === "login") {
         companyId: app.portal === "Sabancı" ? "sabanci-holding" : "bbva-group",
         marketCategory: "Girişimci Fikri",
         marketTicker: `EXT-${String(state.ideas.length + 1).padStart(2, "0")}`,
+        marketPrice: 100,
         marketChange: 0.0,
         marketVolume: 0,
-        upvotes: 0,
-        downvotes: 0,
+        marketShares: 1000,
         marketSpark: [80, 81, 82, 82],
         files: [],
         applications: [],
@@ -9574,6 +10495,26 @@ if (action === "login") {
     return;
   }
 
+  if (action === "set-market-range") {
+    state.marketRange = actionButton.dataset.range || "1D";
+    state.quickFlowFeedback = `${state.marketRange} zaman aralığına geçildi.`;
+    render();
+    return;
+  }
+
+  if (action === "set-market-indicator") {
+    state.marketIndicator = actionButton.dataset.indicator || "MACD";
+    state.quickFlowFeedback = `${state.marketIndicator} indikatörü aktif.`;
+    render();
+    return;
+  }
+
+  if (action === "adjust-order-size") {
+    state.marketOrderSize = Math.max(1, Math.min(25, state.marketOrderSize + Number(actionButton.dataset.delta || 0)));
+    render();
+    return;
+  }
+
   if (action === "set-market-category") {
     state.marketCategoryFilter = actionButton.dataset.category || "Tümü";
     state.marketPanel = "watchlist";
@@ -9617,6 +10558,79 @@ if (action === "login") {
     return;
   }
 
+  if (action === "buy-market" || action === "sell-market") {
+    const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
+    if (idea) {
+      if (idea.status === "rejected") { alert("Bu proje elendiği için işlem yapılamaz!"); return; }
+      const price = marketPrice(idea);
+      const quantity = Math.max(1, Number(actionButton.dataset.quantity || 1));
+      const totalPrice = price * quantity;
+      if (action === "buy-market") {
+        const currentOwned = state.marketHoldings[idea.id] || 0;
+        const maxLimit = 10; // Max 10 Lots
+        if (currentOwned + quantity > maxLimit) {
+          alert(`Bir projeden en fazla 10 lot (hisse) satın alabilirsiniz! (Şu anki varlığınız: ${currentOwned} Lot, Almak istediğiniz: ${quantity} Lot)`);
+          return;
+        }
+
+        if (state.marketBudget >= totalPrice) {
+          state.marketBudget -= totalPrice;
+          state.marketHoldings[idea.id] = (state.marketHoldings[idea.id] || 0) + quantity;
+          idea.marketChange = Number(idea.marketChange || 0) + 0.7 * quantity;
+          idea.marketVolume = Number(idea.marketVolume || 0) + 120 * quantity;
+          state.marketSelectedId = idea.id;
+          
+          if (!state.investmentLedger) state.investmentLedger = [];
+          state.investmentLedger.push({
+            userId: currentUser().id,
+            userName: currentUser().name,
+            ideaId: idea.id,
+            ideaTitle: idea.title,
+            amount: totalPrice,
+            quantity: quantity,
+            date: new Date().toLocaleDateString("tr-TR")
+          });
+          if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
+          state.marketInvestedAmount[idea.id] = (state.marketInvestedAmount[idea.id] || 0) + totalPrice;
+
+          state.quickFlowFeedback = `${quantity} birim ${idea.marketTicker} alındı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+          
+          const royalty = Math.round(totalPrice * 0.05);
+          if (royalty > 0) {
+            if (idea.authorId === currentUser().id) {
+              state.marketBudget += royalty;
+              state.quickFlowFeedback += ` Kendi projeniz olduğu için %5 Girişimci Telifi (+${royalty} B-Token) cüzdanınıza eklendi!`;
+            } else {
+              const authorUser = demoUsers.find(u => u.id === idea.authorId);
+              if (authorUser) {
+                authorUser.voteCreditBalance = (authorUser.voteCreditBalance || 0) + royalty;
+                state.quickFlowFeedback += ` Girişimciye (${authorUser.name}) %5 (%5 = ${royalty} B-Token) telif ödendi.`;
+              }
+            }
+          }
+        } else {
+          alert("Yetersiz bütçe!");
+        }
+      }
+      if (action === "sell-market" && (state.marketHoldings[idea.id] || 0) > 0) {
+        const sellQuantity = Math.min(quantity, state.marketHoldings[idea.id] || 0);
+        const ownedBefore = state.marketHoldings[idea.id] || 0;
+        state.marketHoldings[idea.id] -= sellQuantity;
+        state.marketBudget += price * sellQuantity;
+        idea.marketChange = Number(idea.marketChange || 0) - 0.3 * sellQuantity;
+        idea.marketVolume = Number(idea.marketVolume || 0) + 80 * sellQuantity;
+        state.marketSelectedId = idea.id;
+
+        if (!state.marketInvestedAmount) state.marketInvestedAmount = {};
+        const fraction = sellQuantity / (ownedBefore || 1);
+        state.marketInvestedAmount[idea.id] = Math.max(0, (state.marketInvestedAmount[idea.id] || 0) * (1 - fraction));
+
+        state.quickFlowFeedback = `${sellQuantity} birim ${idea.marketTicker} satıldı. Bütçe ${formatCurrency(state.marketBudget)}.`;
+      }
+      render();
+    }
+    return;
+  }
 
   if (action === "reset-filters") {
     Object.assign(state.filters, {
@@ -9929,18 +10943,6 @@ if (action === "login") {
     render();
   }
 
-  if (action === "upvote-idea") {
-    castVote(actionButton.dataset.id, "up");
-    render();
-    return;
-  }
-
-  if (action === "downvote-idea") {
-    castVote(actionButton.dataset.id, "down");
-    render();
-    return;
-  }
-
   if (action === "escalate-to-board") {
     const ESCALATION_COST = 10000;
     const idea = state.ideas.find(item => item.id === actionButton.dataset.id);
@@ -9961,7 +10963,7 @@ if (action === "login") {
   }
 
   if (action === "quick-like") {
-    castVote(actionButton.dataset.id, "up");
+    supportIdea(actionButton.dataset.id);
     moveQuickFlow(1, "Destek kredisi verildi. Sıradaki fikir açıldı.");
     render();
   }
@@ -10166,14 +11168,13 @@ if (action === "login") {
 
       if (idea.status === "done") {
         idea.communityScore = Math.min(100, idea.communityScore + 4);
-        const investedAmount = (state.investmentLedger || [])
-          .filter(tx => tx.ideaId === idea.id && tx.userId === currentUser().id && tx.action === "upvote")
-          .reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
+        const investedAmount = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
         if (investedAmount > 0) {
           const reward = investedAmount * 10;
           state.marketBudget += reward;
+          state.marketInvestedAmount[idea.id] = 0;
           setTimeout(() => {
-            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki oy desteğinin 10 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!\n\nYatırım Politikası Gereği: Girişimci ödülünün %10'u da destekçiler arasında paylaştırılmıştır.`);
+            alert(`Tebrikler! "${idea.title}" projesi başarıyla hayata geçirildi.\nYaptığınız ${formatCurrency(investedAmount)} değerindeki yatırımın 10 katı olan ${formatCurrency(reward)} oylama kredisi hesabınıza aktarıldı!\n\nYatırım Politikası Gereği: Girişimci ödülünün %10'u da yatırımcılar arasında paylaştırılmıştır.`);
           }, 100);
         }
         // Auto-push AI agenda post for completion
@@ -10491,7 +11492,7 @@ document.addEventListener("pointerup", event => {
     }
 
     if (deltaX > 0) {
-      castVote(ideaId, "up");
+      supportIdea(ideaId);
       moveQuickFlow(1, "Sağa kaydırıldı: destek kredisi verildi.");
     } else {
       moveQuickFlow(1, "Sola kaydırıldı: fikir pas geçildi.");
@@ -10617,7 +11618,7 @@ document.addEventListener("keydown", event => {
 
   const currentIdea = quickFlowIdeas()[state.quickFlowIndex];
   if (event.key === "ArrowRight" && currentIdea) {
-    castVote(currentIdea.id, "up");
+    supportIdea(currentIdea.id);
     moveQuickFlow(1, "Sağ ok: destek kredisi verildi.");
     render();
   }
@@ -11046,9 +12047,7 @@ function handleQuickEvalSwipe(ideaId, action) {
   if (!state.quickEvalLikes) state.quickEvalLikes = {};
   state.quickEvalLikes[ideaId] = action;
   if (action === "like") {
-    castVote(ideaId, "up");
-  } else if (action === "dislike") {
-    castVote(ideaId, "down");
+    supportIdea(ideaId);
   }
   state.quickEvalCommentDraft = "";
   render();
@@ -11090,8 +12089,9 @@ function renderQuickEval() {
 
   const idea = swipableIdeas[0];
   const company = marketCompanyForIdea(idea);
-  const net = netVoteScore(idea);
-  const up = net >= 0;
+  const price = marketPrice(idea);
+  const change = Number(idea.marketChange || 0);
+  const up = change >= 0;
   const comments = idea.comments || [];
   const remainingCount = swipableIdeas.length;
 
@@ -11105,7 +12105,7 @@ function renderQuickEval() {
         <div class="speedy-badge-row">
           <span class="speedy-count-badge">${remainingCount} fikir kaldı</span>
         </div>
-        <p class="speedy-subtitle">Sağa Kaydır: Upvote · Sola Kaydır: Downvote</p>
+        <p class="speedy-subtitle">Sağa Kaydır: Al · Sola Kaydır: Alma</p>
       </div>
 
       <div class="speedy-main">
@@ -11152,12 +12152,12 @@ function renderQuickEval() {
               </div>
             </div>
 
-            <!-- Vote Section at bottom of card -->
+            <!-- Price and Trend Section at bottom of card -->
             <footer class="card-eval-footer">
               <div class="card-price-section">
-                <span class="price-label">NET OY</span>
+                <span class="price-label">FİKİR HİSSE FİYATI</span>
                 <div class="price-row">
-                  <strong class="price-val">${net >= 0 ? "+" : ""}${net}</strong>
+                  <strong class="price-val">${formatCurrency(price)}</strong>
                   <span class="card-trend-badge ${up ? "up" : "down"}">
                     ${up ? `
                       <svg class="trend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
@@ -11170,7 +12170,7 @@ function renderQuickEval() {
                         <polyline points="17 7 17 17 7 17"></polyline>
                       </svg>
                     `}
-                    <span>${icon("thumbs-up", "12")} ${Number(idea.upvotes || 0)} · ${icon("thumbs-down", "12")} ${Number(idea.downvotes || 0)}</span>
+                    <span>${up ? "+" : ""}${change.toFixed(2)}%</span>
                   </span>
                 </div>
               </div>
@@ -11181,8 +12181,8 @@ function renderQuickEval() {
             </footer>
 
             <!-- Swiping Indicators Overlay -->
-            <div class="swipe-overlay like-overlay" style="color: #10b981; border-color: #10b981;">UPVOTE</div>
-            <div class="swipe-overlay pass-overlay" style="color: #ef4444; border-color: #ef4444;">DOWNVOTE</div>
+            <div class="swipe-overlay like-overlay" style="color: #10b981; border-color: #10b981;">AL</div>
+            <div class="swipe-overlay pass-overlay" style="color: #ef4444; border-color: #ef4444;">ALMA</div>
           </article>
         </div>
 
@@ -11307,12 +12307,8 @@ function filteredBorsaIdeas() {
     list.sort((a, b) => (b.supporters || 0) - (a.supporters || 0));
   } else if (sortType === "En çok yorumlanan") {
     list.sort((a, b) => ((b.comments || []).length) - ((a.comments || []).length));
-  } else if (sortType === "En çok upvote alan") {
-    list.sort((a, b) => Number(b.upvotes || 0) - Number(a.upvotes || 0));
-  } else if (sortType === "En çok downvote alan") {
-    list.sort((a, b) => Number(b.downvotes || 0) - Number(a.downvotes || 0));
-  } else if (sortType === "Net oy") {
-    list.sort((a, b) => netVoteScore(b) - netVoteScore(a));
+  } else if (sortType === "En Pahalılar" || sortType === "Fiyat") {
+    list.sort((a, b) => marketPrice(b) - marketPrice(a));
   } else if (sortType === "En Yüksek AI Skoru") {
     list.sort((a, b) => (b.aiScore || 0) - (a.aiScore || 0));
   } else if (sortType === "En Çok Beğenilenler") {
@@ -11327,9 +12323,11 @@ function renderBorsaCard(idea) {
   const author = personById(idea.authorId) || peopleDirectory[0];
   const comments = idea.comments || [];
   const isExpanded = state.expandedComments && state.expandedComments[idea.id];
-  const net = netVoteScore(idea);
-  const myVote = state.userVotes ? state.userVotes[idea.id] : undefined;
-
+  const price = marketPrice(idea);
+  const change = Number(idea.marketChange || 0);
+  const up = change >= 0;
+  const owned = state.marketHoldings[idea.id] || 0;
+  
   return `
     <article class="borsa-card" style="display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px; position: relative; gap: 12px; transition: transform 0.2s, box-shadow 0.2s;">
       <div class="borsa-card-header" style="display: flex; justify-content: space-between; align-items: start; gap: 12px;">
@@ -11396,31 +12394,33 @@ function renderBorsaCard(idea) {
         </button>
       `}
 
-      <!-- Upvote / Downvote Paneli veya Red Bildirimi -->
+      <!-- Lot Buy/Sell Trading Panel veya Red Bildirimi -->
       ${idea.status === "rejected" ? `
         <div style="background: var(--bg); padding: 10px; border-radius: 10px; text-align: center; font-size: 12px; color: var(--muted); border: 1px dashed var(--line-soft); margin-top: 4px;">
-          Tüzük ihlali veya düşük AI skoru (&lt;70) nedeniyle oylama tahtasına kapatılmıştır.
+          Tüzük ihlali veya düşük AI skoru (&lt;70) nedeniyle işlem tahtasına kapatılmıştır.
         </div>
       ` : `
         <div class="borsa-trading-panel" style="background: var(--bg); border-radius: 10px; padding: 12px; border: 1px solid var(--line-soft); margin-top: 4px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <div>
-              <span style="font-size: 11px; color: var(--muted); display: block;">Net Oy</span>
-              <strong style="font-size: 15px; color: var(--ink);" class="${marketDeltaClass(net)}">${net >= 0 ? "+" : ""}${net}</strong>
+              <span style="font-size: 11px; color: var(--muted); display: block;">Destek Değeri / Değişim</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <strong style="font-size: 15px; color: var(--ink);">${formatCurrency(price)}</strong>
+                <span class="trend-badge ${up ? 'up' : 'down'}" style="font-size: 11px; font-weight: 600; color: ${up ? 'var(--positive)' : 'var(--negative)'}; display: flex; align-items: center; gap: 2px;">
+                  ${up ? icon("trending-up", "12") : icon("trending-down", "12")} ${up ? "+" : ""}${change.toFixed(1)}%
+                </span>
+              </div>
             </div>
             <div style="text-align: right;">
-              <span style="font-size: 11px; color: var(--muted); display: block;">Oyum</span>
-              <strong style="font-size: 13px; color: var(--ink);">${myVote === "up" ? "Upvote" : myVote === "down" ? "Downvote" : "—"}</strong>
+              <span style="font-size: 11px; color: var(--muted); display: block;">Yatırımım</span>
+              <strong style="font-size: 13px; color: var(--ink);">${owned} Birim</strong>
             </div>
           </div>
 
           <div style="display: flex; gap: 6px; align-items: center;">
-            <button type="button" class="btn btn-sm success vote-btn vote-up ${myVote === "up" ? "vote-active" : ""}" data-action="upvote-idea" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--positive); color: #fff; border: none; border-radius: 6px; cursor: pointer;">
-              ${icon("thumbs-up", "14")} Upvote (${Number(idea.upvotes || 0)}) · ${UPVOTE_COST} coin
-            </button>
-            <button type="button" class="btn btn-sm danger vote-btn vote-down ${myVote === "down" ? "vote-active" : ""}" data-action="downvote-idea" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--negative); color: #fff; border: none; border-radius: 6px; cursor: pointer;">
-              ${icon("thumbs-down", "14")} Downvote (${Number(idea.downvotes || 0)}) · ücretsiz
-            </button>
+            <input type="number" class="input slim-input" value="1" min="1" max="100" data-trade-qty="${idea.id}" style="width: 55px; text-align: center; padding: 6px; font-size: 13px;" />
+            <button class="btn btn-sm success" data-action="buy-market-qty" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--positive); color: #fff; border: none; border-radius: 6px; cursor: pointer;">Al</button>
+            <button class="btn btn-sm danger" data-action="sell-market-qty" data-id="${idea.id}" style="flex: 1; padding: 6px; font-size: 13px; font-weight: 600; background: var(--negative); color: #fff; border: none; border-radius: 6px; cursor: pointer;">Sat</button>
           </div>
         </div>
       `}
@@ -11529,7 +12529,7 @@ function renderReportModal() {
         </div>
         <div style="background: var(--bg); border-left: 4px solid var(--primary); padding: 10px 12px; border-radius: 6px;">
           <strong style="display:block; font-size: 11px; color: var(--muted);">SLAYT 5 · Borsa Özeti</strong>
-          <span>${esc(idea.marketTicker || "NIE")} · Net oy: ${netVoteScore(idea) >= 0 ? "+" : ""}${netVoteScore(idea)} · ${idea.supporters || 0} destekçi · AI ${idea.aiScore || 70}/100</span>
+          <span>${esc(idea.marketTicker || "NIE")} · ${formatCurrencyHTML(marketPrice(idea))} · ${idea.supporters || 0} destekçi · AI ${idea.aiScore || 70}/100</span>
         </div>
       </div>
     </div>
@@ -12565,7 +13565,7 @@ function renderSocialLeaderboard() {
   const mode = state.socialLeaderboardMode || "total";
   const modes = [
     { id: "idea", label: "Girişimci", icon: "lightbulb" },
-    { id: "trade", label: "Aktif Oy Veren", icon: "thumbs-up" },
+    { id: "trade", label: "Borsacı", icon: "trending-up" },
     { id: "total", label: "Tümü", icon: "trophy" }
   ];
   const rows = socialLeaderboardRows()
@@ -12604,7 +13604,7 @@ function renderSocialLeaderboard() {
             </span>
             <div>
               <strong>${formatCurrency(leaderboardValue(row, mode))}</strong>
-              <small>Girişimci ${formatCurrency(row.ideaMoney)} · Verilen Oy Sayısı ${formatCurrency(row.tradeMoney)}</small>
+              <small>Girişimci ${formatCurrency(row.ideaMoney)} · Borsacı ${formatCurrency(row.tradeMoney)}</small>
             </div>
           </div>
         `).join("")}
@@ -12886,7 +13886,7 @@ function renderProfileV2() {
               Sabitli Fikirler (${(state.pinnedIdeaIds || []).length})
             </button>
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'portfolio' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'portfolio' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="portfolio">
-              Oylarım (${Object.keys(state.userVotes || {}).length})
+              Portföyüm (${Object.values(state.marketHoldings || {}).filter(q => q > 0).length})
             </button>
             <button class="btn" style="flex: 1; border-radius: 0; background: ${state.profileTab === 'applications' ? 'var(--surface)' : 'transparent'}; border: none; border-bottom: 2px solid ${state.profileTab === 'applications' ? 'var(--primary)' : 'transparent'}; font-weight: 600;" data-action="set-profile-tab" data-tab="applications">
               Başvurularım (${state.ideas.filter(i => i.applications && i.applications.some(a => a.userId === user.id)).length})
@@ -13064,27 +14064,36 @@ function renderProfileTabContent(user, tab) {
   }
 
   if (tab === "portfolio") {
-    const votes = Object.entries(state.userVotes || {})
-      .map(([id, direction]) => ({ idea: state.ideas.find(item => item.id === id), direction }))
+    const holdings = Object.entries(state.marketHoldings || {})
+      .filter(([, qty]) => qty > 0)
+      .map(([id, qty]) => ({ idea: state.ideas.find(item => item.id === id), qty }))
       .filter(item => item.idea);
-    if (votes.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz oy vermediniz. Borsa sekmesinden fikirlere upvote/downvote verebilirsiniz.</p>`;
-
+    if (holdings.length === 0) return `<p style="color: var(--muted); font-size: 13.5px; text-align: center;">Henüz portföyünüzde hisse bulunmamaktadır. Borsa sekmesinden projelere yatırım yapabilirsiniz.</p>`;
+    
     return `
       <div style="overflow-x: auto; background: var(--bg); border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; min-width: 500px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; min-width: 700px;">
           <thead>
             <tr style="border-bottom: 2px solid rgba(255,255,255,0.08); color: var(--muted); font-weight: 600;">
               <th style="padding: 12px 8px;">Proje / Kod</th>
-              <th style="padding: 12px 8px; text-align: right;">Oyum</th>
-              <th style="padding: 12px 8px; text-align: right;">Tarih</th>
+              <th style="padding: 12px 8px; text-align: right;">Miktar (Lot)</th>
+              <th style="padding: 12px 8px; text-align: right;">Ort. Maliyet</th>
+              <th style="padding: 12px 8px; text-align: right;">Güncel Fiyat</th>
+              <th style="padding: 12px 8px; text-align: right;">Yatırım</th>
+              <th style="padding: 12px 8px; text-align: right;">Güncel Değer</th>
+              <th style="padding: 12px 8px; text-align: right;">Kâr / Zarar</th>
             </tr>
           </thead>
           <tbody>
-            ${votes.map(({ idea, direction }) => {
-              const isUp = direction === "up";
-              const lastEntry = [...(state.investmentLedger || [])]
-                .reverse()
-                .find(tx => tx.ideaId === idea.id && tx.userId === currentUser().id && (tx.action === "upvote" || tx.action === "downvote"));
+            ${holdings.map(({ idea, qty }) => {
+              const currentPrice = marketPrice(idea);
+              const totalValue = qty * currentPrice;
+              const invested = (state.marketInvestedAmount && state.marketInvestedAmount[idea.id]) || 0;
+              const avgCost = qty > 0 ? (invested / qty) : 0;
+              const profitLoss = totalValue - invested;
+              const profitLossPercent = invested > 0 ? (profitLoss / invested) * 100 : 0;
+              const isProfit = profitLoss >= 0;
+              
               return `
                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;" data-action="open-idea" data-id="${idea.id}" class="table-hover-row">
                   <td style="padding: 12px 8px; display: flex; align-items: center; gap: 8px;">
@@ -13094,12 +14103,16 @@ function renderProfileTabContent(user, tab) {
                       <span style="font-size: 11px; color: var(--muted);">${esc(idea.department)}</span>
                     </div>
                   </td>
-                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isUp ? '#2ecc71' : '#e74c3c'};">
-                    <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isUp ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
-                      ${isUp ? '▲ Upvote' : '▼ Downvote'}
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${qty}</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(avgCost)}</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 600; color: var(--text);">${formatCurrency(currentPrice)}</td>
+                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${formatCurrency(invested)}</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: #ffd700;">${formatCurrency(totalValue)}</td>
+                  <td style="padding: 12px 8px; text-align: right; font-weight: 700; color: ${isProfit ? '#2ecc71' : '#e74c3c'};">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; background: ${isProfit ? 'rgba(46,204,113,0.1)' : 'rgba(231,76,60,0.1)'}; padding: 4px 8px; border-radius: 4px;">
+                      ${isProfit ? '▲ +' : '▼ '}${formatCurrency(profitLoss)} (${isProfit ? '+' : ''}${profitLossPercent.toFixed(1)}%)
                     </span>
                   </td>
-                  <td style="padding: 12px 8px; text-align: right; color: var(--text-secondary);">${esc(lastEntry?.date || "—")}</td>
                 </tr>
               `;
             }).join("")}
@@ -13517,7 +14530,7 @@ function renderAIAssistantWidget() {
       <div class="global-translate-bubble" data-action="toggle-global-translation" style="${translateStyle}" title="${tooltipText}" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
         ${icon("languages", `style="width: 20px; height: 20px; color: ${isGlobalOriginal ? 'white' : 'var(--primary)'};"`)}
       </div>
-      <div class="ai-assistant-bubble ai-chat-bubble-trigger" data-action="toggle-ai-assistant" style="${aiStyle}">
+      <div class="ai-assistant-bubble ai-chat-bubble-trigger" data-action="toggle-ai-assistant" style="${aiStyle} padding: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--primary);">
         <img src="/assets/ugi-avatar.png" alt="UGİ" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
       </div>
     `;
@@ -13569,7 +14582,7 @@ function renderAIAssistantWidget() {
       <!-- Quick Prompt Suggestions -->
       <div style="padding: 8px 12px; display: flex; gap: 6px; overflow-x: auto; background: var(--surface); border-top: 1px solid var(--line-soft); white-space: nowrap;">
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Yeni bir FinTech fikir öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">FinTech Fikri Öner</button>
-        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Garanti BBVA yeşil finansman fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Garanti BBVA Önerisi Al</button>
+        <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Garanti BBVA yeşil finansman fikri öner" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">UGİ Önerisi Al</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Borsadaki en önemli projeleri listele" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Borsayı Özetle</button>
         <button class="suggestion-chip" data-action="ai-suggest" data-prompt="Kurumsal veri setlerini özetle" style="font-size: 11px; background: var(--bg); border: 1px solid var(--line-soft); padding: 4px 8px; border-radius: 20px; cursor: pointer; color: var(--ink-soft);">Veri&Bilgi Listele</button>
       </div>
@@ -13603,7 +14616,7 @@ function handleAIChatResponse(msgText) {
     const topAgenda = (state.agendaItems || [])[0];
     replyText = `**Platform içi hype / trend yönelimi:**
     
-    ${topIdeas.map(i => `- **${i.title}**: ${i.marketCategory || "Fikir"} liginde ${Number(i.marketVolume || 0).toLocaleString("tr-TR")} hacim, net oy ${netVoteScore(i) >= 0 ? "+" : ""}${netVoteScore(i)}.`).join("\n")}
+    ${topIdeas.map(i => `- **${i.title}**: ${i.marketCategory || "Fikir"} liginde ${Number(i.marketVolume || 0).toLocaleString("tr-TR")} hacim, ${formatCurrency(marketPrice(i))} fiyat.`).join("\n")}
     
     ${topAgenda ? `Gündem tarafında öne çıkan başlık: **${topAgenda.title}**.` : ""}
     
@@ -13640,9 +14653,9 @@ function handleAIChatResponse(msgText) {
     const list = state.ideas.slice(0, 3);
     replyText = `**Fikir Borsası Popüler Projeler Özeti:**
     
-    ${list.map(i => `- **${i.title}** (${i.marketCategory || 'Fikir'}, Net oy: ${netVoteScore(i) >= 0 ? "+" : ""}${netVoteScore(i)})`).join("\n")}
-
-    Daha fazla projeyi incelemek ve upvote/downvote vermek için sol menüden **Borsa** sekmesine geçebilirsiniz.`;
+    ${list.map(i => `- **${i.title}** (${i.marketCategory || 'Fikir'}, Hisse: ${formatCurrency(marketPrice(i))})`).join("\n")}
+    
+    Daha fazla projeyi incelemek ve lot alım satımı yapmak için sol menüden **Borsa** sekmesine geçebilirsiniz.`;
   } else if (query.includes("veri") || query.includes("hammadde") || query.includes("dataset") || query.includes("bilgi")) {
     const list = (state.dataSets || []).slice(0, 2);
     replyText = `**Platformdaki Bazı Veri Setleri:**
@@ -13721,7 +14734,7 @@ function renderRulesPage() {
             ${icon("gavel")} 6. Kurumsal İnovasyon Yatırım ve Teşvik Politikası Tüzüğü
           </h3>
           <p>
-            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 B-Token</strong> gereklidir.<br/>
+            • <strong>Karar Kurulu Taşıma Limiti:</strong> Projenizi doğrudan Karar Kurulu'na taşımak ve kurul listesine almak için <strong>10.000 Altın (Coin)</strong> gereklidir.<br/>
             • <strong>Hisse Alım Sınırı:</strong> Fikirlerin adil dağıtılması için, tek bir projeden en fazla <strong>10 adet (hisse/lot)</strong> satın alabilirsiniz.<br/>
             • <strong>AI Barajı (70 Puan):</strong> Projelerin borsada kalabilmesi için Yapay Zeka (AI) değerlendirmesinden en az 70 puan alması gerekir. 70 puanın altındaki projeler doğrudan elenir.<br/>
             • <strong>Tüzük Denetimi:</strong> Yapay zeka denetimi sırasında kurum ilkelerine veya tüzüğe aykırı bulunan fikirler otomatik olarak reddedilir.<br/>
@@ -14554,10 +15567,9 @@ function scaleMockDataset() {
       tags: [trend.area.split(" ")[0], randCompany.shortName],
       createdAt: `2026-06-${10 + (i % 8)}`,
       marketTicker: ticker,
+      marketShares: 1000,
       marketVolume: 1200 + (i * 15),
       marketChange: (i % 2 === 0 ? 1 : -1) * (1.5 + (i % 12)),
-      upvotes: Math.round((1200 + (i * 15)) / 15 + (72 + (i % 23)) / 2),
-      downvotes: Math.round(((1200 + (i * 15)) / 15 + (72 + (i % 23)) / 2) * 0.15),
       translations: translations
     });
   }
