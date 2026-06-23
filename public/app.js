@@ -383,6 +383,15 @@ const state = {
       date: "2026-06-14",
       source: "Demo dokümanı",
       files: ["ai-host-kapsam.md"]
+    },
+    {
+      id: "store-3",
+      title: "Try Us / Bize Katılın URL'si",
+      description: "Platform deneme sürümü veya başvuru için dış paydaşlara iletilecek Try Us bağlantısı.",
+      category: "Dış Kaynak",
+      date: "2026-06-24",
+      source: "https://sabanci-innovation-exchange-3e21vkm0u.vercel.app/#/dashboard",
+      files: ["try-us-link.txt"]
     }
   ],
   studios: [
