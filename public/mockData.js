@@ -2406,7 +2406,7 @@ const navItems = [
   { id: "managerDashboard", label: "Yönetici Dashboardu", icon: "chart-no-axes-combined", managerOnly: true },
   { id: "adminStorage", label: "Yönetici Depolama Alanı", icon: "folder-kanban", managerOnly: true },
   { id: "manager", label: "Karar Kurulu", icon: "clipboard-check", managerOnly: true },
-  { id: "analytics", label: "Karar Analitiği", icon: "chart-no-axes-combined" },
+  { id: "analytics", label: "Karar Analitiği", icon: "chart-no-axes-combined", managerOnly: true },
   { id: "quickEval", label: "Hızlı Değerlendir", icon: "flame" },
   { id: "rules", label: "Kurallar", icon: "scroll" },
   { id: "complaintBox", label: "Şikayet Kutusu", icon: "shield-alert" },
