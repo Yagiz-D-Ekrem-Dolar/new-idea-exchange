@@ -7,6 +7,12 @@ function detectViewMode() {
 
 const state = {
   viewMode: detectViewMode(),
+  panelAuthenticated: false,
+  panelAuthRole: null,
+  panelAuthSelectedRole: null,
+  panelAuthPasswordInput: "",
+  panelAuthError: "",
+  managerDashboardTab: "performance",
   visibleIdeasCount: 12,
   visibleBorsaIdeasCount: 12,
   clubs: structuredClone(initialClubs),
@@ -656,16 +662,17 @@ function currentUser() {
   };
   const config = userConfigs[c] || userConfigs.TR;
 
-  const isManagerMode = state.viewMode === "admin";
+  const isPanelAdmin = state.viewMode === "admin" && state.panelAuthenticated && state.panelAuthRole === "admin";
+  const isPanelManager = state.viewMode === "admin" && state.panelAuthenticated && state.panelAuthRole === "manager";
   const baseUser = {
     id: config.id,
-    name: config.name,
-    email: config.email,
-    employeeId: "BBVA-22018",
-    roleKey: isManagerMode ? "manager" : "user",
-    seniority: isManagerMode ? "Yönetici" : "Çalışan",
-    isManager: isManagerMode,
-    isAdmin: false,
+    name: isPanelAdmin ? "Sistem Yöneticisi" : config.name,
+    email: isPanelAdmin ? "admin@bbva.example" : config.email,
+    employeeId: isPanelAdmin ? "BBVA-00001" : "BBVA-22018",
+    roleKey: isPanelAdmin ? "admin" : (isPanelManager ? "manager" : "user"),
+    seniority: isPanelAdmin ? "Admin" : (isPanelManager ? "Yönetici" : "Çalışan"),
+    isManager: isPanelAdmin || isPanelManager,
+    isAdmin: isPanelAdmin,
     voteCreditBalance: 24,
     monthlyVoteCredit: 40,
     badges: ["Ekipler Arası Köprü", "Pilot Proje Katılımcısı"],
@@ -1030,7 +1037,13 @@ function canAccess(item, user = currentUser()) {
 }
 
 function allowedNav() {
-  return cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(item => item && canAccess(item));
+  let items = cleanNavIds.map(id => navItems.find(item => item.id === id)).filter(item => item && canAccess(item));
+  if (state.viewMode === "admin") {
+    items = items.filter(item => item.managerOnly || item.adminOnly || item.id === "settings");
+  } else {
+    items = items.filter(item => !item.managerOnly && !item.adminOnly);
+  }
+  return items;
 }
 
 function pageLabel() {
@@ -1079,7 +1092,11 @@ function render() {
     state.studioTab = "products";
   }
   translateAllInState();
-  app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
+  if (state.viewMode === "admin" && !state.panelAuthenticated) {
+    app.innerHTML = renderPanelAuth();
+  } else {
+    app.innerHTML = state.loggedIn ? renderShell() : renderLogin();
+  }
   if (window.lucide) window.lucide.createIcons();
 
   // Auto-scroll AI Assistant chat
@@ -1223,6 +1240,74 @@ function renderLogin() {
       </main>
     `;
   }
+
+function renderPanelAuth() {
+  if (state.panelAuthSelectedRole === null) {
+    return `
+      <main class="login-page apple-login" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg); padding: 16px;">
+        <section class="apple-access-card" style="max-width: 600px; width: 100%; text-align: center; padding: 40px 32px; border-radius: 24px; box-shadow: var(--shadow-deep); background: var(--surface); border: 1px solid var(--line-soft);">
+          <div class="apple-access-brand" style="margin-bottom: 24px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            ${brandLockup()}
+            <span style="font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 0.5px; background: rgba(var(--primary-rgb), 0.08); padding: 2px 8px; border-radius: 4px; display: inline-block;">Güvenli Yönetim Girişi</span>
+          </div>
+          <div class="apple-login-copy" style="margin-bottom: 32px;">
+            <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; margin-bottom: 8px;">Sen Admin misin Yönetici mi?</h1>
+            <p style="color: var(--ink-soft); font-size: 14px;">Lütfen devam etmek istediğiniz yönetim rolünü seçiniz.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div class="auth-role-card" data-action="select-auth-role" data-role="admin" style="border: 2px solid var(--line-soft); border-radius: 16px; padding: 24px 16px; cursor: pointer; transition: all 0.2s; text-align: center; background: var(--bg);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--line-soft)'; this.style.transform='none';">
+              <div style="font-size: 32px; margin-bottom: 12px; color: var(--primary);">${icon("shield-alert", "style='width: 36px; height: 36px;'")}</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Sistem Yöneticisi (Admin)</h3>
+              <p style="font-size: 12px; color: var(--muted); line-height: 1.4;">Sistem parametreleri ve veri deposu erişimi.</p>
+            </div>
+            <div class="auth-role-card" data-action="select-auth-role" data-role="manager" style="border: 2px solid var(--line-soft); border-radius: 16px; padding: 24px 16px; cursor: pointer; transition: all 0.2s; text-align: center; background: var(--bg);" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--line-soft)'; this.style.transform='none';">
+              <div style="font-size: 32px; margin-bottom: 12px; color: var(--primary);">${icon("user-cog", "style='width: 36px; height: 36px;'")}</div>
+              <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Karar Kurulu (Yönetici)</h3>
+              <p style="font-size: 12px; color: var(--muted); line-height: 1.4;">Fikir değerlendirme, borsa takibi ve analitikler.</p>
+            </div>
+          </div>
+          <div style="margin-top: 16px; border-top: 1px solid var(--line-soft); padding-top: 16px; text-align: center;">
+            <a href="/" style="font-size: 13px; color: var(--ink-soft); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+              ${icon("arrow-left", "style='width: 14px; height: 14px;'")} Kullanıcı Paneline Dön
+            </a>
+          </div>
+        </section>
+      </main>
+    `;
+  }
+
+  const roleLabel = state.panelAuthSelectedRole === "admin" ? "Sistem Yöneticisi (Admin)" : "Karar Kurulu (Yönetici)";
+  const demoPass = state.panelAuthSelectedRole === "admin" ? "admin123" : "manager123";
+
+  return `
+    <main class="login-page apple-login" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg); padding: 16px;">
+      <section class="apple-access-card" style="max-width: 450px; width: 100%; padding: 40px 32px; border-radius: 24px; box-shadow: var(--shadow-deep); background: var(--surface); border: 1px solid var(--line-soft);">
+        <div class="apple-access-brand" style="margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+          ${brandLockup()}
+          <span style="font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 0.5px; background: rgba(var(--primary-rgb), 0.08); padding: 2px 8px; border-radius: 4px; display: inline-block;">Güvenli Yönetim Girişi</span>
+        </div>
+        <div class="apple-login-copy" style="margin-bottom: 24px; text-align: center;">
+          <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 6px;">Şifre Doğrulama</h2>
+          <p style="color: var(--ink-soft); font-size: 13px;"><strong>${roleLabel}</strong> olarak devam etmek için lütfen şifrenizi giriniz.</p>
+        </div>
+        
+        <label class="field apple-key-field" style="margin-bottom: 16px;">
+          <span>Giriş Şifresi</span>
+          <input type="password" class="input" data-panel-auth-password value="${esc(state.panelAuthPasswordInput)}" placeholder="••••••••" autocomplete="off" style="letter-spacing: 2px; text-align: center;" autofocus />
+          ${state.panelAuthError ? `<small class="form-error" style="color: var(--negative); font-size: 11px; margin-top: 4px; display: block; text-align: center;">${esc(state.panelAuthError)}</small>` : ""}
+        </label>
+        
+        <div class="demo-key-row" style="margin-bottom: 20px; background: rgba(var(--primary-rgb), 0.04); border: 1px solid var(--line-soft); border-radius: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+          <span>Demo şifre: <code>${demoPass}</code></span>
+          <button class="btn ghost slim-btn" data-action="fill-demo-pass" data-pass="${demoPass}" style="padding: 4px 8px; font-size: 11px;">${icon("copy")} Doldur</button>
+        </div>
+        
+        <button class="btn primary block" data-action="validate-panel-auth" style="width: 100%; margin-bottom: 12px;">${icon("unlock-keyhole")} Giriş Yap</button>
+        <button class="btn secondary block" data-action="reset-panel-auth" style="width: 100%; background: none; border: 1px solid var(--line-soft); color: var(--ink-soft);">${icon("chevron-left")} Rol Seçimine Dön</button>
+      </section>
+    </main>
+  `;
+}
 
   // Key is accepted! Now select country portal
   if (!state.loginCountrySelected) {
@@ -1635,6 +1720,11 @@ function renderPage() {
     case "social":
       return renderSocial();
     case "announcements":
+      if (state.viewMode === "admin") {
+        state.page = "managerDashboard";
+        state.managerDashboardTab = "announcements";
+        return renderManagerDashboard();
+      }
       return renderAnnouncements();
     case "messages":
       return renderMessages();
@@ -1659,10 +1749,20 @@ function renderPage() {
     case "chat":
       return renderChat();
     case "challenges":
+      if (state.viewMode === "admin") {
+        state.page = "managerDashboard";
+        state.managerDashboardTab = "challenges";
+        return renderManagerDashboard();
+      }
       return renderChallenges();
     case "implemented":
       return renderImplemented();
     case "analytics":
+      if (state.viewMode === "admin") {
+        state.page = "managerDashboard";
+        state.managerDashboardTab = "analytics";
+        return renderManagerDashboard();
+      }
       return renderAnalyticsV2();
     case "notifications":
       return renderNotifications();
@@ -5259,17 +5359,27 @@ function renderManagerDashboard() {
   const performance = managerCategoryPerformance(votes);
   const maxPerf = Math.max(1, ...performance.map(row => row.score));
 
-  return `
-    <div class="view-stack manager-dashboard-page">
-      <section class="apple-page-head manager-dashboard-hero">
-        <div>
-          <span class="panel-kicker">Yönetici Dashboardu</span>
-          <h2>Oy, ürün ve stüdyo performansı.</h2>
-          <p>Kimin hangi fikre oy verdiğini, toplam etkiyi ve kategori/stüdyo performansını demo verilerle izleyin.</p>
-        </div>
-        <button class="btn ghost" data-page="adminStorage">${icon("folder-kanban")} Yönetici Depolama</button>
-      </section>
+  const tabs = [
+    { id: "performance", label: "Borsa Performansı", icon: "chart-no-axes-combined" },
+    { id: "analytics", label: "Karar Analitiği", icon: "presentation" },
+    { id: "challenges", label: "Yarışmalar", icon: "trophy" },
+    { id: "announcements", label: "Duyurular", icon: "megaphone" }
+  ];
 
+  const tabSwitcherHtml = `
+    <div class="segmented-control" style="margin: 8px 0 20px 0; display: inline-flex; background: var(--bg-soft); padding: 4px; border-radius: 12px; border: 1px solid var(--line-soft); width: auto; overflow-x: auto; white-space: nowrap; max-width: 100%;">
+      ${tabs.map(tab => `
+        <button class="control-tab btn ${state.managerDashboardTab === tab.id ? "primary active" : "ghost"}" data-action="set-manager-tab" data-tab="${tab.id}" style="padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; border: none; box-shadow: ${state.managerDashboardTab === tab.id ? "var(--shadow-flat)" : "none"}; background: ${state.managerDashboardTab === tab.id ? "var(--primary) !important" : "transparent"}; color: ${state.managerDashboardTab === tab.id ? "#ffffff" : "var(--ink-soft)"};">
+          ${icon(tab.icon, `style="width:14px; height:14px; color: ${state.managerDashboardTab === tab.id ? "#ffffff" : "var(--ink-soft)"};"`)}
+          <span>${esc(tab.label)}</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  let activeContentHtml = "";
+  if (state.managerDashboardTab === "performance") {
+    activeContentHtml = `
       <section class="manager-metric-grid">
         ${managerMetricCard("coins", "Toplam oy/lot", totalVotes.toLocaleString("tr-TR"), "Kullanıcıların fikir borsasındaki toplam oy hareketi.")}
         ${managerMetricCard("badge-dollar-sign", "Toplam değer", formatCurrency(totalAmount), "Oyların demo parasal karşılığı.")}
@@ -5359,6 +5469,210 @@ function renderManagerDashboard() {
           })()}
         </div>
       </section>
+    `;
+  } else if (state.managerDashboardTab === "analytics") {
+    const reviewCount = state.ideas.filter(idea => idea.status === "review").length + 51;
+    const pilotCount = state.ideas.filter(idea => idea.status === "pilot").length + 18;
+    const doneCount = state.ideas.filter(idea => idea.status === "done").length + 30;
+    const enterpriseTotal = state.ideas.length + 423;
+    const totalCredits = state.ideas.reduce((sum, idea) => sum + idea.credits, 6820);
+    const complaintSignals = state.ideas.filter(idea => idea.type.includes("Şikayet") || idea.tags?.includes("Şikayet"));
+    const aiSignalRows = [
+      ["Verimsiz onay adımları", 86, "Süreç verimsizliği", "+18%"],
+      ["Tekrarlı veri girişi", 74, "Tekrarlı iş", "+11%"],
+      ["Bekleyen müşteri geri dönüşleri", 69, "Müşteri deneyimi", "+8%"],
+      ["Departmanlar arası devir kaybı", 63, "İletişim kopukluğu", "+6%"]
+    ];
+    const aiChartPoints = [42, 58, 52, 67, 74, 81, 76, 88];
+    const svgWidth = 500;
+    const svgHeight = 180;
+    const xStep = svgWidth / (aiChartPoints.length - 1);
+    const coords = aiChartPoints.map((val, idx) => ({
+      x: idx * xStep,
+      y: svgHeight - 20 - (val / 100) * (svgHeight - 40)
+    }));
+    let linePath = `M ${coords[0].x} ${coords[0].y}`;
+    for (let i = 1; i < coords.length; i++) {
+      const prev = coords[i - 1];
+      const curr = coords[i];
+      const cpX1 = prev.x + xStep / 2;
+      const cpY1 = prev.y;
+      const cpX2 = curr.x - xStep / 2;
+      const cpY2 = curr.y;
+      linePath += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${curr.x} ${curr.y}`;
+    }
+    const areaPath = `${linePath} L ${coords[coords.length - 1].x} ${svgHeight} L ${coords[0].x} ${svgHeight} Z`;
+
+    activeContentHtml = `
+      <section class="apple-bento-grid analytics-bento">
+        ${appleStatCard("lightbulb", "Aktif fikir", `${enterpriseTotal}`, "havuz")}
+        ${appleStatCard("thumbs-up", "Kredi", `${totalCredits.toLocaleString("tr-TR")}`, "kullanım")}
+        ${appleStatCard("clipboard-check", "Kuyruk", `${reviewCount}`, "karar")}
+        ${appleStatCard("rocket", "Pilot", `${pilotCount}`, "aday")}
+      </section>
+
+      <section class="ai-signal-lab">
+        <article class="ai-lab-main">
+          <div class="panel-head">
+            <div>
+              <span class="panel-kicker">AI tarafından çıkarıldı</span>
+              <h3>Şikayet ve öneri sinyal grafiği</h3>
+            </div>
+            <span class="delta-pill positive">${icon("sparkles")} ${complaintSignals.length + 12} şikayet sinyali</span>
+          </div>
+          <div class="ai-generated-chart svg-chart-container" aria-label="AI sinyal yoğunluğu grafiği">
+            <svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="analytics-svg-chart" preserveAspectRatio="none" style="width: 100%; height: 168px; display: block;">
+              <line class="chart-grid-line" x1="0" y1="${svgHeight * 0.25}" x2="${svgWidth}" y2="${svgHeight * 0.25}" style="stroke: rgba(255, 255, 255, 0.08); stroke-dasharray: 4 4;" />
+              <line class="chart-grid-line" x1="0" y1="${svgHeight * 0.5}" x2="${svgWidth}" y2="${svgHeight * 0.5}" style="stroke: rgba(255, 255, 255, 0.08); stroke-dasharray: 4 4;" />
+              <line class="chart-grid-line" x1="0" y1="${svgHeight * 0.75}" x2="${svgWidth}" y2="${svgHeight * 0.75}" style="stroke: rgba(255, 255, 255, 0.08); stroke-dasharray: 4 4;" />
+              <path d="${areaPath}" fill="rgba(59, 130, 246, 0.04)" />
+              <path d="${linePath}" fill="none" stroke="#3b82f6" stroke-width="3.5" stroke-linecap="round" />
+              ${coords.map((c, i) => `
+                <circle cx="${c.x}" cy="${c.y}" r="4.5" fill="#ffffff" stroke="#3b82f6" stroke-width="2.5" />
+              `).join("")}
+            </svg>
+          </div>
+        </article>
+
+        <article class="ai-lab-side">
+          <div class="panel-head">
+            <div>
+              <span class="panel-kicker">AI analiz notları</span>
+              <h3>Otomatik kümeler</h3>
+            </div>
+          </div>
+          <div class="ai-signal-list">
+            ${aiSignalRows.map(row => `
+              <div class="ai-signal-row">
+                <span>
+                  <strong>${esc(row[0])}</strong>
+                  <small>${esc(row[2])}</small>
+                </span>
+                <em>${row[1]}</em>
+                <b>${esc(row[3])}</b>
+              </div>
+            `).join("")}
+          </div>
+        </article>
+      </section>
+
+      <section class="analytics-charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; margin-top: 20px;">
+        <article class="analytics-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px;">
+          <div class="panel-head">
+            <div>
+              <span class="panel-kicker">Süreç Durumları</span>
+              <h3>Karar ve pilot dağılımı</h3>
+            </div>
+          </div>
+          <div class="svg-chart-container" style="padding: 16px 0;">
+            <svg viewBox="0 0 400 200" style="width: 100%; height: 160px; display: block;">
+              <circle cx="100" cy="100" r="70" fill="none" stroke="var(--line-soft)" stroke-width="20" />
+              <circle cx="100" cy="100" r="70" fill="none" stroke="#3b82f6" stroke-width="20" stroke-dasharray="440" stroke-dashoffset="130" stroke-linecap="round" />
+              <circle cx="100" cy="100" r="70" fill="none" stroke="#10b981" stroke-width="20" stroke-dasharray="440" stroke-dashoffset="310" stroke-linecap="round" />
+              <text x="100" y="105" text-anchor="middle" font-size="22" font-weight="700" fill="var(--ink)">%${Math.round((pilotCount/reviewCount)*100)}</text>
+              <text x="100" y="125" text-anchor="middle" font-size="11" fill="var(--ink-soft)">Pilota Geçiş</text>
+              <g transform="translate(220, 50)">
+                <circle cx="10" cy="10" r="6" fill="#3b82f6" />
+                <text x="25" y="14" font-size="12" fill="var(--ink-soft)">Kuyruk (${reviewCount})</text>
+                <circle cx="10" cy="35" r="6" fill="#10b981" />
+                <text x="25" y="39" font-size="12" fill="var(--ink-soft)">Pilot (${pilotCount})</text>
+                <circle cx="10" cy="60" r="6" fill="var(--line-soft)" />
+                <text x="25" y="64" font-size="12" fill="var(--ink-soft)">Uygulanan (${doneCount})</text>
+              </g>
+            </svg>
+          </div>
+        </article>
+
+        <article class="analytics-card" style="background: var(--surface); border: 1px solid var(--line-soft); border-radius: 16px; padding: 20px;">
+          <div class="panel-head">
+            <div>
+              <span class="panel-kicker">Stratejik Hizalama</span>
+              <h3>Uyum Skoru Dağılımı</h3>
+            </div>
+          </div>
+          <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div style="display:flex; justify-content:space-between; font-size:12.5px;"><span>Teknoloji & AI</span><strong>%82</strong></div>
+            <div style="background:var(--bg-soft); height:8px; border-radius:4px; overflow:hidden;"><div style="background:#3b82f6; width:82%; height:100%;"></div></div>
+            <div style="display:flex; justify-content:space-between; font-size:12.5px;"><span>Operasyonel Verimlilik</span><strong>%68</strong></div>
+            <div style="background:var(--bg-soft); height:8px; border-radius:4px; overflow:hidden;"><div style="background:#10b981; width:68%; height:100%;"></div></div>
+            <div style="display:flex; justify-content:space-between; font-size:12.5px;"><span>Sürdürülebilirlik & Yeşil Finans</span><strong>%54</strong></div>
+            <div style="background:var(--bg-soft); height:8px; border-radius:4px; overflow:hidden;"><div style="background:#f59e0b; width:54%; height:100%;"></div></div>
+          </div>
+        </article>
+      </section>
+    `;
+  } else if (state.managerDashboardTab === "challenges") {
+    const visible = filteredChallenges();
+    const activeCount = challenges.filter(item => item.status === "Aktif").length;
+    const totalReward = challenges.reduce((sum, item) => sum + (item.reward.includes("100.000") ? 100000 : item.reward.includes("75.000") ? 75000 : item.reward.includes("50.000") ? 50000 : 25000), 0);
+
+    activeContentHtml = `
+      <section class="challenge-hero" style="margin-bottom: 20px; padding: 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">Aktif Yarışmalar</span>
+          <h2>Yenilikçi Fikir Çağrıları</h2>
+          <p>Şirket içi hedefler doğrultusunda açılan güncel çözüm arayışları.</p>
+        </div>
+        <div class="challenge-hero-metrics" style="display: flex; gap: 12px;">
+          <span style="font-size: 13px; background: var(--bg); border: 1px solid var(--line-soft); padding: 6px 12px; border-radius: 8px;"><strong>${activeCount}</strong> aktif yarışma</span>
+          <span style="font-size: 13px; background: var(--bg); border: 1px solid var(--line-soft); padding: 6px 12px; border-radius: 8px;"><strong>${formatCurrency(totalReward)}</strong> ödül havuzu</span>
+        </div>
+        <button class="btn primary" data-action="create-challenge" style="font-size:13px; height:36px; padding:0 12px; display:inline-flex; align-items:center; gap:6px;">
+          ${icon("plus")} Yarışma Aç
+        </button>
+      </section>
+
+      <section class="challenge-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px;">
+        ${visible.map((challenge, index) => renderChallengeCard(challenge, index)).join("") || `
+          <div style="grid-column: span 3; text-align: center; padding: 40px; color: var(--muted);">
+            Yarışma bulunamadı.
+          </div>
+        `}
+      </section>
+    `;
+  } else if (state.managerDashboardTab === "announcements") {
+    const allVisible = filteredAnnouncements();
+    const annLimit = state.visibleAnnouncementsCount || 18;
+    const visible = allVisible.slice(0, annLimit);
+
+    activeContentHtml = `
+      <section class="apple-hero" style="padding: 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+        <div>
+          <span class="panel-kicker">Duyurular</span>
+          <h2>Yönetici Duyuru Yönetimi</h2>
+          <p>Yönetim duyurularını düzenleyin, tüm platforma yayınlayın.</p>
+        </div>
+        <button class="btn primary" data-action="toggle-announcement-composer" style="font-size:13px; height:36px; padding:0 12px; display:inline-flex; align-items:center; gap:6px;">
+          ${icon("megaphone")} Duyuru Yayınla
+        </button>
+      </section>
+
+      ${state.showAnnouncementComposer ? renderAnnComposer() : ""}
+
+      <section class="announcements-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+        ${visible.map(ann => renderAnnouncementCard(ann)).join("") || `
+          <div style="grid-column: span 3; text-align: center; padding: 40px; color: var(--muted);">
+            Yayınlanmış duyuru bulunamadı.
+          </div>
+        `}
+      </section>
+    `;
+  }
+
+  return `
+    <div class="view-stack manager-dashboard-page">
+      <section class="apple-page-head manager-dashboard-hero" style="margin-bottom: 12px;">
+        <div>
+          <span class="panel-kicker">Yönetici Paneli</span>
+          <h2>Kontrol Paneli & Birleşik Dashboard</h2>
+          <p>Borsa performansı, karar analitiği, yarışmalar ve duyurular tek ekranda.</p>
+        </div>
+        <button class="btn ghost" data-page="adminStorage">${icon("folder-kanban")} Yönetici Depolama</button>
+      </section>
+
+      ${tabSwitcherHtml}
+
+      ${activeContentHtml}
     </div>
   `;
 }
@@ -8696,6 +9010,55 @@ document.addEventListener("click", event => {
     render();
   }
 
+  const selectAuthRole = event.target.closest("[data-action='select-auth-role']");
+  if (selectAuthRole) {
+    state.panelAuthSelectedRole = selectAuthRole.dataset.role;
+    state.panelAuthError = "";
+    state.panelAuthPasswordInput = "";
+    render();
+    return;
+  }
+
+  const fillDemoPass = event.target.closest("[data-action='fill-demo-pass']");
+  if (fillDemoPass) {
+    state.panelAuthPasswordInput = fillDemoPass.dataset.pass;
+    render();
+    return;
+  }
+
+  const validatePanelAuth = event.target.closest("[data-action='validate-panel-auth']");
+  if (validatePanelAuth) {
+    const requiredPass = state.panelAuthSelectedRole === "admin" ? "admin123" : "manager123";
+    if (state.panelAuthPasswordInput === requiredPass) {
+      state.panelAuthenticated = true;
+      state.panelAuthRole = state.panelAuthSelectedRole;
+      state.panelAuthError = "";
+      state.panelAuthPasswordInput = "";
+      state.page = "managerDashboard";
+      state.loggedIn = true;
+    } else {
+      state.panelAuthError = "Hatalı şifre!";
+    }
+    render();
+    return;
+  }
+
+  const resetPanelAuth = event.target.closest("[data-action='reset-panel-auth']");
+  if (resetPanelAuth) {
+    state.panelAuthSelectedRole = null;
+    state.panelAuthError = "";
+    state.panelAuthPasswordInput = "";
+    render();
+    return;
+  }
+
+  const setManagerTab = event.target.closest("[data-action='set-manager-tab']");
+  if (setManagerTab) {
+    state.managerDashboardTab = setManagerTab.dataset.tab;
+    render();
+    return;
+  }
+
   const triggerGlobalSearch = event.target.closest("[data-trigger-global-search]");
   if (triggerGlobalSearch) {
     state.globalSearchQuery = " ";
@@ -11222,6 +11585,11 @@ if (action === "login") {
 });
 
 document.addEventListener("input", event => {
+  if (event.target.matches("[data-panel-auth-password]")) {
+    state.panelAuthPasswordInput = event.target.value;
+    return;
+  }
+
   if (event.target.matches("[data-ext-draft]")) {
     const field = event.target.dataset.extDraft;
     state.externalDraft = state.externalDraft || { name: "", email: "", startupName: "", ideaTitle: "", summary: "", portal: "BBVA" };
