@@ -630,14 +630,14 @@ body[data-theme="dark"] .mobile-tab.active {
 
 .nav-list {
   display: grid;
-  gap: 4px;
+  gap: 1px;
   overflow-y: auto;
   padding-right: 2px;
 }
 
 .nav-item {
   width: 100%;
-  min-height: 42px;
+  min-height: 34px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -5377,11 +5377,11 @@ body[data-theme="dark"] .sidebar {
 }
 
 .nav-list {
-  gap: 4px;
+  gap: 1px;
 }
 
 .nav-item {
-  min-height: 42px;
+  min-height: 34px;
   justify-content: flex-start;
   gap: 10px;
   padding: 0 10px;

@@ -5239,10 +5239,14 @@ function renderManagerDashboard() {
   
   const tabs = [
     { id: "performance", label: "Yönetici Dashboardu", icon: "layout-dashboard" },
+    { id: "externalApps", label: "Dış Başvurular", icon: "inbox" },
+    { id: "messages", label: "Mesajlaşmalar", icon: "message-square" },
+    { id: "leaderboard", label: "Liderlik Tablosu", icon: "medal" },
+    { id: "challenges", label: "Yarışmalar", icon: "trophy" },
+    { id: "datasets", label: "Veri Setleri", icon: "database" },
+    { id: "announcements", label: "Duyurular", icon: "megaphone" },
     { id: "manager", label: "Karar Kurulu", icon: "clipboard-check" },
     { id: "analytics", label: "Karar Analitiği", icon: "presentation" },
-    { id: "challenges", label: "Yarışmalar", icon: "trophy" },
-    { id: "announcements", label: "Duyurular", icon: "megaphone" },
     { id: "adminStorage", label: "Yönetici Depolama", icon: "folder-kanban" }
   ];
 
@@ -5432,6 +5436,152 @@ function renderManagerDashboard() {
             Yayınlanmış duyuru bulunamadı.
           </div>
         `}
+      </section>
+    `;
+  } else if (state.managerDashboardTab === "externalApps") {
+    activeContentHtml = `
+      <section class="apple-hero" style="margin-bottom: 20px; padding: 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">Dış Başvurular</span>
+          <h2>Kurum Dışı Fikir ve Girişim Başvuruları</h2>
+          <p>Dışarıdan gelen startup ve ürün fikirlerini buradan inceleyip onaylayabilirsiniz.</p>
+        </div>
+      </section>
+      <section style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+        <article class="manager-panel" style="padding: 16px;">
+          <div style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">YENİ BAŞVURU</div>
+          <h3 style="font-size: 16px; margin: 0 0 8px 0;">AI Destekli Lojistik Optimizasyonu</h3>
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px; line-height: 1.4;">Rota planlaması ve depo yönetimini otonom hale getiren yapay zeka destekli bir B2B SaaS platformu.</p>
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 12px;"><strong>Gönderen:</strong> Ali Yılmaz (TechLog)</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn primary" style="flex:1; padding: 6px; font-size: 12px;">Onayla</button>
+            <button class="btn ghost" style="flex:1; padding: 6px; font-size: 12px;">Reddet</button>
+          </div>
+        </article>
+        <article class="manager-panel" style="padding: 16px;">
+          <div style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">YENİ BAŞVURU</div>
+          <h3 style="font-size: 16px; margin: 0 0 8px 0;">Sürdürülebilir Enerji Takip IoT</h3>
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px; line-height: 1.4;">Fabrikalarda anlık enerji tüketimini ölçen ve karbon ayak izini hesaplayan IoT cihazı.</p>
+          <div style="font-size: 12px; color: var(--ink-soft); margin-bottom: 12px;"><strong>Gönderen:</strong> Zeynep Kaya (EcoSmart)</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn primary" style="flex:1; padding: 6px; font-size: 12px;">Onayla</button>
+            <button class="btn ghost" style="flex:1; padding: 6px; font-size: 12px;">Reddet</button>
+          </div>
+        </article>
+      </section>
+    `;
+  } else if (state.managerDashboardTab === "messages") {
+    activeContentHtml = `
+      <section class="apple-hero" style="margin-bottom: 20px; padding: 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">İç İletişim Yönetimi</span>
+          <h2>Şirket İçi Mesajlaşma Kayıtları</h2>
+          <p>Kullanıcıların asistanla veya diğer departmanlarla olan şikayet/destek mesaj geçmişi.</p>
+        </div>
+      </section>
+      <div class="manager-panel" style="padding: 0; overflow: hidden;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 3fr 1fr; gap: 8px; background: var(--bg-soft); padding: 12px 16px; font-weight: 700; font-size: 12px; color: var(--ink-soft); border-bottom: 1px solid var(--line-soft);">
+          <div>Tarih</div>
+          <div>Kullanıcı</div>
+          <div>Mesaj İçeriği</div>
+          <div>Kategori</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 2fr 3fr 1fr; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); font-size: 13px;">
+          <div style="color: var(--muted);">Bugün, 10:45</div>
+          <div style="font-weight: 500;">Ahmet Yılmaz</div>
+          <div>"Yeni fikir formundaki dosya yükleme butonu çalışmıyor."</div>
+          <div><span style="background: #fee2e2; color: #b91c1c; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Hata Bildirimi</span></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 2fr 3fr 1fr; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); font-size: 13px;">
+          <div style="color: var(--muted);">Dün, 14:20</div>
+          <div style="font-weight: 500;">Ayşe Demir</div>
+          <div>"Yapay zeka analiz raporum henüz oluşmadı, kontrol edebilir misiniz?"</div>
+          <div><span style="background: #e0e7ff; color: #4338ca; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Destek Talebi</span></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 2fr 3fr 1fr; gap: 8px; padding: 12px 16px; font-size: 13px;">
+          <div style="color: var(--muted);">12 Haziran, 09:15</div>
+          <div style="font-weight: 500;">Mehmet Kılıç</div>
+          <div>"Borsa tarafında hisse satış emrim gerçekleşmedi görünüyor."</div>
+          <div><span style="background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Şikayet</span></div>
+        </div>
+      </div>
+    `;
+  } else if (state.managerDashboardTab === "leaderboard") {
+    const sortedUsers = Object.entries(
+      state.ideas.reduce((acc, idea) => {
+        acc[idea.userName] = (acc[idea.userName] || 0) + idea.points;
+        return acc;
+      }, {})
+    ).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    
+    activeContentHtml = `
+      <section class="apple-hero" style="margin-bottom: 20px; padding: 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">Liderlik Tablosu</span>
+          <h2>Kurum İçi İnovasyon Liderleri</h2>
+          <p>Şirket içinde en çok fikir üreten ve en yüksek etki puanı alan çalışanlar.</p>
+        </div>
+      </section>
+      <div class="manager-panel" style="padding: 16px;">
+        ${sortedUsers.map((user, index) => `
+          <div style="display: flex; align-items: center; gap: 16px; padding: 12px; border-bottom: ${index < sortedUsers.length - 1 ? '1px solid var(--line-soft)' : 'none'};">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: 700; color: ${index === 0 ? '#fbbf24' : index === 1 ? '#9ca3af' : index === 2 ? '#b45309' : 'var(--muted)'};">
+              ${index + 1}
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 14px;">${user[0]}</div>
+              <div style="font-size: 12px; color: var(--muted);">İnovasyon Elçisi</div>
+            </div>
+            <div style="font-weight: 700; font-size: 16px; color: var(--primary);">
+              ${user[1]} Puan
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  } else if (state.managerDashboardTab === "datasets") {
+    activeContentHtml = `
+      <section class="apple-hero" style="margin-bottom: 20px; padding: 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="panel-kicker">Veri Setleri</span>
+          <h2>Kurumsal Veri Seti Yönetimi</h2>
+          <p>Yapay zeka asistanları veya inovasyon projeleri için kurum içi açık veri setleri tanımlayın.</p>
+        </div>
+        <button class="btn primary" style="font-size:13px; height:36px; padding:0 12px; display:inline-flex; align-items:center; gap:6px;">
+          ${icon("plus")} Yeni Veri Seti Yükle
+        </button>
+      </section>
+      
+      <section style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px;">
+        <article class="manager-panel" style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center;">
+              ${icon("database")}
+            </div>
+            <span style="font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: var(--bg); color: var(--muted);">Aktif</span>
+          </div>
+          <h3 style="font-size: 15px; margin: 0;">2025 Müşteri Şikayetleri</h3>
+          <p style="font-size: 12px; color: var(--muted); margin: 0;">Son 3 ayın anonimleştirilmiş müşteri hizmetleri çağrı kayıtları ve etiketlemeleri.</p>
+          <div style="font-size: 11px; color: var(--ink-soft); display: flex; justify-content: space-between; border-top: 1px solid var(--line-soft); padding-top: 12px; margin-top: auto;">
+            <span>CSV • 1.2 GB</span>
+            <span>Güncelleme: 2 gün önce</span>
+          </div>
+        </article>
+
+        <article class="manager-panel" style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="width: 40px; height: 40px; border-radius: 8px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center;">
+              ${icon("database")}
+            </div>
+            <span style="font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: var(--bg); color: var(--muted);">Aktif</span>
+          </div>
+          <h3 style="font-size: 15px; margin: 0;">Üretim Hattı Sensör Logları</h3>
+          <p style="font-size: 12px; color: var(--muted); margin: 0;">Fabrika A hattından alınan 1 haftalık sıcaklık, basınç ve arıza log verileri.</p>
+          <div style="font-size: 11px; color: var(--ink-soft); display: flex; justify-content: space-between; border-top: 1px solid var(--line-soft); padding-top: 12px; margin-top: auto;">
+            <span>JSON • 450 MB</span>
+            <span>Güncelleme: 5 saat önce</span>
+          </div>
+        </article>
       </section>
     `;
   }
